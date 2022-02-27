@@ -1,0 +1,34 @@
+{
+    "name": "evaluate",
+    "version": "1.0.0",
+    "description": "Evaluate any code in over 70 different programming languages. Save code as snippets for lately use or create custom commands in a language you know!",
+    "main": "./src/index.js",
+    "scripts": {
+        "test": "test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/apteryxxyz/eval.git"
+    },
+    "keywords": [
+        "discord",
+        "bot"
+    ],
+    "author": "ApteryxXYZ",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/apteryxxyz/eval/issues"
+    },
+    "homepage": "https://github.com/apteryxxyz/eval#readme",
+    "dependencies": {
+        "discord-modals": "^1.2.3",
+        "discord.js": "^13.6.0",
+        "dotenv": "^16.0.0",
+        "mongoose": "^6.2.3",
+        "node-fetch": "2.6.5",
+        "uid": "^2.0.0"
+    },
+    "devDependencies": {
+        "mongodb-memory-server": "^8.4.0"
+    }
+}

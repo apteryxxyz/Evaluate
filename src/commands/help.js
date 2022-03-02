@@ -18,7 +18,7 @@ module.exports = class Help extends Command {
                 'for lately use or create custom commands in a language you know!')
             .addField('Languages', 'Use the `languages` command to view the list of languages.')
             .addField('Commands', 'Use the `commands` command to view the list of commands.')
-            .addField('Support', 'If you need any help, join the [support server](https://discord.gg/daMQKExkeR).')
+            .addField('Support', 'If you need any help, join the [support server](https://discord.gg/vZQbMhwsKY).')
             .setColor('WHITE')
             .setTimestamp();
         return context.reply({ embeds: [embed] });

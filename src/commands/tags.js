@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Modal, TextInputComponent, showModal } = require('discord-modals');
 const Tag = require('../database/models/Tag');
 const Command = require('../structures/Command');
@@ -6,50 +7,16 @@ const CustomId = require('../util/CustomId');
 
 module.exports = class Tags extends Command {
     constructor(client) {
-        super(client, {
-            name: 'tags',
-            description: 'View and manage this servers tags.',
-            types: [Command.TYPES.INTERACTION],
-
-            options: [
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'list',
-                    description: 'View a list of the servers tags.',
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'view',
-                    description: 'View one of the servers tags.',
-                    options: [
-                        {
-                            name: 'name',
-                            type: 'STRING',
-                            description: 'The name of the tag.',
-                            required: true,
-                        },
-                    ]
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'create',
-                    description: 'Create a new tag, command will open a modal.',
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'delete',
-                    description: 'Delete an existing tag.',
-                    options: [
-                        {
-                            name: 'name',
-                            type: 'STRING',
-                            description: 'The name of the tag.',
-                            required: true,
-                        },
-                    ]
-                },
-            ],
-        });
+        super(client, new SlashCommandBuilder()
+            .setName('tags')
+            .setDescription('View and manage this servers tags.')
+            .addSubcommand(s => s.setName('list').setDescription('View a list of the servers tags.'))
+            .addSubcommand(s => s.setName('view').setDescription('View one of the servers tags.')
+                .addStringOption(o => o.setName('name').setDescription('The name of the tag.').setRequired(true)))
+            .addSubcommand(s => s.setName('create').setDescription('Create a new tag, command will open a modal.'))
+            .addSubcommand(s => s.setName('delete').setDescription('Delete an existing tag.')
+                .addStringOption(o => o.setName('name').setDescription('The name of the tag.').setRequired(true)))
+            .toJSON());
     }
 
     async run({ interaction, command, ...defaults }) {
@@ -92,7 +59,7 @@ module.exports = class Tags extends Command {
 
             const modal = new Modal()
                 .setCustomId(CustomId.create('tags', options))
-                .setTitle(`Create Tag`)
+                .setTitle('Create Tag')
                 .addComponents(
                     new TextInputComponent()
                         .setCustomId('name')

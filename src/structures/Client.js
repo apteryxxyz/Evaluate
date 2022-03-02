@@ -22,11 +22,17 @@ class Eval extends Client {
         if (!token) throw new Error('No token provided');
         Object.defineProperty(this, '_token', { value: token });
 
-        await this.languages.fetch();
-        await this.events.load();
+        await Promise.all([
+            this.languages.fetch(),
+            this.events.load()
+                .then(() => this.events.patch()),
+        ]);
         await this.login(token);
-        await this.commands.fetch();
-        await this.database.open();
+        await Promise.all([
+            this.database.connect(),
+            this.commands.load()
+                .then(() => this.commands.patch()),
+        ]).catch(console.error);
 
         this.readyAt = new Date();
         return this;
@@ -34,8 +40,7 @@ class Eval extends Client {
 
     disconnect() {
         this.readyAt = null;
-        this.commands.clear();
-        this.events.clear();
+        this.database.disconnect();
         this.destroy();
         return this;
     }

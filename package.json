@@ -4,13 +4,18 @@
     "description": "Evaluate any code in over 70 different programming languages. Save code as snippets for lately use or create custom commands in a language you know!",
     "main": "./src/index.js",
     "scripts": {
-        "test": "test"
+        "start": "pm2 start src/index.js --name evaluate",
+        "dev": "ENV=development node src/bot.js",
+        "restart": "pm2 restart evaluate",
+        "stop": "pm2 stop evaluate",
+        "pull": "git reset --hard && git pull && chmod +x scripts/"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/apteryxxyz/eval.git"
     },
     "keywords": [
+        "evaluate",
         "discord",
         "bot"
     ],

@@ -31,7 +31,7 @@ module.exports = class Help extends Command {
 
 function addCommand(commands, command, fullName = command.name) {
     const hasSubCommands = command.options?.
-        find(o => ['SUB_COMMAND', 'SUB_COMMAND_GROUP'].includes(o.type));
+        find(o => ['SUB_COMMAND', 'SUB_COMMAND_GROUP', 1, 2].includes(o.type));
 
     if (hasSubCommands) {
         for (const cmd of command.options)

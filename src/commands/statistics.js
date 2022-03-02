@@ -5,7 +5,7 @@ const pkg = require('../../package.json');
 module.exports = class About extends Command {
     constructor(client) {
         super(client, {
-            name: 'stats',
+            name: 'statistics',
             description: 'View statistics about the bot.',
             types: Object.values(Command.TYPES)
         });
@@ -19,7 +19,6 @@ module.exports = class About extends Command {
 
         const embed = new MessageEmbed()
             .setTitle(':flag_ua: Statistics')
-            .setDescription(pkg.description)
             .addField('Name', 'Evaluate', true)
             .addField('Version', `v${pkg.version}`, true)
             .addField('Developers', developers.map(d => `<@${d}>`).join('\n'), true)
@@ -32,7 +31,7 @@ module.exports = class About extends Command {
                 Object.entries(pkg.dependencies)
                     .map(d => `**${d[0]}** (v${d[1].replaceAll('^', '')})`)
                     .join(', '))
-            .setColor('GREEN');
+            .setColor('WHITE');
 
         return context.reply({ embeds: [embed] });
     }

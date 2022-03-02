@@ -16,7 +16,7 @@ module.exports = class Eval extends Command {
     async run({ interaction, ...defaults }) {
         const modal = new Modal()
             .setCustomId(CustomId.create('eval', {}))
-            .setTitle(':flag_ua: Evaluate Code')
+            .setTitle('Evaluate Code')
             .addComponents(
                 new TextInputComponent()
                     .setCustomId('language')

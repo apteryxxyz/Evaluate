@@ -6,47 +6,52 @@ const fs = require('fs');
 class EventManager extends CachedManager {
     constructor(client) {
         super(client, Event);
-        this.hasLoadedOnce = false;
-    }
-
-    async _add(data, cache = true) {
-        if (!(data instanceof Event)) data = new Event(this.client, data);
-        data.emitter.on(data.name, data.handle.bind(data));
-        if (cache) this.cache.set(data.name, data);
-        return data;
-    }
-
-    async _remove(resolvable) {
-        const data = this.resolve(resolvable);
-        if (!data) return null;
-        data.emitter.off(data.name, data.handle.bind(data));
-        this.cache.delete(data.name);
-        return data;
-    }
-
-    clear() {
-        return this.cache.each(e => this._remove(e));
     }
 
     async load() {
-        this.clear();
-
+        console.info('Loading events...');
         const eventsPath = path.join(__dirname, '../events');
-        const eventFiles = fs.readdirSync(eventsPath);
+        await this.loadFolder(eventsPath);
+        console.info(`Loaded ${this.cache.size} events`);
+        return this;
+    }
 
-        for (const file of eventFiles) {
-            const eventPath = path.join(eventsPath, file);
+    async loadFolder(directoryPath) {
+        const folderContents = fs.readdirSync(directoryPath);
+
+        for (const item of folderContents) {
+            const itemPath = path.join(directoryPath, item);
+            const isFile = fs.lstatSync(itemPath).isFile();
+
+            if (isFile) await this.loadFile(itemPath);
+            else await this.loadFolder(itemPath);
+        }
+
+        return this;
+    }
+
+    async loadFile(eventPath) {
+        try {
             const eventClass = require(eventPath);
             delete require.cache[require.resolve(eventPath)];
 
             const event = new eventClass(this.client);
-            await this._add(event);
+            this.cache.set(event.name, event);
+        } catch (error) {
+            console.error(error);
         }
 
-        const action = this.hasLoadedOnce ? 'Reloaded' : 'Loaded';
-        console.info(`${action} ${this.cache.size} events`);
-        this.hasLoadedOnce = true;
-        return this.cache.size;
+        return this;
+    }
+
+    async patch() {
+        this.client.removeAllListeners();
+
+        for (const event of this.cache.values()) {
+            event.emitter.on(event.name, event.handle.bind(event));
+        }
+
+        return this;
     }
 }
 

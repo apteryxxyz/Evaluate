@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Modal, TextInputComponent, showModal } = require('discord-modals');
 const Snippet = require('../database/models/Snippet');
 const Command = require('../structures/Command');
@@ -6,50 +7,16 @@ const CustomId = require('../util/CustomId');
 
 module.exports = class Snippets extends Command {
     constructor(client) {
-        super(client, {
-            name: 'snippets',
-            description: 'View and manage your code snippets.',
-            types: [Command.TYPES.INTERACTION],
-
-            options: [
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'list',
-                    description: 'View a list of your snippets.',
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'view',
-                    description: 'View one of your snippets.',
-                    options: [
-                        {
-                            name: 'name',
-                            type: 'STRING',
-                            description: 'The name of the snippet.',
-                            required: true,
-                        },
-                    ],
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'create',
-                    description: 'Create a code snippet, command will open a modal.',
-                },
-                {
-                    type: 'SUB_COMMAND',
-                    name: 'delete',
-                    description: 'Delete an existing snippet.',
-                    options: [
-                        {
-                            name: 'name',
-                            type: 'STRING',
-                            description: 'The name of the snippet.',
-                            required: true,
-                        },
-                    ],
-                }
-            ],
-        });
+        super(client, new SlashCommandBuilder()
+            .setName('snippets')
+            .setDescription('View and manage your code snippets.')
+            .addSubcommand(s => s.setName('list').setDescription('View a list of your snippets.'))
+            .addSubcommand(s => s.setName('view').setDescription('View one of your snippets.')
+                .addStringOption(o => o.setName('name').setDescription('The name of the snippet.').setRequired(true)))
+            .addSubcommand(s => s.setName('create').setDescription('Create a new snippet.'))
+            .addSubcommand(s => s.setName('delete').setDescription('Delete a snippet.')
+                .addStringOption(o => o.setName('name').setDescription('The name of the snippet.').setRequired(true)))
+            .toJSON());
     }
 
     async run({ interaction, command, ...defaults }) {
@@ -89,7 +56,7 @@ module.exports = class Snippets extends Command {
 
             const modal = new Modal()
                 .setCustomId(CustomId.create('snippets', options))
-                .setTitle(`Create Snippet`)
+                .setTitle('Create Snippet')
                 .addComponents(
                     new TextInputComponent()
                         .setCustomId('name')

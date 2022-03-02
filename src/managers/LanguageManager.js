@@ -7,19 +7,6 @@ class LanguageManager extends CachedManager {
         super(client, Language);
     }
 
-    async _add(data, cache = true) {
-        if (!(data instanceof Language)) data = new Language(data);
-        if (cache) this.cache.set(data.name, data);
-        return data;
-    }
-
-    async _remove(resolvable) {
-        const data = this.resolve(resolvable);
-        if (!data) return null;
-        this.cache.delete(data.name);
-        return data;
-    }
-
     resolve(resolvable) {
         resolvable = resolvable?.toLowerCase();
         return super.resolve(resolvable)
@@ -27,13 +14,15 @@ class LanguageManager extends CachedManager {
     }
 
     async fetch() {
+        console.info('Loading languages...');
         const url = process.env.PISTON_RUNTIMES_URL;
         const languages = await fetch(url).then(res => res.json());
-        for (const lang of languages) await this._add(lang);
+        for (const lang of languages) {
+            const language = new Language(lang);
+            this.cache.set(language.name, language);
+        }
 
-        const action = this.hasLoadedOnce ? 'Reloaded' : 'Loaded';
-        console.info(`${action} ${this.cache.size} languages`);
-        this.hasLoadedOnce = true;
+        console.info(`Loaded ${this.cache.size} languages`);
         return this.cache.size;
     }
 }

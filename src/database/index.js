@@ -7,20 +7,20 @@ class Database {
         this.Snippet = Snippet
     }
 
-    async open() {
+    async connect() {
         const uri = await this.generateDatabaseUri();
         return this.connection = await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(data => { console.info('Connected to MongoDB'); return data })
             .catch(error => console.error('Failed to connect: ', error));
     }
 
-    close() {
+    disconnect() {
         return this.connection.disconnect();
     }
 
     async generateDatabaseUri() {
-        if (process.isDevelopment) {
-            this.mongod = new MongoMemoryServer();
+        if (ENV === 'development') {
+            this.mongod = await MongoMemoryServer.create();
             return await this.mongod.getUri();
         } else {
             const {

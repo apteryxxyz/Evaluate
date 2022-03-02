@@ -5,7 +5,7 @@
     "main": "./src/index.js",
     "scripts": {
         "start": "pm2 start src/index.js --name evaluate",
-        "dev": "ENV=development node src/bot.js",
+        "dev": "node src/bot.js",
         "restart": "pm2 restart evaluate",
         "stop": "pm2 stop evaluate",
         "pull": "git reset --hard && git pull && chmod +x scripts/"

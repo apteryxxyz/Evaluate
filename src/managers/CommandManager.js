@@ -70,7 +70,7 @@ class CommandManager extends CachedManager {
         if (shouldUpdate) {
             console.log('Patching commands...');
             await this.application.commands.set(localCommands);
-            await this.application.commands.set({ fullPermissions });
+            await this.application.commands.permissions.set({ fullPermissions });
             console.log('Patched commands');
         }
     }

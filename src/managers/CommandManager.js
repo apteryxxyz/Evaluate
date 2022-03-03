@@ -55,22 +55,19 @@ class CommandManager extends CachedManager {
         const externalCommands = this.application.commands.cache.map(c => c.toJSON());
         let localCommands = this.cache.map(c => c.data);
         let shouldUpdate = externalCommands.length !== localCommands.length;
-        let fullPermissions = [];
 
         if (ENV === 'development') localCommands = localCommands.map(addDevelopment);
 
         for (const local of localCommands) {
             const external = externalCommands.find(c => c.name === local.name);
-            if (local.permissions) fullPermissions.push({ id: external.id, permissions: local.permissions });
-            if (shouldUpdate) break;
             if (!external) shouldUpdate = true;
+            if (shouldUpdate) break;
             if (!compareCommands(external, local)) shouldUpdate = true;
         }
 
         if (shouldUpdate) {
             console.log('Patching commands...');
             await this.application.commands.set(localCommands);
-            await this.application.commands.permissions.set({ fullPermissions });
             console.log('Patched commands');
         }
     }

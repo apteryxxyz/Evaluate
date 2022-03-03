@@ -15,17 +15,9 @@ module.exports = class DevEval extends Command {
             .setDefaultPermission(false));
     }
 
-    get permissions() {
-        return [{
-            id: process.env.DISCORD_DEVELOPER_ID,
-            type: 'USER',
-            permission: true,
-        }];
-    }
-
     async run({ interaction }) {
         if (interaction.user.id !== process.env.DISCORD_DEVELOPER_ID)
-            return interaction.reply({ content: 'You are not a developer!', ephemeral: true });
+            return interaction.reply({ content: 'You are not an Evaluate developer!', ephemeral: true });
 
         const modal = new Modal()
             .setCustomId(CustomId.create('deveval', {}))

@@ -9,7 +9,6 @@ module.exports = class Eval extends Command {
         super(client, {
             name: 'eval',
             description: 'Evaluate a piece of code, command will open a modal.',
-            types: [Command.TYPES.INTERACTION],
         });
     }
 

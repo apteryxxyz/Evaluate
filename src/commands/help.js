@@ -6,7 +6,6 @@ module.exports = class Help extends Command {
         super(client, {
             name: 'help',
             description: 'Help and information for the Evaluate bot.',
-            types: Object.values(Command.TYPES)
         });
     }
 

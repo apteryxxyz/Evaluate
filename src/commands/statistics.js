@@ -7,7 +7,6 @@ module.exports = class About extends Command {
         super(client, {
             name: 'statistics',
             description: 'View statistics about the bot.',
-            types: Object.values(Command.TYPES)
         });
     }
 
@@ -25,6 +24,7 @@ module.exports = class About extends Command {
             .addField('Programmed', `NodeJS (${process.version})\nDiscord.js (v${pkg.dependencies['discord.js'].slice(1)})`, true)
             .addField('Source Code', 'Private', true)
             .addField('Memory Used', memoryUsed, true)
+            .addField('Shard Count', this.client.shard?.count ?? 'Not sharding', true)
             .addField('Guild Count', guildCount.toString(), true)
             .addField('User Count', userCount.toString(), true)
             .addField('Dependencies',

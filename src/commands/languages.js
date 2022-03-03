@@ -6,7 +6,6 @@ module.exports = class Languages extends Command {
         super(client, {
             name: 'languages',
             description: 'View a list of avaiable languages.',
-            types: Object.values(Command.TYPES)
         });
     }
 

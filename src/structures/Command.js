@@ -3,9 +3,10 @@ class Command {
         Object.defineProperty(this, 'client', { value: client });
 
         this.id = null;
-        this.name = options.name;
-        this.description = options.description;
-        this.options = options.options ?? [];
+        Object.assign(this, options);
+        this.options = options.options || [];
+        this.choices = options.choices || [];
+        this.defaultPermission = options.defaultPermission || true;
     }
 
     get data() {
@@ -13,6 +14,7 @@ class Command {
             name: this.name,
             description: this.description,
             options: this.options,
+            defaultPermission: this.defaultPermission,
         };
     }
 

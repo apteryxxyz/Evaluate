@@ -47,7 +47,7 @@ class CommandManager extends CachedManager {
     }
 
     async patch() {
-        this.application = ENV === 'development' ?
+        this.application = this.application || ENV === 'development' ?
             await this.client.guilds.fetch(process.env.DISCORD_GUILD_ID) :
             this.client.application;
 
@@ -55,33 +55,34 @@ class CommandManager extends CachedManager {
         const externalCommands = this.application.commands.cache.map(c => c.toJSON());
         let localCommands = this.cache.map(c => c.data);
         let shouldUpdate = externalCommands.length !== localCommands.length;
+        let fullPermissions = [];
 
-        if (ENV === 'development') localCommands = localCommands.map(addDevToDescription);
+        if (ENV === 'development') localCommands = localCommands.map(addDevelopment);
 
         for (const local of localCommands) {
-            if (shouldUpdate) break;
             const external = externalCommands.find(c => c.name === local.name);
+            if (local.permissions) fullPermissions.push({ id: external.id, permissions: local.permissions });
+            if (shouldUpdate) break;
             if (!external) shouldUpdate = true;
-            global.e1 = external;
-            global.e2 = local;
-            if (!checkPropertiesMatch(external, local)) shouldUpdate = true;
+            if (!compareCommands(external, local)) shouldUpdate = true;
         }
 
         if (shouldUpdate) {
             console.log('Patching commands...');
             await this.application.commands.set(localCommands);
+            await this.application.commands.set({ fullPermissions });
             console.log('Patched commands');
         }
     }
 }
 
-function addDevToDescription(option) {
+function addDevelopment(option) {
     option.description = `[DEVLOPMENT] ${option.description}`;
-    if (Array.isArray(option.options)) option.options = option.options.map(addDevToDescription);
+    if (Array.isArray(option.options)) option.options = option.options.map(addDevelopment);
     return option;
 }
 
-function checkPropertiesMatch(obj1, obj2) {
+function compareCommands(obj1, obj2) {
     try {
         let doesMatch = true;
 
@@ -89,12 +90,13 @@ function checkPropertiesMatch(obj1, obj2) {
         if (obj1.value !== obj2.value) doesMatch = false;
         if (obj1.required !== obj2.required) doesMatch = false;
         if (obj1.description !== obj2.description) doesMatch = false;
+        if (obj1.defaultPermission !== obj2.defaultPermission) doesMatch = false;
 
         if (obj1.options || obj2.options) {
             if (obj1.options && obj2.options.length) {
                 obj1.options = obj1.options.sort((a, b) => a.name.localeCompare(b.name));
                 obj2.options = obj2.options.sort((a, b) => a.name.localeCompare(b.name));
-                const mapped = obj1.options.map((o, i) => checkPropertiesMatch(o, obj2.options[i]));
+                const mapped = obj1.options.map((o, i) => compareCommands(o, obj2.options[i]));
                 if (mapped.includes(false)) doesMatch = false;
             }
         }
@@ -103,7 +105,7 @@ function checkPropertiesMatch(obj1, obj2) {
             if (obj1.choices && obj2.choices.length) {
                 obj1.choices = obj1.choices.sort((a, b) => a.name.localeCompare(b.name));
                 obj2.choices = obj2.choices.sort((a, b) => a.name.localeCompare(b.name));
-                const mapped = obj1.choices.map((o, i) => checkPropertiesMatch(o, obj2.choices[i]));
+                const mapped = obj1.choices.map((o, i) => compareCommands(o, obj2.choices[i]));
                 if (mapped.includes(false)) doesMatch = false;
             }
         }

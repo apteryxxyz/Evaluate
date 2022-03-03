@@ -18,7 +18,8 @@ module.exports = class Help extends Command {
                 'for lately use or create custom commands in a language you know!')
             .addField('Languages', 'Use the `languages` command to view the list of languages.')
             .addField('Commands', 'Use the `commands` command to view the list of commands.')
-            .addField('Support', 'If you need any help, join the [support server](https://discord.gg/vZQbMhwsKY).')
+            .addField('Support', `If you need any help, join the [support server](${process.env.DISCORD_GUILD_INVITE}).`)
+            .addField('Invite', `You can invite Evaluate to your server by using the [invite link](${process.env.DISCORD_BOT_INVITE}).`)
             .setColor('WHITE')
             .setTimestamp();
         return context.reply({ embeds: [embed] });

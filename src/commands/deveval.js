@@ -24,6 +24,9 @@ module.exports = class DevEval extends Command {
     }
 
     async run({ interaction }) {
+        if (interaction.user.id !== process.env.DISCORD_DEVELOPER_ID)
+            return interaction.reply({ content: 'You are not a developer!', ephemeral: true });
+
         const modal = new Modal()
             .setCustomId(CustomId.create('deveval', {}))
             .setTitle('Evaluate Code')

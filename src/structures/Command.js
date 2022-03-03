@@ -4,9 +4,9 @@ class Command {
 
         this.id = null;
         Object.assign(this, options);
-        this.options = options.options || [];
-        this.choices = options.choices || [];
-        this.defaultPermission = options.defaultPermission || true;
+        this.options = options.options ?? [];
+        this.choices = options.choices ?? [];
+        this.defaultPermission = options.defaultPermission ?? true;
     }
 
     get data() {

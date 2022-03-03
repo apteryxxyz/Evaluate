@@ -12,7 +12,7 @@ module.exports = class DevEval extends Command {
         super(client, new SlashCommandBuilder()
             .setName('deveval')
             .setDescription('Eval for the developer.')
-            .setDefaultPermission(false));
+        );
     }
 
     async run({ interaction }) {

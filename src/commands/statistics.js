@@ -23,8 +23,8 @@ module.exports = class About extends Command {
             .addField('Developers', developers.map(d => `<@${d}>`).join('\n'), true)
             .addField('Programmed', `NodeJS (${process.version})\nDiscord.js (v${pkg.dependencies['discord.js'].slice(1)})`, true)
             .addField('Source Code', 'Private', true)
-            .addField('Memory Used', memoryUsed, true)
-            .addField('Shard Count', this.client.shard?.count ?? 'Not sharding', true)
+            .addField('Memory Used', memoryUsed.toString(), true)
+            .addField('Shard Count', this.client.shard?.count.toString() || 'Not sharding', true)
             .addField('Guild Count', guildCount.toString(), true)
             .addField('User Count', userCount.toString(), true)
             .addField('Dependencies',

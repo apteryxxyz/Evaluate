@@ -67,13 +67,13 @@ module.exports = class Snippets extends Command {
                         .setCustomId('language')
                         .setLabel('Language')
                         .setStyle('SHORT')
-                        .setDefaultValue(defaults.language)
+                        .setDefaultValue(defaults.language ?? '')
                         .setRequired(true),
                     new TextInputComponent()
                         .setCustomId('code')
                         .setLabel('Code')
                         .setStyle('LONG')
-                        .setDefaultValue(defaults.input)
+                        .setDefaultValue(defaults.input ?? '')
                         .setRequired(true),
                 );
 

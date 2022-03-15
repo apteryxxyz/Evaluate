@@ -23,14 +23,8 @@ class Database {
             this.mongod = await MongoMemoryServer.create();
             return await this.mongod.getUri();
         } else {
-            const {
-                MONGODB_USERNAME: username,
-                MONGODB_PASSWORD: password,
-                MONGODB_CLUSTER: cluster,
-                MONGODB_DATABASE: database
-            } = process.env;
-            return `mongodb+srv://${username}:${password}@${cluster}` +
-                `.mongodb.net/${database}?retryWrites=true&w=majority`;
+            const { MONGODB_PROTOCOL, MONGODB_HOST, MONGODB_DATABASE } = process.env;
+            return `${MONGODB_PROTOCOL}://${MONGODB_HOST}/${MONGODB_DATABASE}`;
         }
     }
 }

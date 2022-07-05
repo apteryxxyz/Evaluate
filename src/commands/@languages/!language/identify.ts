@@ -17,7 +17,7 @@ export default class Detect extends Command {
             type: Command.Type.ChatInput,
             kinds: [Command.Kind.Slash],
             name: 'identify',
-            description: 'Attempt to identify the programming language of a piece of code.',
+            description: 'Use AI to identify the programming language of a piece of code.',
             preconditions: [IncrementCommandCount],
         });
     }

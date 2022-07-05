@@ -11,7 +11,7 @@ export default class Detect extends Command {
             type: Command.Type.ContextMenu,
             kinds: [Command.Kind.Message],
             name: 'Identify Language',
-            description: 'Attemp to identify the language of a piece of code in a message.',
+            description: 'Use AI to identify the language of a piece of code in a message.',
             preconditions: [IncrementCommandCount],
         });
     }

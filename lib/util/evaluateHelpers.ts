@@ -27,7 +27,7 @@ export function buildEvaluateModal(
         .setPlaceholder('Type the programming language...')
         .setValue(
             (typeof options.language === 'object' ? options.language?.pretty : options.language) ||
-                '',
+            '',
         );
 
     const codeInput = new TextInputBuilder()
@@ -36,7 +36,7 @@ export function buildEvaluateModal(
         .setStyle(TextInputStyle.Paragraph)
         .setRequired(true)
         .setMaxLength(1000)
-        .setPlaceholder('Type the code code...')
+        .setPlaceholder('Type the source code...')
         .setValue(options.code ?? '');
 
     const inputInput = new TextInputBuilder()

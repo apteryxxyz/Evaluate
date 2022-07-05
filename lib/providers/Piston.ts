@@ -11,7 +11,7 @@ export class Piston extends Provider {
     public description = '';
     public link = 'https://github.com/engineer-man/piston';
 
-    private languages: Language[] = [];
+    public languages: Language[] = [];
 
     public async initialise(): Promise<this> {
         const runtimes = await piston.runtimes();

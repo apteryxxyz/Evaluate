@@ -108,4 +108,10 @@ const prettyLanguageNames = Object.assign({
 const prettyRuntimeNames = Object.assign({
     node: 'Node',
     deno: 'Deno',
+    gawk: 'GNU Awk',
+    mono: 'Mono',
+    gcc: 'GCC',
+    dotnet: '.NET',
+    nasm: 'NASM',
+    pwsh: 'PowerShell',
 });

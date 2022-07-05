@@ -27,7 +27,7 @@ export function buildEvaluateModal(
         .setPlaceholder('Type the programming language...')
         .setValue(
             (typeof options.language === 'object' ? options.language?.pretty : options.language) ||
-            '',
+                '',
         );
 
     const codeInput = new TextInputBuilder()

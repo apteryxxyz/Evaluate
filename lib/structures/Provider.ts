@@ -36,6 +36,8 @@ export abstract class Provider extends Base {
     public abstract description: string;
     /** The link to more information */
     public abstract link: string;
+    /** Array of supported languages */
+    public abstract languages: Language[];
 
     /**
      * Initialise the provider.

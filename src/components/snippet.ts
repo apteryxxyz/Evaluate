@@ -74,7 +74,6 @@ export class SnippetHandler extends Component {
             await evaluator.evaluate(false);
             const opts = await buildEvaluateMessage(evaluator);
             opts.components[0].components.length = 1;
-            console.log(opts);
             await button.editReply(opts);
             return void 0;
         }

@@ -123,7 +123,7 @@ async function getClientInvites(client: MaclaryClient) {
     const guild = await client.guilds.fetch(guildId);
     const findChannel = (c: any) => c.name === 'information';
     const channelId = guild.channels.cache.find(findChannel)?.id;
-    const guildInvite = await guild?.invites.create(channelId as string);
+    const guildInvite = await guild?.invites.create(channelId as string, { maxAge: 0 });
     const inviteUrl = guildInvite?.url;
 
     return { bot: botInvite, server: inviteUrl };

@@ -14,12 +14,6 @@ const client = new MaclaryClient({
             },
         ],
     },
-    ws: {
-        properties: {
-            os: 'discord.js',
-            browser: 'Discord iOS',
-        },
-    },
     defaultPrefix: 'e!',
     developmentGuildId: '829836158007115806',
     developmentPrefix: 'de!',

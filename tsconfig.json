@@ -1,0 +1,44 @@
+{
+    // Mapped from https://www.typescriptlang.org/tsconfig
+    "compilerOptions": {
+        // Type Checking
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "exactOptionalPropertyTypes": false,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strict": true,
+        "useUnknownInCatchVariables": true,
+        // // Modules
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "paths": {
+            "@lib/*": ["./lib/*"],
+            "@src/*": ["./src/*"]
+        },
+        // Emit
+        "skipLibCheck": true,
+        "declaration": true,
+        "importHelpers": true,
+        "importsNotUsedAsValues": "error",
+        "newLine": "lf",
+        "noEmitHelpers": true,
+        "outDir": "./dist",
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        // Language and Environment
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": ["ESNext", "DOM"],
+        "target": "ES2021",
+        "useDefineForClassFields": false
+    },
+    "include": ["src/**/*.ts", "lib/**/*.ts"],
+    "exclude": ["node_modules", "dist"]
+}

@@ -1,3 +1,8 @@
-node_modules
-.env*
-config.json
+node_modules/
+
+dist/
+.env
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins

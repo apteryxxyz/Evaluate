@@ -1,39 +1,69 @@
 {
     "name": "evaluate",
-    "version": "1.0.0",
-    "description": "Evaluate any code in over 70 different programming languages. Save code as snippets for lately use or create custom commands in a language you know!",
-    "main": "./src/index.js",
-    "scripts": {
-        "start": "pm2 start src/index.js --name evaluate",
-        "dev": "node src/bot.js",
-        "restart": "pm2 restart evaluate",
-        "stop": "pm2 stop evaluate",
-        "pull": "git reset --hard && git pull && chmod +x scripts/"
+    "version": "2.0.0",
+    "description": "",
+    "homepage": "https://github.com/apteryxxyz/evaluate",
+    "license": "MIT",
+    "main": "dist/src/index.js",
+    "packageManager": "yarn@3.2.1",
+    "files": [
+        "dist"
+    ],
+    "author": {
+        "name": "ApteryxXYZ",
+        "url": "https://apteryx.xyz"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/apteryxxyz/eval.git"
+        "url": "https://github.com/apteryxxyz/evaluate.git"
     },
-    "keywords": [
-        "evaluate",
-        "discord",
-        "bot"
-    ],
-    "author": "ApteryxXYZ",
-    "license": "MIT",
     "bugs": {
-        "url": "https://github.com/apteryxxyz/eval/issues"
+        "url": "https://github.com/apteryxxyz/evaluate/issues"
     },
-    "homepage": "https://github.com/apteryxxyz/eval#readme",
+    "funding": [
+        {
+            "type": "individual",
+            "url": "https://apteryx.xyz/donate"
+        }
+    ],
+    "scripts": {
+        "clean": "rm -rf dist",
+        "lint": "eslint {src,lib} --fix",
+        "format": "prettier src lib --write",
+        "test": "jest --coverage",
+        "build": "tsc -p tsconfig.json && tsc-alias",
+        "start": "pm2 start . --name evaluate",
+        "stop": "pm2 stop evaluate",
+        "restart": "pm2 restart evaluate",
+        "dev": "cross-env NODE_ENV=development ts-node src/index.ts",
+        "pull": "git reset --hard && git pull"
+    },
     "dependencies": {
-        "discord-modals": "^1.2.3",
-        "discord.js": "^13.6.0",
-        "dotenv": "^16.0.0",
-        "mongoose": "^6.2.3",
-        "node-fetch": "2.6.5",
-        "uid": "^2.0.0"
+        "@maclary/context": "^0.1.3",
+        "@vscode/vscode-languagedetection": "^1.0.21",
+        "common-tags": "^1.8.2",
+        "discord.js": "dev",
+        "dotenv": "^16.0.1",
+        "fuse.js": "^6.6.2",
+        "lexure": "^0.17.0",
+        "lodash": "^4.17.21",
+        "maclary": "dev",
+        "mongoose": "^6.4.1",
+        "nid": "^2.0.0",
+        "node-cache": "^5.1.2",
+        "piston-api-client": "^2.0.1",
+        "program-language-detector": "^0.0.12",
+        "programing-language-names": "^2.0.8",
+        "tryitonline": "^1.0.2"
     },
     "devDependencies": {
-        "mongodb-memory-server": "^8.4.0"
+        "@types/common-tags": "^1.8.1",
+        "@types/lodash": "^4.14.182",
+        "apteryx-eslint-config": "^1.0.0",
+        "apteryx-prettier-config": "^1.0.1",
+        "eslint": "^8.18.0",
+        "mongodb-memory-server": "^8.7.2",
+        "prettier": "^2.7.1",
+        "tslib": "^2.4.0"
     }
 }

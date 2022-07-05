@@ -1,5 +1,6 @@
 import { addLanguage } from '@lib/util/statisticsTracking';
 import type { Message, User } from 'discord.js';
+import { container } from 'maclary';
 import EventEmitter from 'node:events';
 import type { Language, Options, Provider, Result } from './Provider';
 
@@ -14,6 +15,8 @@ export enum Events {
 export class Evaluator extends EventEmitter {
     public provider!: Provider;
     public readonly startedAt = new Date();
+    public updatedAt = new Date();
+    private timer!: NodeJS.Timeout;
 
     public user: User;
     public message: Message;
@@ -31,6 +34,12 @@ export class Evaluator extends EventEmitter {
         this.message = message;
     }
 
+    public updateTimer() {
+        clearTimeout(this.timer);
+        this.updatedAt = new Date();
+        this.timer = setTimeout(() => container.evaluators.cache.delete(this.message.id), 720_000);
+    }
+
     /**
      * Set a new provider for the evaluator.
      * @param provider The new provider to use
@@ -39,6 +48,7 @@ export class Evaluator extends EventEmitter {
     public setProvider(provider: Provider, emit = true): void {
         this.provider = provider;
         if (emit) this.emit(Events.ProviderUpdated, provider);
+        this.updateTimer();
     }
 
     /**
@@ -56,6 +66,7 @@ export class Evaluator extends EventEmitter {
         if (options.args) this.args = options.args;
 
         this.emit(Events.InputsUpdated, options);
+        this.updateTimer();
         return true;
     }
 
@@ -74,6 +85,7 @@ export class Evaluator extends EventEmitter {
 
         void addLanguage(this.user.id, this.language.pretty);
         const result = await this.provider.evaluate(opts);
+        this.updateTimer();
         if (!result) return undefined;
 
         this.history.push(result);

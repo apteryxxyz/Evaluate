@@ -1,7 +1,7 @@
-import { addLanguage } from '@lib/util/statisticsTracking';
 import type { Message, User } from 'discord.js';
 import { container } from 'maclary';
 import EventEmitter from 'node:events';
+import { addLanguage, incrementEvaluatorCount } from '@lib/util/statisticsTracking';
 import type { Language, Options, Provider, Result } from './Provider';
 
 export enum Events {
@@ -14,9 +14,10 @@ export enum Events {
 
 export class Evaluator extends EventEmitter {
     public provider!: Provider;
+
     public readonly startedAt = new Date();
     public updatedAt = new Date();
-    private timer!: NodeJS.Timeout;
+    public timer!: NodeJS.Timeout;
 
     public user: User;
     public message: Message;
@@ -32,6 +33,8 @@ export class Evaluator extends EventEmitter {
         super();
         this.user = user;
         this.message = message;
+
+        void incrementEvaluatorCount(user.id);
     }
 
     public updateTimer() {

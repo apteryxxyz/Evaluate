@@ -5,6 +5,7 @@ export interface IStatistics {
     userId: Snowflake;
     usedLanguages: string[];
     commandCount: number;
+    evaluatorCount: number;
     firstUsedAt: Date;
     lastUsedAt: Date;
 
@@ -17,6 +18,7 @@ const statisticsSchema = new Schema<IStatistics>({
     userId: { type: String, required: true, unique: true },
     usedLanguages: { type: [String], default: [] },
     commandCount: { type: Number, default: 0 },
+    evaluatorCount: { type: Number, default: 0 },
     firstUsedAt: { type: Date, default: Date.now },
     lastUsedAt: { type: Date, default: Date.now },
 });

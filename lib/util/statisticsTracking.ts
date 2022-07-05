@@ -21,21 +21,37 @@ export async function incrementCommandCount(userId: Snowflake) {
     return statistics.save();
 }
 
+export async function incrementEvaluatorCount(userId: Snowflake) {
+    const statistics = await getOrCreate(userId);
+    statistics.evaluatorCount++;
+    statistics.lastUsedAt = new Date();
+    return statistics.save();
+}
+
 export async function getTotals() {
-    const totals = await Statistics.aggregate<{ count: number; languages: any[] }>([
+    const totals = await Statistics.aggregate<{
+        commands: number;
+        evaluators: number;
+        languages: any[][];
+    }>([
         {
             $group: {
                 _id: null,
-                count: { $sum: '$commandCount' },
-                languages: { $addToSet: '$usedLanguages' },
+                commands: { $sum: '$commandCount' },
+                evaluators: { $sum: '$evaluatorCount' },
+                languages: { $push: '$usedLanguages' },
             },
         },
     ]);
-    if (!totals[0]) return { commandCount: 0, mostUsedLanguage: 'N/A' };
+    if (!totals[0]) return { commandCount: 0, evaluatorCount: 0, mostUsedLanguage: 'N/A' };
     const mostUsedLanguage = totals[0].languages
         ?.flat()
         .reduce((a, b) => (a.length > b.length ? a : b), 'N/A');
-    return { commandCount: totals[0].count || 0, mostUsedLanguage };
+    return {
+        commandCount: totals[0].commands || 0,
+        evaluatorCount: totals[0].evaluators,
+        mostUsedLanguage,
+    };
 }
 
 export async function mostPopularLanguages(): Promise<string[]> {

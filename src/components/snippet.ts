@@ -27,7 +27,17 @@ export class SnippetHandler extends Component {
                     ephemeral: true,
                 });
 
-            const existingName = await Snippet.findOne({ owners: { $elemMatch: { id, name } } });
+            const existingAll = await Snippet.find({ owners: { $elemMatch: { id } } });
+            if (existingAll.length >= 25) {
+                return void modal.reply({
+                    content: 'You already have the max 25 snippets, remove one to add more.',
+                    ephemeral: true,
+                });
+            }
+
+            const existingName = existingAll.find((owned) =>
+                owned.owners.some((o) => o.name === name),
+            );
             if (existingName)
                 return void modal.reply({
                     content: 'You already have a snippet with that name.',

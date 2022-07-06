@@ -1,7 +1,8 @@
 import { EmbedBuilder } from '@discordjs/builders';
+import { Command } from 'maclary';
+import { connection } from 'mongoose';
 import { IncrementCommandCount } from '@lib/preconditions/IncrementCommandCount';
 import { getTotals } from '@lib/util/statisticsTracking';
-import { Command } from 'maclary';
 
 export default class ViewStatistics extends Command {
     public constructor() {
@@ -21,6 +22,7 @@ export default class ViewStatistics extends Command {
 
         const serverCount = client.guilds.cache.size;
         const userCount = client.guilds.cache.reduce((a, c) => a + c.memberCount, 0);
+        const snippetsCount = await connection.models.Snippet.countDocuments();
         const { commandCount, evaluatorCount, mostUsedLanguage } = await getTotals();
         const activeCount = this.container.evaluators.cache.size;
 
@@ -28,9 +30,10 @@ export default class ViewStatistics extends Command {
             { name: 'Server Count', value: serverCount.toString() },
             { name: 'User Count', value: userCount.toString() },
             { name: 'Command Count', value: commandCount.toString() },
+            { name: 'Unique Snippet Count', value: snippetsCount.toString() },
             { name: 'Evaluator Count', value: `${evaluatorCount} (${activeCount} active)` },
-            { name: 'Most Used Language', value: mostUsedLanguage },
-        ].map((f) => ({ ...f, inline: true }));
+            { name: 'Most Used Language', value: mostUsedLanguage, inline: false },
+        ].map((f) => ({ ...f, inline: f.inline !== undefined ? f.inline : true }));
 
         const embed = new EmbedBuilder()
             .setTitle(`${user.username} Statistics`)

@@ -5,6 +5,29 @@ import { ActionRowBuilder, ButtonBuilder, EmbedBuilder } from '@discordjs/builde
 import _ from 'lodash';
 import { IncrementCommandCount } from '@preconditions/IncrementCommandCount';
 
+const BotLists = [
+    {
+        name: 'Top.gg',
+        url: 'https://top.gg/bot/946755134443102258/vote',
+        show: true,
+    },
+    {
+        name: 'Discord Bot List',
+        url: 'https://discordbotlist.com/bots/evaluate/upvote',
+        show: true,
+    },
+    {
+        name: 'Discord List',
+        url: 'https://discordlist.gg/bot/946755134443102258/vote',
+        show: true,
+    },
+    {
+        name: 'Blade List',
+        url: 'https://bladelist.gg/bots/946755134443102258#!',
+        show: false,
+    },
+];
+
 export default class Help extends Command {
     public constructor() {
         super({
@@ -60,7 +83,8 @@ export default class Help extends Command {
             .setFields(commandFields);
 
         const invites = await getClientInvites(client);
-        const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+        console.log(invites);
+        const links = new ActionRowBuilder<ButtonBuilder>().addComponents(
             [
                 invites.bot
                     ? new ButtonBuilder()
@@ -77,7 +101,13 @@ export default class Help extends Command {
             ].filter((b) => b !== undefined) as any,
         );
 
-        await context.editReply({ embeds: [embed], components: [actionRow] });
+        const lists = new ActionRowBuilder<ButtonBuilder>().addComponents(
+            BotLists.filter((l) => l.show).map((list) =>
+                new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel(list.name).setURL(list.url),
+            ),
+        );
+
+        await context.editReply({ embeds: [embed], components: [links, lists] });
     }
 }
 
@@ -123,7 +153,7 @@ async function getClientInvites(client: MaclaryClient) {
     const guild = await client.guilds.fetch(guildId);
     const findChannel = (c: any) => c.name === 'information';
     const channelId = guild.channels.cache.find(findChannel)?.id;
-    const guildInvite = await guild?.invites.create(channelId as string, { maxAge: 0 });
+    const guildInvite = await guild?.invites.create(channelId!, { maxAge: 0 });
     const inviteUrl = guildInvite?.url;
 
     return { bot: botInvite, server: inviteUrl };

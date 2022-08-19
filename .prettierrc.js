@@ -1,3 +1,10 @@
 module.exports = Object.assign(require('apteryx-prettier-config'), {
-    overrides: { '*.yml': { tabWidth: 2 } },
+    overrides: [
+        {
+            files: ['*.yml'],
+            options: {
+                tabWidth: 2,
+            }
+        }
+    ],
 });

@@ -18,8 +18,9 @@ jobs:
         uses: garygrossgarten/github-action-ssh@release
         with:
           host: ${{ secrets.IP }}
+          port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
-          passphrase: ${{ secrets.PASSWORD }}
+          password: ${{ secrets.PASSWORD }}
           command: |
             cd ${{ secrets.PROJECT_PATH }}
             yarn update

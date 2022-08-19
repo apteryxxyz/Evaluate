@@ -16,7 +16,7 @@
         "serve": "cross-env NODE_ENV=production node .",
         "start": "pm2 startOrReload pm2.config.json",
         "stop": "pm2 stop pm2.config.json",
-        "update": "yarn pull && yarn build && yarn start"
+        "update": "yarn pull && yarn && yarn build && yarn start"
     },
     "dependencies": {
         "@discordjs/builders": "^1.1.0",
@@ -47,6 +47,7 @@
         "nodemon": "^2.0.19",
         "prettier": "^2.7.1",
         "rimraf": "^3.0.2",
-        "tsc-alias": "^1.7.0"
+        "tsc-alias": "^1.7.0",
+        "typescript": "^4.7.4"
     }
 }

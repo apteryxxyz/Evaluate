@@ -18,12 +18,13 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
+          YARN_PATH: ${{ secrets.YARN_PATH }}
         with:
           host: ${{ secrets.IP }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          envs: PROJECT_PATH
+          envs: PROJECT_PATH,YARN_PATH
           script: |
             cd $PROJECT_PATH
-            yarn update
+            $YARN_PATH update

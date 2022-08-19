@@ -718,7 +718,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:^3.5.2":
+"chokidar@npm:^3.5.2, chokidar@npm:^3.5.3":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
   dependencies:
@@ -791,6 +791,13 @@ __metadata:
   bin:
     color-support: bin.js
   checksum: 9b7356817670b9a13a26ca5af1c21615463b500783b739b7634a0c2047c16cef4b2865d7576875c31c3cddf9dd621fa19285e628f20198b233a5cfdda6d0793b
+  languageName: node
+  linkType: hard
+
+"commander@npm:^9.0.0":
+  version: 9.4.0
+  resolution: "commander@npm:9.4.0"
+  checksum: a322de584a6ccd1ea83c24f6a660e52d16ffbe2613fcfbb8d2cc68bc9dec637492456d754fe8bb5b039ad843ed8e04fb0b107e581a75f62cde9e1a0ab1546e09
   languageName: node
   linkType: hard
 
@@ -1241,6 +1248,7 @@ __metadata:
     prettier: ^2.7.1
     program-language-detector: ^0.0.12
     rimraf: ^3.0.2
+    tsc-alias: ^1.7.0
   languageName: unknown
   linkType: soft
 
@@ -1499,7 +1507,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:^11.1.0":
+"globby@npm:^11.0.4, globby@npm:^11.1.0":
   version: 11.1.0
   resolution: "globby@npm:11.1.0"
   dependencies:
@@ -2110,6 +2118,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mylas@npm:^2.1.9":
+  version: 2.1.11
+  resolution: "mylas@npm:2.1.11"
+  checksum: 8d0108b9d1ba364426250e6b057a0bd209925637685cc52a72ec358fb912ceffd51f4dd7a1b0e9f5ecd83815e020f4b88d57980b7c9a4a6a44a7be6f43bdc67a
+  languageName: node
+  linkType: hard
+
 "natural-compare@npm:^1.4.0":
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
@@ -2347,6 +2362,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"plimit-lit@npm:^1.2.6":
+  version: 1.3.0
+  resolution: "plimit-lit@npm:1.3.0"
+  dependencies:
+    queue-lit: ^1.3.0
+  checksum: 37f3d78d1b54a5be8c578e4d776e612c8226c3123cc70d5e7a60cf1111d060bf6571c08af963838cea9143a0d9af9cd8f693c9eba4a993df68004a91886b0086
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -2407,6 +2431,13 @@ __metadata:
   version: 2.1.1
   resolution: "punycode@npm:2.1.1"
   checksum: 823bf443c6dd14f669984dea25757b37993f67e8d94698996064035edd43bed8a5a17a9f12e439c2b35df1078c6bec05a6c86e336209eb1061e8025c481168e8
+  languageName: node
+  linkType: hard
+
+"queue-lit@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "queue-lit@npm:1.3.0"
+  checksum: 280f690cc740cb7983bf47586a5c173857d761ee49b9a03e65e9e6dd50726712974fa196a4985122d93d857f2bfb3f73252af86ab2a1c46632a2216348e95041
   languageName: node
   linkType: hard
 
@@ -2823,6 +2854,22 @@ __metadata:
   version: 6.0.1
   resolution: "ts-mixer@npm:6.0.1"
   checksum: 7050f6e85a24155d18cecdcc0a098d1038991cc498317fcffa9d7a8654c776d417fb97e65de1ce8e7ed54ef4814abd8057d0efb9c3b24e9cc78ac3c0f48bbf53
+  languageName: node
+  linkType: hard
+
+"tsc-alias@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "tsc-alias@npm:1.7.0"
+  dependencies:
+    chokidar: ^3.5.3
+    commander: ^9.0.0
+    globby: ^11.0.4
+    mylas: ^2.1.9
+    normalize-path: ^3.0.0
+    plimit-lit: ^1.2.6
+  bin:
+    tsc-alias: dist/bin/index.js
+  checksum: 6fc2a396b7ec2ee279f38f7414f626f0674f1f02f7e947c3757017f4c73fd9a5fa16842935a5b4051fc37bb7a4b4e145886ddf844dcfaaac80d0a3d4c6af0452
   languageName: node
   linkType: hard
 

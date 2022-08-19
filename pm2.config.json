@@ -1,0 +1,9 @@
+{
+    "apps": [
+        {
+            "name": "Evaluate",
+            "script": "yarn",
+            "args": "serve"
+        }
+    ]
+}

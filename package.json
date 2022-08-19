@@ -2,41 +2,20 @@
     "name": "evaluate",
     "version": "2.0.0",
     "description": "",
-    "homepage": "https://github.com/apteryxxyz/evaluate",
     "license": "MIT",
     "main": "dist/src/index.js",
     "packageManager": "yarn@3.2.1",
-    "files": [
-        "dist"
-    ],
-    "author": {
-        "name": "ApteryxXYZ",
-        "url": "https://apteryx.xyz"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/apteryxxyz/evaluate.git"
-    },
-    "bugs": {
-        "url": "https://github.com/apteryxxyz/evaluate/issues"
-    },
-    "funding": [
-        {
-            "type": "individual",
-            "url": "https://apteryx.xyz/donate"
-        }
-    ],
     "scripts": {
-        "clean": "rm -rf dist",
-        "lint": "eslint {src,lib} --fix",
-        "format": "prettier src lib --write",
-        "test": "jest --coverage",
-        "build": "tsc -p tsconfig.json && tsc-alias",
-        "start": "pm2 start . --name evaluate",
-        "stop": "pm2 stop evaluate",
-        "restart": "pm2 restart evaluate",
-        "dev": "cross-env NODE_ENV=development ts-node src/index.ts",
-        "pull": "git reset --hard && git pull"
+        "build": "yarn build:clean && tsc && tsc-alias",
+        "build:clean": "rimraf dist",
+        "build:watch": "concurrently \"tsc -w\" \"tsc-alias -w\"",
+        "format": "eslint {src,lib} --fix && prettier src lib --write",
+        "dev": "node -r @swc-node/register src/index.ts",
+        "dev:watch": "cross-env NODE_ENV=development nodemon --ignore dist --exec yarn dev",
+        "git:pull": "git reset --hard HEAD && git pull",
+        "serve": "cross-env NODE_ENV=production node .",
+        "start": "pm2 startOrReload pm2.config.json",
+        "stop": "pm2 stop pm2.config.json"
     },
     "dependencies": {
         "@maclary/context": "^0.1.3",
@@ -62,9 +41,13 @@
         "@types/lodash": "^4.14.182",
         "apteryx-eslint-config": "^1.0.0",
         "apteryx-prettier-config": "^1.0.1",
+        "concurrently": "^7.3.0",
+        "cross-env": "^7.0.3",
         "eslint": "^8.18.0",
         "mongodb-memory-server": "^8.7.2",
+        "nodemon": "^2.0.19",
         "prettier": "^2.7.1",
+        "rimraf": "^3.0.2",
         "tslib": "^2.4.0"
     }
 }

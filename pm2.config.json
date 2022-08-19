@@ -2,8 +2,8 @@
     "apps": [
         {
             "name": "Evaluate",
-            "script": "yarn",
-            "args": "serve"
+            "script": "npm",
+            "args": "run serve"
         }
     ]
 }

@@ -18,6 +18,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@discordjs/builders@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@discordjs/builders@npm:1.1.0"
+  dependencies:
+    "@sapphire/shapeshift": ^3.5.1
+    discord-api-types: ^0.36.3
+    fast-deep-equal: ^3.1.3
+    ts-mixer: ^6.0.1
+    tslib: ^2.4.0
+  checksum: 95a30b151447bfb625f3f325dc06476a58a050930b07cd0e9d6f66f62cee49e3d68cea137b436bf64559d47add7900574b732ba15e707cdda68a320020988c49
+  languageName: node
+  linkType: hard
+
 "@discordjs/collection@npm:^0.8.0-dev":
   version: 0.8.0-dev.1656864766-c7a205f
   resolution: "@discordjs/collection@npm:0.8.0-dev.1656864766-c7a205f"
@@ -180,6 +193,16 @@ __metadata:
   version: 3.4.0
   resolution: "@sapphire/shapeshift@npm:3.4.0"
   checksum: fede7cc81c360e4222328278a4cd5fb21b5dd79d3d3bd7365a1f9582215032dc8b7c75a3713d047254f69f327f7259f912605c23444bca1a3db9ea9ab0211269
+  languageName: node
+  linkType: hard
+
+"@sapphire/shapeshift@npm:^3.5.1":
+  version: 3.5.1
+  resolution: "@sapphire/shapeshift@npm:3.5.1"
+  dependencies:
+    fast-deep-equal: ^3.1.3
+    lodash.uniqwith: ^4.5.0
+  checksum: caecfef844c9e43e921a5051da888fae7da8980bfd9f9bb4f7fee85931d40929ffb9b6dfae464c0dccee61e56f7698f998e4d9a54d25f35fad39a51ba1a4f391
   languageName: node
   linkType: hard
 
@@ -920,6 +943,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"discord-api-types@npm:^0.36.3":
+  version: 0.36.3
+  resolution: "discord-api-types@npm:0.36.3"
+  checksum: 3089c0fb37425dc5df03c76d82988d43fcc272699b06a02fc830d0a3bef550009aaebdf6d646529e8a7ccea76ae3f43b099d736ea5ef37a0be143142ab49871d
+  languageName: node
+  linkType: hard
+
 "discord.js@npm:dev":
   version: 14.0.0-dev.1656864763-c7a205f
   resolution: "discord.js@npm:14.0.0-dev.1656864763-c7a205f"
@@ -1185,6 +1215,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "evaluate@workspace:."
   dependencies:
+    "@discordjs/builders": ^1.1.0
     "@maclary/context": ^0.1.3
     "@types/common-tags": ^1.8.1
     "@types/lodash": ^4.14.182
@@ -1204,16 +1235,12 @@ __metadata:
     maclary: dev
     mongodb-memory-server: ^8.7.2
     mongoose: ^6.4.1
-    nid: ^2.0.0
     node-cache: ^5.1.2
     nodemon: ^2.0.19
     piston-api-client: ^2.0.1
     prettier: ^2.7.1
     program-language-detector: ^0.0.12
-    programing-language-names: ^2.0.8
     rimraf: ^3.0.2
-    tryitonline: ^1.0.2
-    tslib: ^2.4.0
   languageName: unknown
   linkType: soft
 
@@ -1774,6 +1801,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.uniqwith@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.uniqwith@npm:4.5.0"
+  checksum: d49a4565ed64efd86674127d321622673c29cde3e060baebc0f30372f22886c61b2ead44709db8c890053db1b9660e8ed689689812c1a485eb5703caa94d1150
+  languageName: node
+  linkType: hard
+
 "lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
@@ -2099,13 +2133,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nid@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "nid@npm:2.0.0"
-  checksum: d3b60699e42304a44bed61dce3d0f5da3b4d11bf8b4a3080fa9fe4544284d006e0ae6a2abb854670898085a4884cf6fa6dee6c6e1db73850736ff6236924e3f9
-  languageName: node
-  linkType: hard
-
 "node-cache@npm:^5.1.2":
   version: 5.1.2
   resolution: "node-cache@npm:5.1.2"
@@ -2349,13 +2376,6 @@ __metadata:
   version: 0.0.12
   resolution: "program-language-detector@npm:0.0.12"
   checksum: 10381d4b7f40aa20046257a3cf62d7657fd34c09270f3016c2c34ee02f70d1db5a5ab8a66063382e8c82373cde04573120c6ff50566229de22201d3cc1432725
-  languageName: node
-  linkType: hard
-
-"programing-language-names@npm:^2.0.8":
-  version: 2.0.8
-  resolution: "programing-language-names@npm:2.0.8"
-  checksum: b089cfe391e70551fc29e13b4acaaca895ae9b58087b6cb2105174e21e4d6fa34c8105be473aec033908f7ac7f76d9bb35f49ec60f468c8467dc3b2fb8ae0bab
   languageName: node
   linkType: hard
 
@@ -2796,13 +2816,6 @@ __metadata:
   bin:
     tree-kill: cli.js
   checksum: 49117f5f410d19c84b0464d29afb9642c863bc5ba40fcb9a245d474c6d5cc64d1b177a6e6713129eb346b40aebb9d4631d967517f9fbe8251c35b21b13cd96c7
-  languageName: node
-  linkType: hard
-
-"tryitonline@npm:^1.0.2":
-  version: 1.0.3
-  resolution: "tryitonline@npm:1.0.3"
-  checksum: be358c3c0319c386bc15b19087c032463ac9148c5762e3604115f911ab3f4c5ed6828a3ff189f0a759338f7bab2e562ae1c8a6070369432368b056bb14a68c68
   languageName: node
   linkType: hard
 

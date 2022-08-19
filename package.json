@@ -18,6 +18,7 @@
         "stop": "pm2 stop pm2.config.json"
     },
     "dependencies": {
+        "@discordjs/builders": "^1.1.0",
         "@maclary/context": "^0.1.3",
         "@vscode/vscode-languagedetection": "^1.0.21",
         "common-tags": "^1.8.2",
@@ -29,12 +30,9 @@
         "lodash": "^4.17.21",
         "maclary": "dev",
         "mongoose": "^6.4.1",
-        "nid": "^2.0.0",
         "node-cache": "^5.1.2",
         "piston-api-client": "^2.0.1",
-        "program-language-detector": "^0.0.12",
-        "programing-language-names": "^2.0.8",
-        "tryitonline": "^1.0.2"
+        "program-language-detector": "^0.0.12"
     },
     "devDependencies": {
         "@types/common-tags": "^1.8.1",
@@ -47,7 +45,6 @@
         "mongodb-memory-server": "^8.7.2",
         "nodemon": "^2.0.19",
         "prettier": "^2.7.1",
-        "rimraf": "^3.0.2",
-        "tslib": "^2.4.0"
+        "rimraf": "^3.0.2"
     }
 }

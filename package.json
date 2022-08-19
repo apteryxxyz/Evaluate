@@ -10,12 +10,13 @@
         "build:clean": "rimraf dist",
         "build:watch": "concurrently \"tsc -w\" \"tsc-alias -w\"",
         "format": "eslint {src,lib} --fix && prettier src lib --write",
-        "dev": "node -r @swc-node/register src/index.ts",
-        "dev:watch": "cross-env NODE_ENV=development nodemon --ignore dist --exec yarn dev",
-        "git:pull": "git reset --hard HEAD && git pull",
+        "dev": "cross-env NODE_ENV=development && node .",
+        "dev:watch": "nodemon --watch dist --exec yarn dev",
+        "pull": "git reset --hard HEAD && git pull",
         "serve": "cross-env NODE_ENV=production node .",
         "start": "pm2 startOrReload pm2.config.json",
-        "stop": "pm2 stop pm2.config.json"
+        "stop": "pm2 stop pm2.config.json",
+        "update": "yarn pull && yarn build && yarn start"
     },
     "dependencies": {
         "@discordjs/builders": "^1.1.0",

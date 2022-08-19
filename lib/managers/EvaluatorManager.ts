@@ -1,7 +1,7 @@
 import type { Message, MessageComponentInteraction, User } from 'discord.js';
 import { MapManager } from 'maclary';
-import { Evaluator, Events } from '@lib/structures/Evaluator';
-import { buildEvaluateMessage, buildTryAgainButton } from '@lib/util/evaluateHelpers';
+import { Evaluator, Events } from '@structures/Evaluator';
+import { buildEvaluateMessage, buildTryAgainButton } from '@util/evaluateHelpers';
 
 export class EvaluatorManager extends MapManager<string, Evaluator> {
     /**

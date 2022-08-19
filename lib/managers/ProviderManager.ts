@@ -1,6 +1,6 @@
 import { MapManager } from 'maclary';
-import { Piston } from '@lib/providers/Piston';
-import type { Provider } from '@lib/structures/Provider';
+import { Piston } from '@providers/Piston';
+import type { Provider } from '@structures/Provider';
 
 export class ProviderManager extends MapManager<string, Provider> {
     /**

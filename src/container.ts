@@ -1,7 +1,7 @@
 import { container } from 'maclary';
-import { ProviderManager } from '@lib/managers/ProviderManager';
-import { EvaluatorManager } from '@lib/managers/EvaluatorManager';
-import { Database } from '@lib/structures/Database';
+import { ProviderManager } from '@managers/ProviderManager';
+import { EvaluatorManager } from '@managers/EvaluatorManager';
+import { Database } from '@structures/Database';
 
 container.providers = new ProviderManager();
 container.evaluators = new EvaluatorManager();

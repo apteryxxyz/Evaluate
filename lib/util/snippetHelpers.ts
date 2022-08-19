@@ -6,7 +6,7 @@ import {
     TextInputBuilder,
 } from '@discordjs/builders';
 import { ButtonStyle, TextInputStyle } from 'discord.js';
-import type { HSnippet } from '@lib/models/Snippet';
+import type { HSnippet } from '@models/Snippet';
 import { container } from 'maclary';
 import { codeBlock } from './stringFormatting';
 

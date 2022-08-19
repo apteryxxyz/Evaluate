@@ -1,7 +1,7 @@
 import type { Message, User } from 'discord.js';
 import { container } from 'maclary';
 import EventEmitter from 'node:events';
-import { addLanguage, incrementEvaluatorCount } from '@lib/util/statisticsTracking';
+import { addLanguage, incrementEvaluatorCount } from '@util/statisticsTracking';
 import type { Language, Options, Provider, Result } from './Provider';
 
 export enum Events {

@@ -3,7 +3,7 @@ import { Context } from '@maclary/context';
 import { ButtonStyle } from 'discord.js';
 import { ActionRowBuilder, ButtonBuilder, EmbedBuilder } from '@discordjs/builders';
 import _ from 'lodash';
-import { IncrementCommandCount } from '@lib/preconditions/IncrementCommandCount';
+import { IncrementCommandCount } from '@preconditions/IncrementCommandCount';
 
 export default class Help extends Command {
     public constructor() {

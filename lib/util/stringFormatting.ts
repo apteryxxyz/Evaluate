@@ -1,4 +1,4 @@
-import type { Language } from '@lib/structures/Provider';
+import type { Language } from '@structures/Provider';
 import { escapeCodeBlock } from 'discord.js';
 
 /**

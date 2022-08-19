@@ -1,4 +1,4 @@
-import { incrementCommandCount } from '@lib/util/statisticsTracking';
+import { incrementCommandCount } from '@util/statisticsTracking';
 import { Command, Precondition } from 'maclary';
 
 export class IncrementCommandCount extends Precondition {

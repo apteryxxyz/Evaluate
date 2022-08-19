@@ -6,10 +6,10 @@ import {
 } from '@discordjs/builders';
 import { Command, Component, container } from 'maclary';
 import { TextInputStyle } from 'discord.js';
-import { Piston } from '@lib/providers/Piston';
-import { detectLanguage } from '@lib/util/detectLanguage';
-import { codeBlock } from '@lib/util/stringFormatting';
-import { IncrementCommandCount } from '@lib/preconditions/IncrementCommandCount';
+import { Piston } from '@providers/Piston';
+import { detectLanguage } from '@util/detectLanguage';
+import { codeBlock } from '@util/stringFormatting';
+import { IncrementCommandCount } from '@preconditions/IncrementCommandCount';
 
 export default class Detect extends Command {
     public constructor() {

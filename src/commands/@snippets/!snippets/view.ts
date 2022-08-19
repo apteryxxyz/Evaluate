@@ -2,9 +2,9 @@ import type { ApplicationCommandOptionChoiceData } from 'discord.js';
 import Fuse from 'fuse.js';
 import { Command } from 'maclary';
 import NodeCache from 'node-cache';
-import { Snippet } from '@lib/models/Snippet';
-import { buildSnippetMessage } from '@lib/util/snippetHelpers';
-import { IncrementCommandCount } from '@lib/preconditions/IncrementCommandCount';
+import { Snippet } from '@models/Snippet';
+import { buildSnippetMessage } from '@util/snippetHelpers';
+import { IncrementCommandCount } from '@preconditions/IncrementCommandCount';
 
 const snippetsCache = new NodeCache({ stdTTL: 5, checkperiod: 10 });
 

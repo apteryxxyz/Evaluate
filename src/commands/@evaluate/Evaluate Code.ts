@@ -1,10 +1,10 @@
 import { Command } from 'maclary';
-import { Piston } from '@lib/providers/Piston';
-import { extractCodeBlock } from '@lib/util/stringFormatting';
-import { detectLanguage } from '@lib/util/detectLanguage';
-import { buildEvaluateModal } from '@lib/util/evaluateHelpers';
-import type { Language } from '@lib/structures/Provider';
-import { IncrementCommandCount } from '@lib/preconditions/IncrementCommandCount';
+import { Piston } from '@providers/Piston';
+import { extractCodeBlock } from '@util/stringFormatting';
+import { detectLanguage } from '@util/detectLanguage';
+import { buildEvaluateModal } from '@util/evaluateHelpers';
+import type { Language } from '@structures/Provider';
+import { IncrementCommandCount } from '@preconditions/IncrementCommandCount';
 
 export default class Evaluate extends Command {
     public constructor() {

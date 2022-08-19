@@ -1,6 +1,6 @@
 import type { Snowflake } from 'discord.js';
 import { Schema, HydratedDocument, model } from 'mongoose';
-import type { Options } from '@lib/structures/Provider';
+import type { Options } from '@structures/Provider';
 
 export interface Owner {
     id: Snowflake;

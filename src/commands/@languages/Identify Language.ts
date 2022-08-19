@@ -1,9 +1,9 @@
 import { EmbedBuilder } from '@discordjs/builders';
 import { Command } from 'maclary';
-import { detectLanguage } from '@lib/util/detectLanguage';
-import { codeBlock, extractCodeBlock } from '@lib/util/stringFormatting';
-import { Piston } from '@lib/providers/Piston';
-import { IncrementCommandCount } from '@lib/preconditions/IncrementCommandCount';
+import { detectLanguage } from '@util/detectLanguage';
+import { codeBlock, extractCodeBlock } from '@util/stringFormatting';
+import { Piston } from '@providers/Piston';
+import { IncrementCommandCount } from '@preconditions/IncrementCommandCount';
 
 export default class Detect extends Command {
     public constructor() {

@@ -1,5 +1,5 @@
 import { Command } from 'maclary';
-import { IncrementCommandCount } from '@lib/preconditions/IncrementCommandCount';
+import { IncrementCommandCount } from '@preconditions/IncrementCommandCount';
 import { Context } from '@maclary/context';
 import { EmbedBuilder } from '@discordjs/builders';
 

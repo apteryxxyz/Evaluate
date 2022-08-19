@@ -1,6 +1,6 @@
 import { ModelOperations } from '@vscode/vscode-languagedetection';
 import { detect } from 'program-language-detector';
-import type { Provider } from '@lib/structures/Provider';
+import type { Provider } from '@structures/Provider';
 const model = new ModelOperations();
 
 /**

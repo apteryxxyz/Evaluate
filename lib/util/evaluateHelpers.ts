@@ -6,8 +6,8 @@ import {
     TextInputBuilder,
 } from '@discordjs/builders';
 import { ButtonStyle, TextInputStyle } from 'discord.js';
-import type { Evaluator } from '@lib/structures/Evaluator';
-import type { Language, Options } from '@lib/structures/Provider';
+import type { Evaluator } from '@structures/Evaluator';
+import type { Language, Options } from '@structures/Provider';
 import { uploadToRentry } from './pasteBin';
 import { codeBlock } from './stringFormatting';
 import { Command, Component, container } from 'maclary';

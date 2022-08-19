@@ -1,8 +1,8 @@
 import { EmbedBuilder } from '@discordjs/builders';
 import { Command } from 'maclary';
 import { connection } from 'mongoose';
-import { IncrementCommandCount } from '@lib/preconditions/IncrementCommandCount';
-import { getTotals } from '@lib/util/statisticsTracking';
+import { IncrementCommandCount } from '@preconditions/IncrementCommandCount';
+import { getTotals } from '@util/statisticsTracking';
 import ms from 'enhanced-ms';
 
 export default class ViewStatistics extends Command {

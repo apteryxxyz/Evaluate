@@ -1,8 +1,8 @@
 import { PistonClient, PistonExecuteData, PistonExecuteResult } from 'piston-api-client';
 import Fuse from 'fuse.js';
-import { Language, Options, Provider, Result } from '@lib/structures/Provider';
-import { prettierLanguageName, prettierRuntimeName } from '@lib/util/prettyNames';
-import { formatLanguageName } from '@lib/util/stringFormatting';
+import { Language, Options, Provider, Result } from '@structures/Provider';
+import { prettierLanguageName, prettierRuntimeName } from '@util/prettyNames';
+import { formatLanguageName } from '@util/stringFormatting';
 const piston = new PistonClient();
 
 export class Piston extends Provider {

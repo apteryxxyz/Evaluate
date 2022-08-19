@@ -1,6 +1,6 @@
 import { Component } from 'maclary';
-import { Snippet } from '@lib/models/Snippet';
-import { buildEvaluateMessage } from '@lib/util/evaluateHelpers';
+import { Snippet } from '@models/Snippet';
+import { buildEvaluateMessage } from '@util/evaluateHelpers';
 
 export class SnippetHandler extends Component {
     public constructor() {

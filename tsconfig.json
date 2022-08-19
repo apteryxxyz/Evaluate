@@ -1,7 +1,6 @@
 {
-    // Mapped from https://www.typescriptlang.org/tsconfig
+    "compileOnSave": true,
     "compilerOptions": {
-        // Type Checking
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
         "exactOptionalPropertyTypes": false,
@@ -10,17 +9,20 @@
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
+        "sourceMap": true,
         "strict": true,
         "useUnknownInCatchVariables": true,
-        // // Modules
         "module": "commonjs",
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "paths": {
-            "@lib/*": ["./lib/*"],
-            "@src/*": ["./src/*"]
+            "@managers/*": ["./lib/managers/*"],
+            "@models/*": ["./lib/models/*"],
+            "@preconditions/*": ["./lib/preconditions/*"],
+            "@providers/*": ["./lib/providers/*"],
+            "@structures/*": ["./lib/structures/*"],
+            "@util/*": ["./lib/util/*"]
         },
-        // Emit
         "skipLibCheck": true,
         "declaration": true,
         "importHelpers": true,
@@ -32,13 +34,12 @@
         "removeComments": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-        // Language and Environment
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "lib": ["ESNext", "DOM"],
         "target": "ES2021",
         "useDefineForClassFields": false
     },
-    "include": ["src/**/*.ts", "lib/**/*.ts"],
-    "exclude": ["node_modules", "dist"]
+    "exclude": ["node_modules", "dist"],
+    "include": ["src/**/*.ts", "lib/**/*.ts"]
 }

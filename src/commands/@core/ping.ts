@@ -1,4 +1,4 @@
-import { IncrementCommandCount } from '@lib/preconditions/IncrementCommandCount';
+import { IncrementCommandCount } from '@preconditions/IncrementCommandCount';
 import { Context } from '@maclary/context';
 import { oneLine } from 'common-tags';
 import type { Message } from 'discord.js';

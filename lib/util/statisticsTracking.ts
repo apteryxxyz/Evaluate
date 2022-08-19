@@ -1,4 +1,4 @@
-import { Statistics } from '@lib/models/Statistics';
+import { Statistics } from '@models/Statistics';
 import type { Snowflake } from 'discord.js';
 
 export async function getOrCreate(userId: Snowflake) {

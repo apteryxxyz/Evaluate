@@ -1,7 +1,7 @@
-import { IncrementCommandCount } from '@lib/preconditions/IncrementCommandCount';
-import { Piston } from '@lib/providers/Piston';
-import { buildEvaluateModal } from '@lib/util/evaluateHelpers';
-import { mostPopularLanguages } from '@lib/util/statisticsTracking';
+import { IncrementCommandCount } from '@preconditions/IncrementCommandCount';
+import { Piston } from '@providers/Piston';
+import { buildEvaluateModal } from '@util/evaluateHelpers';
+import { mostPopularLanguages } from '@util/statisticsTracking';
 import { Command } from 'maclary';
 
 let CACHE: { name: string; value: string }[] = [];

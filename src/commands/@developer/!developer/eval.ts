@@ -1,5 +1,5 @@
 import { EmbedBuilder } from '@discordjs/builders';
-import { codeBlock } from '@lib/util/stringFormatting';
+import { codeBlock } from '@util/stringFormatting';
 import { Context } from '@maclary/context';
 import { ApplicationCommandOptionType } from 'discord.js';
 import { Command, Preconditions, ReplyError } from 'maclary';

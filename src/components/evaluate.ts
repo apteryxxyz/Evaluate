@@ -1,13 +1,13 @@
 import { Lexer, longShortStrategy, Parser } from 'lexure';
 import { Component } from 'maclary';
-import { Snippet } from '@lib/models/Snippet';
-import { Piston } from '@lib/providers/Piston';
+import { Snippet } from '@models/Snippet';
+import { Piston } from '@providers/Piston';
 import {
     buildEvaluateMessage,
     buildEvaluateModal,
     getAndVerifyEvaluator,
-} from '@lib/util/evaluateHelpers';
-import { buildSnippetModal } from '@lib/util/snippetHelpers';
+} from '@util/evaluateHelpers';
+import { buildSnippetModal } from '@util/snippetHelpers';
 
 export class EvalHandler extends Component {
     public constructor() {

@@ -712,6 +712,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"enhanced-ms@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "enhanced-ms@npm:1.0.2"
+  checksum: a09e45d9d0abf983ec24e717e631f08608e7b864de4c3028f297254cb6addefe750cb32272458451b80f813f0fbd2e563808b8d6ee63ef334b80615c919c2d58
+  languageName: node
+  linkType: hard
+
 "escape-string-regexp@npm:^4.0.0":
   version: 4.0.0
   resolution: "escape-string-regexp@npm:4.0.0"
@@ -898,6 +905,7 @@ __metadata:
     common-tags: ^1.8.2
     discord.js: dev
     dotenv: ^16.0.1
+    enhanced-ms: ^1.0.2
     eslint: ^8.18.0
     fuse.js: ^6.6.2
     lexure: ^0.17.0

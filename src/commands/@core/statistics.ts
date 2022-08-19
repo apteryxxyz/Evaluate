@@ -3,6 +3,7 @@ import { Command } from 'maclary';
 import { connection } from 'mongoose';
 import { IncrementCommandCount } from '@lib/preconditions/IncrementCommandCount';
 import { getTotals } from '@lib/util/statisticsTracking';
+import ms from 'enhanced-ms';
 
 export default class ViewStatistics extends Command {
     public constructor() {
@@ -27,9 +28,10 @@ export default class ViewStatistics extends Command {
         const activeCount = this.container.evaluators.cache.size;
 
         const fields = [
+            { name: 'Uptime', value: ms(client.uptime || Infinity) },
             { name: 'Server Count', value: serverCount.toString() },
             { name: 'User Count', value: userCount.toString() },
-            { name: 'Command Count', value: commandCount.toString() },
+            { name: 'Commands Used', value: commandCount.toString() },
             { name: 'Unique Snippet Count', value: snippetsCount.toString() },
             { name: 'Evaluator Count', value: `${evaluatorCount} (${activeCount} active)` },
             { name: 'Most Used Language', value: mostUsedLanguage, inline: false },

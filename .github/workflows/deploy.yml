@@ -14,18 +14,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
-        env:
-          PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
+      - name: Executing remote ssh commands using password
+        uses: garygrossgarten/github-action-ssh@release
         with:
           host: ${{ secrets.IP }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          envs: PROJECT_PATH
-          script: |
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
-            cd $PROJECT_PATH
+          passphrase: ${{ secrets.PASSWORD }}
+          command: |
+            cd ${{ secrets.PROJECT_PATH }}
             yarn update

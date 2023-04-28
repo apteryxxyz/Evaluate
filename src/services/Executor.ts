@@ -9,6 +9,8 @@ import { formatLanguageName, formatRuntimeName } from '&functions/formatNames';
 export class Executor {
     private _client = new PistonClient();
 
+    private _preferredRuntimes = new Map([['javascript', 'node']]);
+
     public async getLanguages() {
         const response = await this._client.runtimes();
         if (!response.success) throw new Error('Failed to fetch runtimes');
@@ -52,11 +54,25 @@ export class Executor {
     }
 
     public async resolveLanguage(resolvable: string) {
-        resolvable = resolvable.toLowerCase();
         const languages = await this.getLanguages();
-        const existing = languages.find(lang =>
-            [lang.id, lang.key, lang.name, ...lang.aliases].includes(resolvable)
-        );
+
+        resolvable = resolvable.toLowerCase();
+        const existing = languages.find(lang => {
+            const found = [
+                lang.id,
+                lang.key,
+                lang.name,
+                ...lang.aliases,
+            ].includes(resolvable);
+            if (
+                !lang.runtime ||
+                resolvable !== lang.id ||
+                !this._preferredRuntimes.has(lang.id)
+            )
+                return found;
+            const runtime = this._preferredRuntimes.get(lang.id);
+            return found && runtime === lang.runtime.id;
+        });
         if (existing) return existing;
 
         // Regex that matches "{name} ({runtime})" where the runtime is optional

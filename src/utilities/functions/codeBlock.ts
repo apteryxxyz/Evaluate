@@ -1,0 +1,28 @@
+import { escapeCodeBlock } from 'discord.js';
+
+export function codeBlock(content: string, language = '') {
+    return `\`\`\`${language.toLowerCase()}\n${escapeCodeBlock(
+        content.length > 900 ? content.slice(0, 900) + '...' : content
+    )}\n\`\`\``;
+}
+
+export function extractCodeBlocks(content: string) {
+    const regex = /`{3}([\w#+]*)\n([\S\s]*?)\n`{3}|`([^\n`]+)`/gi;
+
+    const codeBlocks = [];
+    let match;
+    while ((match = regex.exec(content))) {
+        if (match[1]) {
+            // Multi-line code block
+            const language = match[1] || null;
+            const code = match[2];
+            codeBlocks.push({ language, code });
+        } else {
+            // Single-line code block
+            const code = match[3];
+            codeBlocks.push({ language: null, code });
+        }
+    }
+
+    return codeBlocks;
+}

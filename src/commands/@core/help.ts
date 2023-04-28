@@ -1,176 +1,105 @@
-import { Command, MaclaryClient } from 'maclary';
-import { Context } from '@maclary/context';
-import { ButtonStyle } from 'discord.js';
-import { ActionRowBuilder, ButtonBuilder, EmbedBuilder } from '@discordjs/builders';
-import _ from 'lodash';
-import { IncrementCommandCount } from '@preconditions/IncrementCommandCount';
+import type { ApplicationCommand } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
+import { Command } from 'maclary';
+import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
 
-const BotLists = [
-    {
-        name: 'Top.gg',
-        url: 'https://top.gg/bot/946755134443102258/vote',
-        show: true,
-    },
-    {
-        name: 'Discord Bot List',
-        url: 'https://discordbotlist.com/bots/evaluate/upvote',
-        show: true,
-    },
-    {
-        name: 'Discord List',
-        url: 'https://discordlist.gg/bot/946755134443102258/vote',
-        show: true,
-    },
-    {
-        name: 'Blade List',
-        url: 'https://bladelist.gg/bots/946755134443102258#!',
-        show: false,
-    },
-];
-
-export default class Help extends Command {
+export class HelpCommand extends Command<
+    Command.Type.ChatInput,
+    [Command.Kind.Slash]
+> {
     public constructor() {
         super({
             type: Command.Type.ChatInput,
             kinds: [Command.Kind.Slash],
             name: 'help',
-            description: 'Show a list of commands that Evaluate has.',
+            description: 'View a list of commands and useful links.',
+
             preconditions: [IncrementCommandCount],
         });
     }
 
-    public override async onChatInput(interaction: Command.ChatInput) {
-        return this.sharedRun(new Context(interaction));
-    }
+    public override async onSlash(input: Command.ChatInput) {
+        const container = this.container;
 
-    public override async onMessage(message: Command.Message) {
-        return this.sharedRun(new Context(message));
-    }
-
-    private async sharedRun(context: Context) {
-        await context.deferReply();
-
-        const mention = context.client.user?.toString() ?? '@me';
-        let messagePrefix = [this.container.client.options.defaultPrefix].flat()[0];
-        messagePrefix ||= mention;
-
-        const commands = [...Array.from(this.container.client.commands.cache.values())];
-        const rawList = commands.map((c) => loopOverCommand(c, messagePrefix, ''));
-        const commandsList = rawList.flat().filter((c) => c.category !== 'developer');
-
-        const categoriesList = commandsList.reduce((acc: any, cur: any) => {
-            acc[cur.category] ||= [];
-            acc[cur.category].push(cur);
-            return acc;
-        }, {});
-
-        const preSorted = Object.values<Command[]>(categoriesList);
-        const commandRows = buildCommandRows(preSorted);
-
-        const commandFields = commandRows.map((row) => ({
-            inline: true,
-            name: `${_.startCase(row[0].category)} Commands`,
-            value: row.map((c) => Reflect.get(c, 'toString')?.(c)).join('\n\n'),
-        }));
-
-        const { client } = this.container;
-
-        const embed = new EmbedBuilder()
-            .setTitle(`${client.user?.username} Help`)
-            .setDescription(client.application?.description || null)
-            .setTimestamp()
+        const helpEmbed = new EmbedBuilder()
+            .setTitle('Commands')
             .setColor(0x2fc086)
-            .setFields(commandFields);
+            .addFields(
+                buildCommandGroups(
+                    Array.from(container.maclary.commands.cache.values()),
+                    Array.from(
+                        container.maclary.options.guildId
+                            ? input.guild?.commands.cache.values() ?? []
+                            : container.client.application.commands.cache.values()
+                    )
+                )
+            );
 
-        const invites = await getClientInvites(client);
-        console.log(invites);
-        const links = new ActionRowBuilder<ButtonBuilder>().addComponents(
-            [
-                invites.bot
-                    ? new ButtonBuilder()
-                          .setStyle(ButtonStyle.Link)
-                          .setLabel('Add Bot')
-                          .setURL(invites.bot ?? '')
-                    : undefined,
-                invites.server
-                    ? new ButtonBuilder()
-                          .setStyle(ButtonStyle.Link)
-                          .setLabel('Join Support')
-                          .setURL(invites.server ?? '')
-                    : undefined,
-            ].filter((b) => b !== undefined) as any,
+        return input.reply({ embeds: [helpEmbed] });
+    }
+}
+
+function buildCommandGroups(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    internalCommands: Command<any, [any]>[],
+    externalCommands: ApplicationCommand[]
+) {
+    const categories = new Map<string, string[]>();
+    for (const external of externalCommands) {
+        const internal = internalCommands.find(
+            cmd => cmd.name === external.name
+        );
+        if (!internal) continue;
+
+        const category = internal?.category ?? 'Uncategorised';
+        if (category === 'Developer') continue;
+
+        const commands = categories.get(category) ?? [];
+        commands.push(...formatCommand(internal, external.id));
+        categories.set(category, commands);
+    }
+
+    return [...categories.entries()].map(([category, commands]) => ({
+        name: category,
+        value: commands.join('\n'),
+    }));
+}
+
+interface CommandInfo {
+    type: number;
+    name: string;
+    description: string;
+    options?: CommandInfo[];
+}
+function formatCommand(
+    command: CommandInfo,
+    id: string,
+    prefix = ''
+): string[] {
+    if (
+        command.options?.length &&
+        command.options?.every(opt => opt.type === 1)
+    )
+        return command.options.flatMap(opt =>
+            formatCommand(opt, id, `${prefix}${command.name} `)
         );
 
-        const lists = new ActionRowBuilder<ButtonBuilder>().addComponents(
-            BotLists.filter((l) => l.show).map((list) =>
-                new ButtonBuilder().setStyle(ButtonStyle.Link).setLabel(list.name).setURL(list.url),
-            ),
-        );
-
-        await context.editReply({ embeds: [embed], components: [links, lists] });
-    }
+    const usage =
+        command.type === 1
+            ? `</${prefix}${command.name}:${id}>`
+            : `Apps > ${command.name}`;
+    return [`__${usage}__ | ${command.description}`];
 }
 
-function loopOverCommand(command: Command, prefix: string, namePrefix: string): any[] {
-    namePrefix += `${command.name} `;
-    if (command.subType === Command.SubType.Command) {
-        return [
-            {
-                prefix: resolvePrefix(command, prefix),
-                name: namePrefix.trim(),
-                description: command.description,
-                category: command.category || '',
-                options: command.options
-                    .map((o: any) => (o.required ? `<${o.name}>` : `[${o.name}]`))
-                    .join(' '),
-                toString: (c: any) =>
-                    `**${c.prefix}${c.name}${c.options ? ` ${c.options}` : ''}**\n${c.description}`,
-            },
-        ];
-    }
-    return command.options.map((o) => loopOverCommand(o as any, prefix, namePrefix)).flat();
-}
+// function getBotInvite() {
+//     const addParams = container.client.application.installParams ?? {
+//         scopes: [OAuth2Scopes.Bot, OAuth2Scopes.ApplicationsCommands],
+//         permissions: 0n,
+//     };
 
-function resolvePrefix(command: Command, defaultPrefix: string) {
-    const hasUser = command.kinds.includes(Command.Kind.User);
-    const hasMessage = command.kinds.includes(Command.Kind.Message);
-    const hasSlash = command.kinds.includes(Command.Kind.Slash);
-    const hasPrefix = command.kinds.includes(Command.Kind.Prefix);
+//     return container.client.generateInvite(addParams);
+// }
 
-    if (hasUser && hasMessage) return 'Apps > ';
-    else if (hasUser) return 'User > ';
-    else if (hasMessage) return 'Message > ';
-    else if (hasSlash) return '/';
-    else if (hasPrefix) return defaultPrefix;
-    return '';
-}
-
-async function getClientInvites(client: MaclaryClient) {
-    const addParams = client.application?.installParams;
-    const botInvite = addParams ? client.generateInvite(addParams) : undefined;
-
-    const guildId = client.options.developmentGuildId;
-    const guild = await client.guilds.fetch(guildId);
-    const findChannel = (c: any) => c.name === 'information';
-    const channelId = guild.channels.cache.find(findChannel)?.id;
-    const guildInvite = await guild?.invites.create(channelId!, { maxAge: 0 });
-    const inviteUrl = guildInvite?.url;
-
-    return { bot: botInvite, server: inviteUrl };
-}
-
-function buildCommandRows(commands: Record<string, any>[][]) {
-    const lengths: Record<number, Record<string, any>[][]> = {};
-    for (const items of commands) {
-        lengths[items.length] ||= [];
-        lengths[items.length].push(items);
-    }
-
-    const chunks = [];
-    for (const items of Object.values(lengths)) {
-        if (items.length <= 3) chunks.push(items);
-        else chunks.push(..._.chunk(items, 3));
-    }
-
-    return chunks.flat().sort((a, b) => b.length - a.length);
-}
+// function getSupportInvite() {
+//     return '';
+// }

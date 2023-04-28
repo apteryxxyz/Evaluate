@@ -1,0 +1,19 @@
+{
+    "extends": [
+        "apteryx/common",
+        "apteryx/node",
+        "apteryx/typescript",
+        "apteryx/prettier"
+    ],
+    "ignorePatterns": [
+        "build",
+        "node_modules",
+        "database",
+        "scripts",
+        "*.config.*"
+    ],
+    "rules": {
+        "jsdoc/newline-after-description": "off",
+        "@typescript-eslint/no-use-before-define": "off"
+    }
+}

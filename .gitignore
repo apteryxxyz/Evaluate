@@ -1,8 +1,12 @@
+# Node Modules
 node_modules/
 
-dist/
-.env
+# Build
+build/
 
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
+# Secrets
+.env.*
+!.env.schema
+
+# Database
+database/*.sqlite

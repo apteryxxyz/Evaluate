@@ -1,9 +1,8 @@
 import { Command } from 'maclary';
-import { EvaluateBuilder } from '&builders/EvaluateBuilder';
-import { detectLanguage } from '&functions/detectLanguage';
+import { CaptureBuilder } from '&builders/CaptureBuilder';
 import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
 
-export class EvaluateCommand extends Command<
+export class Capture extends Command<
     Command.Type.ChatInput,
     [Command.Kind.Slash]
 > {
@@ -11,23 +10,22 @@ export class EvaluateCommand extends Command<
         super({
             type: Command.Type.ChatInput,
             kinds: [Command.Kind.Slash],
-            name: 'evaluate',
-            description:
-                'Evaluate any piece of code, specify the language or let the bot attempt to detect it automatically.',
+            name: 'capture',
+            description: 'Convert a snippet of code into a beautiful image.',
 
             preconditions: [IncrementCommandCount],
             options: [
                 {
                     type: Command.OptionType.String,
                     name: 'code',
-                    description: 'The code to evaluate.',
-                    maxLength: 900,
+                    description: 'The code to capture.',
+                    maxLength: 500,
                 },
                 {
                     type: Command.OptionType.String,
                     autocomplete: true,
                     name: 'language',
-                    description: 'The programming language to evaluate in.',
+                    description: 'Force the language of the code.',
                     maxLength: 100,
                 },
             ],
@@ -51,26 +49,22 @@ export class EvaluateCommand extends Command<
     }
 
     public override async onSlash(input: Command.ChatInput) {
-        const code = input.options.getString('code') ?? '';
-
-        let rawLang = input.options.getString('language') ?? undefined;
-        if (!rawLang && code.length > 0) rawLang = await detectLanguage(code);
+        const code = input.options.getString('code') ?? undefined;
+        const rawLang = input.options.getString('language');
         const language = rawLang
             ? await this.container.executor.resolveLanguage(rawLang)
             : undefined;
 
-        if (code && language) {
-            const message = await input.deferReply({ fetchReply: true });
-            const params = [input.user, message] as const;
-            const evaluator = this.container.evaluators.create(...params);
-
-            const options = { language, code, input: '', args: [] };
-            const result = await evaluator.runWithOptions(options);
-            const payload = await EvaluateBuilder.buildResultPayload(result);
+        if (code) {
+            await input.deferReply();
+            const payload = await CaptureBuilder.buildCapturePayload(
+                input.user.id,
+                { language, code }
+            );
             return input.editReply(payload);
         }
 
-        const modal = EvaluateBuilder.buildEditModal({ language, code });
+        const modal = CaptureBuilder.buildCreateModal({ language, code });
         return input.showModal(modal);
     }
 }

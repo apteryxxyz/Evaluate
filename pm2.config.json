@@ -1,9 +1,0 @@
-{
-    "apps": [
-        {
-            "name": "Evaluate",
-            "script": "npm",
-            "args": "run serve"
-        }
-    ]
-}

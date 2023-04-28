@@ -1,7 +1,14 @@
-name: Deploy (SSH)
+name: Deploy
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -12,15 +19,19 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Executing remote ssh commands using password
-        uses: garygrossgarten/github-action-ssh@release
+      - name: Execute remote commands
+        uses: appleboy/ssh-action@master
+        env:
+          PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
         with:
-          host: ${{ secrets.IP }}
-          port: ${{ secrets.PORT }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          command: |
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
-            cd ${{ secrets.PROJECT_PATH }}
-            yarn update
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USERNAME }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          port: ${{ secrets.HOST_PORT }}
+          envs: PROJECT_PATH
+          script: |
+            cd $PROJECT_PATH
+            pnpm pull
+            pnpm install
+            pnpm build
+            pnpm reload

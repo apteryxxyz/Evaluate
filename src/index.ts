@@ -38,7 +38,7 @@ function prepareClient() {
         partials: [Partials.Channel, Partials.Reaction],
     });
 
-    const maclary = new Maclary({ guildId: '1083508807637930145' });
+    const maclary = new Maclary({});
 
     Maclary.init(maclary, client);
     return client.login(process.env.DISCORD_TOKEN);

@@ -16,14 +16,13 @@ import { Pastebin } from '&services/Pastebin';
 
 void main();
 async function main() {
-    container.evaluators = new EvaluatorManager();
-
-    await Capture.waitFor();
     await Database.waitFor();
-    await Executor.waitFor();
-    await Pastebin.waitFor();
 
     RequestContext.create(container.database.orm.em, async () => {
+        container.evaluators = new EvaluatorManager();
+        await Executor.waitFor();
+        await Capture.waitFor();
+        await Pastebin.waitFor();
         await prepareClient();
     });
 }

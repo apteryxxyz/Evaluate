@@ -18,14 +18,16 @@ export class Capture extends Command<
                 {
                     type: Command.OptionType.String,
                     name: 'code',
-                    description: 'The code to capture.',
-                    maxLength: 500,
+                    description:
+                        'The code to convert into an image, emitting this will cause a modal to appear.',
+                    maxLength: 900,
                 },
                 {
                     type: Command.OptionType.String,
                     autocomplete: true,
                     name: 'language',
-                    description: 'Force the language of the code.',
+                    description:
+                        'Force the syntax highlighting of a language, or let the bot detect it.',
                     maxLength: 100,
                 },
             ],
@@ -34,18 +36,14 @@ export class Capture extends Command<
 
     public override async onAutocomplete(autocomplete: Command.Autocomplete) {
         const query = autocomplete.options.getFocused();
-        if (query.length < 2) return autocomplete.respond([]);
+        const langs = await this.container.executor.autocompleteLanguage(query);
 
-        return this.container.executor
-            .autocompleteLanguage(query)
-            .then(languages =>
-                autocomplete.respond(
-                    languages.map(lang => ({
-                        name: lang.name,
-                        value: lang.key,
-                    }))
-                )
-            );
+        return autocomplete.respond(
+            langs.map(lang => ({
+                name: lang.name,
+                value: lang.key,
+            }))
+        );
     }
 
     public override async onSlash(input: Command.ChatInput) {

@@ -106,7 +106,7 @@ export class StatisticsRepository extends EntityRepository<Statistics> {
         }, new Map<string, number>());
 
         const sorted = [...counts.entries()].sort((a, b) => b[1] - a[1]);
-        return sorted.map(([language]) => language);
+        return sorted.map(([language]) => language).slice(0, 5);
     }
 }
 

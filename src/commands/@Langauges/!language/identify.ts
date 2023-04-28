@@ -28,7 +28,7 @@ export class IdentifyCommand extends Command<
                     name: 'code',
                     description: 'The code to identify.',
                     minLength: 10,
-                    maxLength: 1_000,
+                    maxLength: 900,
                 },
             ],
         });

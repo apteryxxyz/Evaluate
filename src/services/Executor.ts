@@ -1,8 +1,10 @@
-import { setTimeout } from 'node:timers';
+import { setInterval, setTimeout } from 'node:timers';
 import Fuse from 'fuse.js';
 import { container } from 'maclary';
 import type { PistonExecuteData, PistonExecuteResult } from 'piston-api-client';
 import { PistonClient } from 'piston-api-client';
+import { Database } from './Database';
+import { Statistics } from '&entities/Statistics';
 import { detectLanguage } from '&functions/detectLanguage';
 import { formatLanguageName, formatRuntimeName } from '&functions/formatNames';
 
@@ -10,6 +12,24 @@ export class Executor {
     private _client = new PistonClient();
 
     private _preferredRuntimes = new Map([['javascript', 'node']]);
+    private _popularLanguages: Executor.Language[] = [];
+
+    public constructor() {
+        void this._updatePopularLanguages();
+        setInterval(() => this._updatePopularLanguages(), 60_000);
+    }
+
+    private async _updatePopularLanguages() {
+        await Database.waitFor();
+
+        const repo = container.database.get(Statistics);
+        const languageIds = await repo.getMostUsedLanguages();
+        const _mapper = (id: string) => container.executor.resolveLanguage(id);
+        const languages = await Promise.all(languageIds.map(_mapper));
+        this._popularLanguages = languages.filter(
+            lang => lang !== undefined
+        ) as Executor.Language[];
+    }
 
     public async getLanguages() {
         const response = await this._client.runtimes();
@@ -33,6 +53,8 @@ export class Executor {
     }
 
     public async autocompleteLanguage(query: string) {
+        if (query.length === 0) return Array.from(this._popularLanguages);
+
         const keys = ['id', 'name', 'aliases', 'runtime.id', 'runtime.name'];
         const languages = await this.getLanguages();
         const fuse = new Fuse(languages, { keys, threshold: 0.3 });

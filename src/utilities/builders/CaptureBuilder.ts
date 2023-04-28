@@ -26,7 +26,7 @@ export class CaptureBuilder extends null {
             .setRequired(true)
             .setPlaceholder('Type the source code...')
             .setValue(options.code ?? '')
-            .setMaxLength(500);
+            .setMaxLength(900);
 
         const rows = [language, code] //
             .map(put => new ActionRowBuilder<typeof put>().addComponents(put));

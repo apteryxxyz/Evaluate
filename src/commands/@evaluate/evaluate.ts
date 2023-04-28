@@ -20,14 +20,16 @@ export class EvaluateCommand extends Command<
                 {
                     type: Command.OptionType.String,
                     name: 'code',
-                    description: 'The code to evaluate.',
+                    description:
+                        'The code to evaluate, emitting this will cause a modal to appear.',
                     maxLength: 900,
                 },
                 {
                     type: Command.OptionType.String,
                     autocomplete: true,
                     name: 'language',
-                    description: 'The programming language to evaluate in.',
+                    description:
+                        'Specify the programming language to evaluate in, or let the bot detect it.',
                     maxLength: 100,
                 },
             ],
@@ -36,18 +38,14 @@ export class EvaluateCommand extends Command<
 
     public override async onAutocomplete(autocomplete: Command.Autocomplete) {
         const query = autocomplete.options.getFocused();
-        if (query.length < 2) return autocomplete.respond([]);
+        const langs = await this.container.executor.autocompleteLanguage(query);
 
-        return this.container.executor
-            .autocompleteLanguage(query)
-            .then(languages =>
-                autocomplete.respond(
-                    languages.map(lang => ({
-                        name: lang.name,
-                        value: lang.key,
-                    }))
-                )
-            );
+        return autocomplete.respond(
+            langs.map(lang => ({
+                name: lang.name,
+                value: lang.key,
+            }))
+        );
     }
 
     public override async onSlash(input: Command.ChatInput) {

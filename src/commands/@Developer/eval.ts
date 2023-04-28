@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-eval */
-import process from 'node:process';
 import { inspect } from 'node:util';
 import { EmbedBuilder } from 'discord.js';
 import { Command, Preconditions } from 'maclary';
+import { env } from '../../env';
 import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
 
 export class EvalCommand extends Command<
@@ -98,7 +98,7 @@ export class EvalCommand extends Command<
 }
 
 function censorSecretsInString(input: string) {
-    const secrets = Object.values(process.env);
+    const secrets = Object.values(env);
     for (const secret of secrets)
         input = input.replaceAll(String(secret ?? ''), '******');
     return input;

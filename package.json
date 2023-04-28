@@ -37,6 +37,7 @@
         "@vscode/vscode-languagedetection": "^1.0.22",
         "discord.js": "^14.9.0",
         "dotenv-flow": "^3.2.0",
+        "enhanced-ms": "^2.2.0",
         "fuse.js": "^6.6.2",
         "husky": "^8.0.3",
         "lexure": "^0.17.0",

@@ -34,7 +34,7 @@ export class Evaluator {
         this.history.push(result);
 
         const repo = container.database.get(Statistics);
-        void repo.appendLanguage(this.user.id, options.language.id);
+        void repo.appendLanguage(this.user.id, options.language);
         void repo.incrementEvaluatorCount(this.user.id);
 
         return result;

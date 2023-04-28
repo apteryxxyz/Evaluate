@@ -25,6 +25,9 @@ dependencies:
   dotenv-flow:
     specifier: ^3.2.0
     version: 3.2.0
+  enhanced-ms:
+    specifier: ^2.2.0
+    version: 2.2.0
   fuse.js:
     specifier: ^6.6.2
     version: 6.6.2
@@ -1761,6 +1764,10 @@ packages:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
     dependencies:
       once: 1.4.0
+    dev: false
+
+  /enhanced-ms@2.2.0:
+    resolution: {integrity: sha512-X1ZgAp1HsV/vlZ3KPkWjJHJV9aPDXOXO6may+H7zW1EaQXum4wfIQrJdcjyqeLR9Lkffqr4VlsfmQcMqRPmg1g==}
     dev: false
 
   /env-paths@2.2.1:

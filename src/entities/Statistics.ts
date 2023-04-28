@@ -5,6 +5,7 @@ import {
     PrimaryKey,
     Property,
 } from '@mikro-orm/core';
+import type { Executor } from '&services/Executor';
 
 @Entity({ customRepository: () => StatisticsRepository })
 export class Statistics {
@@ -44,9 +45,9 @@ export class StatisticsRepository extends EntityRepository<Statistics> {
         return statistics;
     }
 
-    public async appendLanguage(id: string, language: string) {
+    public async appendLanguage(id: string, language: Executor.Language) {
         const statistics = await this.ensureStatistics(id);
-        statistics.usedLanguages.push(language);
+        statistics.usedLanguages.push(language.key);
         await this.getEntityManager().persistAndFlush(statistics);
     }
 
@@ -68,25 +69,63 @@ export class StatisticsRepository extends EntityRepository<Statistics> {
         await this.getEntityManager().persistAndFlush(statistics);
     }
 
+    public async getTotals() {
+        const statistics = await this.findAll();
+        const totals = {
+            usedLanguages: [] as string[],
+            commandCount: 0,
+            evaluatorCount: 0,
+            captureCount: 0,
+        };
+
+        for (const stat of statistics) {
+            totals.usedLanguages.push(...stat.usedLanguages);
+            totals.commandCount += stat.commandCount;
+            totals.evaluatorCount += stat.evaluatorCount;
+            totals.captureCount += stat.captureCount;
+        }
+
+        const mostUsedLanguage = findMostCommon(totals.usedLanguages);
+        return { ...totals, mostUsedLanguage };
+    }
+
     public async getFavouriteLanguage(id: string) {
         const statistics = await this.ensureStatistics(id);
         const languages = statistics.usedLanguages;
-        const map = new Map<string, number>();
+        return findMostCommon(languages);
+    }
 
-        for (const language of languages) {
+    public async getMostUsedLanguages(): Promise<string[]> {
+        const statistics = await this.findAll();
+        const languages = statistics.flatMap(stat => stat.usedLanguages);
+
+        const counts = languages.reduce((map, language) => {
             const count = map.get(language) ?? 0;
             map.set(language, count + 1);
-        }
+            return map;
+        }, new Map<string, number>());
 
-        let max = 0;
-        let favourite = '';
-        for (const [language, count] of map.entries()) {
-            if (count > max) {
-                max = count;
-                favourite = language;
-            }
-        }
-
-        return favourite;
+        const sorted = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+        return sorted.map(([language]) => language);
     }
+}
+
+function findMostCommon<T>(array: T[]) {
+    const map = new Map<T, number>();
+
+    for (const item of array) {
+        const count = map.get(item) ?? 0;
+        map.set(item, count + 1);
+    }
+
+    let max = 0;
+    let mostCommon = null;
+    for (const [item, count] of map.entries()) {
+        if (count > max) {
+            max = count;
+            mostCommon = item;
+        }
+    }
+
+    return mostCommon;
 }

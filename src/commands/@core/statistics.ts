@@ -38,11 +38,11 @@ export class StatisticsCommand extends Command<
             : undefined) ?? { name: 'None' };
 
         const statisticsEmbed = new EmbedBuilder()
-            .setTitle(`Statistics for ${client.user?.username}`)
+            .setTitle(`${client.user?.username} Statistics`)
             .setColor(0x2fc086)
             .setFields([
                 buildField(
-                    'Uptime',
+                    'Bot Uptime',
                     ms(client.uptime ?? 0, { shortFormat: true })
                 ),
                 buildField('Server Count', serverCount),

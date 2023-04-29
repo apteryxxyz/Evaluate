@@ -44,10 +44,15 @@ export async function buildExecuteResultPayload(
         .setLabel('Capture')
         .setStyle(ButtonStyle.Success);
 
+    const save = new ButtonBuilder()
+        .setCustomId('execute,save')
+        .setLabel('Save')
+        .setStyle(ButtonStyle.Success);
+
     return {
         content: '',
         embeds: [embed],
-        components: [wrapInRow(edit, capture)],
+        components: [wrapInRow(edit, capture, save)],
     };
 }
 

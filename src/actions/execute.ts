@@ -1,11 +1,13 @@
 import { Lexer, Parser, longShortStrategy } from 'lexure';
 import { Action } from 'maclary';
+import { Snippet } from '&entities/Snippet';
 import {
     buildExecuteModal,
     buildExecuteResultPayload,
     buildInvalidLanguagePayload,
 } from '&factories/executor';
 import { buildRenderAttachmentPayload } from '&factories/renderer';
+import { buildSnippetSaveModal } from '&factories/snippet';
 
 export class EvaluatorAction extends Action {
     public constructor() {
@@ -75,6 +77,62 @@ export class EvaluatorAction extends Action {
 
             const payload = buildRenderAttachmentPayload(image);
             return button.editReply(payload);
+        }
+
+        if (action === 'save') {
+            const repository = this.container.database.repository(Snippet);
+
+            const count = await repository.countBy({ userId: button.user.id });
+
+            if (count >= 25)
+                return button.reply({
+                    content:
+                        'You have reached the maximum snippet limit, delete some snippets to save more.',
+                    ephemeral: true,
+                });
+
+            const existing = await repository.findOneBy({
+                userId: button.user.id,
+                language: options.language.key,
+                code: options.code,
+                input: options.input,
+                args: options.args.map(a => `"${a}"`).join(' '),
+            });
+
+            if (existing)
+                return button.reply({
+                    content: 'You already have this snippet saved.',
+                    ephemeral: true,
+                });
+
+            const modal = buildSnippetSaveModal(button.message.id);
+            await button.showModal(modal);
+
+            const hour = 3_600_000;
+            const submit = await button.awaitModalSubmit({ time: hour });
+            if (!submit) return void 0;
+
+            const name = submit.fields.getTextInputValue('name');
+
+            if (name.length < 4 || name.length > 25)
+                return button.editReply(
+                    'Snippet names must be between 4 and 25 characters.'
+                );
+
+            const snippet = new Snippet();
+            snippet.id = button.message.id;
+            snippet.userId = button.user.id;
+            snippet.name = name;
+            snippet.language = options.language.key;
+            snippet.code = options.code;
+            snippet.input = options.input;
+            snippet.args = options.args.map(a => `"${a}"`).join(' ');
+            await repository.save(snippet);
+
+            return submit.reply({
+                content: 'Snippet saved successfully.',
+                ephemeral: true,
+            });
         }
     }
 

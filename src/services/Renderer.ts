@@ -49,15 +49,22 @@ export class Renderer {
         const element = await page.$('div[style*="width: auto;"]');
         if (!element) throw new Error('Could not find code element');
 
-        // Remove the resize handles and controls
+        // Modify the pages contents
         await page.evaluate(() => {
-            const controls = document.querySelector('div[class*="Controls"]');
+            const selectors = [
+                '.Frame_frame__Dmfe9',
+                'div[class*="Controls"]',
+                'div[class*="windowSizeDragPoint"]',
+            ];
+
+            const container = document.querySelector<HTMLElement>(selectors[0]);
+            if (container) container.style.minWidth = 'auto';
+
+            const controls = document.querySelector(selectors[1]);
             if (controls) controls.remove();
 
-            for (const element of Array.from(
-                document.querySelectorAll('div[class*="windowSizeDragPoint"]')
-            ))
-                element?.remove();
+            const dragPoints = document.querySelectorAll(selectors[2]);
+            for (const dragPoint of Array.from(dragPoints)) dragPoint?.remove();
         });
 
         const screenshot = await element.screenshot();

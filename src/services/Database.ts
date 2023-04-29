@@ -6,7 +6,7 @@ import type { EntityTarget } from 'typeorm';
 export const dataSource = new DataSource({
     type: 'better-sqlite3',
     database: `database/db.sqlite`,
-    entities: ['./src/entities/*.ts'],
+    entities: ['./build/entities/*.js'],
     migrations: ['./database/migrations/*.js'],
     migrationsTableName: 'history',
     metadataTableName: 'metadata',

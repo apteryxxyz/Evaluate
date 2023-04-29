@@ -50,6 +50,11 @@ export class EvaluatorAction extends Action {
     public override async onButton(button: Action.Button) {
         const [, action] = button.customId.split(',');
 
+        if (action === 'create') {
+            const modal = buildExecuteModal({});
+            return button.showModal(modal);
+        }
+
         const evaluator = this.container.evaluators.resolve(button);
         if (!evaluator) return void 0;
 

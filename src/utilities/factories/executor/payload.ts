@@ -37,7 +37,7 @@ export async function buildExecuteResultPayload(
     const edit = new ButtonBuilder()
         .setCustomId('execute,edit')
         .setLabel('Edit')
-        .setStyle(ButtonStyle.Primary);
+        .setStyle(ButtonStyle.Success);
 
     const capture = new ButtonBuilder()
         .setCustomId('execute,capture')

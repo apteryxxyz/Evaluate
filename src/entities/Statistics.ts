@@ -34,7 +34,6 @@ export class Statistics extends Base {
 
         async appendLanguage(userId: string, language: Executor.Language) {
             const statistics = await this.ensureStatistics(userId);
-            console.log(statistics);
             statistics.usedLanguages.push(language.key);
             await this.save(statistics);
         },

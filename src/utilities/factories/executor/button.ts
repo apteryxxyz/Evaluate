@@ -6,6 +6,6 @@ export function buildExecuteStartButton() {
         new ButtonBuilder()
             .setCustomId('execute,create')
             .setLabel('Start')
-            .setStyle(ButtonStyle.Primary),
+            .setStyle(ButtonStyle.Success),
     ]);
 }

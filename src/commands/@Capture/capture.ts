@@ -1,5 +1,8 @@
 import { Command } from 'maclary';
-import { CaptureBuilder } from '&builders/CaptureBuilder';
+import {
+    buildCreateRenderModal,
+    buildRenderAttachmentPayload,
+} from '&factories/renderer';
 import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
 
 export class Capture extends Command<
@@ -36,7 +39,7 @@ export class Capture extends Command<
 
     public override async onAutocomplete(autocomplete: Command.Autocomplete) {
         const query = autocomplete.options.getFocused();
-        const langs = await this.container.executor.autocompleteLanguage(query);
+        const langs = await this.container.executor.searchLanguages(query);
 
         return autocomplete.respond(
             langs.map(lang => ({
@@ -50,19 +53,21 @@ export class Capture extends Command<
         const code = input.options.getString('code') ?? undefined;
         const rawLang = input.options.getString('language');
         const language = rawLang
-            ? await this.container.executor.resolveLanguage(rawLang)
+            ? await this.container.executor.findLanguage(rawLang)
             : undefined;
 
-        if (code) {
-            await input.deferReply();
-            const payload = await CaptureBuilder.buildCapturePayload(
-                input.user.id,
-                { language, code }
-            );
-            return input.editReply(payload);
+        if (!code) {
+            const modal = buildCreateRenderModal({ language, code });
+            return input.showModal(modal);
         }
 
-        const modal = CaptureBuilder.buildCreateModal({ language, code });
-        return input.showModal(modal);
+        await input.deferReply();
+        const image = await this.container.renderer.createRender(
+            { language, code },
+            input.user.id
+        );
+
+        const payload = buildRenderAttachmentPayload(image);
+        return input.editReply(payload);
     }
 }

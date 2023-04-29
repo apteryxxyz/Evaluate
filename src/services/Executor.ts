@@ -5,9 +5,9 @@ import type { PistonExecuteData, PistonExecuteResult } from 'piston-api-client';
 import { PistonClient } from 'piston-api-client';
 import { Database } from './Database';
 import { Statistics } from '&entities/Statistics';
-import { detectLanguage } from '&functions/detectLanguage';
 import { formatLanguageName, formatRuntimeName } from '&functions/formatNames';
 
+/** Handle language fetching and code executing. */
 export class Executor {
     private _client = new PistonClient();
 
@@ -15,8 +15,10 @@ export class Executor {
     private _popularLanguages: Executor.Language[] = [];
 
     public constructor() {
-        void this._updatePopularLanguages();
-        setInterval(() => this._updatePopularLanguages(), 60_000);
+        (async () => {
+            await this._updatePopularLanguages();
+            setInterval(() => this._updatePopularLanguages(), 60_000);
+        })();
     }
 
     private async _updatePopularLanguages() {
@@ -24,14 +26,15 @@ export class Executor {
 
         const repo = container.database.get(Statistics);
         const languageIds = await repo.getMostUsedLanguages();
-        const _mapper = (id: string) => container.executor.resolveLanguage(id);
+        const _mapper = (id: string) => container.executor.findLanguage(id);
         const languages = await Promise.all(languageIds.map(_mapper));
         this._popularLanguages = languages.filter(
             lang => lang !== undefined
         ) as Executor.Language[];
     }
 
-    public async getLanguages() {
+    /** Fetch a list of all available languages. */
+    public async fetchLanguages(): Promise<Executor.Language[]> {
         const response = await this._client.runtimes();
         if (!response.success) throw new Error('Failed to fetch runtimes');
 
@@ -52,31 +55,19 @@ export class Executor {
         }));
     }
 
-    public async autocompleteLanguage(query: string) {
+    /** Search the list of languages for a query, returns a list. */
+    public async searchLanguages(query: string) {
         if (query.length === 0) return Array.from(this._popularLanguages);
 
         const keys = ['id', 'name', 'aliases', 'runtime.id', 'runtime.name'];
-        const languages = await this.getLanguages();
+        const languages = await this.fetchLanguages();
         const fuse = new Fuse(languages, { keys, threshold: 0.3 });
         return fuse.search(query).map(({ item }) => item);
     }
 
-    public async execute(options: Executor.ExecuteOptions) {
-        const data = this._convertOptions(options);
-        const result = await this._client.execute(data);
-        return this._convertResult(
-            options,
-            result.success ? result.data : result.error
-        );
-    }
-
-    public async detectLanguage(input: string, usePaid = false) {
-        const result = await detectLanguage(input, usePaid);
-        return result ? this.resolveLanguage(result) : undefined;
-    }
-
-    public async resolveLanguage(resolvable: string) {
-        const languages = await this.getLanguages();
+    /** Attempt to find a language using a resolvable. */
+    public async findLanguage(resolvable: string) {
+        const languages = await this.fetchLanguages();
 
         resolvable = resolvable.toLowerCase();
         const existing = languages.find(lang => {
@@ -92,6 +83,8 @@ export class Executor {
                 !this._preferredRuntimes.has(lang.id)
             )
                 return found;
+
+            // By default "javascript" would return Deno, but we prefer Node
             const runtime = this._preferredRuntimes.get(lang.id);
             return found && runtime === lang.runtime.id;
         });
@@ -116,6 +109,16 @@ export class Executor {
         });
     }
 
+    /** Execute a piece of code. */
+    public async execute(options: Executor.ExecuteOptions) {
+        const data = this._convertOptions(options);
+        const result = await this._client.execute(data);
+        return this._convertResult(
+            options,
+            result.success ? result.data : result.error
+        );
+    }
+
     private _convertOptions(
         options: Executor.ExecuteOptions
     ): PistonExecuteData {
@@ -136,13 +139,12 @@ export class Executor {
         return { ...options, isSuccess: result.run.code === 0, output };
     }
 
+    /** Ensure that the executor has been initialise. */
     public static async waitFor() {
         if (!container.executor) container.executor = new Executor();
 
-        while (!container.executor._client) {
-            await new Promise(resolve => setTimeout(resolve, 500));
-        }
-
+        while (!container.executor._client)
+            await new Promise(resolve => setTimeout(resolve, 100));
         return container.executor;
     }
 }
@@ -174,5 +176,11 @@ export namespace Executor {
     export interface ExecuteResult extends ExecuteOptions {
         isSuccess: boolean;
         output: string;
+    }
+}
+
+declare module 'maclary' {
+    interface Container {
+        executor: Executor;
     }
 }

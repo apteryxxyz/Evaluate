@@ -1,6 +1,8 @@
 import { Command } from 'maclary';
-import { EvaluateBuilder } from '&builders/EvaluateBuilder';
-import { detectLanguage } from '&functions/detectLanguage';
+import {
+    buildExecuteModal,
+    buildExecuteResultPayload,
+} from '&factories/executor';
 import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
 
 export class EvaluateCommand extends Command<
@@ -38,7 +40,7 @@ export class EvaluateCommand extends Command<
 
     public override async onAutocomplete(autocomplete: Command.Autocomplete) {
         const query = autocomplete.options.getFocused();
-        const langs = await this.container.executor.autocompleteLanguage(query);
+        const langs = await this.container.executor.searchLanguages(query);
 
         return autocomplete.respond(
             langs.map(lang => ({
@@ -52,23 +54,25 @@ export class EvaluateCommand extends Command<
         const code = input.options.getString('code') ?? '';
 
         let rawLang = input.options.getString('language') ?? undefined;
-        if (!rawLang && code.length > 0) rawLang = await detectLanguage(code);
+        if (!rawLang && code.length > 0)
+            rawLang = await this.container.detector.detectLanguage({
+                code,
+            });
         const language = rawLang
-            ? await this.container.executor.resolveLanguage(rawLang)
+            ? await this.container.executor.findLanguage(rawLang)
             : undefined;
 
-        if (code && language) {
-            const message = await input.deferReply({ fetchReply: true });
-            const params = [input.user, message] as const;
-            const evaluator = this.container.evaluators.create(...params);
-
-            const options = { language, code, input: '', args: [] };
-            const result = await evaluator.runWithOptions(options);
-            const payload = await EvaluateBuilder.buildResultPayload(result);
-            return input.editReply(payload);
+        if (!code || !language) {
+            const modal = buildExecuteModal({ language, code });
+            return input.showModal(modal);
         }
 
-        const modal = EvaluateBuilder.buildEditModal({ language, code });
-        return input.showModal(modal);
+        const message = await input.deferReply({ fetchReply: true });
+        const evaluator = this.container.evaluators.create(input.user, message);
+
+        const options = { language, code, input: '', args: [] };
+        const result = await evaluator.runWithOptions(options);
+        const payload = await buildExecuteResultPayload(result);
+        return input.editReply(payload);
     }
 }

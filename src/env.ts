@@ -7,6 +7,7 @@ import { z } from 'zod';
 export const envSchema = z.object({
     NODE_ENV: z.union([z.literal('production'), z.literal('development')]).default('development'),
     DISCORD_TOKEN: z.string(),
+    DISCORD_GUILD_ID: z.string().optional(),
     PAWAN_KEY: z.string().regex(/pk-.*/)
 });
 

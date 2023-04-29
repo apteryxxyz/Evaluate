@@ -6,7 +6,7 @@ import {
 import { TextInputStyle } from 'discord.js';
 import type { Action } from 'maclary';
 import { Command } from 'maclary';
-import { IdentifyBuilder } from '&builders/IdentifyBuilder';
+import { buildIdenifiedEmbed } from '&factories/identify/embed';
 import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
 
 export class IdentifyCommand extends Command<
@@ -48,7 +48,9 @@ export class IdentifyCommand extends Command<
         }
 
         await action.deferReply();
-        const embed = await IdentifyBuilder.identifyAndBuildEmbed(code);
+        const result = await this.container.detector.detectLanguage({ code });
+
+        const embed = buildIdenifiedEmbed(code, result);
         return action.editReply({ embeds: [embed] });
     }
 

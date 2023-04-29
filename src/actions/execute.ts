@@ -1,11 +1,15 @@
 import { Lexer, Parser, longShortStrategy } from 'lexure';
 import { Action } from 'maclary';
-import { CaptureBuilder } from '&builders/CaptureBuilder';
-import { EvaluateBuilder } from '&builders/EvaluateBuilder';
+import {
+    buildExecuteModal,
+    buildExecuteResultPayload,
+    buildInvalidLanguagePayload,
+} from '&factories/executor';
+import { buildRenderAttachmentPayload } from '&factories/renderer';
 
 export class EvaluatorAction extends Action {
     public constructor() {
-        super({ id: 'evaluator' });
+        super({ id: 'execute' });
     }
 
     public override async onModalSubmit(modal: Action.MessageModalSubmit) {
@@ -27,15 +31,15 @@ export class EvaluatorAction extends Action {
 
         if (!evaluator) return void 0;
 
-        const language = await this.container.executor.resolveLanguage(lang);
+        const language = await this.container.executor.findLanguage(lang);
 
         let payload = null;
         if (language) {
             const options = { language, code, input, args };
             const result = await evaluator.runWithOptions(options);
-            payload = await EvaluateBuilder.buildResultPayload(result);
+            payload = await buildExecuteResultPayload(result);
         } else {
-            payload = EvaluateBuilder.buildInvalidLanguagePayload();
+            payload = buildInvalidLanguagePayload();
         }
 
         await modal.editReply(payload);
@@ -52,17 +56,19 @@ export class EvaluatorAction extends Action {
         const options = evaluator.history.at(-1)!;
 
         if (action === 'edit') {
-            const modal = EvaluateBuilder.buildEditModal(options ?? {}) //
-                .setCustomId(`evaluator,edit`);
+            const modal = buildExecuteModal(options ?? {}) //
+                .setCustomId(`execute,edit`);
             return button.showModal(modal);
         }
 
         if (action === 'capture') {
             await button.deferReply();
-            const payload = await CaptureBuilder.buildCapturePayload(
-                button.user.id,
-                { code: options.code, language: options.language }
+            const image = await this.container.renderer.createRender(
+                options,
+                button.user.id
             );
+
+            const payload = buildRenderAttachmentPayload(image);
             return button.editReply(payload);
         }
     }

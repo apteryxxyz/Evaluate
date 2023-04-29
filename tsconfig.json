@@ -12,7 +12,7 @@
             "&entities/*": ["./src/entities/*"],
             "&preconditions/*": ["./src/preconditions/*"],
             "&services/*": ["./src/services/*"],
-            "&builders/*": ["./src/utilities/builders/*"],
+            "&factories/*": ["./src/utilities/factories/*"],
             "&functions/*": ["./src/utilities/functions/*"]
         },
         "experimentalDecorators": true,

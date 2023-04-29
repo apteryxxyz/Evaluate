@@ -34,7 +34,7 @@ export class StatisticsCommand extends Command<
         const { commandCount, evaluatorCount, captureCount, mostUsedLanguage } =
             await repo.getTotals();
         const language = (mostUsedLanguage
-            ? await this.container.executor.resolveLanguage(mostUsedLanguage)
+            ? await this.container.executor.findLanguage(mostUsedLanguage)
             : undefined) ?? { name: 'None' };
 
         const statisticsEmbed = new EmbedBuilder()

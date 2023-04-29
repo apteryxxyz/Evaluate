@@ -3,7 +3,7 @@ import { buildRenderAttachmentPayload } from '&factories/renderer';
 
 export class CaptureAction extends Action {
     public constructor() {
-        super({ id: 'capture' });
+        super({ id: 'render' });
     }
 
     public override async onModalSubmit(modal: Action.ModalSubmit) {

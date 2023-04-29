@@ -8,7 +8,8 @@ export const envSchema = z.object({
     NODE_ENV: z.union([z.literal('production'), z.literal('development')]).default('development'),
     DISCORD_TOKEN: z.string(),
     DISCORD_GUILD_ID: z.string().optional(),
-    PAWAN_KEY: z.string().regex(/pk-.*/)
+    OPENAI_BASE_PATH: z.string().optional(),
+    OPENAI_KEY: z.string()
 });
 
 export type Env = z.infer<typeof envSchema>;

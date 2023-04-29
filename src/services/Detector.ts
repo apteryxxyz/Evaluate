@@ -15,8 +15,8 @@ export class Detector {
             this._vscode = new ModelOperations();
             this._openai = new OpenAIApi(
                 new Configuration({
-                    apiKey: process.env.PAWAN_KEY,
-                    basePath: 'https://api.pawan.krd/v1',
+                    basePath: process.env.OPENAI_BASE_PATH,
+                    apiKey: process.env.OPENAI_KEY,
                 })
             );
         })();

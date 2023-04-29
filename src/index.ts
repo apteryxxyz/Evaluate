@@ -3,7 +3,6 @@ import 'reflect-metadata';
 import './env';
 // Dependencies
 import process from 'node:process';
-import { RequestContext } from '@mikro-orm/core';
 import { Client, GatewayIntentBits, Partials } from 'discord.js';
 import { Maclary, container } from 'maclary';
 import { EvaluatorManager } from '&classes/EvaluatorManager';
@@ -17,18 +16,17 @@ import { Renderer } from '&services/Renderer';
 void main();
 async function main() {
     container.evaluators = new EvaluatorManager();
+
     await Database.waitFor();
 
-    RequestContext.create(container.database.orm.em, async () => {
-        await Promise.all([
-            Renderer.waitFor(),
-            Pastebin.waitFor(),
-            Executor.waitFor(),
-            Detector.waitFor(),
-        ]);
+    await Promise.all([
+        Renderer.waitFor(),
+        Pastebin.waitFor(),
+        Executor.waitFor(),
+        Detector.waitFor(),
+    ]);
 
-        await prepareClient();
-    });
+    await prepareClient();
 }
 
 function prepareClient() {

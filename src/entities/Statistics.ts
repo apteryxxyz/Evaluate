@@ -1,113 +1,96 @@
-import {
-    Entity,
-    EntityRepository,
-    EntityRepositoryType,
-    PrimaryKey,
-    Property,
-} from '@mikro-orm/core';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Base, createRepository } from './Base';
 import type { Executor } from '&services/Executor';
 
-@Entity({ customRepository: () => StatisticsRepository })
-export class Statistics {
-    public [EntityRepositoryType]?: StatisticsRepository;
-
-    @PrimaryKey()
+@Entity()
+export class Statistics extends Base {
+    @PrimaryColumn()
     public id!: string;
 
-    @Property()
-    public usedLanguages: string[] = [];
+    @Column('simple-array')
+    public usedLanguages: string[] = [''];
 
-    @Property()
+    @Column()
     public commandCount: number = 0;
 
-    @Property()
+    @Column()
     public evaluatorCount: number = 0;
 
-    @Property()
+    @Column()
     public captureCount: number = 0;
 
-    @Property()
-    public createdAt: Date = new Date();
+    public static repository = createRepository({
+        __type: () => new Statistics(),
 
-    @Property({ onUpdate: () => new Date() })
-    public updatedAt: Date = new Date();
-}
+        async ensureStatistics(userId: string) {
+            const existing = await this.findOneBy({ id: userId });
+            if (existing) return existing;
 
-export class StatisticsRepository extends EntityRepository<Statistics> {
-    public async ensureStatistics(id: string) {
-        const existing = await this.findOne({ id });
-        if (existing) return existing;
+            const statistics = new Statistics();
+            statistics.id = userId;
 
-        const statistics = new Statistics();
-        statistics.id = id;
-        this.getEntityManager().persist(statistics);
+            return statistics;
+        },
 
-        return statistics;
-    }
+        async appendLanguage(userId: string, language: Executor.Language) {
+            const statistics = await this.ensureStatistics(userId);
+            console.log(statistics);
+            statistics.usedLanguages.push(language.key);
+            await this.save(statistics);
+        },
 
-    public async appendLanguage(id: string, language: Executor.Language) {
-        const statistics = await this.ensureStatistics(id);
-        statistics.usedLanguages.push(language.key);
-        await this.getEntityManager().persistAndFlush(statistics);
-    }
+        async incrementCommandCount(userId: string) {
+            const statistics = await this.ensureStatistics(userId);
+            statistics.commandCount++;
+            await this.save(statistics);
+        },
 
-    public async incrementCommandCount(id: string) {
-        const statistics = await this.ensureStatistics(id);
-        statistics.commandCount++;
-        await this.getEntityManager().persistAndFlush(statistics);
-    }
+        async incrementEvaluatorCount(userId: string) {
+            const statistics = await this.ensureStatistics(userId);
+            statistics.evaluatorCount++;
+            await this.save(statistics);
+        },
 
-    public async incrementEvaluatorCount(id: string) {
-        const statistics = await this.ensureStatistics(id);
-        statistics.evaluatorCount++;
-        await this.getEntityManager().persistAndFlush(statistics);
-    }
+        async incrementCaptureCount(userId: string) {
+            const statistics = await this.ensureStatistics(userId);
+            statistics.captureCount++;
+            await this.save(statistics);
+        },
 
-    public async incrementCaptureCount(id: string) {
-        const statistics = await this.ensureStatistics(id);
-        statistics.captureCount++;
-        await this.getEntityManager().persistAndFlush(statistics);
-    }
+        async getTotals() {
+            const statistics = await this.find();
+            const totals = {
+                usedLanguages: [] as string[],
+                commandCount: 0,
+                evaluatorCount: 0,
+                captureCount: 0,
+            };
 
-    public async getTotals() {
-        const statistics = await this.findAll();
-        const totals = {
-            usedLanguages: [] as string[],
-            commandCount: 0,
-            evaluatorCount: 0,
-            captureCount: 0,
-        };
+            for (const stat of statistics) {
+                totals.usedLanguages.push(...stat.usedLanguages);
+                totals.commandCount += stat.commandCount;
+                totals.evaluatorCount += stat.evaluatorCount;
+                totals.captureCount += stat.captureCount;
+            }
 
-        for (const stat of statistics) {
-            totals.usedLanguages.push(...stat.usedLanguages);
-            totals.commandCount += stat.commandCount;
-            totals.evaluatorCount += stat.evaluatorCount;
-            totals.captureCount += stat.captureCount;
-        }
+            const mostUsedLanguage = findMostCommon(totals.usedLanguages);
+            return { ...totals, mostUsedLanguage };
+        },
 
-        const mostUsedLanguage = findMostCommon(totals.usedLanguages);
-        return { ...totals, mostUsedLanguage };
-    }
+        async getMostUsedLanguages() {
+            const statistics = await this.find();
+            const languages = statistics.flatMap(stat => stat.usedLanguages);
 
-    public async getFavouriteLanguage(id: string) {
-        const statistics = await this.ensureStatistics(id);
-        const languages = statistics.usedLanguages;
-        return findMostCommon(languages);
-    }
+            const counts = languages.reduce((map, language) => {
+                const count = map.get(language) ?? 0;
+                map.set(language, count + 1);
+                return map;
+            }, new Map<string, number>());
 
-    public async getMostUsedLanguages(): Promise<string[]> {
-        const statistics = await this.findAll();
-        const languages = statistics.flatMap(stat => stat.usedLanguages);
-
-        const counts = languages.reduce((map, language) => {
-            const count = map.get(language) ?? 0;
-            map.set(language, count + 1);
-            return map;
-        }, new Map<string, number>());
-
-        const sorted = [...counts.entries()].sort((a, b) => b[1] - a[1]);
-        return sorted.map(([language]) => language).slice(0, 5);
-    }
+            const sorted = [...counts.entries()].sort((a, b) => b[1] - a[1]);
+            return sorted.map(([language]) => language).slice(0, 5);
+        },
+    });
 }
 
 function findMostCommon<T>(array: T[]) {

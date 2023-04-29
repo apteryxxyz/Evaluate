@@ -30,7 +30,7 @@ export class StatisticsCommand extends Command<
             0
         );
 
-        const repo = this.container.database.get(Statistics);
+        const repo = this.container.database.repository(Statistics);
         const { commandCount, evaluatorCount, captureCount, mostUsedLanguage } =
             await repo.getTotals();
         const language = (mostUsedLanguage

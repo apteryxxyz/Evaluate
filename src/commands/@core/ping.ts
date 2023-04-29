@@ -17,8 +17,6 @@ export class PingCommand extends Command<
     }
 
     public override async onSlash(input: Command.ChatInput) {
-        console.log('This has been run');
-
         const initialReply = await input.reply({
             content: 'Pinging client...',
             fetchReply: true,

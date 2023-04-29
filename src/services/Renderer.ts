@@ -28,7 +28,7 @@ export class Renderer {
 
         if (typeof userId === 'string') {
             void Database.waitFor().then(database => {
-                const repository = database.get(Statistics);
+                const repository = database.repository(Statistics);
                 void repository.incrementCaptureCount(userId);
             });
         }

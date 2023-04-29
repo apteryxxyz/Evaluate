@@ -1,6 +1,7 @@
 import { setInterval, setTimeout } from 'node:timers';
 import { container } from 'maclary';
 import { RentryClient } from 'rentry-pastebin';
+import { FindOperator } from 'typeorm';
 import { Database } from './Database';
 import { Paste } from '&entities/Paste';
 
@@ -26,7 +27,7 @@ export class Pastebin {
         entity.lifetime = options.lifetime ?? -1;
 
         await Database.waitFor();
-        await container.database.em.persistAndFlush(entity);
+        await container.database.repository(Paste).save(entity);
 
         return `https://rentry.co/${paste.url}`;
     }
@@ -34,21 +35,23 @@ export class Pastebin {
     /** Delete an existing paste by its ID. */
     public async deletePaste(id: string) {
         await Database.waitFor();
-        const paste = await container.database.get(Paste).findOne({ id });
+
+        const repository = container.database.repository(Paste);
+        const paste = await repository.findOneBy({ id });
         if (!paste) return;
 
         await Pastebin.waitFor();
         this._client.deletePaste(id, paste.editCode);
 
-        await container.database.em.removeAndFlush(paste);
+        await repository.remove(paste);
     }
 
     /** Delete all expired pastes. */
     public async deleteExpiredPastes() {
         await Database.waitFor();
         const pastes = await container.database
-            .get(Paste)
-            .find({ lifetime: { $gt: 0 } });
+            .repository(Paste)
+            .findBy({ lifetime: new FindOperator('moreThan', 0) });
 
         for (const paste of pastes) {
             const age = Date.now() - paste.createdAt.getTime();

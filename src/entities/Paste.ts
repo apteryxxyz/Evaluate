@@ -1,26 +1,18 @@
-import {
-    Entity,
-    EntityRepository,
-    EntityRepositoryType,
-    PrimaryKey,
-    Property,
-} from '@mikro-orm/core';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Base, createRepository } from './Base';
 
-export class PasteRepository extends EntityRepository<Paste> {}
-
-@Entity({ customRepository: () => PasteRepository })
-export class Paste {
-    public [EntityRepositoryType]?: PasteRepository;
-
-    @PrimaryKey()
+@Entity()
+export class Paste extends Base {
+    @PrimaryColumn()
     public id!: string;
 
-    @Property()
+    @Column()
     public editCode!: string;
 
-    @Property()
+    @Column()
     public lifetime: number = -1;
 
-    @Property()
-    public createdAt: Date = new Date();
+    public static repository = createRepository({
+        __type: () => new Paste(),
+    });
 }

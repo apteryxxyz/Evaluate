@@ -1,51 +1,50 @@
 import { setTimeout } from 'node:timers';
-import type { EntityName } from '@mikro-orm/core';
-import { MikroORM } from '@mikro-orm/core';
-import type { SqliteDriver } from '@mikro-orm/sqlite';
 import { container } from 'maclary';
+import { DataSource } from 'typeorm';
+import type { EntityTarget } from 'typeorm';
 
-/** Handle the database and ORM. */
+export const dataSource = new DataSource({
+    type: 'better-sqlite3',
+    database: 'database/development.sqlite',
+    entities: ['./src/entities/*.ts'],
+    migrations: ['./database/migrations/*.js'],
+    migrationsTableName: 'history',
+    metadataTableName: 'metadata',
+});
+
+/** Handle the database and data source. */
 export class Database {
-    private _orm?: Awaited<ReturnType<typeof MikroORM.init>>;
+    private _source?: DataSource;
 
     public constructor() {
         (async () => {
-            const config = require('../../mikro-orm.config');
-            const orm = await MikroORM.init<SqliteDriver>(config);
-
-            // Ensure that the database exists and is up to date
-            const generator = orm.getSchemaGenerator();
-            await generator.ensureDatabase();
-            await generator.updateSchema();
-
-            this._orm = orm;
+            dataSource
+                .initialize()
+                .then(() => (this._source = dataSource))
+                .catch(error => console.error(error));
         })();
     }
 
-    /** Shorthand to the ORM. */
-    public get orm() {
-        if (!this._orm) throw new Error('Database is not ready');
-        return this._orm;
+    /** Shortland to the entity manager. */
+    public get manager() {
+        if (!this._source) throw new Error('Database not initialised');
+        return this._source.manager;
     }
 
-    /** Shorthand to the entity manager. */
-    public get em() {
-        return this.orm.em;
-    }
-
-    /** Shorthand for getting the repository of an entity. */
-    public get<T extends object>(entity: EntityName<T>) {
-        return this.orm.em.getRepository(entity);
+    /** Get an entities repository and extend it with the custom methods. */
+    public repository<E extends object, R extends object>(
+        target: EntityTarget<E> & { repository: R }
+    ) {
+        const repository = this.manager.getRepository(target);
+        return repository.extend(target.repository);
     }
 
     /** Ensure that the database has been initialise. */
     public static async waitFor() {
         if (!container.database) container.database = new Database();
 
-        while (!container.database._orm) {
+        while (!container.database._source)
             await new Promise(resolve => setTimeout(resolve, 100));
-        }
-
         return container.database;
     }
 }

@@ -24,8 +24,8 @@ export class Executor {
     private async _updatePopularLanguages() {
         await Database.waitFor();
 
-        const repo = container.database.get(Statistics);
-        const languageIds = await repo.getMostUsedLanguages();
+        const repository = container.database.repository(Statistics);
+        const languageIds = await repository.getMostUsedLanguages();
         const _mapper = (id: string) => container.executor.findLanguage(id);
         const languages = await Promise.all(languageIds.map(_mapper));
         this._popularLanguages = languages.filter(
@@ -67,6 +67,7 @@ export class Executor {
 
     /** Attempt to find a language using a resolvable. */
     public async findLanguage(resolvable: string) {
+        if (resolvable === '') return undefined;
         const languages = await this.fetchLanguages();
 
         resolvable = resolvable.toLowerCase();

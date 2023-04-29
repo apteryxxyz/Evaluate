@@ -1,4 +1,3 @@
-import process from 'node:process';
 import { setTimeout } from 'node:timers';
 import { container } from 'maclary';
 import { DataSource } from 'typeorm';
@@ -6,7 +5,7 @@ import type { EntityTarget } from 'typeorm';
 
 export const dataSource = new DataSource({
     type: 'better-sqlite3',
-    database: `${process.env.NODE_ENV}/development.sqlite`,
+    database: `database/db.sqlite`,
     entities: ['./src/entities/*.ts'],
     migrations: ['./database/migrations/*.js'],
     migrationsTableName: 'history',

@@ -70,7 +70,7 @@ export class EvaluateCommand extends Command<
         const message = await input.deferReply({ fetchReply: true });
         const evaluator = this.container.evaluators.create(input.user, message);
 
-        const options = { language, code, input: '', args: [] };
+        const options = { language, code, input: '', args: '' };
         const result = await evaluator.runWithOptions(options);
         const payload = await buildExecuteResultPayload(result);
         return input.editReply(payload);

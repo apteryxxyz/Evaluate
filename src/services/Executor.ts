@@ -1,5 +1,6 @@
 import { setInterval, setTimeout } from 'node:timers';
 import Fuse from 'fuse.js';
+import { Lexer, Parser, longShortStrategy } from 'lexure';
 import { container } from 'maclary';
 import type { PistonExecuteData, PistonExecuteResult } from 'piston-api-client';
 import { PistonClient } from 'piston-api-client';
@@ -128,7 +129,7 @@ export class Executor {
             version: options.language.version,
             files: [{ content: options.code }],
             stdin: options.input,
-            args: options.args,
+            args: this._parseArgs(options.args),
         };
     }
 
@@ -138,6 +139,20 @@ export class Executor {
     ): Executor.ExecuteResult {
         const output = result.run.output ?? '';
         return { ...options, isSuccess: result.run.code === 0, output };
+    }
+
+    private _parseArgs(args: string) {
+        const tokens = new Lexer(args)
+            .setQuotes([
+                ['"', '"'],
+                ['“', '”'],
+            ])
+            .lex();
+
+        return new Parser(tokens)
+            .setUnorderedStrategy(longShortStrategy())
+            .parse()
+            .ordered.map(token => token.value);
     }
 
     /** Ensure that the executor has been initialise. */
@@ -171,7 +186,7 @@ export namespace Executor {
         language: Language;
         code: string;
         input: string;
-        args: string[];
+        args: string;
     }
 
     export interface ExecuteResult extends ExecuteOptions {

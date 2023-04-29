@@ -1,4 +1,3 @@
-import { Lexer, Parser, longShortStrategy } from 'lexure';
 import { Action } from 'maclary';
 import { Snippet } from '&entities/Snippet';
 import {
@@ -18,7 +17,7 @@ export class EvaluatorAction extends Action {
         const lang = modal.fields.getTextInputValue('language');
         const code = modal.fields.getTextInputValue('code');
         const input = modal.fields.getTextInputValue('input');
-        const args = this._parseArgs(modal.fields.getTextInputValue('args'));
+        const args = modal.fields.getTextInputValue('args');
 
         const [, action] = modal.customId.split(',');
 
@@ -96,7 +95,7 @@ export class EvaluatorAction extends Action {
                 language: options.language.key,
                 code: options.code,
                 input: options.input,
-                args: options.args.map(a => `"${a}"`).join(' '),
+                args: options.args,
             });
 
             if (existing)
@@ -126,7 +125,7 @@ export class EvaluatorAction extends Action {
             snippet.language = options.language.key;
             snippet.code = options.code;
             snippet.input = options.input;
-            snippet.args = options.args.map(a => `"${a}"`).join(' ');
+            snippet.args = options.args;
             await repository.save(snippet);
 
             return submit.reply({
@@ -134,19 +133,5 @@ export class EvaluatorAction extends Action {
                 ephemeral: true,
             });
         }
-    }
-
-    private _parseArgs(args: string) {
-        const tokens = new Lexer(args)
-            .setQuotes([
-                ['"', '"'],
-                ['“', '”'],
-            ])
-            .lex();
-
-        return new Parser(tokens)
-            .setUnorderedStrategy(longShortStrategy())
-            .parse()
-            .ordered.map(token => token.value);
     }
 }

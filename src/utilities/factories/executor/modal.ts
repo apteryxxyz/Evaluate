@@ -48,7 +48,7 @@ export function buildExecuteModal(options: Partial<Executor.ExecuteOptions>) {
         .setStyle(TextInputStyle.Short)
         .setRequired(false)
         .setPlaceholder(strings.args)
-        .setValue(options.args?.map(a => `"${a}"`).join(' ') ?? '')
+        .setValue(options.args ?? '')
         .setMaxLength(500);
 
     return new ModalBuilder()

@@ -27,9 +27,7 @@ export async function buildExecuteResultPayload(
         ]);
 
     if (result.args.length > 0)
-        embed.addFields([
-            { name: 'Arguments', value: formatArgs(result.args) },
-        ]);
+        embed.addFields([{ name: 'Arguments', value: codeBlock(result.args) }]);
     if (result.input.length > 0)
         embed.addFields([{ name: 'Input', value: codeBlock(result.input) }]);
     embed.addFields([{ name: 'Output', value: output }]);
@@ -91,10 +89,6 @@ export async function buildOutput(output: string) {
 }
 
 // HELPERS
-
-function formatArgs(args: string[]) {
-    return codeBlock(args.map(arg => `"${arg}"`).join(' '));
-}
 
 function wrapInRow<T extends AnyComponentBuilder>(...components: T[]) {
     return new ActionRowBuilder<T>().addComponents(...components);

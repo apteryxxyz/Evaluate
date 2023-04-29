@@ -1,4 +1,3 @@
-import { Lexer, Parser, longShortStrategy } from 'lexure';
 import { Action } from 'maclary';
 import { Snippet } from '&entities/Snippet';
 import { buildExecuteResultPayload } from '&factories/executor';
@@ -27,8 +26,7 @@ export class SnippetAction extends Action {
             const language = (await this.container.executor.findLanguage(
                 snippet.language
             ))!;
-            const args = this._parseArgs(snippet.args);
-            const options = { ...snippet, language, args };
+            const options = { ...snippet, language };
 
             const result = await evaluator.runWithOptions(options);
             const payload = await buildExecuteResultPayload(result);
@@ -36,19 +34,5 @@ export class SnippetAction extends Action {
         }
 
         return void 0;
-    }
-
-    private _parseArgs(args: string) {
-        const tokens = new Lexer(args)
-            .setQuotes([
-                ['"', '"'],
-                ['“', '”'],
-            ])
-            .lex();
-
-        return new Parser(tokens)
-            .setUnorderedStrategy(longShortStrategy())
-            .parse()
-            .ordered.map(token => token.value);
     }
 }

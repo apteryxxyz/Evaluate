@@ -5,7 +5,6 @@ import { container } from 'maclary';
 import type { Browser } from 'puppeteer';
 import puppeteer from 'puppeteer';
 import { Database } from './Database';
-import type { Executor } from './Executor';
 import { Statistics } from '&entities/Statistics';
 
 /** Render code snippets to images. */
@@ -52,19 +51,28 @@ export class Renderer {
         // Modify the pages contents
         await page.evaluate(() => {
             const selectors = [
-                '.Frame_frame__Dmfe9',
-                'div[class*="Controls"]',
-                'div[class*="windowSizeDragPoint"]',
+                '[class*="Frame_frame"]',
+                '[class*="Editor_textarea"]',
+                '[class*="ResizableFrame_windowSizeDragPoint"]',
+                '[class*="Controls_controls"]',
             ];
 
-            const container = document.querySelector<HTMLElement>(selectors[0]);
-            if (container) container.style.minWidth = 'auto';
+            // Keep the frame at a responsive width
+            const frame = document.querySelector<HTMLElement>(selectors[0]);
+            if (frame) frame.style.minWidth = 'unset';
 
-            const controls = document.querySelector(selectors[1]);
+            // Decrease the height of the editor
+            const textarea = document.querySelector<HTMLElement>(selectors[1]);
+            if (textarea) {
+                textarea.style.overflow = 'hidden';
+                textarea.style.height = 'auto';
+            }
+
+            const points = document.querySelectorAll(selectors[2]);
+            for (const point of Array.from(points)) point?.remove();
+
+            const controls = document.querySelector(selectors[3]);
             if (controls) controls.remove();
-
-            const dragPoints = document.querySelectorAll(selectors[2]);
-            for (const dragPoint of Array.from(dragPoints)) dragPoint?.remove();
         });
 
         const screenshot = await element.screenshot();
@@ -81,7 +89,6 @@ export class Renderer {
         params.append('padding', '32');
         params.append('theme', options.theme ?? Renderer.Theme.Meadow);
         params.append('darkMode', String(options.mode === Renderer.Mode.Dark));
-        if (options.language) params.append('language', options.language.id);
         params.append('code', Buffer.from(options.code).toString('base64'));
         return params.toString();
     }
@@ -130,8 +137,6 @@ export class Renderer {
 
 export namespace Renderer {
     export interface CreateOptions {
-        /** Force language syntax. */
-        language?: Executor.Language;
         /** Code to appear in the image. */
         code: string;
         /** Theme to make the image. */

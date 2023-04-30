@@ -1,8 +1,12 @@
-import { Command } from 'maclary';
 import {
-    buildCreateRenderModal,
-    buildRenderAttachmentPayload,
-} from '&factories/renderer';
+    ActionRowBuilder,
+    ModalBuilder,
+    TextInputBuilder,
+} from '@discordjs/builders';
+import { TextInputStyle } from 'discord.js';
+import type { Action } from 'maclary';
+import { Command } from 'maclary';
+import { buildRenderAttachmentPayload } from '&factories/renderer';
 import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
 
 export class Capture extends Command<
@@ -25,49 +29,51 @@ export class Capture extends Command<
                         'The code to convert into an image, emitting this will cause a modal to appear.',
                     maxLength: 900,
                 },
-                {
-                    type: Command.OptionType.String,
-                    autocomplete: true,
-                    name: 'language',
-                    description:
-                        'Force the syntax highlighting of a language, or let the bot detect it.',
-                    maxLength: 100,
-                },
             ],
         });
     }
 
-    public override async onAutocomplete(autocomplete: Command.Autocomplete) {
-        const query = autocomplete.options.getFocused();
-        const langs = await this.container.executor.searchLanguages(query);
-
-        return autocomplete.respond(
-            langs.map(lang => ({
-                name: lang.name,
-                value: lang.key,
-            }))
-        );
-    }
-
     public override async onSlash(input: Command.ChatInput) {
-        const code = input.options.getString('code') ?? undefined;
-        const rawLang = input.options.getString('language');
-        const language = rawLang
-            ? await this.container.executor.findLanguage(rawLang)
-            : undefined;
+        let action: Action.AnyInteraction | Command.AnyInteraction = input;
+        let code = input.options.getString('code');
 
         if (!code) {
-            const modal = buildCreateRenderModal({ language, code });
-            return input.showModal(modal);
+            await input.showModal(this._buildModal());
+
+            const submit = await input
+                .awaitModalSubmit({ time: 3_600_000 })
+                .catch(() => null);
+            if (submit === null) return void 0;
+
+            code = submit.fields.getTextInputValue('code');
+            action = submit;
         }
 
-        await input.deferReply();
+        await action.deferReply();
         const image = await this.container.renderer.createRender(
-            { language, code },
+            { code },
             input.user.id
         );
 
         const payload = buildRenderAttachmentPayload(image);
-        return input.editReply(payload);
+        return action.editReply(payload);
+    }
+
+    private _buildModal() {
+        const code = new TextInputBuilder()
+            .setCustomId('code')
+            .setLabel('Code')
+            .setStyle(TextInputStyle.Paragraph)
+            .setRequired(true)
+            .setMinLength(10)
+            .setMaxLength(1_000)
+            .setPlaceholder('Type the code to render...');
+
+        return new ModalBuilder()
+            .setCustomId('_')
+            .setTitle('Identify Language')
+            .setComponents(
+                new ActionRowBuilder<TextInputBuilder>().addComponents(code)
+            );
     }
 }

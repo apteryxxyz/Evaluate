@@ -6,7 +6,6 @@ import {
 import { TextInputStyle } from 'discord.js';
 import type { Action } from 'maclary';
 import { Command } from 'maclary';
-import { buildRenderAttachmentPayload } from '&factories/renderer';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 import { Renderer } from '&services/Renderer';
 
@@ -61,13 +60,11 @@ export class Capture extends Command<
         }
 
         await action.deferReply();
-        const image = await this.container.renderer.createRender(
-            { code, mode },
-            input.user.id
-        );
-
-        const payload = buildRenderAttachmentPayload(image);
-        return action.editReply(payload);
+        const image = await this.container.renderer //
+            .createRender({ code, mode }, input.user.id);
+        return action.editReply({
+            files: [image],
+        });
     }
 
     private _buildModal() {

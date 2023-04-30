@@ -1,5 +1,6 @@
 import { Action } from 'maclary';
 import { Snippet } from '&entities/Snippet';
+import { User } from '&entities/User';
 import {
     buildExecuteModal,
     buildExecuteResultPayload,
@@ -79,57 +80,63 @@ export class EvaluatorAction extends Action {
         }
 
         if (action === 'save') {
-            const repository = this.container.database.repository(Snippet);
+            const snippetRepository =
+                this.container.database.repository(Snippet);
+            const user = await this.container.database
+                .repository(User)
+                .ensureUser(button.user.id, { relations: ['snippets'] });
 
-            const count = await repository.countBy({ userId: button.user.id });
-
-            if (count >= 25)
+            if (user.snippets.length >= 25) {
                 return button.reply({
                     content:
                         'You have reached the maximum snippet limit, delete some snippets to save more.',
                     ephemeral: true,
                 });
+            }
 
-            const existing = await repository.findOneBy({
-                userId: button.user.id,
-                language: options.language.key,
-                code: options.code,
-                input: options.input,
-                args: options.args,
-            });
-
-            if (existing)
+            const isExistingSnippet = user.snippets.some(
+                snippet =>
+                    snippet.language === options.language.key &&
+                    snippet.code === options.code &&
+                    snippet.input === options.input &&
+                    snippet.args === options.args
+            );
+            if (isExistingSnippet) {
                 return button.reply({
                     content: 'You already have this snippet saved.',
                     ephemeral: true,
                 });
+            }
 
-            const modal = buildSnippetSaveModal(button.message.id);
-            await button.showModal(modal);
+            const nameModal = buildSnippetSaveModal(button.message.id);
+            await button.showModal(nameModal);
 
-            const hour = 3_600_000;
-            const submit = await button.awaitModalSubmit({ time: hour });
+            const submit = await button
+                .awaitModalSubmit({ time: 3_600_000 })
+                .catch(() => null);
             if (!submit) return void 0;
 
             const name = submit.fields.getTextInputValue('name');
-
-            if (name.length < 4 || name.length > 25)
-                return button.editReply(
-                    'Snippet names must be between 4 and 25 characters.'
-                );
+            if (name.length < 4 || name.length > 25) {
+                return submit.reply({
+                    content:
+                        'Snippet names must be between 4 and 25 characters.',
+                    ephemeral: true,
+                });
+            }
 
             const snippet = new Snippet();
-            snippet.id = button.message.id;
-            snippet.userId = button.user.id;
+            snippet.id = submit.id;
+            snippet.user = user;
             snippet.name = name;
             snippet.language = options.language.key;
             snippet.code = options.code;
             snippet.input = options.input;
             snippet.args = options.args;
-            await repository.save(snippet);
+            await snippetRepository.save(snippet);
 
             return submit.reply({
-                content: 'Snippet saved successfully.',
+                content: `Snippet saved successfully as \`${name}\`.`,
                 ephemeral: true,
             });
         }

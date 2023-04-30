@@ -4,6 +4,7 @@ import { ButtonStyle, ComponentType } from 'discord.js';
 import Fuse from 'fuse.js';
 import { Command } from 'maclary';
 import { Snippet } from '&entities/Snippet';
+import { User } from '&entities/User';
 import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
 
 export class SnippetDeleteCommand extends Command<
@@ -37,10 +38,16 @@ export class SnippetDeleteCommand extends Command<
 
         let snippets = this._cache.get(autocomplete.user.id);
         if (!snippets) {
-            const repository = this.container.database.repository(Snippet);
-            snippets = await repository.findBy({
-                userId: autocomplete.user.id,
-            });
+            const user = await this.container.database
+                .repository(User)
+                .findOne({
+                    where: { id: autocomplete.user.id },
+                    relations: ['snippets'],
+                });
+            if (!user) return autocomplete.respond([]);
+
+            snippets = user.snippets;
+
             this._cache.set(autocomplete.user.id, snippets);
             setTimeout(
                 () => this._cache.delete(autocomplete.user.id),

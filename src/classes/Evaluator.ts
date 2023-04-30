@@ -1,12 +1,12 @@
 import { clearTimeout, setTimeout } from 'node:timers';
-import type { Message, User } from 'discord.js';
+import type * as Discord from 'discord.js';
 import { container } from 'maclary';
-import { Statistics } from '&entities/Statistics';
+import { User } from '&entities/User';
 import type { Executor } from '&services/Executor';
 
 export class Evaluator {
-    public readonly user: User;
-    public readonly message: Message;
+    public readonly user: Discord.User;
+    public readonly message: Discord.Message;
 
     private _timeout?: NodeJS.Timeout;
     public readonly startedAt = new Date();
@@ -14,7 +14,7 @@ export class Evaluator {
 
     public history: Executor.ExecuteResult[] = [];
 
-    public constructor(user: User, message: Message) {
+    public constructor(user: Discord.User, message: Discord.Message) {
         this.user = user;
         this.message = message;
     }
@@ -33,9 +33,8 @@ export class Evaluator {
         const result = await container.executor.execute(options);
         this.history.push(result);
 
-        const repository = container.database.repository(Statistics);
-        void repository.appendLanguage(this.user.id, options.language);
-        void repository.incrementEvaluatorCount(this.user.id);
+        const users = container.database.repository(User);
+        void users.appendUsedLanguage(this.user.id, options.language);
 
         return result;
     }

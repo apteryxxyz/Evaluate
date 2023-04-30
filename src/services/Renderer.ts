@@ -5,7 +5,7 @@ import { container } from 'maclary';
 import type { Browser } from 'puppeteer';
 import puppeteer from 'puppeteer';
 import { Database } from './Database';
-import { Statistics } from '&entities/Statistics';
+import { User } from '&entities/User';
 
 /** Render code snippets to images. */
 export class Renderer {
@@ -27,8 +27,8 @@ export class Renderer {
 
         if (typeof userId === 'string') {
             void Database.waitFor().then(database => {
-                const repository = database.repository(Statistics);
-                void repository.incrementCaptureCount(userId);
+                const users = database.repository(User);
+                void users.incrementCaptureCount(userId);
             });
         }
 

@@ -8,8 +8,8 @@ export const dataSource = new DataSource({
     database: `database/db.sqlite`,
     entities: ['./build/entities/*.js'],
     migrations: ['./database/migrations/*.js'],
-    migrationsTableName: 'history',
-    metadataTableName: 'metadata',
+    migrationsTableName: 'typeorm_history',
+    metadataTableName: 'typeorm_metadata',
 });
 
 /** Handle the database and data source. */

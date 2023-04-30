@@ -5,7 +5,7 @@ import { container } from 'maclary';
 import type { PistonExecuteData, PistonExecuteResult } from 'piston-api-client';
 import { PistonClient } from 'piston-api-client';
 import { Database } from './Database';
-import { Statistics } from '&entities/Statistics';
+import { User } from '&entities/User';
 import { formatLanguageName, formatRuntimeName } from '&functions/formatNames';
 
 /** Handle language fetching and code executing. */
@@ -25,8 +25,8 @@ export class Executor {
     private async _updatePopularLanguages() {
         await Database.waitFor();
 
-        const repository = container.database.repository(Statistics);
-        const languageIds = await repository.getMostUsedLanguages();
+        const users = container.database.repository(User);
+        const languageIds = await users.getMostUsedLanguages();
         const _mapper = (id: string) => container.executor.findLanguage(id);
         const languages = await Promise.all(languageIds.map(_mapper));
         this._popularLanguages = languages.filter(

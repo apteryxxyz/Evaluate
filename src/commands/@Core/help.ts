@@ -1,7 +1,7 @@
 import type { ApplicationCommand } from 'discord.js';
 import { EmbedBuilder } from 'discord.js';
 import { Command } from 'maclary';
-import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
+import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class HelpCommand extends Command<
     Command.Type.ChatInput,
@@ -14,7 +14,7 @@ export class HelpCommand extends Command<
             name: 'help',
             description: 'View a list of commands and useful links.',
 
-            preconditions: [IncrementCommandCount],
+            preconditions: [BeforeCommand],
         });
     }
 

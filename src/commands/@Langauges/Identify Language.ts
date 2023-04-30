@@ -2,7 +2,7 @@ import type { EmbedBuilder } from '@discordjs/builders';
 import { Command } from 'maclary';
 import { buildIdenifiedEmbed } from '&factories/identify';
 import { extractCodeBlocks } from '&functions/codeBlock';
-import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
+import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class IdentifyLanguageCommand extends Command<
     Command.Type.ContextMenu,
@@ -16,7 +16,7 @@ export class IdentifyLanguageCommand extends Command<
             description:
                 'Attempt to identify the programming languages in any number of code blocks/message content.',
 
-            preconditions: [IncrementCommandCount],
+            preconditions: [BeforeCommand],
         });
     }
 

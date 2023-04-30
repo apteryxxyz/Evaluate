@@ -1,5 +1,5 @@
 import { Command } from 'maclary';
-import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
+import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class PingCommand extends Command<
     Command.Type.ChatInput,
@@ -12,7 +12,7 @@ export class PingCommand extends Command<
             name: 'ping',
             description: 'Pong! Shows the latency and ping for the bot.',
 
-            preconditions: [IncrementCommandCount],
+            preconditions: [BeforeCommand],
         });
     }
 

@@ -1,8 +1,9 @@
 import { EmbedBuilder } from '@discordjs/builders';
 import ms from 'enhanced-ms';
 import { Command } from 'maclary';
+import { Snippet } from '&entities/Snippet';
 import { User } from '&entities/User';
-import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
+import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class StatisticsCommand extends Command<
     Command.Type.ChatInput,
@@ -15,7 +16,7 @@ export class StatisticsCommand extends Command<
             name: 'statistics',
             description: 'Shows some statistics for the bot.',
 
-            preconditions: [IncrementCommandCount],
+            preconditions: [BeforeCommand],
         });
     }
 
@@ -38,6 +39,10 @@ export class StatisticsCommand extends Command<
             .repository(User)
             .getStatisticsTotals();
 
+        const snippetCount = await this.container.database
+            .repository(Snippet)
+            .count();
+
         const language = (mostUsedLanguage
             ? await this.container.executor.findLanguage(mostUsedLanguage)
             : undefined) ?? { name: 'None' };
@@ -53,8 +58,9 @@ export class StatisticsCommand extends Command<
                 buildField('Server Count', serverCount),
                 buildField('User Count', userCount),
                 buildField('Commands Used', commandCount),
-                buildField('Evaluation Count', evaluationCount),
-                buildField('Capture Count', captureCount),
+                buildField('Code Executed', evaluationCount),
+                buildField('Captures Rendered', captureCount),
+                buildField('Snippets Saved', snippetCount),
                 buildField('Most Used Language', language.name),
             ]);
 

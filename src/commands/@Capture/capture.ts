@@ -7,7 +7,7 @@ import { TextInputStyle } from 'discord.js';
 import type { Action } from 'maclary';
 import { Command } from 'maclary';
 import { buildRenderAttachmentPayload } from '&factories/renderer';
-import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
+import { BeforeCommand } from '&preconditions/BeforeCommand';
 import { Renderer } from '&services/Renderer';
 
 export class Capture extends Command<
@@ -21,7 +21,7 @@ export class Capture extends Command<
             name: 'capture',
             description: 'Convert a snippet of code into a beautiful image.',
 
-            preconditions: [IncrementCommandCount],
+            preconditions: [BeforeCommand],
             options: [
                 {
                     type: Command.OptionType.String,

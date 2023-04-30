@@ -4,7 +4,7 @@ import { inspect } from 'node:util';
 import { EmbedBuilder } from 'discord.js';
 import { Command, Preconditions } from 'maclary';
 import { env } from '../../env';
-import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
+import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class EvalCommand extends Command<
     Command.Type.ChatInput,
@@ -18,7 +18,7 @@ export class EvalCommand extends Command<
             description:
                 'Evaluate JavaScript code in the context of this command.',
 
-            preconditions: [Preconditions.BotOwnerOnly, IncrementCommandCount],
+            preconditions: [Preconditions.BotOwnerOnly, BeforeCommand],
             options: [
                 {
                     type: Command.OptionType.String,
@@ -53,7 +53,7 @@ export class EvalCommand extends Command<
             if (!hasAwait && !hasResolve) {
                 output = eval(script);
             } else if (hasReturn) {
-                output = eval(`(async()=>{\${script}})()`);
+                output = eval(`(async()=>{${script}})()`);
             } else if (hasResolve) {
                 output = new Promise((resolve, reject) => {
                     void [resolve, reject];

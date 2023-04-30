@@ -5,7 +5,7 @@ import { LRUCache } from 'lru-cache';
 import { Command } from 'maclary';
 import { Snippet } from '&entities/Snippet';
 import { User } from '&entities/User';
-import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
+import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class SnippetDeleteCommand extends Command<
     Command.Type.ChatInput,
@@ -18,7 +18,7 @@ export class SnippetDeleteCommand extends Command<
             name: 'delete',
             description: 'Delete any one of your saved code snippets.',
 
-            preconditions: [IncrementCommandCount],
+            preconditions: [BeforeCommand],
             options: [
                 {
                     type: Command.OptionType.String,

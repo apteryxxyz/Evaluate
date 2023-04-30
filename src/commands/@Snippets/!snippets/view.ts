@@ -4,7 +4,7 @@ import { Command } from 'maclary';
 import { Snippet } from '&entities/Snippet';
 import { User } from '&entities/User';
 import { buildViewSnippetPayload } from '&factories/snippet/payload';
-import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
+import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class SnippetViewCommand extends Command<
     Command.Type.ChatInput,
@@ -17,7 +17,7 @@ export class SnippetViewCommand extends Command<
             name: 'view',
             description: 'View any one of your saved code snippets.',
 
-            preconditions: [IncrementCommandCount],
+            preconditions: [BeforeCommand],
             options: [
                 {
                     type: Command.OptionType.String,

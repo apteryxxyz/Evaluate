@@ -1,6 +1,6 @@
 import { Command } from 'maclary';
 import { buildExecuteModal } from '&factories/executor';
-import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
+import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class EvaluateCommand extends Command<
     Command.Type.ChatInput,
@@ -14,7 +14,7 @@ export class EvaluateCommand extends Command<
             description:
                 'Evaluate any piece of code, specify the language or let the bot attempt to detect it automatically.',
 
-            preconditions: [IncrementCommandCount],
+            preconditions: [BeforeCommand],
             options: [
                 {
                     type: Command.OptionType.String,

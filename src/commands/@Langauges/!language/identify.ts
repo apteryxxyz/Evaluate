@@ -7,7 +7,7 @@ import { TextInputStyle } from 'discord.js';
 import type { Action } from 'maclary';
 import { Command } from 'maclary';
 import { buildIdenifiedEmbed } from '&factories/identify/embed';
-import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
+import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class IdentifyCommand extends Command<
     Command.Type.ChatInput,
@@ -21,7 +21,7 @@ export class IdentifyCommand extends Command<
             description:
                 'Attempt to automatically detect the programming language of the provided code.',
 
-            preconditions: [IncrementCommandCount],
+            preconditions: [BeforeCommand],
             options: [
                 {
                     type: Command.OptionType.String,

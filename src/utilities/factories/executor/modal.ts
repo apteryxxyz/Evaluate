@@ -40,7 +40,7 @@ export function buildExecuteModal(options: Partial<Executor.ExecuteOptions>) {
         .setRequired(false)
         .setPlaceholder(strings.input)
         .setValue(options.input ?? '')
-        .setMaxLength(500);
+        .setMaxLength(450);
 
     const args = new TextInputBuilder()
         .setCustomId('args')
@@ -49,7 +49,7 @@ export function buildExecuteModal(options: Partial<Executor.ExecuteOptions>) {
         .setRequired(false)
         .setPlaceholder(strings.args)
         .setValue(options.args ?? '')
-        .setMaxLength(500);
+        .setMaxLength(450);
 
     return new ModalBuilder()
         .setTitle('Evaluate Code')

@@ -1,8 +1,5 @@
 import { Command } from 'maclary';
-import {
-    buildExecuteModal,
-    buildExecuteResultPayload,
-} from '&factories/executor';
+import { buildExecuteModal } from '&factories/executor';
 import { IncrementCommandCount } from '&preconditions/IncrementCommandCount';
 
 export class EvaluateCommand extends Command<
@@ -21,6 +18,15 @@ export class EvaluateCommand extends Command<
             options: [
                 {
                     type: Command.OptionType.String,
+                    autocomplete: true,
+                    name: 'language',
+                    description:
+                        'Specify the programming language to evaluate in, or let the bot detect it.',
+                    required: true,
+                    maxLength: 100,
+                },
+                {
+                    type: Command.OptionType.String,
                     name: 'code',
                     description:
                         'The code to evaluate, emitting this will cause a modal to appear.',
@@ -28,11 +34,17 @@ export class EvaluateCommand extends Command<
                 },
                 {
                     type: Command.OptionType.String,
-                    autocomplete: true,
-                    name: 'language',
+                    name: 'input',
+                    description: 'The input to provide to the program, if any.',
+                    maxLength: 450,
+                },
+
+                {
+                    type: Command.OptionType.String,
+                    name: 'args',
                     description:
-                        'Specify the programming language to evaluate in, or let the bot detect it.',
-                    maxLength: 100,
+                        'The additional command line arguments to provide to the program, if any.',
+                    maxLength: 450,
                 },
             ],
         });
@@ -51,28 +63,15 @@ export class EvaluateCommand extends Command<
     }
 
     public override async onSlash(input: Command.ChatInput) {
-        const code = input.options.getString('code') ?? '';
-
-        let rawLang = input.options.getString('language') ?? undefined;
-        if (!rawLang && code.length > 0)
-            rawLang = await this.container.detector.detectLanguage({
-                code,
-            });
-        const language = rawLang
-            ? await this.container.executor.findLanguage(rawLang)
-            : undefined;
-
-        if (!code || !language) {
-            const modal = buildExecuteModal({ language, code });
-            return input.showModal(modal);
-        }
-
-        const message = await input.deferReply({ fetchReply: true });
-        const evaluator = this.container.evaluators.create(input.user, message);
-
-        const options = { language, code, input: '', args: '' };
-        const result = await evaluator.runWithOptions(options);
-        const payload = await buildExecuteResultPayload(result);
-        return input.editReply(payload);
+        return input.showModal(
+            buildExecuteModal({
+                language: await this.container.executor.findLanguage(
+                    input.options.getString('language', true)
+                ),
+                code: input.options.getString('code') ?? '',
+                input: input.options.getString('input') ?? '',
+                args: input.options.getString('args') ?? '',
+            })
+        );
     }
 }

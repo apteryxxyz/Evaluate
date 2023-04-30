@@ -1,6 +1,8 @@
+import { LRUCache } from 'lru-cache';
 import { Command } from 'maclary';
-import { buildExecuteModal } from '&factories/executor';
+import { Execute } from '&builders/execute';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
+import type { Executor } from '&services/Executor';
 
 export class EvaluateCommand extends Command<
     Command.Type.ChatInput,
@@ -19,43 +21,53 @@ export class EvaluateCommand extends Command<
                 {
                     type: Command.OptionType.String,
                     autocomplete: true,
-                    name: 'language',
-                    description:
-                        'Specify the programming language to evaluate in, or let the bot detect it.',
                     required: true,
-                    maxLength: 100,
+                    name: 'language',
+                    description: Execute.Constants.strings.language,
+                    minLength: Execute.Constants.lengths.language[0],
+                    maxLength: Execute.Constants.lengths.language[1],
                 },
                 {
                     type: Command.OptionType.String,
                     name: 'code',
-                    description:
-                        'The code to evaluate, emitting this will cause a modal to appear.',
-                    maxLength: 900,
+                    description: Execute.Constants.strings.code,
+                    minLength: Execute.Constants.lengths.code[0],
+                    maxLength: Execute.Constants.lengths.code[1],
                 },
                 {
                     type: Command.OptionType.String,
                     name: 'input',
-                    description: 'The input to provide to the program, if any.',
-                    maxLength: 450,
+                    description: Execute.Constants.strings.input,
+                    minLength: Execute.Constants.lengths.input[0],
+                    maxLength: Execute.Constants.lengths.input[1],
                 },
-
                 {
                     type: Command.OptionType.String,
                     name: 'args',
-                    description:
-                        'The additional command line arguments to provide to the program, if any.',
-                    maxLength: 450,
+                    description: Execute.Constants.strings.args,
+                    minLength: Execute.Constants.lengths.args[0],
+                    maxLength: Execute.Constants.lengths.args[1],
                 },
             ],
         });
     }
 
+    private _cache = new LRUCache<string, Executor.Language[]>({
+        ttl: 1_000 * 60 * 5,
+        ttlAutopurge: true,
+    });
+
     public override async onAutocomplete(autocomplete: Command.Autocomplete) {
         const query = autocomplete.options.getFocused();
-        const langs = await this.container.executor.searchLanguages(query);
+
+        let languages = this._cache.get(autocomplete.user.id);
+        if (!languages) {
+            languages = await this.container.executor.searchLanguages(query);
+            this._cache.set(autocomplete.user.id, languages);
+        }
 
         return autocomplete.respond(
-            langs.map(lang => ({
+            languages.map(lang => ({
                 name: lang.name,
                 value: lang.key,
             }))
@@ -64,7 +76,7 @@ export class EvaluateCommand extends Command<
 
     public override async onSlash(input: Command.ChatInput) {
         return input.showModal(
-            buildExecuteModal({
+            new Execute.CreateModal({
                 language: await this.container.executor.findLanguage(
                     input.options.getString('language', true)
                 ),

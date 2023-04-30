@@ -13,7 +13,8 @@
             "&preconditions/*": ["./src/preconditions/*"],
             "&services/*": ["./src/services/*"],
             "&factories/*": ["./src/utilities/factories/*"],
-            "&functions/*": ["./src/utilities/functions/*"]
+            "&functions/*": ["./src/utilities/functions/*"],
+            "&builders/*": ["./src/utilities/builders/*"]
         },
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,

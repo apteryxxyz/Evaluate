@@ -1,8 +1,8 @@
 import { Collection } from 'discord.js';
 import type { Action } from 'maclary';
 import { Command } from 'maclary';
+import { Execute } from '&builders/execute';
 import { Evaluator } from '&classes/Evaluator';
-import { buildExecuteStartButton } from '&factories/executor';
 
 export class EvaluatorManager {
     public cache = new Collection<string, Evaluator>();
@@ -21,7 +21,7 @@ export class EvaluatorManager {
                 content:
                     'This evaluation command has failed to load, ' +
                     'create a new one using the button below.',
-                components: [buildExecuteStartButton()],
+                components: [new Execute.StartButton()],
                 ephemeral: true,
             });
 
@@ -32,7 +32,7 @@ export class EvaluatorManager {
                 content:
                     'This evaluate command has failed to load, ' +
                     'create a new one using the button below.',
-                components: [buildExecuteStartButton()],
+                components: [new Execute.StartButton()],
                 ephemeral: true,
             });
 
@@ -41,7 +41,7 @@ export class EvaluatorManager {
                 content:
                     'You do not have access to this evaluate command, ' +
                     'create your own using the button below.',
-                components: [buildExecuteStartButton()],
+                components: [new Execute.StartButton()],
                 ephemeral: true,
             });
 

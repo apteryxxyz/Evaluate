@@ -39,4 +39,13 @@ export class Evaluator {
 
         return result;
     }
+
+    public async capture() {
+        this.onUpdate();
+
+        return container.renderer.createRender(
+            this.history.at(-1)!,
+            this.user.id
+        );
+    }
 }

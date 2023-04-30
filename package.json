@@ -37,6 +37,7 @@
         "fuse.js": "^6.6.2",
         "husky": "^8.0.3",
         "lexure": "^0.17.0",
+        "lru-cache": "^9.1.1",
         "maclary": "1.0.3-next.26690db.0",
         "openai": "^3.2.1",
         "piston-api-client": "^2.0.1",

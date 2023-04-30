@@ -1,6 +1,7 @@
 import { Buffer } from 'node:buffer';
 import { setTimeout } from 'node:timers';
 import { URL, URLSearchParams } from 'node:url';
+import { LRUCache } from 'lru-cache';
 import { container } from 'maclary';
 import type { Browser } from 'puppeteer';
 import puppeteer from 'puppeteer';
@@ -10,7 +11,11 @@ import { User } from '&entities/User';
 /** Render code snippets to images. */
 export class Renderer {
     private _browser?: Browser;
-    private _cache = new Map<string, string | Buffer>();
+    private _cache = new LRUCache({
+        max: 100,
+        maxSize: 1_024 * 1_024 * 10,
+        sizeCalculation: (value: string | Buffer) => value.length,
+    });
 
     public constructor() {
         (async () => {

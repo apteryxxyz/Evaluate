@@ -28,6 +28,9 @@ dependencies:
   lexure:
     specifier: ^0.17.0
     version: 0.17.0
+  lru-cache:
+    specifier: ^9.1.1
+    version: 9.1.1
   maclary:
     specifier: 1.0.3-next.26690db.0
     version: 1.0.3-next.26690db.0(discord.js@14.9.0)
@@ -2836,6 +2839,11 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+
+  /lru-cache@9.1.1:
+    resolution: {integrity: sha512-65/Jky17UwSb0BuB9V+MyDpsOtXKmYwzhyl+cOa9XUiI4uV2Ouy/2voFP3+al0BjZbJgMBD8FojMpAf+Z+qn4A==}
+    engines: {node: 14 || >=16.14}
+    dev: false
 
   /maclary@1.0.3-next.26690db.0(discord.js@14.9.0):
     resolution: {integrity: sha512-TcJMWT9zdQAu5Psx6uoHZRBodk82lK2o92GgxcfyqXjjYuBL4Xx+3sgxtYh4kNKTRM/pVcj0JaqnVE7nuvAlog==}

@@ -1,7 +1,7 @@
-import { setTimeout } from 'node:timers';
 import { ActionRowBuilder, ButtonBuilder } from '@discordjs/builders';
 import { ButtonStyle, ComponentType } from 'discord.js';
 import Fuse from 'fuse.js';
+import { LRUCache } from 'lru-cache';
 import { Command } from 'maclary';
 import { Snippet } from '&entities/Snippet';
 import { User } from '&entities/User';
@@ -31,7 +31,10 @@ export class SnippetDeleteCommand extends Command<
         });
     }
 
-    private _cache: Map<string, Snippet[]> = new Map();
+    private _cache = new LRUCache<string, Snippet[]>({
+        ttl: 1_000 * 60 * 5,
+        ttlAutopurge: true,
+    });
 
     public override async onAutocomplete(autocomplete: Command.Autocomplete) {
         const query = autocomplete.options.getFocused();
@@ -40,19 +43,11 @@ export class SnippetDeleteCommand extends Command<
         if (!snippets) {
             const user = await this.container.database
                 .repository(User)
-                .findOne({
-                    where: { id: autocomplete.user.id },
-                    relations: ['snippets'],
-                });
+                .ensureUser(autocomplete.user.id, { relations: ['snippets'] });
             if (!user) return autocomplete.respond([]);
 
             snippets = user.snippets;
-
             this._cache.set(autocomplete.user.id, snippets);
-            setTimeout(
-                () => this._cache.delete(autocomplete.user.id),
-                1_000 * 60 * 5
-            );
         }
 
         if (!snippets.length) return autocomplete.respond([]);
@@ -87,7 +82,6 @@ export class SnippetDeleteCommand extends Command<
                 ephemeral: true,
             });
 
-        // const payload = buildDeleteSnippetPayload(snippet);
         const button = new ActionRowBuilder<ButtonBuilder>().setComponents(
             new ButtonBuilder()
                 .setCustomId('_')
@@ -98,6 +92,7 @@ export class SnippetDeleteCommand extends Command<
         const reply = await input.reply({
             content: 'Are you sure you want to delete this snippet?',
             components: [button],
+            ephemeral: true,
             fetchReply: true,
         });
 

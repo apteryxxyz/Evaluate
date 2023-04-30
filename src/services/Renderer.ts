@@ -51,10 +51,10 @@ export class Renderer {
         // Modify the pages contents
         await page.evaluate(() => {
             const selectors = [
-                '[class*="Frame_frame"]',
-                '[class*="Editor_textarea"]',
-                '[class*="ResizableFrame_windowSizeDragPoint"]',
-                '[class*="Controls_controls"]',
+                '[class*="Frame_frame_"]',
+                '[class*="Editor_textarea_"]',
+                '[class*="ResizableFrame_windowSizeDragPoint_"]',
+                '[class*="Controls_controls_"]',
             ];
 
             // Keep the frame at a responsive width

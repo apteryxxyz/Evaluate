@@ -65,13 +65,12 @@ export class Capture extends Command<
             .setLabel('Code')
             .setStyle(TextInputStyle.Paragraph)
             .setRequired(true)
-            .setMinLength(10)
-            .setMaxLength(1_000)
+            .setMaxLength(900)
             .setPlaceholder('Type the code to render...');
 
         return new ModalBuilder()
             .setCustomId('_')
-            .setTitle('Identify Language')
+            .setTitle('Capture COde')
             .setComponents(
                 new ActionRowBuilder<TextInputBuilder>().addComponents(code)
             );

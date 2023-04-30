@@ -19,7 +19,7 @@ export class Capture extends Command<
             type: Command.Type.ChatInput,
             kinds: [Command.Kind.Slash],
             name: 'capture',
-            description: 'Convert a snippet of code into a beautiful image.',
+            description: 'Convert a piece of code into a beautiful image.',
 
             preconditions: [BeforeCommand],
             options: [

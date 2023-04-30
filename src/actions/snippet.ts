@@ -10,8 +10,9 @@ export class SnippetAction extends Action {
     public override async onButton(button: Action.Button) {
         const [, snippetId, action] = button.customId.split(',');
 
-        const repository = this.container.database.repository(Snippet);
-        const snippet = await repository.findOneBy({ id: snippetId });
+        const snippet = await this.container.database
+            .repository(Snippet)
+            .findOneBy({ id: snippetId });
         if (!snippet)
             return button.reply({
                 content: 'Snippet no longer exists, try again.',

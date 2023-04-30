@@ -72,8 +72,9 @@ export class SnippetViewCommand extends Command<
         this._cache.delete(input.user.id);
 
         const id = input.options.getString('name', true);
-        const repository = this.container.database.repository(Snippet);
-        const snippet = await repository.findOneBy({ id });
+        const snippet = await this.container.database
+            .repository(Snippet)
+            .findOneBy({ id });
 
         if (!snippet)
             return input.reply({

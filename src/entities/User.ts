@@ -1,5 +1,5 @@
-import type { FindOneOptions } from 'typeorm';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import type { FindOneOptions } from 'typeorm';
 import { Base, createRepository } from './Base';
 import { Snippet } from './Snippet';
 import type { Executor } from '&services/Executor';

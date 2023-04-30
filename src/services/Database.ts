@@ -35,8 +35,9 @@ export class Database {
     public repository<E extends object, R extends object>(
         target: EntityTarget<E> & { repository: R }
     ) {
-        const repository = this.manager.getRepository(target);
-        return repository.extend(target.repository);
+        return this.manager
+            .getRepository(target) //
+            .extend(target.repository);
     }
 
     /** Ensure that the database has been initialise. */

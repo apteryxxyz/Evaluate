@@ -33,8 +33,9 @@ export class Evaluator {
         const result = await container.executor.execute(options);
         this.history.push(result);
 
-        const users = container.database.repository(User);
-        void users.appendUsedLanguage(this.user.id, options.language);
+        void container.database
+            .repository(User)
+            .appendUsedLanguage(this.user.id, options.language);
 
         return result;
     }

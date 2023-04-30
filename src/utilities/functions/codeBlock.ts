@@ -1,11 +1,13 @@
 import { escapeCodeBlock } from 'discord.js';
 
+/** Wrap a piece of content in a code block. */
 export function codeBlock(content: string, language = '') {
     return `\`\`\`${language.toLowerCase()}\n${escapeCodeBlock(
         content.length > 900 ? content.slice(0, 900) + '...' : content
     )}\n\`\`\``;
 }
 
+/** Extract the contents of every code block within a piece of content. */
 export function extractCodeBlocks(content: string) {
     const regex = /`{3}([\w#+]*)\n([\S\s]*?)\n`{3}|`([^\n`]+)`/gi;
 

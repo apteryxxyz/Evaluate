@@ -12,7 +12,7 @@ export class EvaluateCommand extends Command<
             kinds: [Command.Kind.Slash],
             name: 'evaluate',
             description:
-                'Evaluate any piece of code, specify the language or let the bot attempt to detect it automatically.',
+                'Evaluate any piece of code in any language with optional input and command line arguments.',
 
             preconditions: [BeforeCommand],
             options: [

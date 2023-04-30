@@ -32,8 +32,9 @@ export class Renderer {
 
         if (typeof userId === 'string') {
             void Database.waitFor().then(database => {
-                const users = database.repository(User);
-                void users.incrementCaptureCount(userId);
+                void database
+                    .repository(User) //
+                    .incrementCaptureCount(userId);
             });
         }
 

@@ -80,7 +80,7 @@ export class EvalCommand extends Command<
         }
 
         const resultEmbed = new EmbedBuilder()
-            .setTitle('Evaluation Result')
+            .setTitle('Developer Evaluation Result')
             .setColor(isSuccess ? 0x2fc086 : 0xff0000)
             .addFields([
                 {

@@ -36,14 +36,14 @@ export class Pastebin {
     public async deletePaste(id: string) {
         await Database.waitFor();
 
-        const repository = container.database.repository(Paste);
-        const paste = await repository.findOneBy({ id });
+        const pasteRepository = container.database.repository(Paste);
+        const paste = await pasteRepository.findOneBy({ id });
         if (!paste) return;
 
         await Pastebin.waitFor();
         this._client.deletePaste(id, paste.editCode);
 
-        await repository.remove(paste);
+        await pasteRepository.remove(paste);
     }
 
     /** Delete all expired pastes. */

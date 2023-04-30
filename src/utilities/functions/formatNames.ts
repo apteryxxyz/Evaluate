@@ -89,6 +89,7 @@ const formattedLanguageNames = {
     zig: 'Zig',
 };
 
+/** Prettierify a language name, returns itself if not a key. */
 export function formatLanguageName(language: string) {
     return isKeyof(formattedLanguageNames, language)
         ? formattedLanguageNames[language]
@@ -106,6 +107,7 @@ const formattedRuntimeNames = {
     pwsh: 'PowerShell',
 };
 
+/** Prettierify a runtime name, returns itself if not a key. */
 export function formatRuntimeName(runtime: string) {
     return isKeyof(formattedRuntimeNames, runtime)
         ? formattedRuntimeNames[runtime]

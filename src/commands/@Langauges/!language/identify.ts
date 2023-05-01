@@ -1,12 +1,6 @@
-import {
-    ActionRowBuilder,
-    ModalBuilder,
-    TextInputBuilder,
-} from '@discordjs/builders';
-import { TextInputStyle } from 'discord.js';
 import type { Action } from 'maclary';
 import { Command } from 'maclary';
-import { buildIdenifiedEmbed } from '&factories/identify/embed';
+import { Identify } from '&builders/identify';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class IdentifyCommand extends Command<
@@ -26,9 +20,9 @@ export class IdentifyCommand extends Command<
                 {
                     type: Command.OptionType.String,
                     name: 'code',
-                    description: 'The code to identify.',
-                    minLength: 10,
-                    maxLength: 900,
+                    description: Identify.Constants.strings.code,
+                    minLength: Identify.Constants.lengths.code[0],
+                    maxLength: Identify.Constants.lengths.code[1],
                 },
             ],
         });
@@ -39,7 +33,7 @@ export class IdentifyCommand extends Command<
         let code = input.options.getString('code');
 
         if (!code) {
-            await input.showModal(this._buildModal());
+            await input.showModal(new Identify.StartModal());
 
             const hour = 3_600_000;
             const submit = await input.awaitModalSubmit({ time: hour });
@@ -48,27 +42,15 @@ export class IdentifyCommand extends Command<
         }
 
         await action.deferReply();
-        const result = await this.container.detector.detectLanguage({ code });
-
-        const embed = buildIdenifiedEmbed(code, result);
-        return action.editReply({ embeds: [embed] });
-    }
-
-    private _buildModal() {
-        const code = new TextInputBuilder()
-            .setCustomId('code')
-            .setLabel('Code')
-            .setStyle(TextInputStyle.Paragraph)
-            .setRequired(true)
-            .setMinLength(10)
-            .setMaxLength(1_000)
-            .setPlaceholder('Type the source code...');
-
-        return new ModalBuilder()
-            .setCustomId('_')
-            .setTitle('Identify Language')
-            .setComponents(
-                new ActionRowBuilder<TextInputBuilder>().addComponents(code)
-            );
+        const options = { code };
+        return action.editReply({
+            embeds: [
+                new Identify.ResultEmbed({
+                    ...options,
+                    result: await this.container.detector //
+                        .detectLanguage(options),
+                }),
+            ],
+        });
     }
 }

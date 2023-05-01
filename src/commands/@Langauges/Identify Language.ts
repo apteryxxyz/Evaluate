@@ -1,6 +1,6 @@
 import type { EmbedBuilder } from '@discordjs/builders';
 import { Command } from 'maclary';
-import { buildIdenifiedEmbed } from '&factories/identify';
+import { Identify } from '&builders/identify';
 import { extractCodeBlocks } from '&functions/codeBlock';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 
@@ -28,12 +28,15 @@ export class IdentifyLanguageCommand extends Command<
         await menu.deferReply();
 
         const embeds: EmbedBuilder[] = [];
-        for (const match of matches) {
-            const result = await this.container.detector.detectLanguage({
-                code: match.code,
-            });
-
-            embeds.push(buildIdenifiedEmbed(match.code, result));
+        for (const { code, language } of matches) {
+            const options = { code, language: language ?? undefined };
+            embeds.push(
+                new Identify.ResultEmbed({
+                    ...options,
+                    result: await this.container.detector //
+                        .detectLanguage(options),
+                })
+            );
         }
 
         return menu.editReply({ embeds });

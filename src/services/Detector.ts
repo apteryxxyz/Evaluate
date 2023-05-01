@@ -1,9 +1,10 @@
 import process from 'node:process';
 import { setTimeout } from 'node:timers';
 import { ModelOperations } from '@vscode/vscode-languagedetection';
+import flourite from 'flourite';
 import { container } from 'maclary';
 import { Configuration, OpenAIApi } from 'openai';
-import { detect as detectUsingRegex } from 'program-language-detector';
+import { formatLanguageName } from '&functions/formatNames';
 
 /** Handle detecting programming languages. */
 export class Detector {
@@ -12,7 +13,10 @@ export class Detector {
 
     public constructor() {
         (async () => {
-            this._vscode = new ModelOperations();
+            this._vscode = new ModelOperations({
+                minContentSize: 0,
+            });
+
             this._openai = new OpenAIApi(
                 new Configuration({
                     basePath: process.env.OPENAI_BASE_PATH,
@@ -24,14 +28,16 @@ export class Detector {
 
     /** Attempt to identify the programming language of a piece of code. */
     public async detectLanguage(options: Detector.DetectOptions) {
-        return options.usePaid
+        const result = await (options.usePaid
             ? this._paidDetection(options.code)
-            : this._freeDetection(options.code);
+            : this._freeDetection(options.code, options.language));
+        return result ? formatLanguageName(result) : undefined;
     }
 
-    private _freeDetection(code: string) {
+    private _freeDetection(code: string, language?: string) {
         return Promise.resolve(
-            this._detectUsingRegex(code) ?? //
+            this._detectUsingRegex(code) ??
+                language ??
                 this._detectUsingVscode(code)
         );
     }
@@ -43,7 +49,7 @@ export class Detector {
     }
 
     private _detectUsingRegex(code: string) {
-        const result = detectUsingRegex(code);
+        const result = flourite(code).language;
         return result === 'Unknown' ? undefined : result;
     }
 
@@ -63,16 +69,17 @@ export class Detector {
                 { role: 'user', content: code },
             ],
         }).then(({ data }) => {
-            const result = data.choices[0].message?.content.toLowerCase();
-            if (!result || result.includes('unknown')) return undefined;
+            const result = data.choices[0].message?.content;
+            if (!result || result.toLowerCase().includes('unknown'))
+                return undefined;
             return result;
         });
     }
 
     private _createSystemPrompt() {
         return `Your job is to detect the programming language of the users codeted code.
-You should only ever return the name of the language, all lowercase, no period.
-If the programming language is not found, return "unknown".`;
+You should only ever return the name of the language, formatted and captialized, no period.
+If the programming language is not found, return "Unknown".`;
     }
 
     /** Ensure that the detector has been initialise. */
@@ -88,6 +95,7 @@ If the programming language is not found, return "unknown".`;
 export namespace Detector {
     export interface DetectOptions {
         code: string;
+        language?: string;
         usePaid?: boolean;
     }
 }

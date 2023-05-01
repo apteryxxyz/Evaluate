@@ -1,9 +1,9 @@
 import Fuse from 'fuse.js';
 import { LRUCache } from 'lru-cache';
 import { Command } from 'maclary';
+import { Snippets } from '&builders/snippets';
 import { Snippet } from '&entities/Snippet';
 import { User } from '&entities/User';
-import { buildViewSnippetPayload } from '&factories/snippet/payload';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class SnippetViewCommand extends Command<
@@ -31,7 +31,7 @@ export class SnippetViewCommand extends Command<
     }
 
     private _cache = new LRUCache<string, Snippet[]>({
-        ttl: 1_000 * 60 * 5,
+        ttl: 1_000 * 10,
         ttlAutopurge: true,
     });
 
@@ -82,7 +82,9 @@ export class SnippetViewCommand extends Command<
                 ephemeral: true,
             });
 
-        const payload = await buildViewSnippetPayload(snippet);
-        return input.reply(payload);
+        return input.reply({
+            embeds: [await new Snippets.ViewEmbed(snippet)],
+            components: [new Snippets.ViewComponents(snippet)],
+        });
     }
 }

@@ -1,6 +1,6 @@
 import { Action } from 'maclary';
 import { Execute } from '&builders/execute';
-import { Snip } from '&builders/snippet';
+import { Snippets } from '&builders/snippets';
 import { Snippet } from '&entities/Snippet';
 import { User } from '&entities/User';
 
@@ -93,7 +93,7 @@ export class ExecuteAction extends Action {
                 });
             }
 
-            await click.showModal(new Snip.SaveModal());
+            await click.showModal(new Snippets.SaveModal());
             const submit = await click
                 .awaitModalSubmit({ time: 3_600_000 })
                 .catch(() => null);

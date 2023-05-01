@@ -1,10 +1,11 @@
-import { ActionRowBuilder, ButtonBuilder } from '@discordjs/builders';
+import { ButtonBuilder } from '@discordjs/builders';
 import { ButtonStyle, ComponentType } from 'discord.js';
 import Fuse from 'fuse.js';
 import { LRUCache } from 'lru-cache';
 import { Command } from 'maclary';
 import { Snippet } from '&entities/Snippet';
 import { User } from '&entities/User';
+import { wrapInRow } from '&functions/builderHelpers';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class SnippetDeleteCommand extends Command<
@@ -32,7 +33,7 @@ export class SnippetDeleteCommand extends Command<
     }
 
     private _cache = new LRUCache<string, Snippet[]>({
-        ttl: 1_000 * 60 * 5,
+        ttl: 1_000 * 10,
         ttlAutopurge: true,
     });
 
@@ -82,16 +83,16 @@ export class SnippetDeleteCommand extends Command<
                 ephemeral: true,
             });
 
-        const button = new ActionRowBuilder<ButtonBuilder>().setComponents(
-            new ButtonBuilder()
-                .setCustomId('_')
-                .setLabel('Delete')
-                .setStyle(ButtonStyle.Danger)
-        );
-
         const reply = await input.reply({
             content: 'Are you sure you want to delete this snippet?',
-            components: [button],
+            components: [
+                wrapInRow(
+                    new ButtonBuilder()
+                        .setCustomId('_')
+                        .setLabel('Delete')
+                        .setStyle(ButtonStyle.Danger)
+                ),
+            ],
             ephemeral: true,
             fetchReply: true,
         });

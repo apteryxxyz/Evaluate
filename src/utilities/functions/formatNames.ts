@@ -148,7 +148,7 @@ export function formatLanguageName<T extends string>(
     language: T
 ): T | keyof typeof LanguageNames {
     const lower = language.toLowerCase();
-    for (const [name, values] of Object.entries(RuntimeNames))
+    for (const [name, values] of Object.entries(LanguageNames))
         if (values.includes(lower)) return name as keyof typeof LanguageNames;
     return language;
 }

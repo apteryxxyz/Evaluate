@@ -60,10 +60,10 @@ export class EvaluateCommand extends Command<
     public override async onAutocomplete(autocomplete: Command.Autocomplete) {
         const query = autocomplete.options.getFocused();
 
-        let languages = this._cache.get(autocomplete.user.id);
+        let languages = this._cache.get(query);
         if (!languages) {
             languages = await this.container.executor.searchLanguages(query);
-            this._cache.set(autocomplete.user.id, languages);
+            this._cache.set(query, languages);
         }
 
         return autocomplete.respond(

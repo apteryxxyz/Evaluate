@@ -12,6 +12,7 @@ export class Pastebin {
     public constructor() {
         (async () => {
             await this._client.createToken();
+            void this.deleteExpiredPastes();
             setInterval(() => this.deleteExpiredPastes(), 1_000 * 60 * 60);
         })();
     }
@@ -26,17 +27,17 @@ export class Pastebin {
         entity.editCode = paste.editCode;
         entity.lifetime = options.lifetime ?? -1;
 
-        await Database.waitFor();
-        await container.database.repository(Paste).save(entity);
+        const database = await Database.waitFor();
+        await database.repository(Paste).save(entity);
 
         return `https://rentry.co/${paste.url}`;
     }
 
     /** Delete an existing paste by its ID. */
     public async deletePaste(id: string) {
-        await Database.waitFor();
+        const database = await Database.waitFor();
 
-        const pasteRepository = container.database.repository(Paste);
+        const pasteRepository = database.repository(Paste);
         const paste = await pasteRepository.findOneBy({ id });
         if (!paste) return;
 
@@ -48,8 +49,8 @@ export class Pastebin {
 
     /** Delete all expired pastes. */
     public async deleteExpiredPastes() {
-        await Database.waitFor();
-        const pastes = await container.database
+        const database = await Database.waitFor();
+        const pastes = await database
             .repository(Paste)
             .findBy({ lifetime: new FindOperator('moreThan', 0) });
 

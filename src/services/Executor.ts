@@ -23,12 +23,12 @@ export class Executor {
     }
 
     private async _updatePopularLanguages() {
-        await Database.waitFor();
+        const database = await Database.waitFor();
 
-        const languageIds = await container.database
+        const languageIds = await database
             .repository(User)
             .getMostUsedLanguages();
-        const _mapper = (id: string) => container.executor.findLanguage(id);
+        const _mapper = (id: string) => this.findLanguage(id);
         const languages = await Promise.all(languageIds.map(_mapper));
         this._popularLanguages = languages.filter(
             lang => lang !== undefined

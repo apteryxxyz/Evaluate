@@ -27,7 +27,8 @@ async function main() {
         Detector.waitFor(),
     ]);
 
-    await prepareClient().then(client => prepareLists(client));
+    await prepareClient();
+    prepareLists(container.client);
 }
 
 async function prepareClient() {
@@ -57,7 +58,6 @@ async function prepareClient() {
 
     Maclary.init(maclary, client);
     await client.login(process.env.DISCORD_TOKEN);
-    return client;
 }
 
 function prepareLists(client: Client<true>) {
@@ -76,11 +76,12 @@ function prepareLists(client: Client<true>) {
     });
 
     poster.startAutoPoster();
-    return poster;
+    container.poster = poster;
 }
 
 declare module 'maclary' {
     export interface Container {
         evaluators: EvaluatorManager;
+        poster: Poster;
     }
 }

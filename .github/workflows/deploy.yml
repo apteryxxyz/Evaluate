@@ -34,4 +34,5 @@ jobs:
             pnpm pull
             pnpm install
             pnpm build
+            pnpm migration:run
             pnpm pm2:reload

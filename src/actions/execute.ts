@@ -110,7 +110,8 @@ export class ExecuteAction extends Action {
 
             const snippet = new Snippet();
             snippet.id = submit.id;
-            snippet.user = user;
+            snippet.ownerId = user.id;
+            snippet.owner = user;
             snippet.name = name;
             snippet.language = options.language.key;
             snippet.code = options.code;

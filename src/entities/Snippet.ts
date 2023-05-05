@@ -8,10 +8,10 @@ export class Snippet extends Base {
     public id!: string;
 
     @Column()
-    public userId!: string;
+    public ownerId!: string;
 
     @ManyToOne(() => User, user => user.snippets)
-    public user!: User;
+    public owner!: User;
 
     @Column()
     public name!: string;

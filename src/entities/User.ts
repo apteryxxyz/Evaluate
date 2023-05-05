@@ -9,7 +9,7 @@ export class User extends Base {
     @PrimaryColumn()
     public id!: string;
 
-    @OneToMany(() => Snippet, snippet => snippet.user)
+    @OneToMany(() => Snippet, snippet => snippet.owner)
     public snippets!: Snippet[];
 
     @Column('simple-array')

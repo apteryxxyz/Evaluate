@@ -3,7 +3,8 @@ import 'reflect-metadata';
 import './env';
 // Dependencies
 import process from 'node:process';
-import { Client, GatewayIntentBits, Partials } from 'discord.js';
+import { Lists, Poster } from '@maclary/lists';
+import { ActivityType, Client, GatewayIntentBits, Partials } from 'discord.js';
 import { Maclary, container } from 'maclary';
 import { EvaluatorManager } from '&classes/EvaluatorManager';
 // Services
@@ -26,10 +27,10 @@ async function main() {
         Detector.waitFor(),
     ]);
 
-    await prepareClient();
+    await prepareClient().then(client => prepareLists(client));
 }
 
-function prepareClient() {
+async function prepareClient() {
     const client = new Client({
         intents: [
             GatewayIntentBits.Guilds,
@@ -37,6 +38,14 @@ function prepareClient() {
             GatewayIntentBits.GuildMessages,
         ],
         partials: [Partials.Channel, Partials.Reaction],
+        presence: {
+            activities: [
+                {
+                    type: ActivityType.Watching,
+                    name: 'code execution',
+                },
+            ],
+        },
     });
 
     const maclary = new Maclary({
@@ -47,7 +56,27 @@ function prepareClient() {
     });
 
     Maclary.init(maclary, client);
-    return client.login(process.env.DISCORD_TOKEN);
+    await client.login(process.env.DISCORD_TOKEN);
+    return client;
+}
+
+function prepareLists(client: Client<true>) {
+    if (process.env.NODE_ENV === 'development') return;
+
+    const lists = [
+        new Lists.UniverseList(client.user.id, process.env.UNIVERSE_LIST_KEY),
+    ];
+
+    const poster = new Poster(lists, {
+        shardCount: () => 1,
+        guildCount: () => client.guilds.cache.size,
+        userCount: () =>
+            client.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
+        voiceConnectionCount: () => 0,
+    });
+
+    poster.startAutoPoster();
+    return poster;
 }
 
 declare module 'maclary' {

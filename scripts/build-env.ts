@@ -21,9 +21,8 @@ async function main() {
 }
 
 function parseLine(line: string): [string, string] {
-    const [key, value] = line.split('=');
-    // eslint-disable-next-line prefer-const
-    let [name, type] = key.split(':');
+    let [defintion, value] = line.split('=');
+    let [name, type] = defintion.split(':');
     let zod = parseType(type);
 
     const isOptional = name.endsWith('?');
@@ -55,31 +54,28 @@ function parseType(value: string): string {
 }
 
 function wrapInQuotes(value: string) {
-    const quote = value.includes("'") ? '"' : "'";
-    return `${quote}${value}${quote}`;
+    return JSON.stringify(String(value));
 }
 
-function buildFileContent(envVars: [string, string][]) {
-    return `
-/* eslint-disable n/prefer-global/process */
-/* eslint-disable no-restricted-globals */
+function buildFileContent(vars: [string, string][]) {
+    return `/* eslint-disable unicorn/no-abusive-eslint-disable */
+/* eslint-disable */
 
 import 'dotenv-flow/config';
 import { z } from 'zod';
 
 export const envSchema = z.object({
-${envVars.map(([name, zod]) => `    ${name}: ${zod}`).join(',\n')}
+${vars.map(([name, zod]) => `    ${name}: ${zod}`).join(',\n')}
 });
 
 export type Env = z.infer<typeof envSchema>;
-
 declare global {
     namespace NodeJS {
         interface ProcessEnv extends Env {}
     }
 }
 
-export const env = envSchema.parse(process.env);
+export const env = envSchema.parse(process.env);  
 process.env = Object.assign(process.env, env);
-    `.trim();
+`;
 }

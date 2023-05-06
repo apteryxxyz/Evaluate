@@ -73,7 +73,10 @@ function getLists() {
 function prepareLists() {
     const lists = getLists();
 
-    const webhook = new Webhook(lists, { port: 3_004 });
+    const webhook = new Webhook(lists, {
+        port: Number.parseInt(process.env.PORT, 10),
+    });
+
     const poster = new Poster(lists, {
         shardCount: () => 1,
         guildCount: () => container.client.guilds.cache.size,
@@ -84,6 +87,7 @@ function prepareLists() {
             ),
         voiceConnectionCount: () => 0,
     });
+
     container.lists = { poster, webhook };
 
     poster.startAutoPoster();

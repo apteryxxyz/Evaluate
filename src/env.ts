@@ -8,6 +8,7 @@ export const envSchema = z.object({
     NODE_ENV: z
         .union([z.literal('production'), z.literal('development')])
         .default('development'),
+    PORT: z.string().regex(/\d+/).default('3000'),
     DISCORD_ID: z.string(),
     DISCORD_TOKEN: z.string(),
     DISCORD_GUILD_ID: z.string().optional(),

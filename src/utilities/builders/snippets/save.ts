@@ -9,7 +9,7 @@ export function SaveModal() {
         .setLabel('Name')
         .setStyle(TextInputStyle.Short)
         .setRequired(true)
-        .setPlaceholder(Constants.strings.name)
+        .setPlaceholder('Name for your snippet...')
         .setMinLength(Constants.lengths.name[0])
         .setMaxLength(Constants.lengths.name[1]);
 

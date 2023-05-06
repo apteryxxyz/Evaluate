@@ -30,8 +30,11 @@ export class EvalCommand extends Command<
         });
     }
 
-    public override async onPrefix(message: Command.Message) {
-        const script = message.content.split('eval')[1].trim();
+    public override async onPrefix(
+        message: Command.Message,
+        args: Command.Arguments
+    ) {
+        const script = args.rest();
         if (!script) return void message.reply('No script was provided.');
 
         let isSuccess = true;

@@ -20,31 +20,33 @@ export class EvaluateCommand extends Command<
             options: [
                 {
                     type: Command.OptionType.String,
+                    name: 'language',
+                    description: 'The language to execute in.',
                     autocomplete: true,
                     required: true,
-                    name: 'language',
-                    description: Execute.Constants.strings.language,
                     minLength: Execute.Constants.lengths.language[0],
                     maxLength: Execute.Constants.lengths.language[1],
                 },
                 {
                     type: Command.OptionType.String,
                     name: 'code',
-                    description: Execute.Constants.strings.code,
+                    description:
+                        'The code to execute, omitting this option will prompt you for the code.',
                     minLength: Execute.Constants.lengths.code[0],
                     maxLength: Execute.Constants.lengths.code[1],
                 },
                 {
                     type: Command.OptionType.String,
                     name: 'input',
-                    description: Execute.Constants.strings.input,
+                    description: 'The input to provide to the program.',
                     minLength: Execute.Constants.lengths.input[0],
                     maxLength: Execute.Constants.lengths.input[1],
                 },
                 {
                     type: Command.OptionType.String,
                     name: 'args',
-                    description: Execute.Constants.strings.args,
+                    description:
+                        'Additional command line arguments to provide to the program.',
                     minLength: Execute.Constants.lengths.args[0],
                     maxLength: Execute.Constants.lengths.args[1],
                 },

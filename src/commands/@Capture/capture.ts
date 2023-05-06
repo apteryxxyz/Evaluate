@@ -26,7 +26,7 @@ export class Capture extends Command<
                     type: Command.OptionType.String,
                     name: 'code',
                     description:
-                        'The code to convert into an image, emitting this will cause a modal to appear.',
+                        'The code to convert into an image, for multi-line code omit this option.',
                     maxLength: 900,
                 },
                 {

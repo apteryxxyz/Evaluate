@@ -8,7 +8,7 @@ export function StartModal() {
         .setCustomId('code')
         .setLabel('Code')
         .setStyle(TextInputStyle.Paragraph)
-        .setPlaceholder(Constants.strings.code + '..')
+        .setPlaceholder(Constants.placeholders.code)
         .setMinLength(Constants.lengths.code[0])
         .setMaxLength(Constants.lengths.code[1]);
 

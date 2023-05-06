@@ -23,10 +23,10 @@ export class SnippetDeleteCommand extends Command<
             options: [
                 {
                     type: Command.OptionType.String,
-                    autocomplete: true,
                     name: 'name',
-                    required: true,
                     description: 'The name of the snippet to delete.',
+                    autocomplete: true,
+                    required: true,
                 },
             ],
         });

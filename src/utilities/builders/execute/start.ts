@@ -16,7 +16,7 @@ export function CreateModal(
         .setLabel('Language')
         .setStyle(TextInputStyle.Short)
         .setRequired(true)
-        .setPlaceholder(Constants.strings.language + '..')
+        .setPlaceholder('Language to execute in...')
         .setValue(options.language?.name ?? '')
         .setMinLength(Constants.lengths.language[0])
         .setMaxLength(Constants.lengths.language[1]);
@@ -26,7 +26,7 @@ export function CreateModal(
         .setLabel('Code')
         .setStyle(TextInputStyle.Paragraph)
         .setRequired(true)
-        .setPlaceholder(Constants.strings.code + '..')
+        .setPlaceholder('Code to execute...')
         .setValue(options.code ?? '')
         .setMinLength(Constants.lengths.code[0])
         .setMaxLength(Constants.lengths.code[1]);
@@ -36,7 +36,7 @@ export function CreateModal(
         .setLabel('Input')
         .setStyle(TextInputStyle.Short)
         .setRequired(false)
-        .setPlaceholder(Constants.strings.input + '..')
+        .setPlaceholder('Input to provide to the program...')
         .setValue(options.input ?? '')
         .setMinLength(Constants.lengths.input[0])
         .setMaxLength(Constants.lengths.input[1]);
@@ -46,7 +46,7 @@ export function CreateModal(
         .setLabel('Arguments')
         .setStyle(TextInputStyle.Short)
         .setRequired(false)
-        .setPlaceholder(Constants.strings.args + '..')
+        .setPlaceholder('Additional command line arguments...')
         .setValue(options.args ?? '')
         .setMinLength(Constants.lengths.args[0])
         .setMaxLength(Constants.lengths.args[1]);

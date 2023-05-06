@@ -4,13 +4,6 @@ import { CreateModal, EditModal, StartButton } from './start';
 import type { New } from '&functions/builderHelpers';
 
 export const Constants = {
-    strings: {
-        language: 'Language to execute in.',
-        code: 'Code to execute.',
-        input: 'Input to provide to the program.',
-        args: 'Additional command line arguments.',
-    },
-
     lengths: {
         language: [0, 100],
         code: [0, 900],

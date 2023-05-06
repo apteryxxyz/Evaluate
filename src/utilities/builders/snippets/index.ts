@@ -3,10 +3,6 @@ import { ViewComponents, ViewEmbed } from './view';
 import type { New } from '&functions/builderHelpers';
 
 export const Constants = {
-    strings: {
-        name: 'Name for your snippet.',
-    },
-
     lengths: {
         name: [4, 25],
     },

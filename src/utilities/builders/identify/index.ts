@@ -3,8 +3,12 @@ import { StartModal } from './start';
 import type { New } from '&functions/builderHelpers';
 
 export const Constants = {
-    strings: {
-        code: 'The code to identify.',
+    descriptions: {
+        code: 'The code to identify, omitting this option will prompt you for the code.',
+    },
+
+    placeholders: {
+        code: 'The code to identify...',
     },
 
     lengths: {

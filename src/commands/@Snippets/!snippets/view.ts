@@ -21,10 +21,10 @@ export class SnippetViewCommand extends Command<
             options: [
                 {
                     type: Command.OptionType.String,
-                    autocomplete: true,
                     name: 'name',
-                    required: true,
                     description: 'The name of the snippet to view.',
+                    autocomplete: true,
+                    required: true,
                 },
             ],
         });

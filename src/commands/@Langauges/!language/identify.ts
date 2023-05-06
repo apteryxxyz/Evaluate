@@ -20,7 +20,8 @@ export class IdentifyCommand extends Command<
                 {
                     type: Command.OptionType.String,
                     name: 'code',
-                    description: Identify.Constants.strings.code,
+                    description:
+                        'The code to identify, omitting this option will prompt you for the code.',
                     minLength: Identify.Constants.lengths.code[0],
                     maxLength: Identify.Constants.lengths.code[1],
                 },

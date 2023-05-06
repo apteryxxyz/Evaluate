@@ -10,6 +10,7 @@ export const envSchema = z.object({
         .default('development'),
     DISCORD_TOKEN: z.string(),
     DISCORD_GUILD_ID: z.string().optional(),
+    DISCORD_SUPPORT_CODE: z.string().optional(),
     OPENAI_BASE_PATH: z.string().optional(),
     OPENAI_KEY: z.string(),
     UNIVERSE_LIST_KEY: z.string(),

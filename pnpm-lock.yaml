@@ -13,6 +13,9 @@ dependencies:
   better-sqlite3:
     specifier: ^8.3.0
     version: 8.3.0
+  common-tags:
+    specifier: ^1.8.2
+    version: 1.8.2
   discord.js:
     specifier: ^14.9.0
     version: 14.9.0
@@ -69,6 +72,9 @@ devDependencies:
   '@rushstack/eslint-patch':
     specifier: ^1.2.0
     version: 1.2.0
+  '@types/common-tags':
+    specifier: ^1.8.1
+    version: 1.8.1
   '@types/dotenv-flow':
     specifier: ^3.2.0
     version: 3.2.0
@@ -623,6 +629,10 @@ packages:
   /@types/caseless@0.12.2:
     resolution: {integrity: sha512-6ckxMjBBD8URvjB6J3NcnuAn5Pkl7t3TizAg+xdlzzQGSPSmBcXf8KoIH0ua/i+tio+ZRUHEXp0HEmvaR4kt0w==}
     dev: false
+
+  /@types/common-tags@1.8.1:
+    resolution: {integrity: sha512-20R/mDpKSPWdJs5TOpz3e7zqbeCNuMCPhV7Yndk9KU2Rbij2r5W4RzwDPkzC+2lzUqXYu9rFzTktCBnDjHuNQg==}
+    dev: true
 
   /@types/dotenv-flow@3.2.0:
     resolution: {integrity: sha512-A79hbPwocbYkcTwGcDOFbKDuqyVo5mLAz/6Iq465YZ7R7Go5bT1PIM8I2jlPQkaD9u9fbotGVLkUPhX+9XUHfw==}
@@ -1213,6 +1223,11 @@ packages:
     resolution: {integrity: sha512-B52sN2VNghyq5ofvUsqZjmk6YkihBX5vMSChmSK9v4ShjKf3Vk5Xcmgpw4o+iIgtrnM/u5FiMpz9VKb8lpBveA==}
     engines: {node: '>= 12.0.0'}
     dev: true
+
+  /common-tags@1.8.2:
+    resolution: {integrity: sha512-gk/Z852D2Wtb//0I+kRFNKKE9dIIVirjoqPoA1wJU+XePVXZfGeBpk45+A1rKO4Q43prqWBNY/MiIeRLbPWUaA==}
+    engines: {node: '>=4.0.0'}
+    dev: false
 
   /concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}

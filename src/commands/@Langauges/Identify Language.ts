@@ -3,6 +3,7 @@ import { Command } from 'maclary';
 import { Identify } from '&builders/identify';
 import { extractCodeBlocks } from '&functions/codeBlock';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
+import premium from '&premium';
 
 export class IdentifyLanguageCommand extends Command<
     Command.Type.ContextMenu,
@@ -29,7 +30,13 @@ export class IdentifyLanguageCommand extends Command<
 
         const embeds: EmbedBuilder[] = [];
         for (const { code, language } of matches) {
-            const options = { code, language: language ?? undefined };
+            const options = {
+                code,
+                language: language ?? undefined,
+                usePaid: premium.identify.ai.determine(
+                    menu.user.entity.hasPremium
+                ),
+            };
             embeds.push(
                 new Identify.ResultEmbed({
                     ...options,

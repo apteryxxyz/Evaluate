@@ -20,6 +20,15 @@ export class HelpAction extends Action {
 
             return click.reply({
                 embeds: [new Help.CommandsEmbed(commands)],
+                ephemeral: true,
+            });
+        }
+
+        if (action === 'premium') {
+            return click.reply({
+                embeds: [new Help.PremiumEmbed()],
+                components: [new Help.VoteComponents()],
+                ephemeral: true,
             });
         }
 

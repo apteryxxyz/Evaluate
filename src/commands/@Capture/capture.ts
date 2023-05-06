@@ -4,9 +4,13 @@ import {
     TextInputBuilder,
 } from '@discordjs/builders';
 import { TextInputStyle } from 'discord.js';
+import Fuse from 'fuse.js';
+import { LRUCache } from 'lru-cache';
 import type { Action } from 'maclary';
 import { Command } from 'maclary';
+import { User } from '&entities/User';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
+import premium from '&premium';
 import { Renderer } from '&services/Renderer';
 
 export class Capture extends Command<
@@ -36,16 +40,51 @@ export class Capture extends Command<
                     choices: Object.entries(Renderer.Mode) //
                         .map(([name, value]) => ({ name, value })),
                 },
+                {
+                    type: Command.OptionType.String,
+                    name: 'theme',
+                    description: 'The theme to use, unlock more with premium.',
+                    autocomplete: true,
+                },
             ],
         });
+    }
+
+    private _cache = new LRUCache<string, boolean>({
+        ttl: 1_000 * 40,
+        ttlAutopurge: true,
+    });
+
+    public override async onAutocomplete(autocomplete: Command.Autocomplete) {
+        const query = autocomplete.options.getFocused();
+
+        let hasPremium = this._cache.get(autocomplete.user.id);
+        if (typeof hasPremium !== 'boolean') {
+            const user = await this.container.database
+                .repository(User)
+                .findOneBy({ id: autocomplete.user.id });
+
+            hasPremium = user?.hasPremium ?? false;
+            this._cache.set(autocomplete.user.id, hasPremium);
+        }
+
+        const available = premium.capture.themes
+            .determine(hasPremium)
+            .map(([name, value]) => ({ name, value }));
+        const fuse = new Fuse(available, { keys: ['name'] });
+        const themes =
+            query.length > 0
+                ? fuse.search(query).map(({ item }) => item)
+                : available;
+
+        return autocomplete.respond(themes);
     }
 
     public override async onSlash(input: Command.ChatInput) {
         let action: Action.AnyInteraction | Command.AnyInteraction = input;
         let code = input.options.getString('code');
-        const mode = (input.options.getString('mode') ?? undefined) as
-            | Renderer.Mode
-            | undefined;
+        const mode = input.options.getString('mode') as Renderer.Mode;
+        const theme = input.options.getString('theme') as Renderer.Theme;
 
         if (!code) {
             await input.showModal(this._buildModal());
@@ -61,10 +100,8 @@ export class Capture extends Command<
 
         await action.deferReply();
         const image = await this.container.renderer //
-            .createRender({ code, mode }, input.user.id);
-        return action.editReply({
-            files: [image],
-        });
+            .createRender({ code, mode, theme }, input.user.id);
+        return action.editReply({ files: [image] });
     }
 
     private _buildModal() {
@@ -78,7 +115,7 @@ export class Capture extends Command<
 
         return new ModalBuilder()
             .setCustomId('_')
-            .setTitle('Capture COde')
+            .setTitle('Capture Code')
             .setComponents(
                 new ActionRowBuilder<TextInputBuilder>().addComponents(code)
             );

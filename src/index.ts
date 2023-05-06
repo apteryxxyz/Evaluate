@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import './env';
 // Dependencies
 import process from 'node:process';
-import { Lists, Poster } from '@maclary/lists';
+import { Lists, Poster, Webhook } from '@maclary/lists';
 import { ActivityType, Client, GatewayIntentBits, Partials } from 'discord.js';
 import { Maclary, container } from 'maclary';
 import { EvaluatorManager } from '&classes/EvaluatorManager';
@@ -27,8 +27,8 @@ async function main() {
         Detector.waitFor(),
     ]);
 
+    prepareLists();
     await prepareClient();
-    prepareLists(container.client);
 }
 
 async function prepareClient() {
@@ -60,28 +60,42 @@ async function prepareClient() {
     await client.login(process.env.DISCORD_TOKEN);
 }
 
-function prepareLists(client: Client<true>) {
-    if (process.env.NODE_ENV === 'development') return;
-
-    const lists = [
-        new Lists.UniverseList(client.user.id, process.env.UNIVERSE_LIST_KEY),
+function getLists() {
+    if (process.env.NODE_ENV === 'development') return [];
+    return [
+        new Lists.UniverseList(
+            process.env.DISCORD_ID,
+            process.env.UNIVERSE_LIST_KEY
+        ),
     ];
+}
 
+function prepareLists() {
+    const lists = getLists();
+
+    const webhook = new Webhook(lists, { port: 3_004 });
     const poster = new Poster(lists, {
         shardCount: () => 1,
-        guildCount: () => client.guilds.cache.size,
+        guildCount: () => container.client.guilds.cache.size,
         userCount: () =>
-            client.guilds.cache.reduce((a, b) => a + b.memberCount, 0),
+            container.client.guilds.cache.reduce(
+                (a, b) => a + b.memberCount,
+                0
+            ),
         voiceConnectionCount: () => 0,
     });
+    container.lists = { poster, webhook };
 
     poster.startAutoPoster();
-    container.poster = poster;
 }
 
 declare module 'maclary' {
     export interface Container {
         evaluators: EvaluatorManager;
-        poster: Poster;
+
+        lists: {
+            poster: Poster;
+            webhook: Webhook;
+        };
     }
 }

@@ -14,7 +14,8 @@
             "&services/*": ["./src/services/*"],
             "&factories/*": ["./src/utilities/factories/*"],
             "&functions/*": ["./src/utilities/functions/*"],
-            "&builders/*": ["./src/utilities/builders/*"]
+            "&builders/*": ["./src/utilities/builders/*"],
+            "&premium": ["./src/premium"]
         },
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,

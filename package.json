@@ -30,7 +30,7 @@
     },
     "dependencies": {
         "@discordjs/builders": "^1.6.1",
-        "@maclary/lists": "0.3.0-next.4fe5d58.0",
+        "@maclary/lists": "0.3.0-next.776cc52.0",
         "@vscode/vscode-languagedetection": "^1.0.22",
         "better-sqlite3": "^8.3.0",
         "common-tags": "^1.8.2",

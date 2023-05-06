@@ -2,6 +2,7 @@ import type { Action } from 'maclary';
 import { Command } from 'maclary';
 import { Identify } from '&builders/identify';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
+import premium from '&premium';
 
 export class IdentifyCommand extends Command<
     Command.Type.ChatInput,
@@ -43,7 +44,12 @@ export class IdentifyCommand extends Command<
         }
 
         await action.deferReply();
-        const options = { code };
+        const options = {
+            code,
+            usePaid: premium.identify.ai.determine(
+                input.user.entity.hasPremium
+            ),
+        };
         return action.editReply({
             embeds: [
                 new Identify.ResultEmbed({

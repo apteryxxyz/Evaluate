@@ -18,11 +18,11 @@ export function ActionComponents() {
         new ButtonBuilder()
             .setLabel('Commands')
             .setStyle(ButtonStyle.Success)
-            .setCustomId('help,commands')
-        // new ButtonBuilder()
-        //     .setLabel('Premium')
-        //     .setStyle(ButtonStyle.Primary)
-        //     .setCustomId('help,premium')
+            .setCustomId('help,commands'),
+        new ButtonBuilder()
+            .setLabel('Premium (its free)')
+            .setStyle(ButtonStyle.Primary)
+            .setCustomId('help,premium')
     );
 }
 

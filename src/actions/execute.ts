@@ -56,7 +56,7 @@ export class ExecuteAction extends Action {
         const result = evaluator.history.at(-1)!;
 
         if (action === 'edit') {
-            return click.showModal(new Execute.EditModal(result));
+            return click.showModal(new Execute.EditModal(result ?? {}));
         }
 
         if (action === 'undo') {

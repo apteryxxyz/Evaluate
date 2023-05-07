@@ -19,7 +19,14 @@ export class Renderer {
 
     public constructor() {
         (async () => {
-            this._browser = await puppeteer.launch({ headless: 'new' });
+            this._browser = await puppeteer.launch({
+                headless: 'new',
+                defaultViewport: {
+                    width: 1_920,
+                    height: 1_080,
+                },
+                args: ['--start-maximized'],
+            });
         })();
     }
 
@@ -78,8 +85,8 @@ export class Renderer {
     private _modifyPage(theme: string) {
         const classes = {
             frame: '[class*="Frame_frame_"]',
-            header: '[class*="Frame_header__"]',
-            window: '[class*="Frame_window__"]',
+            header: '[class*="Frame_header_"]',
+            window: '[class*="Frame_window_"]',
             textarea: '[class*="Editor_textarea_"]',
             dragPoint: '[class*="ResizableFrame_windowSizeDragPoint_"]',
             controls: '[class*="Controls_controls_"]',
@@ -89,19 +96,14 @@ export class Renderer {
         if (frame) {
             // Keep the frame at a responsive width
             frame.style.minWidth = 'unset';
+            frame.style.maxWidth = '100vw';
 
             // Change the background to a gradient theme
-            const style = frame.getAttribute('style');
-            if (style)
-                frame.setAttribute(
-                    'style',
-                    `${style} background-image: linear-gradient(140deg, ${theme});`
-                );
-            else
-                frame.setAttribute(
-                    'style',
-                    `background-image: linear-gradient(140deg, ${theme});`
-                );
+            const style = frame.getAttribute('style') ?? '';
+            frame.setAttribute(
+                'style',
+                `${style} background-image: linear-gradient(140deg, ${theme});`
+            );
         }
 
         // Remove the header
@@ -109,7 +111,10 @@ export class Renderer {
         if (header) header.remove();
 
         const window = document.querySelector<HTMLElement>(classes.window);
-        if (window) window.style.paddingTop = 'unset';
+        if (window) {
+            window.style.paddingTop = 'unset';
+            window.style.minHeight = 'unset';
+        }
 
         // Decrease the height of the editor
         const textarea = document.querySelector<HTMLElement>(classes.textarea);

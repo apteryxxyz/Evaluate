@@ -43,6 +43,7 @@ export class Renderer {
         if (existing) return existing;
 
         const url = new URL('https://ray.so/');
+        const theme = this.resolveTheme(options.theme);
         url.hash = hash;
 
         // Ensure the browser is ready
@@ -55,31 +56,7 @@ export class Renderer {
         if (!element) throw new Error('Could not find code element');
 
         // Modify the pages contents
-        await page.evaluate(() => {
-            const selectors = [
-                '[class*="Frame_frame_"]',
-                '[class*="Editor_textarea_"]',
-                '[class*="ResizableFrame_windowSizeDragPoint_"]',
-                '[class*="Controls_controls_"]',
-            ];
-
-            // Keep the frame at a responsive width
-            const frame = document.querySelector<HTMLElement>(selectors[0]);
-            if (frame) frame.style.minWidth = 'unset';
-
-            // Decrease the height of the editor
-            const textarea = document.querySelector<HTMLElement>(selectors[1]);
-            if (textarea) {
-                textarea.style.overflow = 'hidden';
-                textarea.style.height = 'auto';
-            }
-
-            const points = document.querySelectorAll(selectors[2]);
-            for (const point of Array.from(points)) point?.remove();
-
-            const controls = document.querySelector(selectors[3]);
-            if (controls) controls.remove();
-        });
+        await page.evaluate(this._modifyPage, theme);
 
         const screenshot = await element.screenshot();
         await page.close();
@@ -91,33 +68,85 @@ export class Renderer {
 
     private _createHash(options: Renderer.CreateOptions) {
         const params = new URLSearchParams();
-        params.append('title', 'Evaluate');
         params.append('padding', '32');
-        params.append('theme', options.theme ?? Renderer.Theme.Meadow);
+        params.append('_theme', options.theme ?? Renderer.Theme.Green);
         params.append('darkMode', String(options.mode === Renderer.Mode.Dark));
         params.append('code', Buffer.from(options.code).toString('base64'));
         return params.toString();
     }
 
+    private _modifyPage(theme: string) {
+        const classes = {
+            frame: '[class*="Frame_frame_"]',
+            header: '[class*="Frame_header__"]',
+            window: '[class*="Frame_window__"]',
+            textarea: '[class*="Editor_textarea_"]',
+            dragPoint: '[class*="ResizableFrame_windowSizeDragPoint_"]',
+            controls: '[class*="Controls_controls_"]',
+        };
+
+        const frame = document.querySelector<HTMLElement>(classes.frame);
+        if (frame) {
+            // Keep the frame at a responsive width
+            frame.style.minWidth = 'unset';
+
+            // Change the background to a gradient theme
+            const style = frame.getAttribute('style');
+            if (style)
+                frame.setAttribute(
+                    'style',
+                    `${style} background-image: linear-gradient(140deg, ${theme});`
+                );
+            else
+                frame.setAttribute(
+                    'style',
+                    `background-image: linear-gradient(140deg, ${theme});`
+                );
+        }
+
+        // Remove the header
+        const header = document.querySelector<HTMLElement>(classes.header);
+        if (header) header.remove();
+
+        const window = document.querySelector<HTMLElement>(classes.window);
+        if (window) window.style.paddingTop = 'unset';
+
+        // Decrease the height of the editor
+        const textarea = document.querySelector<HTMLElement>(classes.textarea);
+        if (textarea) {
+            textarea.style.overflow = 'hidden';
+            textarea.style.height = 'auto';
+        }
+
+        const points = document.querySelectorAll(classes.dragPoint);
+        for (const point of Array.from(points)) point?.remove();
+
+        const controls = document.querySelector(classes.controls);
+        if (controls) controls.remove();
+    }
+
     /** Resolves the input into a theme, default is the green meadow. */
     public resolveTheme(theme: unknown) {
         switch (String(theme).toLowerCase()) {
-            case 'breeze':
-                return Renderer.Theme.Breeze;
-            case 'candy':
-                return Renderer.Theme.Candy;
-            case 'crimson':
-                return Renderer.Theme.Crimson;
-            case 'falcon':
-                return Renderer.Theme.Falcon;
-            case 'midnight':
-                return Renderer.Theme.Midnight;
-            case 'raindrop':
-                return Renderer.Theme.Raindrop;
-            case 'sunset':
-                return Renderer.Theme.Sunset;
-            default:
-                return Renderer.Theme.Meadow;
+            case Renderer.Theme.Red:
+                return 'rgb(238, 82, 83), rgb(205, 41, 52)';
+            case Renderer.Theme.Orange:
+                return 'rgb(255, 183, 77), rgb(218, 131, 13)';
+            case Renderer.Theme.Blue:
+                return 'rgb(87, 137, 219), rgb(59, 96, 146)';
+            default: // Green
+                return 'rgb(47, 192, 134), rgb(20, 105, 76)';
+            case Renderer.Theme.Yellow:
+                return 'rgb(255, 218, 117), rgb(218, 165, 32)';
+            case Renderer.Theme.Purple:
+                return 'rgb(160, 94, 183), rgb(110, 53, 142)';
+
+            case Renderer.Theme.Pink:
+                return 'rgb(255, 153, 204), rgb(255, 51, 153)';
+            case Renderer.Theme.Black:
+                return 'rgb(51, 51, 51), rgb(0, 0, 0)';
+            case Renderer.Theme.White:
+                return 'rgb(255, 255, 255), rgb(255, 255, 255)';
         }
     }
 
@@ -152,14 +181,16 @@ export namespace Renderer {
     }
 
     export enum Theme {
-        Breeze = 'breeze',
-        Candy = 'candy',
-        Crimson = 'crimson',
-        Falcon = 'falcon',
-        Meadow = 'meadow',
-        Midnight = 'midnight',
-        Raindrop = 'raindrop',
-        Sunset = 'sunset',
+        Red = 'red',
+        Orange = 'orange',
+        Yellow = 'yellow',
+        Green = 'green',
+        Blue = 'blue',
+        Purple = 'purple',
+
+        Pink = 'pink',
+        Black = 'black',
+        White = 'white',
     }
 
     export enum Mode {

@@ -37,7 +37,7 @@ export default {
             explained:
                 'Rendering captures use a lot of resources on our server and can reduce performance of other features.',
             free: Object.entries({
-                Meadow: Renderer.Theme.Meadow,
+                Green: Renderer.Theme.Green,
             }),
             premium: Object.entries(Renderer.Theme),
         }),

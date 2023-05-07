@@ -86,6 +86,16 @@ export class Capture extends Command<
         const mode = input.options.getString('mode') as Renderer.Mode;
         const theme = input.options.getString('theme') as Renderer.Theme;
 
+        const available = premium.capture.themes //
+            .determine(input.user.entity.hasPremium);
+        if (theme && !available.some(([, value]) => value === theme))
+            return void input.reply({
+                content:
+                    'You do not have access to this theme, ' +
+                    'upgrade to premium to unlock more.',
+                ephemeral: true,
+            });
+
         if (!code) {
             await input.showModal(this._buildModal());
 

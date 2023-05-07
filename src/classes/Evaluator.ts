@@ -49,9 +49,12 @@ export class Evaluator {
         );
     }
 
-    public async destroy() {
+    public async destroy(deleteMessage: boolean = false) {
         clearTimeout(this._timeout);
-        await this.message.edit({ components: [] });
+
+        if (deleteMessage) await this.message.delete();
+        else await this.message.edit({ components: [] });
+
         container.evaluators.cache.delete(this.message.id);
     }
 }

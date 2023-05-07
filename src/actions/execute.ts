@@ -36,11 +36,10 @@ export class ExecuteAction extends Action {
             });
         }
 
-        const options = { language, code, input, args };
-        const result = await evaluator.runWithOptions(options);
+        await evaluator.runWithOptions({ language, code, input, args });
         return submit.editReply({
-            embeds: [await new Execute.ResultEmbed(result)],
-            components: [new Execute.ResultComponents(result)],
+            embeds: [await new Execute.ResultEmbed(evaluator)],
+            components: [new Execute.ResultComponents(evaluator)],
         });
     }
 
@@ -54,10 +53,23 @@ export class ExecuteAction extends Action {
         const evaluator = this.container.evaluators.resolve(click);
         if (!evaluator) return void 0;
 
-        const options = evaluator.history.at(-1)!;
+        const result = evaluator.history.at(-1)!;
 
         if (action === 'edit') {
-            return click.showModal(new Execute.EditModal(options));
+            return click.showModal(new Execute.EditModal(result));
+        }
+
+        if (action === 'undo') {
+            evaluator.history.pop();
+            return click.update({
+                embeds: [await new Execute.ResultEmbed(evaluator)],
+                components: [new Execute.ResultComponents(evaluator)],
+            });
+        }
+
+        if (action === 'delete') {
+            await click.deferUpdate();
+            return evaluator.destroy(true);
         }
 
         if (action === 'capture') {
@@ -81,10 +93,10 @@ export class ExecuteAction extends Action {
 
             const isExistingSnippet = user.snippets.some(
                 snippet =>
-                    snippet.language === options.language.key &&
-                    snippet.code === options.code &&
-                    snippet.input === options.input &&
-                    snippet.args === options.args
+                    snippet.language === result.language.key &&
+                    snippet.code === result.code &&
+                    snippet.input === result.input &&
+                    snippet.args === result.args
             );
             if (isExistingSnippet) {
                 return click.reply({
@@ -113,10 +125,10 @@ export class ExecuteAction extends Action {
             snippet.ownerId = user.id;
             snippet.owner = user;
             snippet.name = name;
-            snippet.language = options.language.key;
-            snippet.code = options.code;
-            snippet.input = options.input;
-            snippet.args = options.args;
+            snippet.language = result.language.key;
+            snippet.code = result.code;
+            snippet.input = result.input;
+            snippet.args = result.args;
             await this.container.database.repository(Snippet).save(snippet);
 
             return submit.reply({

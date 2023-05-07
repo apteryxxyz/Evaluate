@@ -1,15 +1,17 @@
 import { ButtonBuilder, EmbedBuilder } from '@discordjs/builders';
 import { ButtonStyle } from 'discord.js';
+import type { Evaluator } from '&classes/Evaluator';
 import {
     buildField,
     removeNullish,
     wrapInRow,
 } from '&functions/builderHelpers';
 import { codeBlock } from '&functions/codeBlock';
-import type { Executor } from '&services/Executor';
 import { Pastebin } from '&services/Pastebin';
 
-export function ResultEmbed(result: Executor.ExecuteResult) {
+export function ResultEmbed(executor: Evaluator) {
+    const result = executor.history.at(-1)!;
+
     const fields = removeNullish(
         buildField('Code', codeBlock(result.code, result.language.id)),
         buildField('Input', codeBlock(result.input), true),
@@ -27,12 +29,23 @@ export function ResultEmbed(result: Executor.ExecuteResult) {
     });
 }
 
-export function ResultComponents(result: Executor.ExecuteResult) {
+export function ResultComponents(executor: Evaluator) {
+    const result = executor.history.at(-1)!;
+
     return wrapInRow(
         new ButtonBuilder()
             .setCustomId('execute,edit')
             .setLabel('Edit')
             .setStyle(ButtonStyle.Primary),
+        new ButtonBuilder()
+            .setCustomId('execute,undo')
+            .setLabel('Undo')
+            .setStyle(ButtonStyle.Primary)
+            .setDisabled(executor.history.length === 1),
+        new ButtonBuilder()
+            .setCustomId('execute,delete')
+            .setLabel('Delete')
+            .setStyle(ButtonStyle.Danger),
         new ButtonBuilder()
             .setCustomId('execute,capture')
             .setLabel('Capture')

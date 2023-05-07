@@ -12,15 +12,14 @@ import { formatLanguageName, formatRuntimeName } from '&functions/formatNames';
 export class Executor {
     private _client = new PistonClient();
 
-    private _preferredRuntimes = new Map([['javascript', 'node']]);
-    private _popularLanguages: Executor.Language[] = [];
-
     public constructor() {
         (async () => {
             await this._updatePopularLanguages();
             setInterval(() => this._updatePopularLanguages(), 60_000);
         })();
     }
+
+    private _popularLanguages: Executor.Language[] = [];
 
     private async _updatePopularLanguages() {
         const database = await Database.waitFor();
@@ -67,48 +66,29 @@ export class Executor {
         return fuse.search(query).map(({ item }) => item);
     }
 
-    /** Attempt to find a language using a resolvable. */
+    private _preferredRuntimes = new Map([
+        ['javascript', 'node'],
+        ['typescript', undefined],
+    ]);
+
     public async findLanguage(resolvable: string) {
+        resolvable = resolvable.toLowerCase().trim();
         if (resolvable === '') return undefined;
+
         const languages = await this.fetchLanguages();
 
-        resolvable = resolvable.toLowerCase();
-        const existing = languages.find(lang => {
-            const found = [
-                lang.id,
-                lang.key,
-                lang.name,
-                ...lang.aliases,
-            ].includes(resolvable);
-            if (
-                !lang.runtime ||
-                resolvable !== lang.id ||
-                !this._preferredRuntimes.has(lang.id)
-            )
-                return found;
+        return languages.find(language => {
+            const wasFound = [
+                language.id,
+                language.key,
+                language.name,
+                ...language.aliases,
+            ].some(value => value.toLowerCase() === resolvable);
+            if (!wasFound) return false;
 
-            // By default "javascript" would return Deno, but we prefer Node
-            const runtime = this._preferredRuntimes.get(lang.id);
-            return found && runtime === lang.runtime.id;
-        });
-        if (existing) return existing;
-
-        // Regex that matches "{name} ({runtime})" where the runtime is optional
-        const extractor = /([\w #+.-]+)(?:\(([\w #+.-]+)\))?/i;
-        const [, name, runtime] = extractor.exec(resolvable) ?? [];
-
-        return languages.find(lang => {
-            const names = [lang.id, lang.key, lang.name, ...lang.aliases];
-            const isName = names.some(
-                value => value.toLowerCase() === name.trim()
-            );
-            if (!lang.runtime) return isName;
-
-            const runtimes = [lang.runtime.id, lang.runtime.name];
-            return (
-                isName &&
-                runtimes.some(value => value.toLowerCase() === runtime.trim())
-            );
+            if (resolvable !== language.id) return wasFound;
+            const runtime = this._preferredRuntimes.get(language.id);
+            return runtime === language.runtime?.id;
         });
     }
 

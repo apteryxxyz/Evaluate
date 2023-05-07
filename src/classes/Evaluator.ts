@@ -23,7 +23,7 @@ export class Evaluator {
     public onUpdate() {
         this.updatedAt = new Date();
         clearTimeout(this._timeout);
-        this._timeout = setTimeout(() => {}, 720_000);
+        this._timeout = setTimeout(() => this.destroy(), 720_000);
     }
 
     /** Merge the options with new ones. */
@@ -47,5 +47,11 @@ export class Evaluator {
             this.history.at(-1)!,
             this.user.id
         );
+    }
+
+    public async destroy() {
+        clearTimeout(this._timeout);
+        await this.message.edit({ components: [] });
+        container.evaluators.cache.delete(this.message.id);
     }
 }

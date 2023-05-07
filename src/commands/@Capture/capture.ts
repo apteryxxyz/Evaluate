@@ -83,8 +83,12 @@ export class Capture extends Command<
     public override async onSlash(input: Command.ChatInput) {
         let action: Action.AnyInteraction | Command.AnyInteraction = input;
         let code = input.options.getString('code');
-        const mode = input.options.getString('mode') as Renderer.Mode;
-        const theme = input.options.getString('theme') as Renderer.Theme;
+        const mode = input.options
+            .getString('mode')
+            ?.toLowerCase() as Renderer.Mode;
+        const theme = input.options
+            .getString('theme')
+            ?.toLowerCase() as Renderer.Theme;
 
         const available = premium.capture.themes //
             .determine(input.user.entity.hasPremium);

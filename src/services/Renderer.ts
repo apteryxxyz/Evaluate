@@ -132,21 +132,26 @@ export class Renderer {
                 return 'rgb(238, 82, 83), rgb(205, 41, 52)';
             case Renderer.Theme.Orange:
                 return 'rgb(255, 183, 77), rgb(218, 131, 13)';
-            case Renderer.Theme.Blue:
-                return 'rgb(87, 137, 219), rgb(59, 96, 146)';
-            default: // Green
-                return 'rgb(47, 192, 134), rgb(20, 105, 76)';
+            case Renderer.Theme.Peach:
+                return 'rgb(255, 186, 173), rgb(255, 146, 119)';
             case Renderer.Theme.Yellow:
                 return 'rgb(255, 218, 117), rgb(218, 165, 32)';
+            default:
+                return 'rgb(47, 192, 134), rgb(20, 105, 76)'; // Green
+            case Renderer.Theme.Teal:
+                return 'rgb(82, 194, 191), rgb(41, 117, 115)';
+            case Renderer.Theme.Blue:
+                return 'rgb(87, 137, 219), rgb(59, 96, 146)';
             case Renderer.Theme.Purple:
                 return 'rgb(160, 94, 183), rgb(110, 53, 142)';
-
             case Renderer.Theme.Pink:
                 return 'rgb(255, 153, 204), rgb(255, 51, 153)';
-            case Renderer.Theme.Black:
-                return 'rgb(51, 51, 51), rgb(0, 0, 0)';
             case Renderer.Theme.White:
                 return 'rgb(255, 255, 255), rgb(255, 255, 255)';
+            case Renderer.Theme.Grey:
+                return 'rgb(214, 214, 214), rgb(128, 128, 128)';
+            case Renderer.Theme.Black:
+                return 'rgb(51, 51, 51), rgb(0, 0, 0)';
         }
     }
 
@@ -183,12 +188,14 @@ export namespace Renderer {
     export enum Theme {
         Red = 'red',
         Orange = 'orange',
+        Peach = 'peach',
         Yellow = 'yellow',
         Green = 'green',
+        Teal = 'teal',
         Blue = 'blue',
         Purple = 'purple',
-
         Pink = 'pink',
+        Grey = 'grey',
         Black = 'black',
         White = 'white',
     }

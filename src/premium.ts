@@ -1,3 +1,4 @@
+import process from 'node:process';
 import { Renderer } from '&services/Renderer';
 
 interface Feature<T> {
@@ -43,3 +44,18 @@ export default {
         }),
     },
 };
+
+export const lists = [
+    {
+        key: 'discordscom',
+        name: 'Discords.com',
+        days: 2,
+        url: `https://discords.com/bots/bot/${process.env.DISCORD_ID}/vote`,
+    },
+    {
+        key: 'discordbotlist',
+        name: 'Discord Bot List',
+        days: 1,
+        url: `https://discordbotlist.com/bots/${process.env.DISCORD_ID}/upvote`,
+    },
+];

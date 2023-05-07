@@ -63,9 +63,14 @@ async function prepareClient() {
 function getLists() {
     if (process.env.NODE_ENV === 'development') return [];
     return [
+        new Lists.DiscordsCom(
+            process.env.DISCORD_ID,
+            process.env.DISCORDS_COM_API_KEY,
+            process.env.DISCORDS_COM_WEBHOOK_TOKEN
+        ),
         new Lists.UniverseList(
             process.env.DISCORD_ID,
-            process.env.UNIVERSE_LIST_KEY
+            process.env.UNIVERSE_LIST_API_KEY
         ),
     ];
 }

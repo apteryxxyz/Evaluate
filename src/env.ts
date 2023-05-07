@@ -15,7 +15,9 @@ export const envSchema = z.object({
     DISCORD_SUPPORT_CODE: z.string().optional(),
     OPENAI_BASE_PATH: z.string().optional(),
     OPENAI_KEY: z.string(),
-    UNIVERSE_LIST_KEY: z.string(),
+    DISCORDS_COM_API_KEY: z.string(),
+    DISCORDS_COM_WEBHOOK_TOKEN: z.string(),
+    UNIVERSE_LIST_API_KEY: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;

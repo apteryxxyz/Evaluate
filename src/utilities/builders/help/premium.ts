@@ -7,7 +7,7 @@ import {
     removeNullish,
     wrapInRow,
 } from '&functions/builderHelpers';
-import premium from '&premium';
+import premium, { lists } from '&premium';
 
 export function PremiumEmbed() {
     const client = container.client;
@@ -23,7 +23,8 @@ export function PremiumEmbed() {
             oneLine`Going premium is a great way to support
             ${client.user.username} and unlock some cool features.
             Best of all, **it's completely free!** All you need to
-            do is vote for ${client.user.username} on bot lists.`
+            do is vote for ${client.user.username} on bot lists,
+            use the buttons below to get started!`
         )
         .setFields(features)
         .setColor(0x2fc086);
@@ -31,10 +32,13 @@ export function PremiumEmbed() {
 
 export function VoteComponents() {
     return wrapInRow(
-        new ButtonBuilder()
-            .setLabel("Evaluate isn't on any bot lists yet")
-            .setStyle(ButtonStyle.Secondary)
-            .setCustomId('help,premium,coming-soon')
-            .setDisabled(true)
+        ...lists.map(list =>
+            new ButtonBuilder()
+                .setLabel(
+                    `Vote for ${list.days} day${list.days === 1 ? '' : 's'}`
+                )
+                .setStyle(ButtonStyle.Link)
+                .setURL(list.url)
+        )
     );
 }

@@ -63,6 +63,11 @@ async function prepareClient() {
 function getLists() {
     if (process.env.NODE_ENV === 'development') return [];
     return [
+        new Lists.DiscordBotList(
+            process.env.DISCORD_ID,
+            process.env.DISCORD_BOT_LIST_API_KEY,
+            process.env.DISCORD_BOT_LIST_WEBHOOK_TOKEN
+        ),
         new Lists.DiscordsCom(
             process.env.DISCORD_ID,
             process.env.DISCORDS_COM_API_KEY,

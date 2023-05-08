@@ -73,6 +73,10 @@ function getLists() {
             process.env.DISCORDS_COM_API_KEY,
             process.env.DISCORDS_COM_WEBHOOK_TOKEN
         ),
+        new Lists.DiscordList(
+            process.env.DISCORD_ID,
+            process.env.DISCORD_LIST_API_KEY
+        ),
         new Lists.UniverseList(
             process.env.DISCORD_ID,
             process.env.UNIVERSE_LIST_API_KEY

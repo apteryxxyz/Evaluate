@@ -16,10 +16,11 @@ export const envSchema = z.object({
     OPENAI_BASE_PATH: z.string().optional(),
     OPENAI_KEY: z.string(),
     DISCORD_BOT_LIST_API_KEY: z.string(),
-    DISCORD_BOT_LIST_WEBHOOK_TOKEN: z.string(),
+    DISCORD_LIST_API_KEY: z.string(),
     DISCORDS_COM_API_KEY: z.string(),
-    DISCORDS_COM_WEBHOOK_TOKEN: z.string(),
     UNIVERSE_LIST_API_KEY: z.string(),
+    DISCORD_BOT_LIST_WEBHOOK_TOKEN: z.string(),
+    DISCORDS_COM_WEBHOOK_TOKEN: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;

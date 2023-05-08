@@ -42,10 +42,11 @@ export function ResultComponents(executor: Evaluator) {
             .setLabel('Undo')
             .setStyle(ButtonStyle.Primary)
             .setDisabled(executor.history.length === 1),
-        new ButtonBuilder()
-            .setCustomId('execute,delete')
-            .setLabel('Delete')
-            .setStyle(ButtonStyle.Danger),
+        // NOTE: Removed as it's not really needed
+        // new ButtonBuilder()
+        //     .setCustomId('execute,delete')
+        //     .setLabel('Delete')
+        //     .setStyle(ButtonStyle.Danger),
         new ButtonBuilder()
             .setCustomId('execute,capture')
             .setLabel('Capture')

@@ -71,6 +71,7 @@ export class Executor {
         ['typescript', undefined],
     ]);
 
+    /** Attempt to find a language using a resolvable. */
     public async findLanguage(resolvable: string) {
         resolvable = resolvable.toLowerCase().trim();
         if (resolvable === '') return undefined;
@@ -84,9 +85,11 @@ export class Executor {
                 language.name,
                 ...language.aliases,
             ].some(value => value.toLowerCase() === resolvable);
-            if (!wasFound) return false;
 
+            if (!wasFound) return false;
             if (resolvable !== language.id) return wasFound;
+
+            // By default "javascript" will return "deno" but we prefer "node"
             const runtime = this._preferredRuntimes.get(language.id);
             return runtime === language.runtime?.id;
         });

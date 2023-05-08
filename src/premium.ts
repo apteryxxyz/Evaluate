@@ -49,13 +49,13 @@ export const lists = [
     {
         key: 'discordscom',
         name: 'Discords.com',
-        days: 2,
+        hours: 36,
         url: `https://discords.com/bots/bot/${process.env.DISCORD_ID}/vote`,
     },
     {
         key: 'discordbotlist',
         name: 'Discord Bot List',
-        days: 1,
+        hours: 24,
         url: `https://discordbotlist.com/bots/${process.env.DISCORD_ID}/upvote`,
     },
 ];

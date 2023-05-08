@@ -54,7 +54,7 @@ export class EvaluateCommand extends Command<
         });
     }
 
-    private _cache = new LRUCache<string, Executor.Language[]>({
+    private _languageListCache = new LRUCache<string, Executor.Language[]>({
         ttl: 1_000 * 60 * 5,
         ttlAutopurge: true,
     });
@@ -62,10 +62,10 @@ export class EvaluateCommand extends Command<
     public override async onAutocomplete(autocomplete: Command.Autocomplete) {
         const query = autocomplete.options.getFocused();
 
-        let languages = this._cache.get(query);
+        let languages = this._languageListCache.get(query);
         if (!languages) {
             languages = await this.container.executor.searchLanguages(query);
-            this._cache.set(query, languages);
+            this._languageListCache.set(query, languages);
         }
 
         return autocomplete.respond(

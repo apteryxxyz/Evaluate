@@ -97,6 +97,8 @@ export class Renderer {
             // Keep the frame at a responsive width
             frame.style.minWidth = 'unset';
             frame.style.maxWidth = '100vw';
+            frame.style.minHeight = 'unset';
+            frame.style.maxHeight = '100vh';
 
             // Change the background to a gradient theme
             const style = frame.getAttribute('style') ?? '';
@@ -110,6 +112,7 @@ export class Renderer {
         const header = document.querySelector<HTMLElement>(classes.header);
         if (header) header.remove();
 
+        // Remove the window padding
         const window = document.querySelector<HTMLElement>(classes.window);
         if (window) {
             window.style.paddingTop = 'unset';
@@ -123,9 +126,11 @@ export class Renderer {
             textarea.style.height = 'auto';
         }
 
+        // Remove the drag points
         const points = document.querySelectorAll(classes.dragPoint);
         for (const point of Array.from(points)) point?.remove();
 
+        // Remove the controls
         const controls = document.querySelector(classes.controls);
         if (controls) controls.remove();
     }

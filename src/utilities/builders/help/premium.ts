@@ -35,7 +35,7 @@ export function VoteComponents() {
         ...lists.map(list =>
             new ButtonBuilder()
                 .setLabel(
-                    `Vote for ${list.days} day${list.days === 1 ? '' : 's'}`
+                    `Vote for ${list.hours} hour${list.hours === 1 ? '' : 's'}`
                 )
                 .setStyle(ButtonStyle.Link)
                 .setURL(list.url)

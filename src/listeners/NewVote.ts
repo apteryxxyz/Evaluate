@@ -17,14 +17,14 @@ export class OnNewVote extends Listener<any> {
     public async run(...args: Webhook.EventParams[Webhook.Events.NewVote]) {
         const [list, vote] = args;
         if (vote.type !== 'vote') return void 0;
-        const days = lists.find(({ key }) => key === list.key)?.days;
-        if (!days || days < 1) return void 0;
+        const hours = lists.find(({ key }) => key === list.key)?.hours;
+        if (!hours || hours < 1) return void 0;
 
         const userRepository = this.container.database.repository(User);
         const user = await userRepository.ensureUser(vote.userId);
 
         if (user.premiumEndsAt < new Date()) user.premiumEndsAt = new Date();
-        user.premiumEndsAt.setDate(user.premiumEndsAt.getDate() + days);
+        user.premiumEndsAt.setHours(user.premiumEndsAt.getHours() + hours);
 
         await userRepository.save(user);
 
@@ -37,9 +37,9 @@ export class OnNewVote extends Listener<any> {
 
             await discordUser.send(oneLine`Thanks for voting for me on
                 ${list.title}! To show my appreciation, I've given you
-                **${days} day${days === 1 ? '' : 's'}** of premium, you
-                have a total of ${time}! Vote again tomorrow to extend
-                your premium! Enjoy!`);
+                **${hours} hour${hours === 1 ? '' : 's'}** of premium,
+                you have a total of ${time}! Vote again tomorrow to
+                extend your premium! Enjoy!`);
         } catch {}
 
         return void 0;

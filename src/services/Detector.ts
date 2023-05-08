@@ -77,7 +77,7 @@ export class Detector {
     }
 
     private _createSystemPrompt() {
-        return `Your job is to detect the programming language of the users codeted code.
+        return `Your job is to detect the programming language of the users code.
 You should only ever return the name of the language, formatted and captialized, no period.
 If the programming language is not found, return "Unknown".`;
     }

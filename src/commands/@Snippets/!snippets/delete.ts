@@ -32,7 +32,7 @@ export class SnippetDeleteCommand extends Command<
         });
     }
 
-    private _cache = new LRUCache<string, Snippet[]>({
+    private _userSnippetsCache = new LRUCache<string, Snippet[]>({
         ttl: 1_000 * 10,
         ttlAutopurge: true,
     });
@@ -40,7 +40,7 @@ export class SnippetDeleteCommand extends Command<
     public override async onAutocomplete(autocomplete: Command.Autocomplete) {
         const query = autocomplete.options.getFocused();
 
-        let snippets = this._cache.get(autocomplete.user.id);
+        let snippets = this._userSnippetsCache.get(autocomplete.user.id);
         if (!snippets) {
             const user = await this.container.database
                 .repository(User)
@@ -48,7 +48,7 @@ export class SnippetDeleteCommand extends Command<
             if (!user) return autocomplete.respond([]);
 
             snippets = user.snippets;
-            this._cache.set(autocomplete.user.id, snippets);
+            this._userSnippetsCache.set(autocomplete.user.id, snippets);
         }
 
         if (!snippets.length) return autocomplete.respond([]);
@@ -71,7 +71,7 @@ export class SnippetDeleteCommand extends Command<
     }
 
     public override async onSlash(input: Command.ChatInput) {
-        this._cache.delete(input.user.id);
+        this._userSnippetsCache.delete(input.user.id);
 
         const id = input.options.getString('name', true);
         const snippetRepository = this.container.database.repository(Snippet);

@@ -7,12 +7,14 @@ import { Evaluator } from '&classes/Evaluator';
 export class EvaluatorManager {
     public cache = new Collection<string, Evaluator>();
 
+    /** Create a new evaluator and cache it. */
     public create(...args: ConstructorParameters<typeof Evaluator>) {
         const evaluator = new Evaluator(...args);
         this.cache.set(evaluator.message.id, evaluator);
         return evaluator;
     }
 
+    /** Resolve an evaluator from an interaction. */
     public resolve(
         interaction: Action.Button | Action.ModalSubmit | Action.AnySelectMenu
     ) {

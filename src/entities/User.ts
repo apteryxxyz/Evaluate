@@ -6,33 +6,42 @@ import type { Executor } from '&services/Executor';
 
 @Entity()
 export class User extends Base {
+    /** ID for the user, Discord ID. */
     @PrimaryColumn()
     public id!: string;
 
+    /** List of snippets this user owns. */
     @OneToMany(() => Snippet, snippet => snippet.owner)
     public snippets!: Snippet[];
 
+    /** List of every language this user has used. */
     @Column('simple-array')
     public usedLanguages: string[] = [''];
 
+    /** Number of commands used. */
     @Column()
     public commandCount: number = 0;
 
+    /** Number of evaluation this user has made. */
     @Column()
     public evaluationCount: number = 0;
 
+    /** Number of captures this user has made. */
     @Column()
     public captureCount: number = 0;
 
+    /** Whether this user has premium. */
     @Column()
     public hasPremium: boolean = false;
 
+    /** If the user has premium, when it ends. */
     @Column()
     public premiumEndsAt: Date = new Date(0);
 
     public static repository = createRepository({
         __type: () => new User(),
 
+        /** Ensures a user exists, if not, creates it. */
         async ensureUser(userId: string, options: FindOneOptions<User> = {}) {
             const existing = await this.findOne({
                 where: { id: userId },
@@ -51,6 +60,7 @@ export class User extends Base {
             return user;
         },
 
+        /** Appends a language to the list of used languages. */
         async appendUsedLanguage(userId: string, language: Executor.Language) {
             const user = await this.ensureUser(userId);
             user.evaluationCount++;
@@ -58,18 +68,21 @@ export class User extends Base {
             await this.save(user);
         },
 
+        /** Increments the command count. */
         async incrementCommandCount(userId: string) {
             const user = await this.ensureUser(userId);
             user.commandCount++;
             await this.save(user);
         },
 
+        /** Increments the capture count. */
         async incrementCaptureCount(userId: string) {
             const user = await this.ensureUser(userId);
             user.captureCount++;
             await this.save(user);
         },
 
+        /** Gets the statistics totals. */
         async getStatisticsTotals() {
             const users = await this.find();
             const totals = {
@@ -90,6 +103,7 @@ export class User extends Base {
             return { ...totals, mostUsedLanguage };
         },
 
+        /** Gets the most used languages. */
         async getMostUsedLanguages() {
             const users = await this.find();
             const languages = users.flatMap(stat => stat.usedLanguages);
@@ -106,6 +120,7 @@ export class User extends Base {
     });
 }
 
+/** Find the most common item in a list. */
 function findMostCommon<T>(array: T[]) {
     const map = new Map<T, number>();
 

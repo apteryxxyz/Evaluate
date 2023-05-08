@@ -50,7 +50,7 @@ export class Capture extends Command<
         });
     }
 
-    private _cache = new LRUCache<string, boolean>({
+    private _hasPremiumCache = new LRUCache<string, boolean>({
         ttl: 1_000 * 40,
         ttlAutopurge: true,
     });
@@ -58,14 +58,14 @@ export class Capture extends Command<
     public override async onAutocomplete(autocomplete: Command.Autocomplete) {
         const query = autocomplete.options.getFocused();
 
-        let hasPremium = this._cache.get(autocomplete.user.id);
+        let hasPremium = this._hasPremiumCache.get(autocomplete.user.id);
         if (typeof hasPremium !== 'boolean') {
             const user = await this.container.database
                 .repository(User)
                 .findOneBy({ id: autocomplete.user.id });
 
             hasPremium = user?.hasPremium ?? false;
-            this._cache.set(autocomplete.user.id, hasPremium);
+            this._hasPremiumCache.set(autocomplete.user.id, hasPremium);
         }
 
         const available = premium.capture.themes

@@ -25,12 +25,17 @@ export class BeforeCommand extends Precondition {
         return userRepository
             .ensureUser(discordUser.id) //
             .then(ourUser => {
+                // Update the command count
                 ourUser.commandCount++;
+
+                // Ensure the 'hasPremium' is correct
                 if (ourUser.hasPremium && ourUser.premiumEndsAt < new Date())
                     ourUser.hasPremium = false;
-                void userRepository.save(ourUser);
 
+                // Save the user
+                void userRepository.save(ourUser);
                 discordUser.entity = ourUser;
+
                 return this.ok();
             });
     }

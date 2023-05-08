@@ -40,6 +40,7 @@ export class Evaluator {
         return result;
     }
 
+    /** Render a capture for the current code. */
     public async capture() {
         this.onUpdate();
 
@@ -49,6 +50,7 @@ export class Evaluator {
         );
     }
 
+    /** Destroy this evaluator. */
     public async destroy(deleteMessage: boolean = false) {
         clearTimeout(this._timeout);
 

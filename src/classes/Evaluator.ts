@@ -33,15 +33,15 @@ export class Evaluator {
     public async runWithOptions(options: Executor.ExecuteOptions) {
         this.onUpdate();
 
-        // eslint-disable-next-line require-atomic-updates
-        options.code = await container.autocompleter.autocompleteCode({
+        const code = await container.autocompleter.autocompleteCode({
             code: options.code,
             language: options.language.id,
             usePaid: false,
         });
 
-        const result = await container.executor.execute(options);
+        const result = await container.executor.execute({ ...options, code });
         this.history.push(result);
+
         void container.database
             .repository(User)
             .appendUsedLanguage(this.user.id, options.language);

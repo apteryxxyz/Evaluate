@@ -7,14 +7,17 @@ import type { Executor } from '&services/Executor';
 export class Evaluator {
     public readonly user: Discord.User;
     public readonly message: Discord.Message;
+    public history: Executor.ExecuteResult[] = [];
 
     private _timeout?: NodeJS.Timeout;
     public readonly startedAt = new Date();
     public updatedAt = new Date();
 
-    public history: Executor.ExecuteResult[] = [];
-
-    public constructor(user: Discord.User, message: Discord.Message) {
+    public constructor(
+        user: Discord.User,
+        message: Discord.Message,
+        _options: Evaluator.Options = {}
+    ) {
         this.user = user;
         this.message = message;
     }
@@ -30,13 +33,18 @@ export class Evaluator {
     public async runWithOptions(options: Executor.ExecuteOptions) {
         this.onUpdate();
 
+        // eslint-disable-next-line require-atomic-updates
+        options.code = await container.autocompleter.autocompleteCode({
+            code: options.code,
+            language: options.language.id,
+            usePaid: false,
+        });
+
         const result = await container.executor.execute(options);
         this.history.push(result);
-
         void container.database
             .repository(User)
             .appendUsedLanguage(this.user.id, options.language);
-
         return result;
     }
 
@@ -59,4 +67,8 @@ export class Evaluator {
 
         container.evaluators.cache.delete(this.message.id);
     }
+}
+
+export namespace Evaluator {
+    export interface Options {}
 }

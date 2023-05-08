@@ -8,6 +8,7 @@ import { ActivityType, Client, GatewayIntentBits, Partials } from 'discord.js';
 import { Maclary, container } from 'maclary';
 import { EvaluatorManager } from '&classes/EvaluatorManager';
 // Services
+import { Autocompleter } from '&services/Autocompleter';
 import { Database } from '&services/Database';
 import { Detector } from '&services/Detector';
 import { Executor } from '&services/Executor';
@@ -25,6 +26,7 @@ async function main() {
         Pastebin.waitFor(),
         Executor.waitFor(),
         Detector.waitFor(),
+        Autocompleter.waitFor(),
     ]);
 
     prepareLists();

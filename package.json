@@ -14,7 +14,7 @@
         "build": "pnpm build:env && pnpm build:tsup && pnpm build:alias",
         "build:tsup": "tsup --config tsup.config.ts",
         "build:alias": "tsc-alias",
-        "build:env": "ts-node ./scripts/build-env.ts",
+        "build:env": "ts-node ./scripts/build-env.ts && prettier --write \"src/env.ts\"",
         "//3": "DATABASE",
         "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/services/Database.ts",
         "migration:generate": "npx typeorm-ts-node-commonjs migration:generate -d ./src/services/Database.ts -o",

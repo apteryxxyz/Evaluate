@@ -9,6 +9,7 @@ import { LRUCache } from 'lru-cache';
 import type { Action } from 'maclary';
 import { Command } from 'maclary';
 import { User } from '&entities/User';
+import { deferReply } from '&functions/loadingPrefix';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 import premium from '&premium';
 import { Renderer } from '&services/Renderer';
@@ -112,10 +113,10 @@ export class Capture extends Command<
             action = submit;
         }
 
-        await action.deferReply();
+        await deferReply(action, 'Rendering image, this may take a while...');
         const image = await this.container.renderer //
             .createRender({ code, mode, theme }, input.user.id);
-        return action.editReply({ files: [image] });
+        return action.editReply({ content: null, files: [image] });
     }
 
     private _buildModal() {

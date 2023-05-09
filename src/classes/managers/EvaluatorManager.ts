@@ -2,7 +2,7 @@ import { Collection } from 'discord.js';
 import type { Action } from 'maclary';
 import { Command } from 'maclary';
 import { Execute } from '&builders/execute';
-import { Evaluator } from '&classes/Evaluator';
+import { Evaluator } from '&classes/structures/Evaluator';
 
 export class EvaluatorManager {
     public cache = new Collection<string, Evaluator>();

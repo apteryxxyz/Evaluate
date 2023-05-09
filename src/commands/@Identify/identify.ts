@@ -1,6 +1,7 @@
 import type { Action } from 'maclary';
 import { Command } from 'maclary';
 import { Identify } from '&builders/identify';
+import { deferReply } from '&functions/loadingPrefix';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 import premium from '&premium';
 
@@ -43,7 +44,10 @@ export class IdentifyCommand extends Command<
             action = submit;
         }
 
-        await action.deferReply();
+        await deferReply(
+            action,
+            'Attempting to identify language, please wait...'
+        );
         const options = {
             code,
             usePaid: premium.identify.ai.determine(
@@ -51,6 +55,7 @@ export class IdentifyCommand extends Command<
             ),
         };
         return action.editReply({
+            content: null,
             embeds: [
                 new Identify.ResultEmbed({
                     ...options,

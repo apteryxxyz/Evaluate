@@ -2,6 +2,7 @@ import type { EmbedBuilder } from '@discordjs/builders';
 import { Command } from 'maclary';
 import { Identify } from '&builders/identify';
 import { extractCodeBlocks } from '&functions/codeBlock';
+import { deferReply } from '&functions/loadingPrefix';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 import premium from '&premium';
 
@@ -26,8 +27,10 @@ export class IdentifyLanguageCommand extends Command<
         let matches = extractCodeBlocks(content);
         if (matches.length === 0) matches = [{ language: null, code: content }];
 
-        await menu.deferReply();
-
+        await deferReply(
+            menu,
+            'Attempting to identify language, please wait...'
+        );
         const embeds: EmbedBuilder[] = [];
         for (const { code, language } of matches) {
             const options = {
@@ -46,6 +49,6 @@ export class IdentifyLanguageCommand extends Command<
             );
         }
 
-        return menu.editReply({ embeds });
+        return menu.editReply({ content: null, embeds });
     }
 }

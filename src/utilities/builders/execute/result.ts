@@ -1,6 +1,6 @@
 import { ButtonBuilder, EmbedBuilder } from '@discordjs/builders';
 import { ButtonStyle } from 'discord.js';
-import type { Evaluator } from '&classes/Evaluator';
+import type { Evaluator } from '&classes/structures/Evaluator';
 import {
     buildField,
     removeNullish,

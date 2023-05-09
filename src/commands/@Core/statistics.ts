@@ -3,6 +3,7 @@ import ms from 'enhanced-ms';
 import { Command } from 'maclary';
 import { Snippet } from '&entities/Snippet';
 import { User } from '&entities/User';
+import { deferReply } from '&functions/loadingPrefix';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class StatisticsCommand extends Command<
@@ -21,7 +22,7 @@ export class StatisticsCommand extends Command<
     }
 
     public override async onSlash(input: Command.ChatInput) {
-        await input.deferReply();
+        await deferReply(input, 'Gathering statistics...');
 
         const client = input.client;
         const serverCount = client.guilds.cache.size;
@@ -62,7 +63,7 @@ export class StatisticsCommand extends Command<
                 buildField('Most Used Language', language.name),
             ]);
 
-        return input.editReply({ embeds: [statisticsEmbed] });
+        return input.editReply({ content: null, embeds: [statisticsEmbed] });
     }
 }
 

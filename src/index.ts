@@ -6,7 +6,7 @@ import process from 'node:process';
 import { Lists, Poster, Webhook } from '@maclary/lists';
 import { ActivityType, Client, GatewayIntentBits, Partials } from 'discord.js';
 import { Maclary, container } from 'maclary';
-import { EvaluatorManager } from '&classes/EvaluatorManager';
+import { EvaluatorManager } from '&classes/managers/EvaluatorManager';
 // Services
 import { Autocompleter } from '&services/Autocompleter';
 import { Database } from '&services/Database';
@@ -22,11 +22,11 @@ async function main() {
     await Database.waitFor();
 
     await Promise.all([
-        Renderer.waitFor(),
-        Pastebin.waitFor(),
-        Executor.waitFor(),
-        Detector.waitFor(),
         Autocompleter.waitFor(),
+        Detector.waitFor(),
+        Executor.waitFor(),
+        Pastebin.waitFor(),
+        Renderer.waitFor(),
     ]);
 
     prepareLists();

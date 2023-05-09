@@ -1,4 +1,5 @@
 import { Command } from 'maclary';
+import { resolveEmoji } from '&functions/resolveEmoji';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class PingCommand extends Command<
@@ -18,7 +19,7 @@ export class PingCommand extends Command<
 
     public override async onSlash(input: Command.ChatInput) {
         const initialReply = await input.reply({
-            content: 'Pinging client...',
+            content: `${resolveEmoji('loading')} Pinging client...`,
             fetchReply: true,
         });
 

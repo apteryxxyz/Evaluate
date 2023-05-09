@@ -3,7 +3,7 @@ import { Execute } from '&builders/execute';
 import { Snippets } from '&builders/snippets';
 import { Snippet } from '&entities/Snippet';
 import { User } from '&entities/User';
-import { resolveEmoji } from '&functions/resolveEmoji';
+import { deferReply, editMessage } from '&functions/loadingPrefix';
 
 export class ExecuteAction extends Action {
     public constructor() {
@@ -19,19 +19,23 @@ export class ExecuteAction extends Action {
         const [, action] = submit.customId.split(',');
 
         let evaluator = null;
-        if (action === 'create') {
-            const message = await submit.reply({
-                content: `${resolveEmoji('loading')} Executing...`,
-                fetchReply: true,
-            });
-            evaluator = this.container.evaluators.create(submit.user, message);
-        } else if (action === 'edit') {
-            evaluator = this.container.evaluators.resolve(submit);
+
+        if (action === 'create')
+            evaluator = this.container.evaluators.create(
+                submit.user,
+                await deferReply(submit, 'Executing...', {
+                    fetchReply: true,
+                })
+            );
+
+        if (action === 'edit') {
             await submit.deferUpdate();
-            await evaluator?.message.edit({
-                content: `${resolveEmoji('loading')} Executing...`,
-                components: [new Execute.ResultComponents(evaluator, true)],
-            });
+            evaluator = this.container.evaluators.resolve(submit);
+
+            if (evaluator?.message)
+                await editMessage(evaluator?.message, 'Executing...', {
+                    components: [new Execute.ResultComponents(evaluator, true)],
+                });
         }
 
         if (!evaluator) return void 0;
@@ -39,6 +43,7 @@ export class ExecuteAction extends Action {
         const language = await this.container.executor.findLanguage(rawLang);
         if (!language) {
             return evaluator.message.edit({
+                content: null,
                 embeds: [new Execute.InvalidLanguageEmbed()],
                 components: [new Execute.InvalidLanguageComponents()],
             });
@@ -82,9 +87,12 @@ export class ExecuteAction extends Action {
         }
 
         if (action === 'capture') {
-            await click.deferReply();
+            await deferReply(
+                click,
+                'Rendering image, this may take a while...'
+            );
             const image = await evaluator.capture();
-            return click.editReply({ files: [image] });
+            return click.editReply({ content: '', files: [image] });
         }
 
         if (action === 'save') {
@@ -107,12 +115,11 @@ export class ExecuteAction extends Action {
                     snippet.input === result.input &&
                     snippet.args === result.args
             );
-            if (isExistingSnippet) {
+            if (isExistingSnippet)
                 return click.reply({
                     content: 'You already have this snippet saved.',
                     ephemeral: true,
                 });
-            }
 
             await click.showModal(new Snippets.SaveModal());
             const submit = await click

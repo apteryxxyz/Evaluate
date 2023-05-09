@@ -23,7 +23,7 @@ export class BeforeCommand extends Precondition {
             .repository(Database.User);
 
         return userRepository
-            .ensureUser(discordUser.id) //
+            .ensure(discordUser.id) //
             .then(ourUser => {
                 // Update the command count
                 ourUser.commandCount++;

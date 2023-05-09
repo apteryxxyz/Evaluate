@@ -90,7 +90,7 @@ export class ExecuteAction extends Action {
         if (action === 'save') {
             const user = await this.container.database
                 .repository(User)
-                .ensureUser(click.user.id, { relations: ['snippets'] });
+                .ensure(click.user.id, { relations: ['snippets'] });
 
             if (user.snippets.length >= 25) {
                 return click.reply({

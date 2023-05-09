@@ -42,7 +42,7 @@ export class SnippetViewCommand extends Command<
         if (!snippets) {
             const user = await this.container.database
                 .repository(User)
-                .ensureUser(autocomplete.user.id, { relations: ['snippets'] });
+                .ensure(autocomplete.user.id, { relations: ['snippets'] });
             if (!user) return autocomplete.respond([]);
 
             snippets = user.snippets;

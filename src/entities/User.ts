@@ -42,7 +42,7 @@ export class User extends Base {
         __type: () => new User(),
 
         /** Ensures a user exists, if not, creates it. */
-        async ensureUser(userId: string, options: FindOneOptions<User> = {}) {
+        async ensure(userId: string, options: FindOneOptions<User> = {}) {
             const existing = await this.findOne({
                 where: { id: userId },
                 ...options,
@@ -62,7 +62,7 @@ export class User extends Base {
 
         /** Appends a language to the list of used languages. */
         async appendUsedLanguage(userId: string, language: Executor.Language) {
-            const user = await this.ensureUser(userId);
+            const user = await this.ensure(userId);
             user.evaluationCount++;
             user.usedLanguages.push(language.key);
             await this.save(user);
@@ -70,14 +70,14 @@ export class User extends Base {
 
         /** Increments the command count. */
         async incrementCommandCount(userId: string) {
-            const user = await this.ensureUser(userId);
+            const user = await this.ensure(userId);
             user.commandCount++;
             await this.save(user);
         },
 
         /** Increments the capture count. */
         async incrementCaptureCount(userId: string) {
-            const user = await this.ensureUser(userId);
+            const user = await this.ensure(userId);
             user.captureCount++;
             await this.save(user);
         },

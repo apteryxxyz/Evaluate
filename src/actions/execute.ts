@@ -3,6 +3,7 @@ import { Execute } from '&builders/execute';
 import { Snippets } from '&builders/snippets';
 import { Snippet } from '&entities/Snippet';
 import { User } from '&entities/User';
+import { resolveEmoji } from '&functions/resolveEmoji';
 
 export class ExecuteAction extends Action {
     public constructor() {
@@ -19,25 +20,33 @@ export class ExecuteAction extends Action {
 
         let evaluator = null;
         if (action === 'create') {
-            const message = await submit.deferReply({ fetchReply: true });
+            const message = await submit.reply({
+                content: `${resolveEmoji('loading')} Executing...`,
+                fetchReply: true,
+            });
             evaluator = this.container.evaluators.create(submit.user, message);
         } else if (action === 'edit') {
-            await submit.deferUpdate();
             evaluator = this.container.evaluators.resolve(submit);
+            await submit.deferUpdate();
+            await evaluator?.message.edit({
+                content: `${resolveEmoji('loading')} Executing...`,
+                components: [new Execute.ResultComponents(evaluator, true)],
+            });
         }
 
         if (!evaluator) return void 0;
 
         const language = await this.container.executor.findLanguage(rawLang);
         if (!language) {
-            return submit.editReply({
+            return evaluator.message.edit({
                 embeds: [new Execute.InvalidLanguageEmbed()],
                 components: [new Execute.InvalidLanguageComponents()],
             });
         }
 
         await evaluator.runWithOptions({ language, code, input, args });
-        return submit.editReply({
+        return evaluator.message.edit({
+            content: null,
             embeds: [await new Execute.ResultEmbed(evaluator)],
             components: [new Execute.ResultComponents(evaluator)],
         });

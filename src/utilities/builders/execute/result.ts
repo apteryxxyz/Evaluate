@@ -29,33 +29,30 @@ export function ResultEmbed(executor: Evaluator) {
     });
 }
 
-export function ResultComponents(executor: Evaluator) {
+export function ResultComponents(executor: Evaluator, disableAll = false) {
     const result = executor.history.at(-1)!;
 
     return wrapInRow(
         new ButtonBuilder()
             .setCustomId('execute,edit')
             .setLabel('Edit')
-            .setStyle(ButtonStyle.Primary),
+            .setStyle(ButtonStyle.Primary)
+            .setDisabled(disableAll),
         new ButtonBuilder()
             .setCustomId('execute,undo')
             .setLabel('Undo')
             .setStyle(ButtonStyle.Primary)
-            .setDisabled(executor.history.length === 1),
-        // NOTE: Removed as it's not really needed
-        // new ButtonBuilder()
-        //     .setCustomId('execute,delete')
-        //     .setLabel('Delete')
-        //     .setStyle(ButtonStyle.Danger),
+            .setDisabled(executor.history.length === 1 || disableAll),
         new ButtonBuilder()
             .setCustomId('execute,capture')
             .setLabel('Capture')
-            .setStyle(ButtonStyle.Success),
+            .setStyle(ButtonStyle.Success)
+            .setDisabled(!result.isSuccess || disableAll),
         new ButtonBuilder()
             .setCustomId('execute,save')
             .setLabel('Save')
             .setStyle(ButtonStyle.Success)
-            .setDisabled(!result.isSuccess)
+            .setDisabled(!result.isSuccess || disableAll)
     );
 }
 

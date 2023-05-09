@@ -14,7 +14,7 @@ export function buildField(name: string, value: string, inline = false) {
         // Empty code blocks
         value === '```\n\n```'
     )
-        return undefined;
+        return undefined as never;
     return { name, value, inline };
 }
 

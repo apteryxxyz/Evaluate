@@ -5,29 +5,23 @@ import type { EntityTarget } from 'typeorm';
 
 export const dataSource = new DataSource({
     type: 'better-sqlite3',
-    database: `database/db.sqlite`,
+    database: 'database/db.sqlite',
     entities: ['./build/entities/*.js'],
     migrations: ['./database/migrations/*.js'],
     migrationsTableName: 'typeorm_history',
     metadataTableName: 'typeorm_metadata',
 });
 
-/** Handle the database and data source. */
+/** Database instance providing easy access to TypeORM. */
 export class Database {
-    private _source?: DataSource;
+    private _source = dataSource;
 
     public constructor() {
-        (async () => {
-            dataSource
-                .initialize()
-                .then(() => (this._source = dataSource))
-                .catch(error => console.error(error));
-        })();
+        void this._source.initialize();
     }
 
     /** Shortland to the entity manager. */
     public get manager() {
-        if (!this._source) throw new Error('Database not initialised');
         return this._source.manager;
     }
 
@@ -35,16 +29,13 @@ export class Database {
     public repository<E extends object, R extends object>(
         target: EntityTarget<E> & { repository: R }
     ) {
-        return this.manager
-            .getRepository(target) //
-            .extend(target.repository);
+        return this.manager.getRepository(target).extend(target.repository);
     }
 
-    /** Ensure that the database has been initialise. */
+    /** Ensure the database has been initialise. */
     public static async waitFor() {
         if (!container.database) container.database = new Database();
-
-        while (!container.database._source)
+        while (!container.database._source.isInitialized)
             await new Promise(resolve => setTimeout(resolve, 100));
         return container.database;
     }

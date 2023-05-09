@@ -70,7 +70,7 @@ async function buildOutput(output: string) {
             lifetime: 1_000 * 60 * 60,
         });
 
-        return `Output was too long, so it was uploaded to [pastebin](${pasteUrl}).`;
+        return `Output was too long, so it was uploaded to a [pastebin](${pasteUrl}).`;
     }
 
     return codeBlock(output);

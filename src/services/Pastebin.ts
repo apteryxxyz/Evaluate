@@ -10,33 +10,26 @@ export class Pastebin {
     private _client = new RentryClient();
 
     public constructor() {
-        (async () => {
-            await this._client.createToken();
-            void this.deleteExpiredPastes();
-            setInterval(() => this.deleteExpiredPastes(), 1_000 * 60 * 60);
-        })();
+        void this._client.createToken();
+        void this.deleteExpiredPastes();
+        setInterval(() => this.deleteExpiredPastes(), 1_000 * 60 * 60);
     }
 
     /** Upload content to a pastebin then save its ID and edit code in the database. */
     public async createPaste(options: Pastebin.CreateOptions) {
         await Pastebin.waitFor();
-        const paste = await this._client.createPaste(options);
+        const data = await this._client.createPaste(options);
 
-        const entity = new Paste();
-        entity.id = paste.url;
-        entity.editCode = paste.editCode;
-        entity.lifetime = options.lifetime ?? -1;
-
+        const paste = new Paste({ ...options, ...data });
         const database = await Database.waitFor();
-        await database.repository(Paste).save(entity);
+        await database.repository(Paste).save(paste);
 
-        return `https://rentry.co/${paste.url}`;
+        return `https://rentry.co/${data.url}`;
     }
 
     /** Delete an existing paste by its ID. */
     public async deletePaste(id: string) {
         const database = await Database.waitFor();
-
         const pasteRepository = database.repository(Paste);
         const paste = await pasteRepository.findOneBy({ id });
         if (!paste) return;

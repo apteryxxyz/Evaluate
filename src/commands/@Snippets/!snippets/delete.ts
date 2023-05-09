@@ -74,8 +74,9 @@ export class SnippetDeleteCommand extends Command<
         this._userSnippetsCache.delete(input.user.id);
 
         const id = input.options.getString('name', true);
-        const snippetRepository = this.container.database.repository(Snippet);
-        const snippet = await snippetRepository.findOneBy({ id });
+        const snippet = await this.container.database
+            .repository(Snippet)
+            .findOneBy({ id });
 
         if (!snippet)
             return input.reply({
@@ -105,7 +106,7 @@ export class SnippetDeleteCommand extends Command<
             })
             .then(async click => {
                 await click.deferUpdate();
-                await snippetRepository.remove(snippet);
+                await snippet.delete();
                 return input.editReply({
                     content: 'Snippet successfully deleted.',
                     components: [],

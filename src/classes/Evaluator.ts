@@ -44,7 +44,13 @@ export class Evaluator {
 
         void container.database
             .repository(User)
-            .appendUsedLanguage(this.user.id, options.language);
+            .ensure(this.user.id)
+            .then(user => {
+                user.commandCount++;
+                user.usedLanguages.push(options.language.key);
+                return user.save();
+            });
+
         return result;
     }
 

@@ -138,7 +138,7 @@ export class ExecuteAction extends Action {
             snippet.code = result.code;
             snippet.input = result.input;
             snippet.args = result.args;
-            await this.container.database.repository(Snippet).save(snippet);
+            await snippet.save();
 
             return submit.reply({
                 content: `Snippet saved successfully as \`${name}\`.`,

@@ -2,17 +2,12 @@ import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import type { FindOneOptions } from 'typeorm';
 import { Base, createRepository } from './Base';
 import { Snippet } from './Snippet';
-import type { Executor } from '&services/Executor';
 
 @Entity()
 export class User extends Base {
     /** ID for the user, Discord ID. */
     @PrimaryColumn()
     public id!: string;
-
-    /** List of snippets this user owns. */
-    @OneToMany(() => Snippet, snippet => snippet.owner)
-    public snippets!: Snippet[];
 
     /** List of every language this user has used. */
     @Column('simple-array')
@@ -38,6 +33,10 @@ export class User extends Base {
     @Column()
     public premiumEndsAt: Date = new Date(0);
 
+    /** List of snippets this user owns. */
+    @OneToMany(() => Snippet, snippet => snippet.owner)
+    public snippets!: Snippet[];
+
     public static repository = createRepository({
         __type: () => new User(),
 
@@ -51,40 +50,12 @@ export class User extends Base {
 
             const user = new User();
             user.id = userId;
-            if (
-                Array.isArray(options?.relations) &&
-                options.relations.includes('snippets')
-            )
-                user.snippets = [];
-
+            user.snippets = [];
             return user;
         },
 
-        /** Appends a language to the list of used languages. */
-        async appendUsedLanguage(userId: string, language: Executor.Language) {
-            const user = await this.ensure(userId);
-            user.evaluationCount++;
-            user.usedLanguages.push(language.key);
-            await this.save(user);
-        },
-
-        /** Increments the command count. */
-        async incrementCommandCount(userId: string) {
-            const user = await this.ensure(userId);
-            user.commandCount++;
-            await this.save(user);
-        },
-
-        /** Increments the capture count. */
-        async incrementCaptureCount(userId: string) {
-            const user = await this.ensure(userId);
-            user.captureCount++;
-            await this.save(user);
-        },
-
-        /** Gets the statistics totals. */
-        async getStatisticsTotals() {
-            const users = await this.find();
+        /** Get the total statistics for all users. */
+        async getTotalStatistics() {
             const totals = {
                 usedLanguages: [] as string[],
                 commandCount: 0,
@@ -92,7 +63,7 @@ export class User extends Base {
                 captureCount: 0,
             };
 
-            for (const user of users) {
+            for (const user of await this.find()) {
                 totals.usedLanguages.push(...user.usedLanguages);
                 totals.commandCount += user.commandCount;
                 totals.evaluationCount += user.evaluationCount;
@@ -103,10 +74,10 @@ export class User extends Base {
             return { ...totals, mostUsedLanguage };
         },
 
-        /** Gets the most used languages. */
+        /** Find the most used languages. */
         async getMostUsedLanguages() {
             const users = await this.find();
-            const languages = users.flatMap(stat => stat.usedLanguages);
+            const languages = users.flatMap(user => user.usedLanguages);
 
             const counts = languages.reduce((map, language) => {
                 const count = map.get(language) ?? 0;

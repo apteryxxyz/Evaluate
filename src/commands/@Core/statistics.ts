@@ -35,9 +35,7 @@ export class StatisticsCommand extends Command<
             evaluationCount,
             captureCount,
             mostUsedLanguage,
-        } = await this.container.database
-            .repository(User)
-            .getStatisticsTotals();
+        } = await this.container.database.repository(User).getTotalStatistics();
 
         const snippetCount = await this.container.database
             .repository(Snippet)

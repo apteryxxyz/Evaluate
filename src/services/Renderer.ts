@@ -37,13 +37,16 @@ export class Renderer {
     ) {
         const hash = this._createHash(options);
 
-        if (typeof userId === 'string') {
-            void Database.waitFor().then(database => {
-                void database
-                    .repository(User) //
-                    .incrementCaptureCount(userId);
-            });
-        }
+        if (typeof userId === 'string')
+            void Database.waitFor().then(database =>
+                database
+                    .repository(User)
+                    .ensure(userId)
+                    .then(user => {
+                        user.captureCount++;
+                        return user.save();
+                    })
+            );
 
         // Check if we have a cached version of this render
         const existing = this._cache.get(hash);

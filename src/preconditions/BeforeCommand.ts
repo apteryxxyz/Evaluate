@@ -19,11 +19,9 @@ export class BeforeCommand extends Precondition {
     }
 
     private async _sharedRun(discordUser: Discord.User) {
-        const userRepository = this.container.database //
-            .repository(Database.User);
-
-        return userRepository
-            .ensure(discordUser.id) //
+        return this.container.database
+            .repository(Database.User)
+            .ensure(discordUser.id)
             .then(ourUser => {
                 // Update the command count
                 ourUser.commandCount++;
@@ -33,7 +31,7 @@ export class BeforeCommand extends Precondition {
                     ourUser.hasPremium = false;
 
                 // Save the user
-                void userRepository.save(ourUser);
+                void ourUser.save();
                 discordUser.entity = ourUser;
 
                 return this.ok();

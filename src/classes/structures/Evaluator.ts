@@ -46,7 +46,7 @@ export class Evaluator {
             .repository(User)
             .ensure(this.user.id)
             .then(user => {
-                user.commandCount++;
+                user.evaluationCount++;
                 user.usedLanguages.push(options.language.key);
                 return user.save();
             });

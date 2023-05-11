@@ -44,7 +44,11 @@ export class EnableChallengeChannelCommand extends Command<
         const channel = input.options.getChannel('channel', true);
         const mention = input.options.getRole('mention');
 
-        if (channel.type !== ChannelType.GuildText)
+        if (
+            !channel ||
+            (channel.type !== ChannelType.GuildText &&
+                channel.type !== ChannelType.GuildAnnouncement)
+        )
             return input.reply({
                 content: 'The challenge channel must be a text channel.',
                 ephemeral: true,

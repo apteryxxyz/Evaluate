@@ -35,7 +35,12 @@ export class Challenger {
         for (const guild of guilds) {
             const channelId = guild.challengeChannelId!;
             const channel = await container.client.channels.fetch(channelId);
-            if (!channel || channel.type !== ChannelType.GuildText) continue;
+            if (
+                !channel ||
+                (channel.type !== ChannelType.GuildText &&
+                    channel.type !== ChannelType.GuildAnnouncement)
+            )
+                continue;
 
             const roleId = guild.challengeRoleId;
             const role = roleId

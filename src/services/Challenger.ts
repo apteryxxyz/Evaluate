@@ -46,11 +46,13 @@ export class Challenger {
                 role ? `${role} ` : ''
             }New code challenge!`;
 
-            await channel.send({
-                content: contentString,
-                embeds: [announceEmbed],
-                components: [announceComponents],
-            });
+            await channel
+                .send({
+                    content: contentString,
+                    embeds: [announceEmbed],
+                    components: [announceComponents],
+                })
+                .catch(() => {});
         }
     }
 

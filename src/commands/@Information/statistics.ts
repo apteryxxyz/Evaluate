@@ -2,6 +2,7 @@ import { EmbedBuilder } from '@discordjs/builders';
 import ms from 'enhanced-ms';
 import { Command } from 'maclary';
 import { Snippet } from '&entities/Snippet';
+import { Submission } from '&entities/Submission';
 import { User } from '&entities/User';
 import { deferReply } from '&functions/loadingPrefix';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
@@ -42,6 +43,10 @@ export class StatisticsCommand extends Command<
             .repository(Snippet)
             .count();
 
+        const submissionCount = await this.container.database
+            .repository(Submission)
+            .count();
+
         const language = (mostUsedLanguage
             ? await this.container.executor.findLanguage(mostUsedLanguage)
             : undefined) ?? { name: 'None' };
@@ -60,6 +65,7 @@ export class StatisticsCommand extends Command<
                 buildField('Code Executed', evaluationCount),
                 buildField('Captures Rendered', captureCount),
                 buildField('Snippets Saved', snippetCount),
+                buildField('Submissions Made', submissionCount),
                 buildField('Most Used Language', language.name),
             ]);
 

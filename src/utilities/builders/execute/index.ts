@@ -15,15 +15,18 @@ export const Constants = {
 export const Execute = {
     Constants,
 
+    // Start
     CreateModal: CreateModal as unknown as New<typeof CreateModal>,
     EditModal: EditModal as unknown as New<typeof EditModal>,
     StartButton: StartButton as unknown as New<typeof StartButton>,
 
+    // Result
     ResultEmbed: ResultEmbed as unknown as New<typeof ResultEmbed>,
     ResultComponents: ResultComponents as unknown as New<
         typeof ResultComponents
     >,
 
+    // Invalid Language
     InvalidLanguageEmbed: InvalidLanguageEmbed as unknown as New<
         typeof InvalidLanguageEmbed
     >,

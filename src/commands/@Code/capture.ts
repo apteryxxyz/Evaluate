@@ -8,6 +8,7 @@ import Fuse from 'fuse.js';
 import { LRUCache } from 'lru-cache';
 import type { Action } from 'maclary';
 import { Command } from 'maclary';
+import { Guild } from '&entities/Guild';
 import { User } from '&entities/User';
 import { deferReply } from '&functions/loadingPrefix';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
@@ -51,7 +52,12 @@ export class Capture extends Command<
         });
     }
 
-    private _hasPremiumCache = new LRUCache<string, boolean>({
+    private _userHasPremiumCache = new LRUCache<string, boolean>({
+        ttl: 1_000 * 40,
+        ttlAutopurge: true,
+    });
+
+    private _guildHasPremiumCache = new LRUCache<string, boolean>({
         ttl: 1_000 * 40,
         ttlAutopurge: true,
     });
@@ -59,25 +65,43 @@ export class Capture extends Command<
     public override async onAutocomplete(autocomplete: Command.Autocomplete) {
         const query = autocomplete.options.getFocused();
 
-        let hasPremium = this._hasPremiumCache.get(autocomplete.user.id);
-        if (typeof hasPremium !== 'boolean') {
+        let userHasPremium = this._userHasPremiumCache.get(
+            autocomplete.user.id
+        );
+        let guildHasPremium = autocomplete.guild
+            ? this._guildHasPremiumCache.get(autocomplete.guild.id)
+            : false;
+
+        if (typeof userHasPremium !== 'boolean') {
             const user = await this.container.database
                 .repository(User)
                 .findOneBy({ id: autocomplete.user.id });
 
-            hasPremium = user?.hasPremium ?? false;
-            this._hasPremiumCache.set(autocomplete.user.id, hasPremium);
+            userHasPremium = user?.hasPremium ?? false;
+            this._userHasPremiumCache.set(autocomplete.user.id, userHasPremium);
+        }
+
+        if (typeof guildHasPremium !== 'boolean' && autocomplete.guild) {
+            const guild = await this.container.database
+                .repository(Guild)
+                .findOneBy({ id: autocomplete.guild.id });
+
+            guildHasPremium = guild?.hasPremium ?? false;
+            this._guildHasPremiumCache.set(
+                autocomplete.guild.id,
+                guildHasPremium
+            );
         }
 
         const available = premium.capture.themes
-            .determine(hasPremium)
+            .determine(userHasPremium, guildHasPremium)
             .map(([name, value]) => ({ name, value }));
         const fuse = new Fuse(available, { keys: ['name'] });
+
         const themes =
             query.length > 0
                 ? fuse.search(query).map(({ item }) => item)
                 : available;
-
         return autocomplete.respond(themes);
     }
 
@@ -92,7 +116,7 @@ export class Capture extends Command<
             ?.toLowerCase() as Renderer.Theme;
 
         const available = premium.capture.themes //
-            .determine(input.user.entity.hasPremium);
+            .determine(input.user.entity!.hasPremium);
         if (theme && !available.some(([, value]) => value === theme))
             return void input.reply({
                 content:

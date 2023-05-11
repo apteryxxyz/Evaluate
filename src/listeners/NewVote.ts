@@ -23,7 +23,7 @@ export class OnNewVote extends Listener<any> {
         const userRepository = this.container.database.repository(User);
         const user = await userRepository.ensure(vote.userId);
 
-        if (user.premiumEndsAt < new Date()) user.premiumEndsAt = new Date();
+        if (!user.premiumEndsAt) user.premiumEndsAt = new Date();
         user.premiumEndsAt.setHours(user.premiumEndsAt.getHours() + hours);
 
         await userRepository.save(user);

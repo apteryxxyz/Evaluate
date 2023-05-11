@@ -3,7 +3,7 @@ const script = process.platform === 'win32'
 
 module.exports = [
     {
-        name: 'Evaluate Bot',
+        name: 'Evaluate',
         cwd: '.',
         script,
         args: 'start',

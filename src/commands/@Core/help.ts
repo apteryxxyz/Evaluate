@@ -54,9 +54,9 @@ export class HelpCommand extends Command<
         }
 
         return input.reply({
-            embeds: [new Help.MainEmbed()],
+            embeds: [new Help.Embed()],
             components: [
-                new Help.ActionComponents(),
+                new Help.SectionComponents(),
                 new Help.LinkComponents(),
             ],
         });

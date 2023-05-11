@@ -1,7 +1,10 @@
 import type {
+    InteractionEditReplyOptions,
     InteractionReplyOptions,
     InteractionResponse,
+    InteractionUpdateOptions,
     Message,
+    MessageComponentInteraction,
     MessageEditOptions,
     RepliableInteraction,
 } from 'discord.js';
@@ -9,13 +12,35 @@ import { resolveEmoji } from './resolveEmoji';
 
 export function deferReply<T extends boolean>(
     interaction: RepliableInteraction,
-    message: string,
+    content: string,
     options?: InteractionReplyOptions & { fetchReply?: T }
 ) {
     return interaction.reply({
         ...options,
-        content: `${resolveEmoji('loading')} ${message}`,
+        content: `${resolveEmoji('loading')} ${content}`,
     }) as T extends true ? Promise<Message> : Promise<InteractionResponse>;
+}
+
+export function editReply(
+    interaction: RepliableInteraction,
+    content: string,
+    options?: InteractionEditReplyOptions
+) {
+    return interaction.editReply({
+        ...options,
+        content: `${resolveEmoji('loading')} ${content}`,
+    });
+}
+
+export function update(
+    interaction: MessageComponentInteraction,
+    content: string,
+    options?: InteractionUpdateOptions
+) {
+    return interaction.update({
+        ...options,
+        content: `${resolveEmoji('loading')} ${content}`,
+    });
 }
 
 export function editMessage(
@@ -25,6 +50,6 @@ export function editMessage(
 ) {
     return message.edit({
         ...options,
-        content,
+        content: `${resolveEmoji('loading')} ${content}`,
     });
 }

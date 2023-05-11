@@ -5,8 +5,8 @@ import { LRUCache } from 'lru-cache';
 import { container } from 'maclary';
 import type { Browser } from 'puppeteer';
 import puppeteer from 'puppeteer';
-import { Database } from './Database';
-import { User } from '&entities/User';
+import { Guild as DatabaseGuild } from '&entities/Guild';
+import { User as DatabaseUser } from '&entities/User';
 
 /** Render code snippets to images. */
 export class Renderer {
@@ -33,20 +33,11 @@ export class Renderer {
     /** Create a new render of a code snippet. */
     public async createRender(
         options: Renderer.CreateOptions,
-        userId?: string
+        userId?: string,
+        guildId?: string
     ) {
         const hash = this._createHash(options);
-
-        if (typeof userId === 'string')
-            void Database.waitFor().then(database =>
-                database
-                    .repository(User)
-                    .ensure(userId)
-                    .then(user => {
-                        user.captureCount++;
-                        return user.save();
-                    })
-            );
+        void this._bumpStatistics(userId, guildId);
 
         // Check if we have a cached version of this render
         const existing = this._cache.get(hash);
@@ -74,6 +65,24 @@ export class Renderer {
         // Cache it so we don't have to render it again
         this._cache.set(url.hash, screenshot);
         return screenshot;
+    }
+
+    private async _bumpStatistics(userId?: string, guildId?: string) {
+        const database = container.database;
+        const userRepository = database.repository(DatabaseUser);
+        const guildRepository = database.repository(DatabaseGuild);
+
+        const [ourUser, ourGuild] = await Promise.all([
+            userId ? userRepository.ensure(userId) : null,
+            guildId ? guildRepository.ensure(guildId) : null,
+        ]);
+
+        // Bump the evaluation count
+        if (ourUser) ourUser.captureCount++;
+        if (ourGuild) ourGuild.captureCount++;
+
+        // Save our entities
+        await Promise.all([ourUser?.save(), ourGuild?.save()]);
     }
 
     private _createHash(options: Renderer.CreateOptions) {

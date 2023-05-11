@@ -50,9 +50,8 @@ export class IdentifyCommand extends Command<
         );
         const options = {
             code,
-            usePaid: premium.identify.ai.determine(
-                input.user.entity.hasPremium
-            ),
+            usePaid: premium.identify.ai //
+                .determine(input.user.entity!.hasPremium),
         };
         return action.editReply({
             content: null,

@@ -1,7 +1,8 @@
 import { clearTimeout, setTimeout } from 'node:timers';
 import type * as Discord from 'discord.js';
 import { container } from 'maclary';
-import { User } from '&entities/User';
+import { Guild as DatabaseGuild } from '&entities/Guild';
+import { User as DatabaseUser } from '&entities/User';
 import type { Executor } from '&services/Executor';
 
 export class Evaluator {
@@ -41,17 +42,38 @@ export class Evaluator {
 
         const result = await container.executor.execute({ ...options, code });
         this.history.push(result);
-
-        void container.database
-            .repository(User)
-            .ensure(this.user.id)
-            .then(user => {
-                user.evaluationCount++;
-                user.usedLanguages.push(options.language.key);
-                return user.save();
-            });
+        void this._bumpStatistics(options.language.key);
 
         return result;
+    }
+
+    private async _bumpStatistics(langaugeKey: string) {
+        const database = container.database;
+        const userRepository = database.repository(DatabaseUser);
+        const guildRepository = database.repository(DatabaseGuild);
+
+        const [ourUser, ourGuild] = await Promise.all([
+            userRepository.ensure(this.user),
+            (this.message.guildId &&
+                guildRepository.ensure(this.message.guildId)) ||
+                undefined,
+        ]);
+
+        // Bump the evaluation count
+        if (ourUser) ourUser.evaluationCount++;
+        if (ourGuild) ourGuild.evaluationCount++;
+
+        // Append the used language
+        if (ourUser) ourUser.usedLanguages.push(langaugeKey);
+        if (ourGuild) ourGuild.usedLanguages.push(langaugeKey);
+
+        // Save our entities
+        await Promise.all([ourUser.save(), ourGuild?.save()]);
+
+        // Apply the entities to the discord user and guild
+        if (this.user) this.user.entity = ourUser;
+        if (this.message.guild && ourGuild)
+            this.message.guild.entity = ourGuild;
     }
 
     /** Render a capture for the current code. */
@@ -60,7 +82,8 @@ export class Evaluator {
 
         return container.renderer.createRender(
             this.history.at(-1)!,
-            this.user.id
+            this.user.id,
+            this.message.guildId ?? undefined
         );
     }
 

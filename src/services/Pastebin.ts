@@ -20,8 +20,11 @@ export class Pastebin {
         await Pastebin.waitFor();
         const data = await this._client.createPaste(options);
 
-        const paste = new Paste({ ...options, ...data });
+        const paste = new Paste();
         const database = await Database.waitFor();
+        paste.id = data.url;
+        paste.editCode = data.editCode;
+        paste.lifetime = options.lifetime ?? -1;
         await database.repository(Paste).save(paste);
 
         return `https://rentry.co/${data.url}`;

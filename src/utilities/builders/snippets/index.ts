@@ -8,12 +8,13 @@ export const Constants = {
     },
 };
 
-// I don't like the name but it's to prevent conflicts with the entity
 export const Snippets = {
     Constants,
 
+    // Save
     SaveModal: SaveModal as unknown as New<typeof SaveModal>,
 
+    // View
     ViewEmbed: ViewEmbed as unknown as New<typeof ViewEmbed>,
     ViewComponents: ViewComponents as unknown as New<typeof ViewComponents>,
 };

@@ -36,9 +36,8 @@ export class IdentifyLanguageCommand extends Command<
             const options = {
                 code,
                 language: language ?? undefined,
-                usePaid: premium.identify.ai.determine(
-                    menu.user.entity.hasPremium
-                ),
+                usePaid: premium.identify.ai //
+                    .determine(menu.user.entity!.hasPremium),
             };
             embeds.push(
                 new Identify.ResultEmbed({

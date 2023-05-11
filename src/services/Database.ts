@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { setTimeout } from 'node:timers';
 import { container } from 'maclary';
 import { DataSource } from 'typeorm';

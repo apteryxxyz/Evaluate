@@ -24,9 +24,8 @@ export function ResultEmbed(executor: Evaluator) {
         .setColor(result.isSuccess ? 0x2fc086 : 0xff0000)
         .setFields(fields);
 
-    return buildOutput(result.output).then(output => {
-        return embed.addFields(buildField('Output', output)!);
-    });
+    return buildOutput(result.output) //
+        .then(output => embed.addFields(buildField('Output', output)!));
 }
 
 export function ResultComponents(executor: Evaluator, disableAll = false) {
@@ -56,7 +55,7 @@ export function ResultComponents(executor: Evaluator, disableAll = false) {
     );
 }
 
-// HELPERS
+// Helpers
 
 async function buildOutput(output: string) {
     if (output.length === 0)

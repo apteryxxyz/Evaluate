@@ -1,46 +1,59 @@
-import type * as Discord from 'discord.js';
+import type { Guild as DiscordGuild, User as DiscordUser } from 'discord.js';
 import type { Action, Command } from 'maclary';
 import { Precondition } from 'maclary';
-import * as Database from '&entities/User';
+import { Guild as DatabaseGuild } from '&entities/Guild';
+import { User as DatabaseUser } from '&entities/User';
 
 export class BeforeCommand extends Precondition {
-    public override async prefixRun(message: Command.Message) {
-        return this._sharedRun(message.author);
+    public override actionRun(action: Action.AnyInteraction) {
+        return this._sharedRun(action.user, action.guild ?? undefined);
     }
 
-    public override slashRun = this._interactionRun;
-    public override contextMenuRun = this._interactionRun;
-    public override actionRun = this._interactionRun;
-
-    private async _interactionRun(
-        interaction: Command.AnyInteraction | Action.AnyInteraction
-    ) {
-        return this._sharedRun(interaction.user);
+    public override contextMenuRun(menu: Command.ContextMenu) {
+        return this._sharedRun(menu.user, menu.guild ?? undefined);
     }
 
-    private async _sharedRun(discordUser: Discord.User) {
-        return this.container.database
-            .repository(Database.User)
-            .ensure(discordUser.id)
-            .then(ourUser => {
-                // Update the command count
-                ourUser.commandCount++;
+    public override prefixRun(message: Command.Message) {
+        return this._sharedRun(message.author, message.guild ?? undefined);
+    }
 
-                // Ensure the 'hasPremium' is correct
-                if (ourUser.hasPremium && ourUser.premiumEndsAt < new Date())
-                    ourUser.hasPremium = false;
+    public override slashRun(input: Command.ChatInput) {
+        return this._sharedRun(input.user, input.guild ?? undefined);
+    }
 
-                // Save the user
-                void ourUser.save();
-                discordUser.entity = ourUser;
+    private async _sharedRun(user: DiscordUser, guild?: DiscordGuild) {
+        const database = this.container.database;
+        const userRepository = database.repository(DatabaseUser);
+        const guildRepository = database.repository(DatabaseGuild);
 
-                return this.ok();
-            });
+        const [ourUser, ourGuild] = await Promise.all([
+            userRepository.ensure(user),
+            guild && guildRepository.ensure(guild),
+        ]);
+
+        // Bump the command count
+        if (ourUser) ourUser.commandCount++;
+        if (ourGuild) ourGuild.commandCount++;
+
+        // Save our entities
+        await Promise.all([ourUser.save(), ourGuild?.save()]);
+
+        // Apply the entities to the discord user and guild
+        if (user) user.entity = ourUser;
+        if (guild && ourGuild) guild.entity = ourGuild;
+
+        return this.ok();
     }
 }
 
 declare module 'discord.js' {
     export interface User {
-        entity: Database.User;
+        /** Database entity for this user, only exists if used after `BeforeCommand` precondition has run. */
+        entity?: DatabaseUser;
+    }
+
+    export interface Guild {
+        /** Database entity for this guild, only exists if used after `BeforeCommand` precondition has run. */
+        entity?: DatabaseGuild;
     }
 }

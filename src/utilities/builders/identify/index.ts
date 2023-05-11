@@ -19,7 +19,9 @@ export const Constants = {
 export const Identify = {
     Constants,
 
+    // Start
     StartModal: StartModal as unknown as New<typeof StartModal>,
 
+    // Result
     ResultEmbed: ResultEmbed as unknown as New<typeof ResultEmbed>,
 };

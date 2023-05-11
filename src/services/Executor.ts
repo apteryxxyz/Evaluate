@@ -121,7 +121,8 @@ export class Executor {
         options: Executor.ExecuteOptions,
         result: PistonExecuteResult
     ): Executor.ExecuteResult {
-        const output = result.run.output ?? '';
+        const output = (result.run.output ?? '') //
+            .replaceAll('/piston/', '/evaluate/');
         return { ...options, isSuccess: result.run.code === 0, output };
     }
 

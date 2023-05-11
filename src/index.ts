@@ -7,8 +7,10 @@ import { Lists, Poster, Webhook } from '@maclary/lists';
 import { ActivityType, Client, GatewayIntentBits, Partials } from 'discord.js';
 import { Maclary, container } from 'maclary';
 import { EvaluatorManager } from '&classes/managers/EvaluatorManager';
+import { SubmissionManager } from '&classes/managers/SubmissionManager';
 // Services
 import { Autocompleter } from '&services/Autocompleter';
+import { Challenger } from '&services/Challenger';
 import { Database } from '&services/Database';
 import { Detector } from '&services/Detector';
 import { Executor } from '&services/Executor';
@@ -18,11 +20,13 @@ import { Renderer } from '&services/Renderer';
 void main();
 async function main() {
     container.evaluators = new EvaluatorManager();
+    container.submissions = new SubmissionManager();
 
     await Database.waitFor();
 
     await Promise.all([
         Autocompleter.waitFor(),
+        Challenger.waitFor(),
         Detector.waitFor(),
         Executor.waitFor(),
         Pastebin.waitFor(),
@@ -39,6 +43,7 @@ async function prepareClient() {
             GatewayIntentBits.Guilds,
             GatewayIntentBits.MessageContent,
             GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.GuildMembers,
         ],
         partials: [Partials.Channel, Partials.Reaction],
         presence: {
@@ -112,6 +117,7 @@ function prepareLists() {
 declare module 'maclary' {
     export interface Container {
         evaluators: EvaluatorManager;
+        submissions: SubmissionManager;
 
         lists: {
             poster: Poster;

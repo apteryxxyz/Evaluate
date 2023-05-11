@@ -25,6 +25,8 @@ export function ResultEmbed(
     return embed;
 }
 
+// Helpers
+
 function buildOutput(result?: string) {
     return result
         ? `Identified this code as being **${formatLanguageName(result)}**.`

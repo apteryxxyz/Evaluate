@@ -1,13 +1,15 @@
 import { container } from 'maclary';
-import type { Repository } from 'typeorm';
+import type { FindOptionsRelations, Repository } from 'typeorm';
 import { BeforeUpdate, Column } from 'typeorm';
 
 export abstract class Base {
+    public abstract readonly id: unknown;
+
     @Column()
     public createdAt: Date = new Date();
 
-    @Column()
-    public updatedAt: Date = new Date();
+    @Column({ type: 'datetime', nullable: true })
+    public updatedAt: Date | null = null;
 
     @BeforeUpdate()
     public updateUpdatedAt() {
@@ -25,6 +27,19 @@ export abstract class Base {
         const parent = Object.getPrototypeOf(this).constructor;
         const repository = container.database.repository(parent);
         await repository.remove(this);
+        return this;
+    }
+
+    public async relations(relations: FindOptionsRelations<this>) {
+        const parent = Object.getPrototypeOf(this).constructor;
+        const repository = container.database.repository(parent);
+
+        const that = await repository.findOne({
+            where: { id: this.id },
+            relations,
+        });
+
+        Object.assign(this, that);
         return this;
     }
 }

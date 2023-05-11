@@ -11,7 +11,7 @@ export class ExecuteAction extends Action {
     }
 
     public override async onModalSubmit(submit: Action.ModalSubmit) {
-        const rawLang = submit.fields.getTextInputValue('language');
+        const lang = submit.fields.getTextInputValue('language');
         const code = submit.fields.getTextInputValue('code');
         const input = submit.fields.getTextInputValue('input');
         const args = submit.fields.getTextInputValue('args');
@@ -40,7 +40,7 @@ export class ExecuteAction extends Action {
 
         if (!evaluator) return void 0;
 
-        const language = await this.container.executor.findLanguage(rawLang);
+        const language = await this.container.executor.findLanguage(lang);
         if (!language) {
             return evaluator.message.edit({
                 content: null,

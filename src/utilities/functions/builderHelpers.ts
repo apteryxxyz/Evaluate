@@ -7,15 +7,10 @@ export function wrapInRow<T extends AnyComponentBuilder>(...components: T[]) {
 }
 
 /** Build a field, returning undefined if value is empty. */
-export function buildField(name: string, value: string, inline = false) {
-    if (
-        !value ||
-        value.length === 0 ||
-        // Empty code blocks
-        value === '```\n\n```'
-    )
-        return undefined as never;
-    return { name, value, inline };
+export function buildField(name: string, value: unknown, inline = false) {
+    const string = String(value ?? '');
+    if (!string || value === '```\n\n```') return undefined as never;
+    return { name, value: string, inline };
 }
 
 /** Remove any nullish values from a list. */

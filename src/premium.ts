@@ -7,13 +7,14 @@ interface Feature<T> {
     readonly explained: string;
     readonly free: T;
     readonly premium: T;
-    determine(hasPremium: boolean): T;
+    determine(...hasPremium: unknown[]): T;
 }
 
 function createFeature<T>(feature: Omit<Feature<T>, 'determine'>): Feature<T> {
     return {
         ...feature,
-        determine: hasPremium => (hasPremium ? feature.premium : feature.free),
+        determine: (...hasPremium) =>
+            hasPremium.includes(true) ? feature.premium : feature.free,
     };
 }
 

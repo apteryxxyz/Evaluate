@@ -6,7 +6,7 @@ export function InvalidLanguageEmbed() {
     return new EmbedBuilder()
         .setTitle('Invalid Language')
         .setDescription(
-            'The language you provided is invalid. Please try again.'
+            'I could not find a language that I support with that name. Please try again.'
         )
         .setColor(0xff0000);
 }

@@ -1,5 +1,5 @@
 import { PermissionsBitField } from 'discord.js';
-import { Command } from 'maclary';
+import { Command, Preconditions } from 'maclary';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class DisableChallengeChannelCommand extends Command<
@@ -13,9 +13,13 @@ export class DisableChallengeChannelCommand extends Command<
             name: 'disable',
             description:
                 'Disable the automatically code challenge announcements posting.',
-            defaultMemberPermissions: new PermissionsBitField('ManageChannels'),
+            defaultMemberPermissions: new PermissionsBitField('ManageGuild'),
+            dmPermission: false,
 
-            preconditions: [BeforeCommand],
+            preconditions: [
+                BeforeCommand,
+                Preconditions.UserPermissions('ManageGuild'),
+            ],
         });
     }
 

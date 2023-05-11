@@ -14,6 +14,7 @@ export class ServerLeaderboardCommand extends Command<
             name: 'leaderboard',
             description:
                 'Shows the top 10 users with the most points within this server.',
+            dmPermission: false,
 
             preconditions: [BeforeCommand, Preconditions.GuildOnly],
         });

@@ -5,7 +5,7 @@ import {
     channelMention,
     roleMention,
 } from 'discord.js';
-import { Command } from 'maclary';
+import { Command, Preconditions } from 'maclary';
 import { BeforeCommand } from '&preconditions/BeforeCommand';
 
 export class EnableChallengeChannelCommand extends Command<
@@ -19,9 +19,13 @@ export class EnableChallengeChannelCommand extends Command<
             name: 'enable',
             description:
                 'Enable automatic code challenge announcements in a specific channel with a specific mention.',
-            defaultMemberPermissions: new PermissionsBitField('ManageChannels'),
+            defaultMemberPermissions: new PermissionsBitField('ManageGuild'),
+            dmPermission: false,
 
-            preconditions: [BeforeCommand],
+            preconditions: [
+                BeforeCommand,
+                Preconditions.UserPermissions('ManageGuild'),
+            ],
             options: [
                 {
                     type: Command.OptionType.Channel,

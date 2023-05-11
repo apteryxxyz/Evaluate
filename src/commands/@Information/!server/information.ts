@@ -16,6 +16,7 @@ export class ServerInformation extends Command<
             name: 'information',
             description:
                 'Shows statistics and information related to Evaluate for this server.',
+            dmPermission: false,
 
             preconditions: [BeforeCommand, Preconditions.GuildOnly],
         });

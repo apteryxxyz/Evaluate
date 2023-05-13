@@ -41,8 +41,8 @@ dependencies:
     specifier: ^9.1.1
     version: 9.1.1
   maclary:
-    specifier: 1.0.3-next.26690db.0
-    version: 1.0.3-next.26690db.0(discord.js@14.11.0)
+    specifier: 1.0.3-next.c79ccb7.0
+    version: 1.0.3-next.c79ccb7.0(discord.js@14.11.0)
   openai:
     specifier: ^3.2.1
     version: 3.2.1
@@ -3095,8 +3095,8 @@ packages:
     engines: {node: 14 || >=16.14}
     dev: false
 
-  /maclary@1.0.3-next.26690db.0(discord.js@14.11.0):
-    resolution: {integrity: sha512-TcJMWT9zdQAu5Psx6uoHZRBodk82lK2o92GgxcfyqXjjYuBL4Xx+3sgxtYh4kNKTRM/pVcj0JaqnVE7nuvAlog==}
+  /maclary@1.0.3-next.c79ccb7.0(discord.js@14.11.0):
+    resolution: {integrity: sha512-pT0fQaDa8q3dWExSgmS3R+hqFRf+7IMZ3S7aVvoJ6tXzFAUTpIcJ+Gg4Fl2V08VnL2+BmAAj9D7NeK2qfzW3RQ==}
     peerDependencies:
       discord.js: '>=14.7.0'
     dependencies:

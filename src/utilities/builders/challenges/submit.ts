@@ -24,7 +24,7 @@ export function SubmitModal(
         .setLabel('Language')
         .setStyle(TextInputStyle.Short)
         .setRequired(true)
-        .setPlaceholder('Language to execute in...')
+        .setPlaceholder('Language solution is in...')
         .setValue(options?.language.name ?? '')
         .setMinLength(Constants.lengths.language[0])
         .setMaxLength(Constants.lengths.language[1]);
@@ -34,13 +34,13 @@ export function SubmitModal(
         .setLabel('Code')
         .setStyle(TextInputStyle.Paragraph)
         .setRequired(true)
-        .setPlaceholder('Code to execute...')
+        .setPlaceholder('Solution code...')
         .setValue(options?.code ?? '')
         .setMinLength(Constants.lengths.code[0])
         .setMaxLength(Constants.lengths.code[1]);
 
     return new ModalBuilder()
-        .setTitle('Evaluate Code')
+        .setTitle('Submit Solution')
         .setComponents([language, code].map(input => wrapInRow(input)))
         .setCustomId(`challenge,${challenge.id},submit`);
 }

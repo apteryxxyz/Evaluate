@@ -42,7 +42,7 @@
         "husky": "^8.0.3",
         "lexure": "^0.17.0",
         "lru-cache": "^9.1.1",
-        "maclary": "1.0.3-next.26690db.0",
+        "maclary": "1.0.3-next.c79ccb7.0",
         "openai": "^3.2.1",
         "piston-api-client": "^2.0.1",
         "puppeteer": "^19.11.1",

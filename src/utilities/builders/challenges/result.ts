@@ -22,7 +22,7 @@ export function ResultEmbed(
                 const emoji = resolveEmoji(result === true ? 'pass' : 'fail');
                 let output =
                     typeof result === 'string'
-                        ? result.trim().replaceAll('\n', '  ')
+                        ? result.trim().replaceAll('\n', '  ') || 'No output'
                         : test.output;
                 if (output.length > 100) output = output.slice(0, 97) + '...';
 

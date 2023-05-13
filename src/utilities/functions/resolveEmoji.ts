@@ -2,6 +2,8 @@ import type { APIMessageComponentEmoji, Snowflake } from 'discord.js';
 
 export const CustomEmojis = {
     loading: 'a1105417837905981523',
+    pass: '1083618759798951986',
+    fail: '1083618756670005309',
 } as const;
 
 export const UnicodeEmojis = {

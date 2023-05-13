@@ -18,6 +18,11 @@ export function ViewEmbed(challenge: Challenge) {
     const createdBy = userMention(challenge.authorId);
     const createdAt = time(challenge.createdAt, TimestampStyles.ShortDateTime);
 
+    const examples = challenge.tests
+        .map(test => `\`${test.input}\` -> \`${test.output}\``)
+        .slice(0, 3)
+        .join('\n');
+
     return new EmbedBuilder()
         .setTitle(`Code Challenge ${challenge}`)
         .setDescription(challenge.description)
@@ -27,7 +32,8 @@ export function ViewEmbed(challenge: Challenge) {
             buildField('Submissions', submissionCount, true),
             buildField('Passed', passCount, true),
             buildField('Created By', createdBy, true),
-            buildField('Created At', createdAt, true)
+            buildField('Created At', createdAt, true),
+            buildField('Examples', examples, false)
         );
 }
 
@@ -36,6 +42,11 @@ export function AnnounceEmbed(challenge: Challenge) {
     const createdBy = userMention(challenge.authorId);
     const createdAt = time(challenge.createdAt, TimestampStyles.ShortDateTime);
 
+    const examples = challenge.tests
+        .map(test => `\`${test.input}\` -> \`${test.output}\``)
+        .slice(0, 3)
+        .join('\n');
+
     return new EmbedBuilder()
         .setTitle(`Code Challenge ${challenge}`)
         .setDescription(challenge.description)
@@ -43,7 +54,8 @@ export function AnnounceEmbed(challenge: Challenge) {
         .setFields(
             buildField('Difficulty', difficulty, true),
             buildField('Created By', createdBy, true),
-            buildField('Created At', createdAt, true)
+            buildField('Created At', createdAt, true),
+            buildField('Examples', examples, false)
         );
 }
 

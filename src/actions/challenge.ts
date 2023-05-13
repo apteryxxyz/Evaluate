@@ -91,7 +91,13 @@ export class ChallengeAction extends Action {
 
             return click.editReply({
                 content: null,
-                embeds: [new Challenges.ResultEmbed(challenge, submission)],
+                embeds: [
+                    new Challenges.ResultEmbed(
+                        challenge,
+                        submission,
+                        testResults
+                    ),
+                ],
             });
         }
     }

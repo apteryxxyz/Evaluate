@@ -115,7 +115,7 @@ export class Challenger {
     ) {
         return this._openai!.createChatCompletion({
             model: 'gpt-3.5-turbo',
-            max_tokens: 100,
+            max_tokens: 30,
             messages: [
                 {
                     role: 'system',
@@ -125,9 +125,10 @@ export class Challenger {
             ],
         }).then(({ data }) => {
             const content = data.choices[0].message?.content;
+            console.log(content);
             const score = Number(content?.match(/\d+/)?.[0]);
             if (Number.isNaN(score)) return 60;
-            return score;
+            return Math.min(score + 5, 100);
         });
     }
 
@@ -135,32 +136,13 @@ export class Challenger {
         challenge: Challenge,
         options: Omit<Executor.ExecuteOptions, 'input' | 'args'>
     ) {
-        return stripIndent`As an AI programming code quality assistant, your task
-        is to evaluate the quality of a user's code that was written to complete
-        the challenge: "${challenge.description}". The code was written in
-        ${options.language.name} and has already passed all tests.
-
-        Your goal is to provide a score from 0 to 100, based solely on the quality
-        of the code. Your evaluation should take into account factors such as
-        efficiency and overall quality. Please note that your analysis will only
-        consist of examining the code and not running it.
+        return stripIndent`As an AI programming code quality determinator, your task is to evaluate the quality of the user's code that was written to complete the challenge: "${challenge.description}". The code was written in ${options.language.name} and has already passed all tests.
         
-        Remember that this is a quick code challenge and the code does not need
-        to be perfect. Your analysis should focus on the code itself and not on
-        its test results. The score you give is an addition to the score that the
-        code has already received, so do not hesitate to give a low score if you
-        feel it is deserved.
-
-        As an example, if the code is perfect, you should give it a score of 100.
-        If the code is terrible, you should give it a score of 0. If the code is
-        average, you should give it a score of 50. Comments and formatting were
-        removed from the code to prevent bias.
+        Your goal is to provide a score from 0 to 100, based solely on the efficiency, morden features, and length of the code. Fewer characters and lines is better. It is extremely important that you do not take into account the test results, nor the comments, variable naming or formatting. Comments, variable naming and formatting were removed from the code to prevent bias.
         
-        Please return only the numerical score without any additional text or
-        characters so that it can easily be parsed by a computer. The score
-        should be a whole number between 0 and 100.`;
-    }
+        Remember that this is for a quick code challenge and the code does not need to be perfect. Your analysis should focus on the code itself and not on its test results. The score you give is an addition to the score that the code has already received, so do not hesitate to give a low or even a max high score if you feel it is deserved, be lenient, we want to encourage people to participate.
 
+        As an example, if the code is good (does not need to be perfect to get a max score), you should give it a score of 100. If the code is terrible, you should give it a score of 0. If the code is average, you should give it a score of 50. Your reply should be in the following format: "Score: {score}".`;
     }
 
     public static async waitFor() {

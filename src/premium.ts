@@ -48,15 +48,21 @@ export default {
 
 export const lists = [
     {
+        key: 'topgg',
+        name: 'Top.gg',
+        hours: 36,
+        url: `https://top.gg/bot/${process.env.DISCORD_ID}/vote`,
+    },
+    {
         key: 'discordscom',
         name: 'Discords.com',
-        hours: 36,
+        hours: 24,
         url: `https://discords.com/bots/bot/${process.env.DISCORD_ID}/vote`,
     },
     {
         key: 'discordbotlist',
         name: 'Discord Bot List',
-        hours: 24,
+        hours: 12,
         url: `https://discordbotlist.com/bots/${process.env.DISCORD_ID}/upvote`,
     },
 ];

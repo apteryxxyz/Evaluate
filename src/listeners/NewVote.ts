@@ -24,7 +24,9 @@ export class OnNewVote extends Listener<any> {
         const user = await userRepository.ensure(vote.userId);
 
         if (!user.premiumEndsAt) user.premiumEndsAt = new Date();
-        user.premiumEndsAt.setHours(user.premiumEndsAt.getHours() + hours);
+        user.premiumEndsAt = new Date(
+            user.premiumEndsAt.getTime() + hours * 60 * 60 * 1_000
+        );
 
         await userRepository.save(user);
 

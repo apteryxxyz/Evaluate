@@ -124,9 +124,10 @@ export class Challenger {
                 { role: 'user', content: options.code },
             ],
         }).then(({ data }) => {
-            const value = Number(data.choices[0].message?.content);
-            if (Number.isNaN(value)) return 0;
-            return value;
+            const content = data.choices[0].message?.content;
+            const score = Number(content?.match(/\d+/)?.[0]);
+            if (Number.isNaN(score)) return 60;
+            return score;
         });
     }
 
@@ -155,7 +156,11 @@ export class Challenger {
         average, you should give it a score of 50. Comments and formatting were
         removed from the code to prevent bias.
         
-        Please return just the number so it can easily be parsed by a computer.`;
+        Please return only the numerical score without any additional text or
+        characters so that it can easily be parsed by a computer. The score
+        should be a whole number between 0 and 100.`;
+    }
+
     }
 
     public static async waitFor() {

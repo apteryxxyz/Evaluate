@@ -92,7 +92,6 @@ export namespace Challenge {
         Easy = 'easy',
         Medium = 'medium',
         Hard = 'hard',
-        Extreme = 'extreme',
     }
 
     export interface Test {

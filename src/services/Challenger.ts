@@ -96,12 +96,12 @@ export class Challenger {
 
         let baseScore = 1_000;
 
-        if (challenge.difficulty === Challenge.Difficulty.Extreme)
-            baseScore *= 3;
-        else if (challenge.difficulty === Challenge.Difficulty.Hard)
-            baseScore *= 2;
-        else if (challenge.difficulty === Challenge.Difficulty.Medium)
-            baseScore *= 1.5;
+        if (challenge.difficulty !== Challenge.Difficulty.Easy) {
+            if (challenge.difficulty === Challenge.Difficulty.Hard)
+                baseScore *= 2;
+            else if (challenge.difficulty === Challenge.Difficulty.Medium)
+                baseScore *= 1.5;
+        }
 
         return baseScore;
     }

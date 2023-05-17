@@ -127,7 +127,7 @@ export class Challenger {
             const content = data.choices[0].message?.content;
             const score = Number(content?.match(/\d+/)?.[0]);
             if (Number.isNaN(score)) return 80;
-            return score === 95 ? 100 : score;
+            return score > 95 ? 100 : score;
         });
     }
 

@@ -125,10 +125,9 @@ export class Challenger {
             ],
         }).then(({ data }) => {
             const content = data.choices[0].message?.content;
-            console.log(content);
             const score = Number(content?.match(/\d+/)?.[0]);
-            if (Number.isNaN(score)) return 60;
-            return Math.min(score + 5, 100);
+            if (Number.isNaN(score)) return 80;
+            return score === 95 ? 100 : score;
         });
     }
 

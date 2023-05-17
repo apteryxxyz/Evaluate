@@ -89,7 +89,7 @@ export class Challenger {
 
     public async calculateScore(
         challenge: Challenge,
-        options: Omit<Executor.ExecuteOptions, 'input' | 'args'>,
+        _options: Omit<Executor.ExecuteOptions, 'input' | 'args'>,
         testPassPercent: number
     ) {
         if (testPassPercent !== 100) return null;
@@ -103,12 +103,10 @@ export class Challenger {
         else if (challenge.difficulty === Challenge.Difficulty.Medium)
             baseScore *= 1.5;
 
-        const quality = await this._determineCodeQuality(challenge, options);
-        baseScore += quality * 10;
-
         return baseScore;
     }
 
+    // @ts-expect-error Code quality is no longer used
     private _determineCodeQuality(
         challenge: Challenge,
         options: Omit<Executor.ExecuteOptions, 'input' | 'args'>
@@ -137,11 +135,11 @@ export class Challenger {
     ) {
         return stripIndent`As an AI programming code quality determinator, your task is to evaluate the quality of the user's code that was written to complete the challenge: "${challenge.description}". The code was written in ${options.language.name} and has already passed all tests.
         
-        Your goal is to provide a score from 0 to 100, based solely on the efficiency, morden features, and length of the code. Fewer characters and lines is better. It is extremely important that you do not take into account the test results, nor the comments, variable naming or formatting. Comments, variable naming and formatting were removed from the code to prevent bias.
+        Your goal is to provide a score from 0 to 100, based solely on the efficiency, morden features, and length of the code. Fewer characters and lines deverse higher scores. It is extremely important that you do not take into account the test results, nor the comments, variable naming or formatting. Comments, variable naming and formatting were removed from the code to prevent bias.
         
         Remember that this is for a quick code challenge and the code does not need to be perfect. Your analysis should focus on the code itself and not on its test results. The score you give is an addition to the score that the code has already received, so do not hesitate to give a low or even a max high score if you feel it is deserved, be lenient, we want to encourage people to participate.
 
-        As an example, if the code is good (does not need to be perfect to get a max score), you should give it a score of 100. If the code is terrible, you should give it a score of 0. If the code is average, you should give it a score of 50. Your reply should be in the following format: "Score: {score}".`;
+        As an example, if the code is good, you should give it a score of 100. If the code is terrible, you should give it a score of 0. If the code is average, you should give it a score of 50. Your reply should be in the following format: "Score: {score}".`;
     }
 
     public static async waitFor() {

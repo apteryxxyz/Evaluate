@@ -23,7 +23,8 @@ export class OnNewVote extends Listener<any> {
         const userRepository = this.container.database.repository(User);
         const user = await userRepository.ensure(vote.userId);
 
-        if (!user.premiumEndsAt) user.premiumEndsAt = new Date();
+        if (!user.premiumEndsAt || user.premiumEndsAt < new Date())
+            user.premiumEndsAt = new Date();
         user.premiumEndsAt = new Date(
             user.premiumEndsAt.getTime() + hours * 60 * 60 * 1_000
         );

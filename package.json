@@ -4,29 +4,17 @@
     "private": true,
     "main": "./build/index.js",
     "scripts": {
-        "//1": "CHECKING",
-        "lint": "pnpm lint:types && eslint src --ext .ts",
-        "format": "prettier --write \"src/**/*.ts\" && pnpm lint --fix",
-        "lint:types": "tsc --noEmit",
-        "//2": "BUILDING",
-        "pull": "git reset --hard HEAD && git pull",
-        "prepare": "husky install",
-        "build": "pnpm build:env && pnpm build:tsup && pnpm build:alias",
-        "build:tsup": "tsup --config tsup.config.ts",
-        "build:alias": "tsc-alias",
+        "lint": "eslint src --ext .ts",
+        "format": "prettier --write \"src/**/*.ts\" && yarn lint --fix",
+        "build": "yarn build:env && yarn build:tsup && yarn build:alias",
         "build:env": "ts-node ./scripts/build-env.ts && prettier --write \"src/env.ts\"",
-        "//3": "DATABASE",
-        "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/services/Database.ts",
-        "migration:generate": "pnpm build && npx typeorm-ts-node-commonjs migration:generate -d ./src/services/Database.ts -o",
-        "//4": "RUNNING",
+        "build:alias": "tsc-alias",
+        "build:tsup": "tsup --config tsup.config.ts",
+        "migrate": "npx typeorm migration:run -d ./src/services/Database.ts",
+        "migration:generate": "yarn build && npx typeorm migration:generate -d ./src/services/Database.ts -o",
         "start": "cross-env NODE_ENV=production node build/index.js",
-        "start:dev": "pnpm build:alias && cross-env NODE_ENV=development node build/index.js",
-        "dev": "pnpm build:tsup --watch --onSuccess \"pnpm start:dev\"",
-        "//5": "PM2",
-        "pm2:start": "pm2 startOrReload pm2.config.js",
-        "pm2:stop": "pm2 stop pm2.config.js",
-        "pm2:reload": "pm2 startOrReload pm2.config.js",
-        "pm2:restart": "pm2 startOrRestart pm2.config.js"
+        "start:dev": "yarn build:alias && cross-env NODE_ENV=development node build/index.js",
+        "dev": "yarn build:tsup --watch --onSuccess \"yarn start:dev\""
     },
     "dependencies": {
         "@discordjs/builders": "^1.6.3",
@@ -39,7 +27,6 @@
         "enhanced-ms": "^2.3.0",
         "flourite": "^1.2.3",
         "fuse.js": "^6.6.2",
-        "husky": "^8.0.3",
         "lexure": "^0.17.0",
         "lru-cache": "^9.1.1",
         "maclary": "1.0.3-next.c79ccb7.0",
@@ -79,5 +66,6 @@
         "tsup": "^6.7.0",
         "typescript": "^5.0.4"
     },
-    "prettier": "prettier-config-apteryx"
+    "prettier": "prettier-config-apteryx",
+    "packageManager": "yarn@3.5.1"
 }

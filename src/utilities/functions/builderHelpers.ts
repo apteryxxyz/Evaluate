@@ -14,7 +14,7 @@ export function buildField(name: string, value: unknown, inline = false) {
 }
 
 /** Remove any nullish values from a list. */
-export function removeNullish<T>(...values: (T | undefined | null)[]): T[] {
+export function removeNullish<T>(...values: (T | null | undefined)[]): T[] {
     return values.filter(
         (value): value is T => value !== null && value !== undefined
     );

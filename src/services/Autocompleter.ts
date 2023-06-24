@@ -20,7 +20,7 @@ export class Autocompleter {
         })();
     }
 
-    public autocompleteCode(options: Autocompleter.AutocompleteOptions) {
+    public async autocompleteCode(options: Autocompleter.AutocompleteOptions) {
         return options.usePaid
             ? this._autocompleteUsingOpenai(options)
             : this._autocompleteUsingFind(options);
@@ -61,23 +61,23 @@ export class Autocompleter {
         ] as const,
     };
 
-    private _autocompleteUsingFind(options: Autocompleter.AutocompleteOptions) {
+    private async _autocompleteUsingFind(
+        options: Autocompleter.AutocompleteOptions
+    ) {
         if (!(options.language in this._autocompleteValues))
-            return Promise.resolve(options.code);
+            return options.code;
 
         const language =
             options.language as keyof typeof this._autocompleteValues;
         const [find, replace] = this._autocompleteValues[language];
 
-        return Promise.resolve(
-            options.code.includes(find)
-                ? options.code
-                : replace(options.code.replaceAll('\n', '\n  '))
-        );
+        return options.code.includes(find)
+            ? options.code
+            : replace(options.code.replaceAll('\n', '\n  '));
     }
 
     // NOTE: This is never used, it is too slow to do on every evaluation
-    private _autocompleteUsingOpenai(
+    private async _autocompleteUsingOpenai(
         options: Autocompleter.AutocompleteOptions
     ) {
         return this._openai!.createChatCompletion({

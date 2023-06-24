@@ -21,7 +21,7 @@ export function deferReply<T extends boolean>(
     }) as T extends true ? Promise<Message> : Promise<InteractionResponse>;
 }
 
-export function editReply(
+export async function editReply(
     interaction: RepliableInteraction,
     content: string,
     options?: InteractionEditReplyOptions
@@ -32,7 +32,7 @@ export function editReply(
     });
 }
 
-export function update(
+export async function update(
     interaction: MessageComponentInteraction,
     content: string,
     options?: InteractionUpdateOptions
@@ -43,7 +43,7 @@ export function update(
     });
 }
 
-export function editMessage(
+export async function editMessage(
     message: Message,
     content: string,
     options?: MessageEditOptions

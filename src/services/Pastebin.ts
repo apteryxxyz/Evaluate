@@ -11,8 +11,7 @@ export class Pastebin {
 
     public constructor() {
         void this._client.createToken();
-        void this.deleteExpiredPastes();
-        setInterval(() => this.deleteExpiredPastes(), 1_000 * 60 * 60);
+        setInterval(async () => this.deleteExpiredPastes(), 1_000 * 60 * 60);
     }
 
     /** Upload content to a pastebin then save its ID and edit code in the database. */
@@ -33,7 +32,9 @@ export class Pastebin {
     /** Delete an existing paste by its ID. */
     public async deletePaste(id: string) {
         const paste = await Database.waitFor() //
-            .then(database => database.repository(Paste).findOneBy({ id }));
+            .then(async database =>
+                database.repository(Paste).findOneBy({ id })
+            );
         if (!paste) return;
 
         await Pastebin.waitFor();

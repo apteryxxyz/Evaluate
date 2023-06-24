@@ -14,7 +14,7 @@ export class Renderer {
     private _cache = new LRUCache({
         max: 100,
         maxSize: 1_024 * 1_024 * 10,
-        sizeCalculation: (value: string | Buffer) => value.length,
+        sizeCalculation: (value: Buffer | string) => value.length,
     });
 
     public constructor() {

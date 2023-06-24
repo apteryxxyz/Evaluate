@@ -6,7 +6,7 @@
         "baseUrl": ".",
         "outDir": "build",
         "lib": ["esnext", "dom"],
-        "moduleResolution": "node",
+        "moduleResolution": "nodenext",
         "paths": {
             "&classes/*": ["./src/classes/*"],
             "&entities/*": ["./src/entities/*"],

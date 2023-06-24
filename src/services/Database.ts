@@ -1,4 +1,6 @@
 import 'reflect-metadata';
+import { join } from 'node:path';
+import process from 'node:process';
 import { setTimeout } from 'node:timers';
 import { container } from 'maclary';
 import { DataSource } from 'typeorm';
@@ -7,7 +9,7 @@ import type { EntityTarget } from 'typeorm';
 export const dataSource = new DataSource({
     type: 'better-sqlite3',
     database: 'database/db.sqlite',
-    entities: ['./build/entities/*.js'],
+    entities: [join(process.cwd(), 'build/entities/**.js')],
     migrations: ['./database/migrations/*.js'],
     migrationsTableName: 'typeorm_history',
     metadataTableName: 'typeorm_metadata',

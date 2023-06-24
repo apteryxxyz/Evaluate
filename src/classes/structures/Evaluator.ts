@@ -27,7 +27,7 @@ export class Evaluator {
     public onUpdate() {
         this.updatedAt = new Date();
         clearTimeout(this._timeout);
-        this._timeout = setTimeout(() => this.destroy(), 720_000);
+        this._timeout = setTimeout(async () => this.destroy(), 720_000);
     }
 
     /** Merge the options with new ones. */
@@ -99,5 +99,5 @@ export class Evaluator {
 }
 
 export namespace Evaluator {
-    export interface Options {}
+    export type Options = {};
 }

@@ -35,18 +35,18 @@ export class Detector {
         return result ? formatLanguageName(result) : undefined;
     }
 
-    private _freeDetection(options: Detector.DetectOptions) {
-        return Promise.resolve(
+    private async _freeDetection(options: Detector.DetectOptions) {
+        return (
             this._detectUsingRegex(options) ??
-                options.language ??
-                this._detectUsingVscode(options)
+            options.language ??
+            this._detectUsingVscode(options)
         );
     }
 
     private async _paidDetection(options: Detector.DetectOptions) {
         return this._detectUsingOpenai(options)
             .catch(() => undefined)
-            .then(result => result ?? this._freeDetection(options));
+            .then(async result => result ?? this._freeDetection(options));
     }
 
     private _detectUsingRegex(options: Detector.DetectOptions) {

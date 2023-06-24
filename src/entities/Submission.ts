@@ -38,13 +38,10 @@ export class Submission extends Base {
             const leaderboard = new Map<string, number>();
 
             for (const submission of await this.find()) {
-                if (!leaderboard.has(submission.submitterId))
-                    leaderboard.set(submission.submitterId, 0);
-
-                const currentScore = leaderboard.get(submission.submitterId)!;
                 leaderboard.set(
                     submission.submitterId,
-                    currentScore + submission.score
+                    (leaderboard.get(submission.submitterId) ?? 0) +
+                        submission.score
                 );
             }
 

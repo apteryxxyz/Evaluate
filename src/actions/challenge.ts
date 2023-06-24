@@ -44,7 +44,7 @@ export class ChallengeAction extends Action {
             void this.container.database
                 .repository(User)
                 .ensure(click.user.id)
-                .then(user => user.save());
+                .then(async user => user.save());
             return click.showModal(new Challenges.SubmitModal(challenge));
         }
 

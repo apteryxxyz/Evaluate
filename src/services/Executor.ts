@@ -15,7 +15,7 @@ export class Executor {
     public constructor() {
         (async () => {
             await this._updatePopularLanguages();
-            setInterval(() => this._updatePopularLanguages(), 60_000);
+            setInterval(async () => this._updatePopularLanguages(), 60_000);
         })();
     }
 
@@ -27,11 +27,10 @@ export class Executor {
         const languageIds = await database
             .repository(User)
             .getMostUsedLanguages();
-        const _mapper = (id: string) => this.findLanguage(id);
-        const languages = await Promise.all(languageIds.map(_mapper));
-        this._popularLanguages = languages.filter(
-            lang => lang !== undefined
-        ) as Executor.Language[];
+        const languages = await Promise.all(
+            languageIds.map(async (id: string) => this.findLanguage(id))
+        ).then(languages => languages.filter(lang => lang !== undefined));
+        this._popularLanguages = languages as Executor.Language[];
     }
 
     /** Fetch a list of all available languages. */

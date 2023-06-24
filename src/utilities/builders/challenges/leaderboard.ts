@@ -4,6 +4,7 @@ import { userMention } from 'discord.js';
 import { container } from 'maclary';
 import { Submission } from '&entities/Submission';
 
+// eslint-disable-next-line @typescript-eslint/promise-function-async
 export function LeaderboardEmbed(userId: string, guild?: Guild) {
     return (async () => {
         let leaderboard = await container.database

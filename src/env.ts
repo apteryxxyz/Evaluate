@@ -15,14 +15,14 @@ export const envSchema = z.object({
     DISCORD_SUPPORT_CODE: z.string().optional(),
     OPENAI_BASE_PATH: z.string().optional(),
     OPENAI_KEY: z.string(),
-    DISCORD_BOT_LIST_API_KEY: z.string(),
-    DISCORD_LIST_API_KEY: z.string(),
-    DISCORDS_COM_API_KEY: z.string(),
-    TOP_GG_API_KEY: z.string(),
-    UNIVERSE_LIST_API_KEY: z.string(),
-    DISCORD_BOT_LIST_WEBHOOK_TOKEN: z.string(),
-    DISCORDS_COM_WEBHOOK_TOKEN: z.string(),
-    TOP_GG_WEBHOOK_TOKEN: z.string(),
+    DISCORD_BOT_LIST_API_KEY: z.string().optional(),
+    DISCORD_LIST_API_KEY: z.string().optional(),
+    DISCORDS_COM_API_KEY: z.string().optional(),
+    TOP_GG_API_KEY: z.string().optional(),
+    UNIVERSE_LIST_API_KEY: z.string().optional(),
+    DISCORD_BOT_LIST_WEBHOOK_TOKEN: z.string().optional(),
+    DISCORDS_COM_WEBHOOK_TOKEN: z.string().optional(),
+    TOP_GG_WEBHOOK_TOKEN: z.string().optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;

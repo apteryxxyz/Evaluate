@@ -13,6 +13,7 @@ export function codeBlock(content: string, language = '') {
 
 /** Extract the contents of every code block within a piece of content. */
 export function extractCodeBlocks(content: string) {
+    // eslint-disable-next-line unicorn/no-unsafe-regex
     const regex = /`{3}([\w#+]*\n)?([\S\s]*?)\n?`{3}|`([^\n`]+)`/gi;
 
     const codeBlocks = [];

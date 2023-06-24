@@ -9,6 +9,7 @@ import {
 import { codeBlock } from '&functions/codeBlock';
 import { Pastebin } from '&services/Pastebin';
 
+// eslint-disable-next-line @typescript-eslint/promise-function-async
 export function ResultEmbed(executor: Evaluator) {
     const result = executor.history.at(-1)!;
 

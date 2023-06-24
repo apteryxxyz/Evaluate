@@ -9,6 +9,7 @@ import {
 } from '&functions/builderHelpers';
 import { codeBlock } from '&functions/codeBlock';
 
+// eslint-disable-next-line @typescript-eslint/promise-function-async
 export function ViewEmbed(snippet: Snippet) {
     const fields = removeNullish(
         buildField('Input', codeBlock(snippet.input), true),

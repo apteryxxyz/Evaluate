@@ -45,7 +45,7 @@ export abstract class Base {
 }
 
 export function createRepository<E extends Base, R>(
-    custom: { __type(): E } & R & ThisType<Repository<E> & Omit<R, '__type'>>
+    custom: R & ThisType<Omit<R, '__type'> & Repository<E>> & { __type(): E }
 ): Omit<R, '__type'> {
     const { __type, ...rest } = custom;
     return rest;

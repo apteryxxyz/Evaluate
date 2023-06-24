@@ -72,26 +72,26 @@ function getLists() {
     return [
         new Lists.DiscordBotList(
             process.env.DISCORD_ID,
-            process.env.DISCORD_BOT_LIST_API_KEY,
+            process.env.DISCORD_BOT_LIST_API_KEY!,
             process.env.DISCORD_BOT_LIST_WEBHOOK_TOKEN
         ),
         new Lists.DiscordsCom(
             process.env.DISCORD_ID,
-            process.env.DISCORDS_COM_API_KEY,
+            process.env.DISCORDS_COM_API_KEY!,
             process.env.DISCORDS_COM_WEBHOOK_TOKEN
         ),
         new Lists.DiscordList(
             process.env.DISCORD_ID,
-            process.env.DISCORD_LIST_API_KEY
+            process.env.DISCORD_LIST_API_KEY!
         ),
         new Lists.TopGG(
             process.env.DISCORD_ID,
-            process.env.TOP_GG_API_KEY,
+            process.env.TOP_GG_API_KEY!,
             process.env.TOP_GG_WEBHOOK_TOKEN
         ),
         new Lists.UniverseList(
             process.env.DISCORD_ID,
-            process.env.UNIVERSE_LIST_API_KEY
+            process.env.UNIVERSE_LIST_API_KEY!
         ),
     ];
 }

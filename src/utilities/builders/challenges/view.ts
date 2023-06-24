@@ -14,7 +14,9 @@ import { buildField, wrapInRow } from '&functions/builderHelpers';
 export function ViewEmbed(challenge: Challenge) {
     const difficulty = challenge.difficulty.toUpperCase();
     const submissionCount = challenge.submissions.length;
-    const passCount = challenge.submissions.filter(s => s.score > 0).length;
+    const passCount = challenge.submissions.filter(
+        submission => submission.score > 0
+    ).length;
     const createdBy = userMention(challenge.authorId);
     const createdAt = time(challenge.createdAt, TimestampStyles.ShortDateTime);
 

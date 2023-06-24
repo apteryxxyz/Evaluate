@@ -16,7 +16,7 @@ export class EvaluatorManager {
 
     /** Resolve an evaluator from an interaction. */
     public resolve(
-        interaction: Action.Button | Action.ModalSubmit | Action.AnySelectMenu
+        interaction: Action.AnySelectMenu | Action.Button | Action.ModalSubmit
     ) {
         if (!(interaction.message instanceof Command.Message))
             return void interaction.reply({

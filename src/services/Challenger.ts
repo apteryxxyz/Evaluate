@@ -63,7 +63,7 @@ export class Challenger {
 
     public async *runTests(
         challenge: Challenge,
-        options: Omit<Executor.ExecuteOptions, 'input' | 'args'>
+        options: Omit<Executor.ExecuteOptions, 'args' | 'input'>
     ) {
         for (const test of challenge.tests) {
             const result = await this._runTest(test, options);
@@ -73,13 +73,13 @@ export class Challenger {
 
     private async _runTest(
         test: Challenge.Test,
-        options: Omit<Executor.ExecuteOptions, 'input' | 'args'>
+        options: Omit<Executor.ExecuteOptions, 'args' | 'input'>
     ) {
         const executor = await Executor.waitFor();
         const result = await executor.execute({
             ...options,
             input: test.input,
-            args: test.input,
+            args: `"${test.input}"`,
         });
 
         if (result.isSuccess && result.output.trim() === test.output)
@@ -89,7 +89,7 @@ export class Challenger {
 
     public async calculateScore(
         challenge: Challenge,
-        _options: Omit<Executor.ExecuteOptions, 'input' | 'args'>,
+        _options: Omit<Executor.ExecuteOptions, 'args' | 'input'>,
         testPassPercent: number
     ) {
         if (testPassPercent !== 100) return null;
@@ -107,9 +107,9 @@ export class Challenger {
     }
 
     // @ts-expect-error Code quality is no longer used
-    private _determineCodeQuality(
+    private async _determineCodeQuality(
         challenge: Challenge,
-        options: Omit<Executor.ExecuteOptions, 'input' | 'args'>
+        options: Omit<Executor.ExecuteOptions, 'args' | 'input'>
     ) {
         return this._openai!.createChatCompletion({
             model: 'gpt-3.5-turbo',
@@ -131,7 +131,7 @@ export class Challenger {
 
     private _createSystemPrompt(
         challenge: Challenge,
-        options: Omit<Executor.ExecuteOptions, 'input' | 'args'>
+        options: Omit<Executor.ExecuteOptions, 'args' | 'input'>
     ) {
         return stripIndent`As an AI programming code quality determinator, your task is to evaluate the quality of the user's code that was written to complete the challenge: "${challenge.description}". The code was written in ${options.language.name} and has already passed all tests.
         

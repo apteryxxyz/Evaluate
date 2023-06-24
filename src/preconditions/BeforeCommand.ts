@@ -5,19 +5,19 @@ import { Guild as DatabaseGuild } from '&entities/Guild';
 import { User as DatabaseUser } from '&entities/User';
 
 export class BeforeCommand extends Precondition {
-    public override actionRun(action: Action.AnyInteraction) {
+    public override async actionRun(action: Action.AnyInteraction) {
         return this._sharedRun(action.user, action.guild ?? undefined);
     }
 
-    public override contextMenuRun(menu: Command.ContextMenu) {
+    public override async contextMenuRun(menu: Command.ContextMenu) {
         return this._sharedRun(menu.user, menu.guild ?? undefined);
     }
 
-    public override prefixRun(message: Command.Message) {
+    public override async prefixRun(message: Command.Message) {
         return this._sharedRun(message.author, message.guild ?? undefined);
     }
 
-    public override slashRun(input: Command.ChatInput) {
+    public override async slashRun(input: Command.ChatInput) {
         return this._sharedRun(input.user, input.guild ?? undefined);
     }
 

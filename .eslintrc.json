@@ -12,8 +12,6 @@
         "scripts",
         "*.config.*"
     ],
-    "rules": {
-        "jsdoc/newline-after-description": "off",
-        "@typescript-eslint/no-use-before-define": "off"
-    }
+    "settings": { "node": { "version": ">=16.0.0" } },
+    "parserOptions": { "project": "./tsconfig.json" }
 }

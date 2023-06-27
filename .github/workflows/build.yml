@@ -13,19 +13,14 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v3
 
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'pnpm'
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: pnpm install
+        run: yarn install
 
       - name: Compile code
-        run: pnpm build
+        run: yarn build

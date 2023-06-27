@@ -39,13 +39,8 @@ async function main() {
 
 async function prepareClient() {
     const client = new Client({
-        intents: [
-            GatewayIntentBits.Guilds,
-            GatewayIntentBits.MessageContent,
-            GatewayIntentBits.GuildMessages,
-            GatewayIntentBits.GuildMembers,
-        ],
-        partials: [Partials.Channel, Partials.Reaction],
+        intents: [GatewayIntentBits.DirectMessages],
+        partials: [Partials.Channel, Partials.Message, Partials.User],
         presence: {
             activities: [
                 {

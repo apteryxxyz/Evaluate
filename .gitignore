@@ -1,20 +1,19 @@
-# Node Modules
+# Yarn v2
 node_modules/
-
-# Yarn
 .yarn/*
 !.yarn/patches
-!.yarn/releases
 !.yarn/plugins
+!.yarn/releases
 !.yarn/sdks
 !.yarn/versions
 
-# Build
-build/
-
 # Secrets
+.env
 .env.*
-!.env.schema
 
-# Database
-database/*.sqlite
+# Vercel
+.vercel/
+
+# Build
+.next/
+.translations/

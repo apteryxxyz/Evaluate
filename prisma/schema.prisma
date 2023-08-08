@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @unique
+  snippets Snippet[]
+}
+
+model Snippet {
+  id       String  @id @unique
+  userId   String
+  user     User    @relation(fields: [userId], references: [id])
+  name     String
+  code     String
+  language String
+  input    String?
+  args     String?
+}

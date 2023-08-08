@@ -1,96 +1,18 @@
 {
-    // Language-specific settings for files
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[prisma]": {
-        "editor.defaultFormatter": "Prisma.prisma"
-    },
-
-    // CSS linting settings
-    "css.lint.unknownAtRules": "ignore",
-
-    // General editor settings
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.detectIndentation": false,
-    "editor.formatOnSave": true,
-    "editor.insertSpaces": true,
-    "editor.tabSize": 4,
-    "editor.useTabStops": true,
-
-    // ESLint settings
-    "eslint.format.enable": true,
-    "eslint.validate": ["typescript"],
-
-    // File-related settings
-    "files.autoSave": "onFocusChange",
-    "files.eol": "\n",
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true,
-        "**/node_modules": true
-    },
-
-    // Markdown linting settings
-    "markdownlint.config": {
-        "no-inline-html": false,
-        "first-line-heading": false
-    },
-
-    // Prettier settings
-    "prettier.tabWidth": 4,
-
-    // Tailwind CSS settings
-    "tailwindCSS.classAttributes": [
-        "class",
-        "className",
-        "ngClass",
-        "whileHover",
-        "whileActive"
-    ],
-
-    // TODO highlight settings
-    "todohighlight.keywords": [
-        {
-            "text": "NOTE:",
-            "color": "cyan",
-            "border": "1px solid cyan",
-            "borderRadius": "2px",
-            "backgroundColor": "rgba(0,0,0,.2)",
-            "isWholeLine": true
-        },
-        {
-            "text": "IDEA:",
-            "color": "lime",
-            "border": "1px solid green",
-            "borderRadius": "2px",
-            "backgroundColor": "rgba(0,0,0,.2)",
-            "isWholeLine": true
-        },
-        {
-            "text": "TODO:",
-            "color": "orange",
-            "border": "1px solid orange",
-            "borderRadius": "2px",
-            "backgroundColor": "rgba(0,0,0,.2)",
-            "isWholeLine": true
-        },
-        {
-            "text": "FIXME:",
-            "color": "red",
-            "border": "1px solid red",
-            "borderRadius": "2px",
-            "backgroundColor": "rgba(0,0,0,.2)",
-            "isWholeLine": true
-        }
-    ],
-
-    // TypeScript settings
-    "typescript.enablePromptUseWorkspaceTsdk": true,
-    "typescript.preferences.autoImportFileExcludePatterns": ["**/index.*"],
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+  "[cjs]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "//**/node_modules": true,
+    "**/dist": true
+  }
 }

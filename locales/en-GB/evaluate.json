@@ -1,0 +1,36 @@
+{
+  "command": {
+    "name": "Evaluate",
+    "description": "Evaluate any piece of code in any language with optional input and command line arguments."
+  },
+  "language": {
+    "name": "Language",
+    "description": "The language to execute in.",
+    "placeholder": "Enter the language to execute in...",
+    "unknown": "I could not find a language that I support with that name. Please try again."
+  },
+  "code": {
+    "name": "Code",
+    "description": "The code to evaluate.",
+    "placeholder": "Enter your code here..."
+  },
+  "input": {
+    "name": "Input",
+    "description": "The input to provide to the program.",
+    "placeholder": "Enter the input to provide to the program..."
+  },
+  "args": {
+    "name": "Arguments",
+    "description": "Additional command line arguments to provide to the program.",
+    "placeholder": "Enter additional command line arguments..."
+  },
+  "result": {
+    "title": "Evaluation Result"
+  },
+  "output": {
+    "name": "Output",
+    "empty": "No output was produced, ensure something was printed to the console.",
+    "pastebin": "The output was too large to display, so it has been uploaded to a [pastebin]({url})."
+  },
+  "unauthorised": "This is not your evaluation, you'll need to create your own using the 'evaluate' command."
+}

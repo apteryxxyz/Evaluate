@@ -1,0 +1,23 @@
+diff --git a/node_modules/@discordjs/core/package.json b/node_modules/@discordjs/core/package.json
+index a20d1c4..590ff34 100644
+--- a/node_modules/@discordjs/core/package.json
++++ b/node_modules/@discordjs/core/package.json
+@@ -16,18 +16,6 @@
+   "main": "./dist/index.js",
+   "module": "./dist/index.mjs",
+   "typings": "./dist/index.d.ts",
+-  "exports": {
+-    ".": {
+-      "types": "./dist/index.d.ts",
+-      "import": "./dist/index.mjs",
+-      "require": "./dist/index.js"
+-    },
+-    "./http-only": {
+-      "types": "./dist/http-only.d.ts",
+-      "import": "./dist/http-only.mjs",
+-      "require": "./dist/http-only.js"
+-    }
+-  },
+   "directories": {
+     "lib": "src",
+     "test": "__tests__"

@@ -1,24 +1,23 @@
 {
-    "extends": "ts-config-apteryx",
-    "include": ["src", "**/*.ts", "mikro-orm.config.js"],
-    "exclude": ["node_modules", "build"],
-    "compilerOptions": {
-        "baseUrl": ".",
-        "outDir": "build",
-        "lib": ["esnext", "dom"],
-        "moduleResolution": "nodenext",
-        "paths": {
-            "&classes/*": ["./src/classes/*"],
-            "&entities/*": ["./src/entities/*"],
-            "&preconditions/*": ["./src/preconditions/*"],
-            "&services/*": ["./src/services/*"],
-            "&factories/*": ["./src/utilities/factories/*"],
-            "&functions/*": ["./src/utilities/functions/*"],
-            "&builders/*": ["./src/utilities/builders/*"],
-            "&premium": ["./src/premium"]
-        },
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "esModuleInterop": true
-    }
+  "extends": "ts-config-apteryx",
+  "include": ["src/**/**/*", "cli/**/*", ".next/types/**/*.ts"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@cli/*": ["./cli/*"],
+      "translations": ["./.translations"]
+    },
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "exclude": ["node_modules"]
 }

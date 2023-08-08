@@ -1,0 +1,20 @@
+# Yarn v2
+node_modules/
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Secrets
+.env
+.env.*
+
+# Config
+.vscode
+*.*rc.*
+.*config
+
+# Build
+.next/

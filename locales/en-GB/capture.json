@@ -1,0 +1,13 @@
+{
+  "command": {
+    "name": "Capture",
+    "description": "Convert a piece of code into a beautiful image."
+  },
+  "code": {
+    "name": "Code",
+    "description": "The code to capture.",
+    "placeholder": "Enter your code here..."
+  },
+  "backup": "Preferred service timed out, using backup service.",
+  "down": "Both services are down, please try again later."
+}

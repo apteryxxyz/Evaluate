@@ -1,7 +1,13 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import { z } from 'zod';
 
+const nodeEnv = process.env.NODE_ENV || 'development';
+dotenv.config({ path: `.env.${nodeEnv}` });
+
 const envSchema = z.object({
+  NODE_ENV: z
+    .enum(['development', 'production', 'preview', 'test'])
+    .default('development'),
   DISCORD_TOKEN: z.string().min(1),
   DISCORD_CLIENT_PUBLIC_KEY: z.string().min(1),
   DISCORD_CLIENT_ID: z.string().min(1),

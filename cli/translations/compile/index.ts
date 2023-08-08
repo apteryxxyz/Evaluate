@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-
-import { readdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { Command } from 'commander';
 import { buildIndexDtsFile, buildIndexJsFile } from './builders';
 import {
   buildInterfacesFile,
@@ -10,7 +8,8 @@ import {
 } from './builders/interfaces';
 import type { Translations } from './types';
 
-export default new Command('compile').action(() => {
+void main();
+function main() {
   const baseLocale = 'en-GB';
   const rootPath = process.cwd();
   const saveDir = join(rootPath, '.translations');
@@ -21,6 +20,13 @@ export default new Command('compile').action(() => {
 
   const translations = loadLocaleTranslations(baseLocale);
   const layer = fromTranslationsToLayer(translations);
+
+  try {
+    readdirSync(saveDir);
+  } catch {
+    console.info('Creating .translations directory...');
+    mkdirSync(saveDir, { recursive: true });
+  }
 
   for (const locale of locales) {
     console.info(`Saving full ${locale} translation file...`);
@@ -42,7 +48,7 @@ export default new Command('compile').action(() => {
   const constantsDtsFile = join(saveDir, 'index.d.ts');
   const constantsDtsContent = buildIndexDtsFile(baseLocale, locales);
   writeFileSync(constantsDtsFile, constantsDtsContent);
-});
+}
 
 function loadLocaleTranslations(locale: string) {
   const directory = join(process.cwd(), 'locales', locale);

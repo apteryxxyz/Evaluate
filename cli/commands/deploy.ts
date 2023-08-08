@@ -1,22 +1,23 @@
-import { Command } from 'commander';
 import type { RESTPostAPIApplicationCommandsJSONBody } from 'discord-api-types/v10';
 import _ from 'lodash';
 import { api } from '@/core';
 import { chatInputCommands } from '@/interactions';
 import { getLocalizations } from '@/translate/functions';
 
-export default new Command('deploy').action(() => {
+void main();
+async function main() {
   const commands = [];
   for (const rawCommand of Object.values(chatInputCommands)) {
     const command = replaceValues(rawCommand.builder().toJSON());
     commands.push(command);
   }
 
-  void api.applicationCommands.bulkOverwriteGlobalCommands(
+  console.info('Deploying commands...');
+  await api.applicationCommands.bulkOverwriteGlobalCommands(
     process.env.DISCORD_CLIENT_ID,
     commands as RESTPostAPIApplicationCommandsJSONBody[],
   );
-});
+}
 
 function replaceValues(value: unknown) {
   if (typeof value !== 'object' || value === null) return value;

@@ -11,7 +11,8 @@ async function main() {
     ...Object.values(chatInputCommands),
     ...Object.values(messageMenuCommands),
   ]) {
-    const command = replaceValues(rawCommand.builder().toJSON());
+    const built = rawCommand.builder().toJSON();
+    const command = replaceValues(built, Number(built.type) > 1);
     commands.push(command);
   }
 
@@ -22,9 +23,9 @@ async function main() {
   );
 }
 
-function replaceValues(value: unknown) {
-  if (typeof value !== 'object' || value === null) return value;
-  const object = value as Record<string, unknown>;
+function replaceValues(parent: unknown, isMenu = false) {
+  if (typeof parent !== 'object' || parent === null) return parent;
+  const object = parent as Record<string, unknown>;
 
   for (const string of ['name', 'description'] as const) {
     if (string in object && typeof object[string] === 'string') {
@@ -33,7 +34,7 @@ function replaceValues(value: unknown) {
 
       const key = value.split('_').slice(1).join('.');
       let localizations = getLocalizations(key);
-      if (string === 'name')
+      if (string === 'name' && !isMenu)
         localizations = _.mapValues(localizations, (v) => v.toLowerCase());
 
       object[string] = localizations['en-GB'];

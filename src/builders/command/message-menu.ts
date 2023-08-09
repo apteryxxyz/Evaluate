@@ -20,7 +20,7 @@ export function createMessageMenuCommand(
   ) => Promise<void>,
 ): MessageMenuCommand {
   return {
-    name: name.toLowerCase(),
+    name,
     builder,
     handler,
   };

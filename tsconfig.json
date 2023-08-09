@@ -7,7 +7,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@cli/*": ["./cli/*"],
-      "translations": ["./.translations"]
+      "translations": ["./.translations"],
+      "contentlayer/generated": ["./.contentlayer/generated"]
     },
     "incremental": true,
     "resolveJsonModule": true,

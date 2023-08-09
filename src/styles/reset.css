@@ -1,0 +1,68 @@
+/* Makes sizing simpler */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default spacing */
+/* Force styling of type through styling, rather than elements */
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+/* Min body height */
+body {
+  min-height: 100dvh;
+  max-width: 100dvw;
+  overflow-x: hidden;
+}
+
+/* Responsive images/videos */
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  flex-shrink: 0;
+}
+
+/* Remove input styling */
+input,
+button,
+textarea,
+select,
+option {
+  appearance: none;
+  background-color: transparent;
+  /* border: none; */
+  box-sizing: border-box;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  vertical-align: middle;
+}
+
+/* Actually disable a tags */
+a[disabled] {
+  pointer-events: none;
+}
+
+/* Remove list styling */
+ol,
+ul {
+  list-style: none;
+}
+
+/* Remove table styling */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

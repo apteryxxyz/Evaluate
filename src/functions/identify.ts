@@ -7,27 +7,35 @@ import type { TranslationFunctions } from '.translations';
 export async function handleIdentifing(
   t: TranslationFunctions,
   interaction: APIInteraction,
-  options: { code: string },
+  options: { code: string[]; ephemeral?: boolean },
 ) {
-  await api.interactions.defer(interaction.id, interaction.token);
+  await api.interactions.defer(interaction.id, interaction.token, {
+    flags: options.ephemeral ? 64 : undefined,
+  });
 
   const { detectLanguage } = await import('@/services/detection');
-  const result = await detectLanguage({ code: options.code });
 
-  const embed = new EmbedBuilder()
-    .setTitle(t.identify.result.title())
-    .setColor(result ? 0x2fc086 : 0xff0000)
-    .setDescription(codeBlock(result ?? '', options.code, 4000))
-    .addFields({
-      name: t.identify.prediction.name(),
-      value: result
-        ? t.identify.prediction.identified({ language: bold(result) })
-        : t.identify.prediction.unknown(),
-    });
+  const promises = options.code.map((code) => detectLanguage({ code }));
+  const results = await Promise.all(promises);
+
+  const embeds = results.map((result, index) => {
+    const embed = new EmbedBuilder()
+      .setColor(result ? 0x2fc086 : 0xff0000)
+      .setDescription(codeBlock(result ?? '', options.code[index], 4000))
+      .addFields({
+        name: t.identify.prediction.name(),
+        value: result
+          ? t.identify.prediction.identified({ language: bold(result) })
+          : t.identify.prediction.unknown(),
+      });
+
+    if (index === 0) return embed.setTitle(t.identify.result.title());
+    return embed;
+  });
 
   return void (await api.interactions.editReply(
     interaction.application_id,
     interaction.token,
-    { embeds: [embed.toJSON()] },
+    { embeds: embeds.map((e) => e.toJSON()) },
   ));
 }

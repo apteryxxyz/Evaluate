@@ -6,11 +6,16 @@ import type { APIInteraction } from 'discord-api-types/v10';
 import { verifyKey } from 'discord-interactions';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { isAutocomplete, isChatInputCommand } from '@/builders/command';
+import {
+  isAutocomplete,
+  isChatInputCommand,
+  isMessageMenuCommand,
+} from '@/builders/command';
 import { isButton, isModal, isSelectMenu } from '@/builders/component';
 import {
   buttonComponents,
   chatInputCommands,
+  messageMenuCommands,
   modalComponents,
   selectMenuComponents,
 } from '@/interactions';
@@ -50,6 +55,13 @@ export async function POST(request: NextRequest) {
         await command.handler(interaction);
         return new NextResponse(null, { status: 200 });
       }
+    }
+
+    if (isMessageMenuCommand(interaction)) {
+      const command = messageMenuCommands[interaction.data.name];
+      if (!command) return new NextResponse(null, { status: 400 });
+      await command.handler(interaction);
+      return new NextResponse(null, { status: 200 });
     }
 
     if (isModal(interaction)) {

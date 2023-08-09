@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import type { ChatInputCommand } from '@/builders/command';
+import type { ChatInputCommand, MessageMenuCommand } from '@/builders/command';
 import type {
   ButtonComponent,
   ModalComponent,
@@ -21,6 +21,16 @@ export const chatInputCommands = (
     return commands;
   },
   {} as Record<string, ChatInputCommand>,
+);
+
+export const messageMenuCommands = (
+  [require('./identify/message-menu').default] as MessageMenuCommand[]
+).reduce(
+  (commands, command) => {
+    commands[command.name] = command;
+    return commands;
+  },
+  {} as Record<string, MessageMenuCommand>,
 );
 
 export const modalComponents = [

@@ -1,13 +1,16 @@
 import type { RESTPostAPIApplicationCommandsJSONBody } from 'discord-api-types/v10';
 import _ from 'lodash';
 import { api } from '@/core';
-import { chatInputCommands } from '@/interactions';
+import { chatInputCommands, messageMenuCommands } from '@/interactions';
 import { getLocalizations } from '@/translate/functions';
 
 void main();
 async function main() {
   const commands = [];
-  for (const rawCommand of Object.values(chatInputCommands)) {
+  for (const rawCommand of [
+    ...Object.values(chatInputCommands),
+    ...Object.values(messageMenuCommands),
+  ]) {
     const command = replaceValues(rawCommand.builder().toJSON());
     commands.push(command);
   }

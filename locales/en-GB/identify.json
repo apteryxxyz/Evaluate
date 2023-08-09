@@ -3,10 +3,15 @@
     "name": "Identify",
     "description": "Attempt to identify the programming language of the given piece of code."
   },
+  "message": {
+    "name": "Identify Code",
+    "description": "Attempt to detect the programming language of any code within a message."
+  },
   "code": {
     "name": "Code",
     "description": "The code to identify.",
-    "placeholder": "Enter your code here..."
+    "placeholder": "Enter your code here...",
+    "long": "The code provided is too long, please try again with a shorter piece of code."
   },
   "result": {
     "title": "Identification Result"

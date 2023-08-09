@@ -24,7 +24,7 @@ export default createChatInputCommand(
     return handleIdentifing(
       useTranslate(determineLocale(interaction)),
       interaction,
-      { code: getOption<string>(interaction, 'code', true).value },
+      { code: [getOption<string>(interaction, 'code', true).value] },
     );
   },
 );

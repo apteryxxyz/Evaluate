@@ -79,14 +79,14 @@ export function createEvaluateResult(
           ? {
               inline: true,
               name: t.evaluate.input.name(),
-              value: result.input,
+              value: codeBlock(result.input, 1000),
             }
           : undefined,
         result.args
           ? {
               inline: true,
               name: t.evaluate.args.name(),
-              value: result.args,
+              value: codeBlock(result.args, 1000),
             }
           : undefined,
         { name: t.evaluate.output.name(), value: output },

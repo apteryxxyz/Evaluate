@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import _ from 'lodash';
 import { buildIndexDtsFile, buildIndexJsFile } from './builders';
 import {
   buildInterfacesFile,
@@ -14,8 +15,7 @@ function main() {
   const rootPath = process.cwd();
   const saveDir = join(rootPath, '.translations');
 
-  const locales = readdirSync(join(rootPath, 'locales')) //
-    .filter((file) => file !== 'source');
+  const locales = readdirSync(join(rootPath, 'locales'));
   if (!locales.includes(baseLocale)) throw new Error('Base locale not found');
 
   const translations = loadLocaleTranslations(baseLocale);
@@ -30,10 +30,11 @@ function main() {
 
   for (const locale of locales) {
     console.info(`Saving full ${locale} translation file...`);
-    const translationsFile = join(saveDir, `${locale}.json`);
-    const translations = loadLocaleTranslations(locale);
-    const translationsContent = JSON.stringify(translations, null, 2);
-    writeFileSync(translationsFile, translationsContent);
+    const localeFile = join(saveDir, `${locale}.json`);
+    const localeTranslations = loadLocaleTranslations(locale);
+    const allTranslations = _.merge(localeTranslations, translations);
+    const localeContent = JSON.stringify(allTranslations, null, 2);
+    writeFileSync(localeFile, localeContent);
   }
 
   console.info('Saving interfaces file...');

@@ -2,6 +2,7 @@ import type { APIInteraction } from 'discord-api-types/v10';
 import _ from 'lodash';
 import type { Locale } from 'translations';
 import { baseLocale, locales } from 'translations';
+import { getUser } from '@/utilities/interaction-helpers';
 import { useTranslate } from './use';
 
 /**
@@ -25,8 +26,9 @@ export function getLocalizations(key: string) {
  * @param value The interaction
  */
 export function determineLocale(value: APIInteraction): Locale {
-  const userLocale = value.user?.locale;
-  if (locales.includes(userLocale!)) return userLocale as Locale;
+  const userLocale =
+    getUser(value)?.locale ?? (Reflect.get(value, 'locale') as string);
+  if (locales.includes(userLocale)) return userLocale as Locale;
   // ? Perhaps should use guild locale as backup? However perfer base locale over guild locale
   return baseLocale;
 }

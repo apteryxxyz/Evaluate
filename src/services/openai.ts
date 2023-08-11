@@ -6,7 +6,9 @@ const DEFAULT_SYSTEM_MESSAGE =
  * @param params The messages to send to the model
  */
 export async function createCompletion(
-  ...params: [ChatCompletionMessage[]] | [string, ChatCompletionMessage[]]
+  ...params:
+    | [messages: ChatCompletionMessage[]]
+    | [systemMessageContent: string, messages: ChatCompletionMessage[]]
 ) {
   const [systemMessageContent, messages] =
     params.length === 1 ? [DEFAULT_SYSTEM_MESSAGE, ...params] : params;

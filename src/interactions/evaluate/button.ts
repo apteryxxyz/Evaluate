@@ -5,11 +5,7 @@ import { createEvaluateModal, createSaveModal } from '@/functions/evaluate';
 import { handleExplaining } from '@/functions/explain';
 import { determineLocale } from '@/translate/functions';
 import { useTranslate } from '@/translate/use';
-import {
-  getBolds,
-  getCodeBlocks,
-  getEmbedField,
-} from '@/utilities/discord-helpers';
+import { getEvaluateOptions } from '@/utilities/discord-helpers';
 import { getUser } from '@/utilities/interaction-helpers';
 
 export default createButtonComponent(
@@ -28,12 +24,10 @@ export default createButtonComponent(
 
     if (action === 'edit') {
       const embed = interaction.message.embeds.at(0)!;
-      const modal = createEvaluateModal(t, {
-        language: getBolds(embed.description ?? '').at(0),
-        code: getCodeBlocks(embed.description ?? '').at(0)?.code,
-        input: getEmbedField(embed, t.evaluate.input.name())?.value,
-        args: getEmbedField(embed, t.evaluate.args.name())?.value,
-      }).setCustomId('evaluate,edit');
+      const options = getEvaluateOptions(t, embed);
+
+      const modal = createEvaluateModal(t, options) //
+        .setCustomId('evaluate,edit');
 
       return api.interactions.createModal(
         interaction.id,
@@ -66,9 +60,8 @@ export default createButtonComponent(
       );
 
       const embed = interaction.message.embeds.at(0)!;
-      const modal = createCaptureModal(t, {
-        code: getCodeBlocks(embed.description ?? '').at(0)?.code,
-      }).setCustomId('capture,new');
+      const options = getEvaluateOptions(t, embed);
+      const modal = createCaptureModal(t, options).setCustomId('capture,new');
 
       return api.interactions.createModal(
         interaction.id,
@@ -91,11 +84,8 @@ export default createButtonComponent(
       );
 
       const embed = interaction.message.embeds.at(0)!;
-      return handleExplaining(t, interaction, {
-        language: getBolds(embed.description ?? '').at(0)!,
-        code: getCodeBlocks(embed.description ?? '').at(0)!.code,
-        output: getEmbedField(embed, t.evaluate.output.name())!.value,
-      });
+      const options = getEvaluateOptions(t, embed);
+      return handleExplaining(t, interaction, options);
     }
   },
 );

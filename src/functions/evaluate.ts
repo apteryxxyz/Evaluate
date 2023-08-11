@@ -113,7 +113,7 @@ export function createEvaluateResult(
       .setStyle(ButtonStyle.Success)
       .setCustomId('evaluate,explain')
       .setEmoji(resolveEmoji('explain', true))
-      .setDisabled(result.success),
+      .setDisabled(result.success || output.includes('[pastebin]')),
   );
 
   return { embeds: [embed.toJSON()], components: [buttons.toJSON()] };

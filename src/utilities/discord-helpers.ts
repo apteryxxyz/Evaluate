@@ -1,4 +1,5 @@
 import type { APIEmbed } from 'discord-api-types/v10';
+import type { TranslationFunctions } from 'translations';
 
 export function getBolds(text: string) {
   return Array.from(text.match(/(\*\*)(.*?)\1/g) ?? []) //
@@ -28,4 +29,17 @@ export function getCodeBlocks(content: string) {
 
 export function getEmbedField(embed: APIEmbed, name: string) {
   return embed.fields?.find((field) => field.name === name);
+}
+
+export function getEvaluateOptions(t: TranslationFunctions, embed: APIEmbed) {
+  const language = getBolds(embed.description!).at(0)!;
+  const code = getCodeBlocks(embed.description!).at(0)!.code;
+  const input = getCodeBlocks(
+    getEmbedField(embed, t.evaluate.input.name())?.value ?? '',
+  )?.at(0)?.code;
+  const args = getCodeBlocks(
+    getEmbedField(embed, t.evaluate.args.name())?.value ?? '',
+  )?.at(0)?.code;
+  const output = getEmbedField(embed, t.evaluate.output.name())!.value;
+  return { language, code, input, args, output };
 }

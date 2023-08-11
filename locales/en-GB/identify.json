@@ -11,7 +11,8 @@
     "name": "Code",
     "description": "The code to identify.",
     "placeholder": "Enter your code here...",
-    "long": "The code provided is too long, please try again with a shorter piece of code."
+    "long": "The code provided is too long, please try again with a shorter piece of code.",
+    "missing": "There is no code to identify, please try again with a piece of code."
   },
   "result": {
     "title": "Identification Result"

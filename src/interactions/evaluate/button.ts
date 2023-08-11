@@ -2,6 +2,7 @@ import { createButtonComponent } from '@/builders/component';
 import { api } from '@/core';
 import { createCaptureModal } from '@/functions/capture';
 import { createEvaluateModal, createSaveModal } from '@/functions/evaluate';
+import { handleExplaining } from '@/functions/explain';
 import { determineLocale } from '@/translate/functions';
 import { useTranslate } from '@/translate/use';
 import {
@@ -52,6 +53,18 @@ export default createButtonComponent(
     }
 
     if (action === 'capture') {
+      // To prevent duplicating the captures, we disable the button
+      const row = interaction.message.components![0];
+      const newComponents = row.components //
+        // * The capture button is the third button
+        .map((c, i) => (i === 2 ? { disabled: true, ...c } : c));
+      row.components = newComponents;
+      await api.channels.editMessage(
+        interaction.channel.id,
+        interaction.message.id,
+        { components: [row] },
+      );
+
       const embed = interaction.message.embeds.at(0)!;
       const modal = createCaptureModal(t, {
         code: getCodeBlocks(embed.description ?? '').at(0)?.code,
@@ -62,6 +75,27 @@ export default createButtonComponent(
         interaction.token,
         modal.toJSON(),
       );
+    }
+
+    if (action === 'explain') {
+      // To prevent duplicating the explains, we disable the button
+      const row = interaction.message.components![0];
+      const newComponents = row.components //
+        // * The explain button is the fourth button
+        .map((c, i) => (i === 3 ? { disabled: true, ...c } : c));
+      row.components = newComponents;
+      await api.channels.editMessage(
+        interaction.channel.id,
+        interaction.message.id,
+        { components: [row] },
+      );
+
+      const embed = interaction.message.embeds.at(0)!;
+      return handleExplaining(t, interaction, {
+        language: getBolds(embed.description ?? '').at(0)!,
+        code: getCodeBlocks(embed.description ?? '').at(0)!.code,
+        output: getEmbedField(embed, t.evaluate.output.name())!.value,
+      });
     }
   },
 );

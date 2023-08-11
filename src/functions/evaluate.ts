@@ -107,7 +107,13 @@ export function createEvaluateResult(
     new ButtonBuilder()
       .setStyle(ButtonStyle.Success)
       .setCustomId('evaluate,capture')
-      .setEmoji(resolveEmoji('capture', true)),
+      .setEmoji(resolveEmoji('capture', true))
+      .setDisabled(!result.success),
+    new ButtonBuilder()
+      .setStyle(ButtonStyle.Success)
+      .setCustomId('evaluate,explain')
+      .setEmoji(resolveEmoji('explain', true))
+      .setDisabled(result.success),
   );
 
   return { embeds: [embed.toJSON()], components: [buttons.toJSON()] };

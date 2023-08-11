@@ -13,7 +13,7 @@ export async function handleIdentifing(
     flags: options.ephemeral ? 64 : undefined,
   });
 
-  const { detectLanguage } = await import('@/services/detection');
+  const { detectLanguage } = await import('@/services/assistant');
 
   const promises = options.code.map((code) => detectLanguage({ code }));
   const results = await Promise.all(promises);

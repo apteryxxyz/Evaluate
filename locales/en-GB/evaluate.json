@@ -32,5 +32,8 @@
     "empty": "No output was produced, ensure something was printed to the console.",
     "pastebin": "The output was too large to display, so it has been uploaded to a [pastebin]({url})."
   },
+  "explain": {
+    "title": "Explanation"
+  },
   "unauthorised": "This is not your evaluation, you'll need to create your own using the 'evaluate' command."
 }

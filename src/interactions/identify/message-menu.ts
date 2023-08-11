@@ -20,8 +20,14 @@ export default createMessageMenuCommand(
     const targetMessage = interaction.data.resolved.messages[targetId];
 
     let codeBlocks = getCodeBlocks(targetMessage.content);
-    if (codeBlocks.length === 0)
+    if (codeBlocks.length === 0) {
+      if (!targetMessage.content)
+        return api.interactions.reply(interaction.id, interaction.token, {
+          content: t.identify.code.missing(),
+          flags: 64,
+        });
       codeBlocks = [{ language: undefined, code: targetMessage.content }];
+    }
 
     const hasTooLong = codeBlocks.some((block) => block.code.length > 1000);
     if (hasTooLong)

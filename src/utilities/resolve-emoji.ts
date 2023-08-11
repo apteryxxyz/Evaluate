@@ -9,6 +9,7 @@ export const CustomEmojis = {
   save: '1137874862019448892',
   run: '1137874859855204412',
   delete: '1137874856256479325',
+  explain: '1139362285912064111',
 } as const;
 
 type ExtractId<T extends string> = T extends `${infer I}:a` ? I : T;

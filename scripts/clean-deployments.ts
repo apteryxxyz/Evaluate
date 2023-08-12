@@ -5,9 +5,6 @@ const execAsync = promisify(exec);
 
 void main(process.argv.length, process.argv);
 async function main(_argc: number, _argv: string[]) {
-  const { stdout: branch } = await execAsync('git rev-parse --abbrev-ref HEAD');
-  if (branch.trim() !== 'main') throw new Error('Not on main branch');
-
   const { stdout: ls } = await execAsync('vercel ls evaluate');
   const [, ...stale] = ls
     .trim()

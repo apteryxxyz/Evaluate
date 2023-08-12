@@ -1,7 +1,5 @@
-import { exec } from 'node:child_process';
 import { mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { promisify } from 'node:util';
 import _ from 'lodash';
 import { buildIndexDtsFile, buildIndexJsFile } from './builders';
 import {
@@ -10,13 +8,8 @@ import {
 } from './builders/interfaces';
 import type { Translations } from './types';
 
-const execAsync = promisify(exec);
-
 void main(process.argv.length, process.argv);
-async function main(_argc: number, _argv: string[]) {
-  const { stdout: branch } = await execAsync('git rev-parse --abbrev-ref HEAD');
-  if (branch.trim() !== 'main') throw new Error('Not on main branch');
-
+function main(_argc: number, _argv: string[]) {
   const baseLocale = 'en-GB';
   const rootPath = process.cwd();
   const saveDir = join(rootPath, '.translations');

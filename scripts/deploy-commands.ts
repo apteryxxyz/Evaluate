@@ -1,17 +1,10 @@
-import { exec } from 'node:child_process';
-import { promisify } from 'node:util';
 import _ from 'lodash';
 import { api } from '@/core';
 import { chatInputCommands, messageMenuCommands } from '@/interactions';
 import { getLocalizations } from '@/translate/functions';
 
-const execAsync = promisify(exec);
-
 void main(process.argv.length, process.argv);
 async function main(_argc: number, _argv: string[]) {
-  const { stdout: branch } = await execAsync('git rev-parse --abbrev-ref HEAD');
-  if (branch.trim() !== 'main') throw new Error('Not on main branch');
-
   const commands = [];
   for (const command of [
     ...Object.values(chatInputCommands),

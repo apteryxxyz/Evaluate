@@ -26,6 +26,11 @@ export default createChatInputCommand(
           .setMinLength(1)
           .setMaxLength(4000),
       )
+      .addAttachmentOption((option) =>
+        option
+          .setName('t_evaluate_file_name')
+          .setDescription('t_evaluate_file_description'),
+      )
       .addStringOption((option) =>
         option
           .setName('t_evaluate_input_name')
@@ -42,10 +47,21 @@ export default createChatInputCommand(
       ),
 
   async (interaction) => {
-    const language = getOption<string>(interaction, 'language')?.value;
-    const code = getOption<string>(interaction, 'code')?.value;
+    let language = getOption<string>(interaction, 'language')?.value;
+    let code = getOption<string>(interaction, 'code')?.value;
+    const file = getOption<string>(interaction, 'file')?.attachment;
     const input = getOption<string>(interaction, 'input')?.value;
     const args = getOption<string>(interaction, 'arguments')?.value;
+
+    if (file) {
+      if (file.size > 0 && file.size < 4000) {
+        const content = await fetch(file.url).then((r) => r.text());
+        if (content.length > 0 && content.length < 4000) code = content;
+
+        const extension = file.filename.split('.').pop();
+        if (!language && extension) language = extension;
+      }
+    }
 
     const t = useTranslate(determineLocale(interaction));
 

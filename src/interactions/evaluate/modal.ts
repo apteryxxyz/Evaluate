@@ -1,13 +1,10 @@
+import { PrismaClient } from '@prisma/client';
 import { createModalComponent, isMessageModal } from '@/builders/component';
 import { api } from '@/core';
 import { handleEvaluating } from '@/functions/evaluate';
 import { determineLocale } from '@/translate/functions';
 import { useTranslate } from '@/translate/use';
-import {
-  getBolds,
-  getCodeBlocks,
-  getEmbedField,
-} from '@/utilities/discord-helpers';
+import { getEvaluateOptions } from '@/utilities/evaluate-helpers';
 import { getField, getUser } from '@/utilities/interaction-helpers';
 
 export default createModalComponent(
@@ -30,7 +27,6 @@ export default createModalComponent(
         flags: 64,
       });
 
-      const { PrismaClient } = await import('@prisma/client');
       const prisma = new PrismaClient();
 
       const userId = getUser(interaction).id;
@@ -51,10 +47,7 @@ export default createModalComponent(
       const embed = interaction.message.embeds.at(0)!;
       const data = {
         name: getField(interaction, 'name', true).value,
-        language: getBolds(embed.description ?? '').at(0)!,
-        code: getCodeBlocks(embed.description ?? '').at(0)!.code,
-        input: getEmbedField(embed, t.evaluate.input.name())?.value,
-        args: getEmbedField(embed, t.evaluate.args.name())?.value,
+        ...getEvaluateOptions(t, embed),
       };
 
       const isExisting = user.snippets.some(

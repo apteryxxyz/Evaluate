@@ -14,7 +14,7 @@
     "build": "yarn build:i18n && yarn build:contentlayer && yarn build:prisma && next build --no-lint",
     "dev:tunnel": "npx localtunnel --port 3000 --subdomain evaluate",
     "dev:i18n": "yarn build:i18n && npx watch-cli -p \"locales/**\" -c \"yarn build:i18n\"",
-    "dev:prisma": "npx prisma studio & npx prisma generate --watch",
+    "dev:prisma": "npx prisma generate --watch",
     "dev:contentlayer": "npx contentlayer dev",
     "dev": "yarn dev:i18n & yarn dev:contentlayer & yarn dev:prisma & yarn dev:tunnel & next dev",
     "format": "prettier --write src cli",

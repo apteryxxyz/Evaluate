@@ -8,8 +8,10 @@ import {
 import type { APIInteraction } from 'discord-api-types/v10';
 import { ButtonStyle, TextInputStyle } from 'discord-api-types/v10';
 import { api } from '@/core';
+import { createPaste } from '@/services/dpaste';
+import { executeCode, findLanguage } from '@/services/piston';
 import type { ExecuteCodeResult } from '@/services/piston';
-import { codeBlock } from '@/utilities/code-block';
+import { codeBlock } from '@/utilities/discord-formatting';
 import { resolveEmoji } from '@/utilities/resolve-emoji';
 import type { TranslationFunctions } from '.translations';
 
@@ -31,8 +33,6 @@ export async function handleEvaluating(
     options.ephemeral ? { flags: 64 } : undefined,
   );
 
-  const { findLanguage, executeCode } = await import('@/services/piston');
-
   const language = await findLanguage(options.language);
   if (!language)
     return void (await api.interactions[
@@ -46,7 +46,6 @@ export async function handleEvaluating(
   const output = await (async () => {
     if (result.output.length === 0) return t.evaluate.output.empty();
     else if (result.output.length > 2000) {
-      const { createPaste } = await import('@/services/dpaste');
       const url = await createPaste({ content: result.output });
       return t.evaluate.output.pastebin({ url });
     } else return codeBlock(result.output, 1000);

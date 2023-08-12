@@ -5,7 +5,7 @@ import { api } from '@/core';
 import { handleIdentifing } from '@/functions/identify';
 import { determineLocale } from '@/translate/functions';
 import { useTranslate } from '@/translate/use';
-import { getCodeBlocks } from '@/utilities/discord-helpers';
+import { extractCodeBlocks } from '@/utilities/discord-formatting';
 
 export default createMessageMenuCommand(
   'Identify Code',
@@ -19,7 +19,7 @@ export default createMessageMenuCommand(
     const targetId = interaction.data.target_id;
     const targetMessage = interaction.data.resolved.messages[targetId];
 
-    let codeBlocks = getCodeBlocks(targetMessage.content);
+    let codeBlocks = extractCodeBlocks(targetMessage.content);
     if (codeBlocks.length === 0) {
       if (!targetMessage.content)
         return api.interactions.reply(interaction.id, interaction.token, {

@@ -6,7 +6,9 @@ import {
 import type { APIInteraction } from 'discord-api-types/v10';
 import { TextInputStyle } from 'discord-api-types/v10';
 import { api } from '@/core';
-import { isPromiseFulfilled } from '@/utilities/better-promise';
+import * as carbon from '@/services/carbon';
+import * as code2img from '@/services/code2img';
+import { isFulfilled } from '@/utilities/better-promise';
 import type { TranslationFunctions } from '.translations';
 
 export async function handleCapturing(
@@ -15,9 +17,6 @@ export async function handleCapturing(
   code: string,
 ) {
   await api.interactions.defer(interaction.id, interaction.token);
-
-  const carbon = await import('@/services/carbon');
-  const code2img = await import('@/services/code2img');
 
   /**
    * We prefer Carbonara, however it can take a while to respond.
@@ -38,9 +37,9 @@ export async function handleCapturing(
 
   let imageBuffer;
   let isBackup = false;
-  if (isPromiseFulfilled(carbonPromise)) {
+  if (isFulfilled(carbonPromise)) {
     imageBuffer = await carbonPromise;
-  } else if (isPromiseFulfilled(code2imgPromise)) {
+  } else if (isFulfilled(code2imgPromise)) {
     imageBuffer = await code2imgPromise;
     isBackup = true;
   }

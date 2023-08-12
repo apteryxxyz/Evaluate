@@ -1,5 +1,31 @@
 import { escapeCodeBlock } from '@discordjs/builders';
 
+export function extractBoldText(content: string) {
+  return Array.from(content.match(/(\*\*)(.*?)\1/g) ?? []) //
+    .map((match) => match.slice(2, -2));
+}
+
+export function extractCodeBlocks(content: string) {
+  const regex = /`{3}([\w#+]*\n)?([\S\s]*?)\n?`{3}|`([^\n`]+)`/gi;
+
+  const codeBlocks = [];
+  let match;
+  while ((match = regex.exec(content))) {
+    if (match[2]) {
+      // Multi-line code block
+      const language = match[1]?.trim() || undefined;
+      const code = match[2].trim();
+      codeBlocks.push({ language, code });
+    } else {
+      // Single-line code block
+      const code = match[3];
+      codeBlocks.push({ language: undefined, code });
+    }
+  }
+
+  return codeBlocks;
+}
+
 /**
  * Wrap a string inside a code block.
  * @param content The string to wrap

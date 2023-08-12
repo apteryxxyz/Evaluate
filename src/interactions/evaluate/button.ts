@@ -5,7 +5,7 @@ import { createEvaluateModal, createSaveModal } from '@/functions/evaluate';
 import { handleExplaining } from '@/functions/explain';
 import { determineLocale } from '@/translate/functions';
 import { useTranslate } from '@/translate/use';
-import { getEvaluateOptions } from '@/utilities/discord-helpers';
+import { getEvaluateOptions } from '@/utilities/evaluate-helpers';
 import { getUser } from '@/utilities/interaction-helpers';
 
 export default createButtonComponent(

@@ -3,7 +3,7 @@ import { Lexer, longShortStrategy, Parser } from 'lexure';
 import {
   formatLanguageName,
   formatRuntimeName,
-} from '@/utilities/format-names';
+} from '@/utilities/language-names';
 
 export function fetchLanguages() {
   return fetch('https://emkc.org/api/v2/piston/runtimes') //

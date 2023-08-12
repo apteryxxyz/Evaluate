@@ -1,6 +1,6 @@
 import { createCompletion } from '@/services/openai';
-import { getBolds } from '@/utilities/discord-helpers';
-import { formatLanguageName } from '@/utilities/format-names';
+import { extractBoldText } from '@/utilities/discord-formatting';
+import { formatLanguageName } from '@/utilities/language-names';
 
 const DETECT_LANGUAGE_SYSTEM_MESSAGE = `
 You are a programming language detection AI known as "Evaluate", you are not capable of doing anything else.
@@ -24,8 +24,7 @@ export async function detectLanguage(options: DetectLanguageOptions) {
     { role: 'user', content: options.code },
   ])
     .then((value) => {
-      console.log(value);
-      const language = getBolds(value).at(0);
+      const language = extractBoldText(value).at(0);
       if (!language || value.toLowerCase().includes('unknown'))
         return undefined;
       return formatLanguageName(language);

@@ -3,6 +3,7 @@ import {
   SlashCommandBuilder,
   StringSelectMenuBuilder,
 } from '@discordjs/builders';
+import { PrismaClient } from '@prisma/client';
 import { createChatInputCommand } from '@/builders/command';
 import { api } from '@/core';
 import { determineLocale } from '@/translate/functions';
@@ -23,7 +24,6 @@ export default createChatInputCommand(
 
     const t = useTranslate(determineLocale(interaction));
 
-    const { PrismaClient } = await import('@prisma/client');
     const prisma = new PrismaClient();
 
     const userId = getUser(interaction).id;

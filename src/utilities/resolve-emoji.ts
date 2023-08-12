@@ -3,6 +3,7 @@ import type { Snowflake } from 'discord-api-types/v10';
 export const UnicodeEmojis = {
   joy: '😂',
 } as const;
+
 export const CustomEmojis = {
   edit: '1137874868327682109',
   capture: '1137874864800268320',

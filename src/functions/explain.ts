@@ -2,6 +2,7 @@ import { EmbedBuilder } from '@discordjs/builders';
 import type { APIInteraction } from '@discordjs/core';
 import type { TranslationFunctions } from 'translations';
 import { api } from '@/core';
+import { explainError } from '@/services/assistant';
 import { determineLocale } from '@/translate/functions';
 
 export async function handleExplaining(
@@ -11,7 +12,6 @@ export async function handleExplaining(
 ) {
   await api.interactions.defer(interaction.id, interaction.token);
 
-  const { explainError } = await import('@/services/assistant');
   const locale = determineLocale(interaction);
   const result = await explainError({ ...options, locale });
 

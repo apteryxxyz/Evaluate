@@ -3,12 +3,14 @@ import {
   ButtonBuilder,
   EmbedBuilder,
 } from '@discordjs/builders';
+import { PrismaClient } from '@prisma/client';
 import { ButtonStyle } from 'discord-api-types/v10';
 import { createSelectMenuComponent } from '@/builders/component';
 import { api } from '@/core';
+import { findLanguage } from '@/services/piston';
 import { determineLocale } from '@/translate/functions';
 import { useTranslate } from '@/translate/use';
-import { codeBlock } from '@/utilities/code-block';
+import { codeBlock } from '@/utilities/discord-formatting';
 import { resolveEmoji } from '@/utilities/resolve-emoji';
 
 export default createSelectMenuComponent(
@@ -23,7 +25,6 @@ export default createSelectMenuComponent(
         flags: 64,
       });
 
-      const { PrismaClient } = await import('@prisma/client');
       const prisma = new PrismaClient();
 
       const snippetId = interaction.data.values[0];
@@ -36,7 +37,6 @@ export default createSelectMenuComponent(
           { content: t.snippets.view.unknown() },
         ));
 
-      const { findLanguage } = await import('@/services/piston');
       const language = (await findLanguage(snippet.language))!;
 
       const embed = new EmbedBuilder()

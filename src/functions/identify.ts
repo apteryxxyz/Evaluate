@@ -1,7 +1,8 @@
 import { bold, EmbedBuilder } from '@discordjs/builders';
 import type { APIInteraction } from 'discord-api-types/v10';
 import { api } from '@/core';
-import { codeBlock } from '@/utilities/code-block';
+import { detectLanguage } from '@/services/assistant';
+import { codeBlock } from '@/utilities/discord-formatting';
 import type { TranslationFunctions } from '.translations';
 
 export async function handleIdentifing(
@@ -12,8 +13,6 @@ export async function handleIdentifing(
   await api.interactions.defer(interaction.id, interaction.token, {
     flags: options.ephemeral ? 64 : undefined,
   });
-
-  const { detectLanguage } = await import('@/services/assistant');
 
   const promises = options.code.map((code) => detectLanguage({ code }));
   const results = await Promise.all(promises);

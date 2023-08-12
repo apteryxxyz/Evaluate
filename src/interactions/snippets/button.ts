@@ -1,3 +1,4 @@
+import { PrismaClient } from '@prisma/client';
 import { createButtonComponent } from '@/builders/component';
 import { api } from '@/core';
 import { handleEvaluating } from '@/functions/evaluate';
@@ -11,7 +12,6 @@ export default createButtonComponent(
     const [, action, snippetId] = interaction.data.custom_id.split(',');
     const t = useTranslate(determineLocale(interaction));
 
-    const { PrismaClient } = await import('@prisma/client');
     const prisma = new PrismaClient();
 
     if (action === 'run') {

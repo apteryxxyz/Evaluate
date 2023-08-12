@@ -1,10 +1,9 @@
 import { inspect } from 'node:util';
 
-export function isPromisePending<T>(promise: Promise<T>) {
-  const inspected = inspect(promise, { depth: 0 });
-  return inspected.includes('<pending>');
+export function isPending(promise: Promise<unknown>) {
+  return inspect(promise, { depth: 0 }).includes('pending');
 }
 
-export function isPromiseFulfilled<T>(promise: Promise<T>) {
-  return isPromisePending(promise) === false;
+export function isFulfilled(promise: Promise<unknown>) {
+  return !isPending(promise);
 }

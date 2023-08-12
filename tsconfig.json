@@ -1,12 +1,11 @@
 {
   "extends": "ts-config-apteryx",
-  "include": ["src/**/**/*", "cli/**/*", ".next/types/**/*.ts"],
+  "include": ["src/**/**/*", "scripts/**/*", ".next/types/**/*.ts"],
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist",
     "paths": {
       "@/*": ["./src/*"],
-      "@cli/*": ["./cli/*"],
       "translations": ["./.translations"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     },

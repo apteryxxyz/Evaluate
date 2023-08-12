@@ -12,6 +12,8 @@ export function getEvaluateOptions(t: TranslationFunctions, embed: APIEmbed) {
   const args = extractCodeBlocks(
     getEmbedField(embed, t.evaluate.args.name())?.value ?? '',
   )?.at(0)?.code;
-  const output = getEmbedField(embed, t.evaluate.output.name())!.value;
+  const output = extractCodeBlocks(
+    getEmbedField(embed, t.evaluate.output.name())!.value,
+  )?.at(0)?.code;
   return { language, code, input, args, output };
 }

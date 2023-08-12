@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import _ from 'lodash';
 import { createModalComponent, isMessageModal } from '@/builders/component';
 import { api } from '@/core';
 import { handleEvaluating } from '@/functions/evaluate';
@@ -47,7 +48,13 @@ export default createModalComponent(
       const embed = interaction.message.embeds.at(0)!;
       const data = {
         name: getField(interaction, 'name', true).value,
-        ...getEvaluateOptions(t, embed),
+        // Only pick the fields that are relevant to the snippet, errors otherwise
+        ..._.pick(getEvaluateOptions(t, embed), [
+          'language',
+          'code',
+          'input',
+          'args',
+        ]),
       };
 
       const isExisting = user.snippets.some(

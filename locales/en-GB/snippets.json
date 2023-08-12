@@ -1,7 +1,7 @@
 {
   "command": {
     "name": "Snippets",
-    "description": "Manage your snippets."
+    "description": "Manage your saved code snippets."
   },
   "save": {
     "title": "Save Snippet",

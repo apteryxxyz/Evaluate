@@ -11,12 +11,13 @@
   },
   "code": {
     "name": "Code",
-    "description": "The code to evaluate.",
+    "description": "The source code to evaluate.",
     "placeholder": "Enter your code here..."
   },
   "file": {
     "name": "File",
-    "description": "The file to load the code from."
+    "description": "Upload a file with which to evaluate. Uses the file extension to determine the language.",
+    "large": "The file you uploaded was too large, please try again with a smaller file."
   },
   "input": {
     "name": "Input",
@@ -37,7 +38,7 @@
     "pastebin": "The output was too large to display, so it has been uploaded to a [pastebin]({url})."
   },
   "explain": {
-    "title": "Explanation"
+    "title": "AI Explanation"
   },
   "unauthorised": "This is not your evaluation, you'll need to create your own using the 'evaluate' command."
 }

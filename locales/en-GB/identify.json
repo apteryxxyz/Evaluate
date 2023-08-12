@@ -1,11 +1,11 @@
 {
   "command": {
     "name": "Identify",
-    "description": "Attempt to identify the programming language of the given piece of code."
+    "description": "Use AI to identify the programming language of the given piece of code."
   },
   "message": {
     "name": "Identify Code",
-    "description": "Attempt to detect the programming language of any code within a message."
+    "description": "Use AI to identify the programming language of any code within a message."
   },
   "code": {
     "name": "Code",

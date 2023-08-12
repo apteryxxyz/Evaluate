@@ -53,17 +53,24 @@ export default createChatInputCommand(
     const input = getOption<string>(interaction, 'input')?.value;
     const args = getOption<string>(interaction, 'arguments')?.value;
 
-    if (file) {
-      if (file.size > 0 && file.size < 4000) {
-        const content = await fetch(file.url).then((r) => r.text());
-        if (content.length > 0 && content.length < 4000) code = content;
-
-        const extension = file.filename.split('.').pop();
-        if (!language && extension) language = extension;
-      }
-    }
-
     const t = useTranslate(determineLocale(interaction));
+
+    if (file) {
+      const large = () =>
+        api.interactions.reply(
+          interaction.id, //
+          interaction.token,
+          { content: t.evaluate.file.large() },
+        );
+
+      if (file.size > 4000) return large();
+      const content = await fetch(file.url).then((r) => r.text());
+      if (content.length > 4000) return large();
+
+      code = content;
+      const extension = file.filename.split('.').pop();
+      if (!language && extension) language = extension;
+    }
 
     if (language && code) {
       const options = { language, code, input, args };

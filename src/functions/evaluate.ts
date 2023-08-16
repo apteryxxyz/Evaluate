@@ -25,6 +25,7 @@ export async function handleEvaluating(
     input?: string;
     args?: string;
     ephemeral?: boolean;
+    static?: boolean;
   },
 ) {
   await api.interactions[action === 'edit' ? 'deferMessageUpdate' : 'defer'](
@@ -54,7 +55,7 @@ export async function handleEvaluating(
   return void (await api.interactions.editReply(
     interaction.application_id,
     interaction.token,
-    createEvaluateResult(t, result, output),
+    createEvaluateResult(t, result, output, options),
   ));
 }
 
@@ -62,6 +63,7 @@ export function createEvaluateResult(
   t: TranslationFunctions,
   result: ExecuteCodeResult,
   output: string,
+  options: { static?: boolean },
 ) {
   const embed = new EmbedBuilder()
     .setTitle(t.evaluate.result.title())
@@ -115,7 +117,10 @@ export function createEvaluateResult(
       .setDisabled(result.success || output.includes('[pastebin]')),
   );
 
-  return { embeds: [embed.toJSON()], components: [buttons.toJSON()] };
+  return {
+    embeds: [embed.toJSON()],
+    components: options?.static ? undefined : [buttons.toJSON()],
+  };
 }
 
 export function createEvaluateModal(

@@ -29,6 +29,7 @@ export default createButtonComponent(
         ...snippet,
         input: snippet.input ?? undefined,
         args: snippet.args ?? undefined,
+        static: true,
       });
     }
 

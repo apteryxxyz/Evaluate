@@ -47,18 +47,6 @@ export default createButtonComponent(
     }
 
     if (action === 'capture') {
-      // To prevent duplicating the captures, we disable the button
-      const row = interaction.message.components![0];
-      const newComponents = row.components //
-        // * The capture button is the third button
-        .map((c, i) => (i === 2 ? { disabled: true, ...c } : c));
-      row.components = newComponents;
-      await api.channels.editMessage(
-        interaction.channel.id,
-        interaction.message.id,
-        { components: [row] },
-      );
-
       const embed = interaction.message.embeds.at(0)!;
       const options = getEvaluateOptions(t, embed);
       const modal = createCaptureModal(t, options).setCustomId('capture,new');

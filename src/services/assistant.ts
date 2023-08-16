@@ -20,7 +20,8 @@ Your task is crucial in helping users identify the language in which their code 
  * @param options The options for the detection
  */
 export async function detectLanguage(options: DetectLanguageOptions) {
-  return createCompletion(DETECT_LANGUAGE_SYSTEM_MESSAGE, [
+  return createCompletion([
+    { role: 'system', content: DETECT_LANGUAGE_SYSTEM_MESSAGE },
     { role: 'user', content: options.code },
   ])
     .then((value) => {
@@ -62,7 +63,8 @@ Your task is crucial in helping users understand the errors in their code.
  * @param options The options for the explanation
  */
 export async function explainError(options: ExplainErrorOptions) {
-  return createCompletion(EXPLAIN_ERROR_SYSTEM_MESSAGE, [
+  return createCompletion([
+    { role: 'system', content: EXPLAIN_ERROR_SYSTEM_MESSAGE },
     {
       role: 'user',
       content: `My language locale is ${options.locale}, please response in that.`,

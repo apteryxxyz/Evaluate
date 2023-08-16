@@ -13,7 +13,7 @@ export function getEvaluateOptions(t: TranslationFunctions, embed: APIEmbed) {
     getEmbedField(embed, t.evaluate.args.name())?.value ?? '',
   )?.at(0)?.code;
   const output = extractCodeBlocks(
-    getEmbedField(embed, t.evaluate.output.name())!.value,
-  )!.at(0)!.code;
+    getEmbedField(embed, t.evaluate.output.name())?.value ?? '',
+  )?.at(0)?.code;
   return { language, code, input, args, output };
 }

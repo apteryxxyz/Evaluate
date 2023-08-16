@@ -14,5 +14,11 @@
     "**/Thumbs.db": true,
     "**/node_modules": true,
     "**/dist": true
+  },
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#2FC086",
+    "titleBar.activeForeground": "#FFFFFF",
+    "activityBarBadge.background": "#2FC086",
+    "activityBarBadge.foreground": "#FFFFFF"
   }
 }

@@ -14,6 +14,11 @@
     "long": "The code provided is too long, please try again with a shorter piece of code.",
     "missing": "There is no code to identify, please try again with a piece of code."
   },
+  "file": {
+    "name": "File",
+    "description": "Upload a file, its contents language will be identified.",
+    "large": "The file you uploaded was too large, please try again with a smaller file."
+  },
   "result": {
     "title": "Identification Result"
   },

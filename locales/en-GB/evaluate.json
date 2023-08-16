@@ -16,7 +16,7 @@
   },
   "file": {
     "name": "File",
-    "description": "Upload a file with which to evaluate. Uses the file extension to determine the language.",
+    "description": "Upload a file for execution. Language determined by extension or overwritten with option.",
     "large": "The file you uploaded was too large, please try again with a smaller file."
   },
   "input": {

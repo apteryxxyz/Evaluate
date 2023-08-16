@@ -18,11 +18,31 @@ export default createChatInputCommand(
           .setDescription('t_capture_code_description')
           .setMinLength(1)
           .setMaxLength(2000),
+      )
+      .addAttachmentOption((option) =>
+        option
+          .setName('t_capture_file_name')
+          .setDescription('t_capture_file_description'),
       ),
 
   async (interaction) => {
-    const code = getOption<string>(interaction, 'code')?.value;
+    let code = getOption<string>(interaction, 'code')?.value;
+    const file = getOption<string>(interaction, 'file')?.attachment;
     const t = useTranslate(determineLocale(interaction));
+
+    if (file) {
+      const large = () =>
+        api.interactions.reply(
+          interaction.id, //
+          interaction.token,
+          { content: t.capture.file.large() },
+        );
+
+      if (file.size > 4000) return large();
+      const content = await fetch(file.url).then((r) => r.text());
+      if (content.length > 4000) return large();
+      code = content;
+    }
 
     if (code) {
       return handleCapturing(t, interaction, code);

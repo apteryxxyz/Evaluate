@@ -26,8 +26,8 @@ export default createChatInputCommand(
       ),
 
   async (interaction) => {
-    let code = getOption<string>(interaction, 'code')?.value;
-    const file = getOption<string>(interaction, 'file')?.attachment;
+    let code = getOption<string>(interaction.data, 'code')?.value;
+    const file = getOption<string>(interaction.data, 'file')?.attachment;
     const t = useTranslate(determineLocale(interaction));
 
     if (file) {

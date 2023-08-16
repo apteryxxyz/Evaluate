@@ -1,8 +1,15 @@
+/*
+getSubcommand
+getOption
+getUser
+*/
+
 import type {
-  APIApplicationCommandAutocompleteInteraction,
+  APIApplicationCommandInteractionDataOption,
+  APIApplicationCommandInteractionDataSubcommandOption,
   APIAttachment,
-  APIChatInputApplicationCommandInteraction,
   APIGuildMember,
+  APIInteractionDataResolved,
   APIInteractionDataResolvedChannel,
   APIInteractionDataResolvedGuildMember,
   APIModalSubmitInteraction,
@@ -13,16 +20,31 @@ import type {
   ModalSubmitComponent,
 } from 'discord-api-types/v10';
 
+export interface ChatInputData {
+  options?: APIApplicationCommandInteractionDataOption[];
+  resolved?: APIInteractionDataResolved;
+}
+
+/* SUBCOMMAND */
+
+export function getSubcommand(data: ChatInputData) {
+  type _ = APIApplicationCommandInteractionDataSubcommandOption;
+  const command = data.options![0]! as unknown as _;
+  return { ...data, ...command } satisfies ChatInputData;
+}
+
+/* OPTION */
+
 type Value = string | number | boolean | undefined;
 
-interface Option<TValue extends Value> {
+export interface Option<TValue extends Value> {
   type: ApplicationCommandOptionType;
   name: string;
   value: TValue;
   focused?: true;
 }
 
-interface ResolvedOption<TValue extends Value> extends Option<TValue> {
+export interface ResolvedOption<TValue extends Value> extends Option<TValue> {
   user?: APIUser;
   role?: APIRole;
   member?: APIInteractionDataResolvedGuildMember & { user?: APIUser };
@@ -31,16 +53,12 @@ interface ResolvedOption<TValue extends Value> extends Option<TValue> {
 }
 
 export function getOption<TValue extends Value>(
-  interaction:
-    | APIChatInputApplicationCommandInteraction
-    | APIApplicationCommandAutocompleteInteraction,
+  data: ChatInputData,
   name: string,
   required: true,
 ): ResolvedOption<TValue>;
 export function getOption<TValue extends Value>(
-  interaction:
-    | APIChatInputApplicationCommandInteraction
-    | APIApplicationCommandAutocompleteInteraction,
+  data: ChatInputData,
   name: string,
   required?: false,
 ): ResolvedOption<TValue> | undefined;
@@ -52,13 +70,11 @@ export function getOption<TValue extends Value>(
  * @param required Whether the option is required
  */
 export function getOption<TValue extends Value>(
-  interaction:
-    | APIChatInputApplicationCommandInteraction
-    | APIApplicationCommandAutocompleteInteraction,
+  { options, resolved }: ChatInputData,
   name: string,
   required?: boolean,
 ) {
-  const option = interaction.data.options?.find((o) => o.name === name);
+  const option = options?.find((o) => o.name === name);
   if (!option) {
     if (required) throw new Error(`Missing required option: ${name}`);
     return undefined;
@@ -70,7 +86,6 @@ export function getOption<TValue extends Value>(
     value: 'value' in option ? option.value : undefined,
   } as ResolvedOption<TValue>;
 
-  const resolved = interaction.data.resolved;
   if (resolved && typeof result.value === 'string') {
     const user = resolved.users?.[result.value];
     if (user) result.user = user;
@@ -91,15 +106,15 @@ export function getOption<TValue extends Value>(
   return result;
 }
 
-export function getFocusedOption<TValue extends Exclude<Value, boolean>>(
-  interaction:
-    | APIChatInputApplicationCommandInteraction
-    | APIApplicationCommandAutocompleteInteraction,
-) {
-  return interaction.data.options?.find((o) => 'focused' in o && o.focused) as
+export function getFocusedOption<TValue extends Exclude<Value, boolean>>({
+  options,
+}: Pick<ChatInputData, 'options'>) {
+  return options?.find((o) => 'focused' in o && o.focused) as
     | (Option<TValue> & { focused: true })
     | undefined;
 }
+
+/* USER */
 
 /**
  * Get the user from an interaction.
@@ -112,7 +127,9 @@ export function getUser(interaction: {
   return (interaction.user ?? interaction.member?.user)!;
 }
 
-interface Field<TValue extends string> {
+/* FIELD */
+
+export interface Field<TValue extends string> {
   type: ComponentType;
   custom_id: string;
   value: TValue;

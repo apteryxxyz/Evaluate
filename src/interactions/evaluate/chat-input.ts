@@ -47,11 +47,11 @@ export default createChatInputCommand(
       ),
 
   async (interaction) => {
-    let language = getOption<string>(interaction, 'language')?.value;
-    let code = getOption<string>(interaction, 'code')?.value;
-    const file = getOption<string>(interaction, 'file')?.attachment;
-    const input = getOption<string>(interaction, 'input')?.value;
-    const args = getOption<string>(interaction, 'arguments')?.value;
+    let language = getOption<string>(interaction.data, 'language')?.value;
+    let code = getOption<string>(interaction.data, 'code')?.value;
+    const file = getOption<string>(interaction.data, 'file')?.attachment;
+    const input = getOption<string>(interaction.data, 'input')?.value;
+    const args = getOption<string>(interaction.data, 'arguments')?.value;
 
     const t = useTranslate(determineLocale(interaction));
 

@@ -73,7 +73,10 @@ export default createButtonComponent(
 
       const embed = interaction.message.embeds.at(0)!;
       const options = getEvaluateOptions(t, embed);
-      return handleExplaining(t, interaction, options);
+      return handleExplaining(t, interaction, {
+        ...options,
+        output: options.output ?? '',
+      });
     }
   },
 );

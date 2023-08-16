@@ -14,13 +14,15 @@ export async function handleIdentifing(
     flags: options.ephemeral ? 64 : undefined,
   });
 
-  const promises = options.code.map((code) => detectLanguage({ code }));
+  const promises = options.code.map((code) => {
+    if (code.length < 4) return Promise.resolve(null);
+    return detectLanguage({ code });
+  });
   const results = await Promise.all(promises);
 
   const embeds = results.map((result, index) => {
     const embed = new EmbedBuilder()
       .setColor(result ? 0x2fc086 : 0xff0000)
-      .setDescription(codeBlock(result ?? '', options.code[index], 4000))
       .addFields({
         name: t.identify.prediction.name(),
         value: result
@@ -28,7 +30,9 @@ export async function handleIdentifing(
           : t.identify.prediction.unknown(),
       });
 
-    if (index === 0) return embed.setTitle(t.identify.result.title());
+    if (index === 0) embed.setTitle(t.identify.result.title());
+    if (options.code[index].length)
+      embed.setDescription(codeBlock(result ?? '', options.code[index], 4000));
     return embed;
   });
 

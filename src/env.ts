@@ -14,6 +14,7 @@ const envSchema = z.object({
   DISCORD_CLIENT_SECRET: z.string().min(1),
   DATABASE_URL: z.string().min(1),
   FUNCTION_START_TIMESTAMP: z.string().min(1).default('0'),
+  OPENAI_API_URL: z.string().min(1),
 });
 
 export type Env = z.infer<typeof envSchema>;

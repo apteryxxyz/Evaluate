@@ -1,6 +1,4 @@
-const CURRENT_URL = new URL(
-  'https://next.eqing.tech/api/openai/v1/chat/completions',
-);
+const CURRENT_URL = new URL(process.env.OPENAI_API_URL);
 
 export function createCompletion(
   messages: ChatCompletionMessage[],
@@ -14,8 +12,8 @@ export function createCompletion(
 ) {
   const headers = new Headers({
     'Content-Type': 'application/json',
-    Origin: 'https://next.eqing.tech',
-    Referer: 'https://next.eqing.tech/',
+    Origin: CURRENT_URL.origin,
+    Referer: CURRENT_URL.origin,
     'User-Agent':
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
     Plugins: '0',
@@ -31,12 +29,20 @@ export function createCompletion(
     .then(async (response) => {
       if (response.ok)
         return response.json() as Promise<ChatCompletionResponse>;
-
-      const body = await response.text();
-      console.error('error', response.statusText, body);
-      return null;
+      else
+        throw new Error(
+          'An error occurred while fetching from OpenAI API, ' +
+            response.statusText,
+        );
     })
-    .then((r) => r?.choices[0].message.content);
+    .then((r) => r?.choices[0].message.content)
+    .catch((e) => {
+      console.error(e);
+      console.error('current url', CURRENT_URL);
+      console.error('headers', headers);
+      console.error('body', body);
+      return null;
+    });
 }
 
 export interface CreateCompletionOptions {

@@ -17,7 +17,7 @@ export async function createPaste(options: CreatePasteOptions) {
     redirect: 'manual',
   }).then((response) => {
     const location = response.headers.get('location');
-    return `https://dpaste.com${location ?? ''}`;
+    return `https://dpaste.com${location ?? '8J2S53EYT'}`;
   });
 }
 

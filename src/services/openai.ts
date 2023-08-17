@@ -28,8 +28,15 @@ export function createCompletion(
   });
 
   return fetch(CURRENT_URL, { method: 'POST', headers, body }) //
-    .then((r) => r.json() as Promise<ChatCompletionResponse>)
-    .then((r) => r.choices[0].message.content);
+    .then(async (response) => {
+      if (response.ok)
+        return response.json() as Promise<ChatCompletionResponse>;
+
+      const body = await response.text();
+      console.error('error', response.statusText, body);
+      return null;
+    })
+    .then((r) => r?.choices[0].message.content);
 }
 
 export interface CreateCompletionOptions {

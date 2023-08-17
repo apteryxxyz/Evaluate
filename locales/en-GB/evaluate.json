@@ -38,7 +38,8 @@
     "pastebin": "The output was too large to display, so it has been uploaded to a [pastebin]({url})."
   },
   "explain": {
-    "title": "AI Explanation"
+    "title": "AI Explanation",
+    "error": "An error occurred while trying contact the AI, please try again later."
   },
   "unauthorised": "This is not your evaluation, you'll need to create your own using the 'evaluate' command."
 }

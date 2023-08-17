@@ -17,7 +17,7 @@ export async function handleExplaining(
 
   const embed = new EmbedBuilder()
     .setTitle(t.evaluate.explain.title())
-    .setDescription(result)
+    .setDescription(result ?? t.evaluate.explain.error())
     .setColor(0x2fc086);
 
   return void (await api.interactions.editReply(

@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguages } from '@/contexts/languages';
 import { useTranslate } from '@/contexts/translate';
 import { IdentifyCodeButton } from './identify-code-button';
 import { LanguageSearchBar } from './language-search-bar';
@@ -11,11 +12,16 @@ import { Button } from './ui/button';
 
 export function HeaderBar() {
   const t = useTranslate();
+  const languages = useLanguages();
 
   return (
     <header className="container flex flex-col lg:flex-row gap-4 justify-between">
       <nav className="flex flex-wrap gap-4">
-        <Link href="/" className="flex items-center gap-2">
+        <Link
+          href="/"
+          className="flex items-center gap-2"
+          onClick={() => languages.setFiltered(languages.initial)}
+        >
           <Image
             src="https://japi.rest/discord/v1/user/946755134443102258/avatar"
             alt="evaluate logo"

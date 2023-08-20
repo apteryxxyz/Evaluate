@@ -32,7 +32,6 @@ export function generateBaseMetadata(
       themeColor: '#2fc086',
       colorScheme: 'light dark',
       alternates: {
-        canonical: '/',
         languages: locales.reduce(
           (acc, locale) => ({
             ...acc,

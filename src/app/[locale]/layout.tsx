@@ -24,6 +24,26 @@ export default function Layout(p: LayoutProps) {
   return (
     <HTMLProviders>
       <html key="html" lang={p.params.locale} className={inter.className}>
+        <head key="head">
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/favicon-16x16.png"
+          />
+        </head>
+
         <body key="body" className="py-8 flex flex-col gap-8">
           <MainProviders locale={p.params.locale}>
             <HeaderBar />

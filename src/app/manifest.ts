@@ -1,16 +1,18 @@
-import type { MetadataRoute } from 'next/types';
+import { getLocalizations } from '@/translations/get-localizations';
 
 export default function manifest() {
+  const description = getLocalizations('seo.description').localizations;
+
   return {
-    theme_color: '#3A86F8',
+    name: 'Evaluate',
+    short_name: 'Evaluate',
+    theme_color: '#2FC086',
     background_color: '#FFFFFF',
+    description: description,
     display: 'standalone',
+    lang: 'en-GB',
     scope: '/',
     start_url: '/',
-    name: 'Qwaroo',
-    short_name: 'Qwaroo',
-    description:
-      'Higher or Lower on a whole new level, play one of the many games we have to offer, or create your own and share it with your friends!',
     icons: [
       {
         src: '/android-chrome-192x192.png',
@@ -23,5 +25,5 @@ export default function manifest() {
         type: 'image/png',
       },
     ],
-  } satisfies MetadataRoute.Manifest;
+  };
 }

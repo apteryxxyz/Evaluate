@@ -1,18 +1,20 @@
 import { createButtonComponent } from '@/builders/component';
 import { api } from '@/core';
-import { createCaptureModal } from '@/functions/capture';
-import { createEvaluateModal, createSaveModal } from '@/functions/evaluate';
-import { handleExplaining } from '@/functions/explain';
-import { determineLocale } from '@/translate/functions';
-import { useTranslate } from '@/translate/use';
-import { getEvaluateOptions } from '@/utilities/evaluate-helpers';
-import { getUser } from '@/utilities/interaction-helpers';
+import { createCaptureModal } from '@/interactions/handlers/capture';
+import {
+  createEvaluateModal,
+  createSaveModal,
+} from '@/interactions/handlers/evaluate';
+import { handleExplaining } from '@/interactions/handlers/explain';
+import { getTranslate } from '@/translations/determine-locale';
+import { getEvaluateOptions } from '@/utilities/interaction/evaluate-helpers';
+import { getUser } from '@/utilities/interaction/interaction-helpers';
 
 export default createButtonComponent(
   (i) => i.data.custom_id.startsWith('evaluate,'),
 
   async (interaction) => {
-    const t = useTranslate(determineLocale(interaction));
+    const t = getTranslate(interaction);
 
     if (getUser(interaction).id !== interaction.message?.interaction?.user?.id)
       return api.interactions.reply(interaction.id, interaction.token, {

@@ -2,18 +2,17 @@ import { PrismaClient } from '@prisma/client';
 import _ from 'lodash';
 import { createModalComponent, isMessageModal } from '@/builders/component';
 import { api } from '@/core';
-import { handleEvaluating } from '@/functions/evaluate';
-import { determineLocale } from '@/translate/functions';
-import { useTranslate } from '@/translate/use';
-import { getEvaluateOptions } from '@/utilities/evaluate-helpers';
-import { getField, getUser } from '@/utilities/interaction-helpers';
+import { handleEvaluating } from '@/interactions/handlers/evaluate';
+import { getTranslate } from '@/translations/determine-locale';
+import { getEvaluateOptions } from '@/utilities/interaction/evaluate-helpers';
+import { getField, getUser } from '@/utilities/interaction/interaction-helpers';
 
 export default createModalComponent(
   (i) => i.data.custom_id.startsWith('evaluate,'),
 
   async (interaction) => {
     const [, action] = interaction.data.custom_id.split(',');
-    const t = useTranslate(determineLocale(interaction));
+    const t = getTranslate(interaction);
 
     if (action === 'new' || action === 'edit')
       return handleEvaluating(action, t, interaction, {
@@ -42,7 +41,7 @@ export default createModalComponent(
         return void (await api.interactions.editReply(
           interaction.application_id,
           interaction.token,
-          { content: t.snippets.save.maximum() },
+          { content: t.snippets.save.reached_max() },
         ));
 
       const embed = interaction.message.embeds.at(0)!;
@@ -68,7 +67,7 @@ export default createModalComponent(
         return void (await api.interactions.editReply(
           interaction.application_id,
           interaction.token,
-          { content: t.snippets.save.exists() },
+          { content: t.snippets.save.already_exists() },
         ));
 
       await prisma.snippet.create({

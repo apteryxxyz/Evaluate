@@ -1,9 +1,8 @@
 import { createModalComponent, isMessageModal } from '@/builders/component';
 import { api } from '@/core';
-import { handleCapturing } from '@/functions/capture';
-import { determineLocale } from '@/translate/functions';
-import { useTranslate } from '@/translate/use';
-import { getField } from '@/utilities/interaction-helpers';
+import { handleCapturing } from '@/interactions/handlers/capture';
+import { getTranslate } from '@/translations/determine-locale';
+import { getField } from '@/utilities/interaction/interaction-helpers';
 
 export default createModalComponent(
   (i) => i.data.custom_id.startsWith('capture,'),
@@ -23,7 +22,7 @@ export default createModalComponent(
       );
     }
 
-    const t = useTranslate(determineLocale(interaction));
+    const t = getTranslate(interaction);
     const code = getField(interaction, 'code', true).value;
     return handleCapturing(t, interaction, code);
   },

@@ -1,48 +1,22 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
 import { createChatInputCommand } from '@/builders/command';
 import { api } from '@/core';
-import { createCaptureModal, handleCapturing } from '@/functions/capture';
-import { determineLocale } from '@/translate/functions';
-import { useTranslate } from '@/translate/use';
-import { getOption } from '@/utilities/interaction-helpers';
+import {
+  createCaptureModal,
+  handleCapturing,
+} from '@/interactions/handlers/capture';
+import { getTranslate } from '@/translations/determine-locale';
+import { applyLocalizations } from '@/translations/get-localizations';
+import { getOption } from '@/utilities/interaction/interaction-helpers';
 
 export default createChatInputCommand(
-  'capture',
-  () =>
-    new SlashCommandBuilder()
-      .setName('t_capture_command_name')
-      .setDescription('t_capture_command_description')
-      .addStringOption((option) =>
-        option
-          .setName('t_capture_code_name')
-          .setDescription('t_capture_code_description')
-          .setMinLength(1)
-          .setMaxLength(2000),
-      )
-      .addAttachmentOption((option) =>
-        option
-          .setName('t_capture_file_name')
-          .setDescription('t_capture_file_description'),
-      ),
+  (builder) =>
+    applyLocalizations(builder, 'capture').addStringOption((option) =>
+      applyLocalizations(option, 'capture.code').setMaxLength(2000),
+    ),
 
   async (interaction) => {
-    let code = getOption<string>(interaction.data, 'code')?.value;
-    const file = getOption<string>(interaction.data, 'file')?.attachment;
-    const t = useTranslate(determineLocale(interaction));
-
-    if (file) {
-      const large = () =>
-        api.interactions.reply(
-          interaction.id, //
-          interaction.token,
-          { content: t.capture.file.large() },
-        );
-
-      if (file.size > 4000) return large();
-      const content = await fetch(file.url).then((r) => r.text());
-      if (content.length > 4000) return large();
-      code = content;
-    }
+    const code = getOption<string>(interaction.data, 'code')?.value;
+    const t = getTranslate(interaction);
 
     if (code) {
       return handleCapturing(t, interaction, code);

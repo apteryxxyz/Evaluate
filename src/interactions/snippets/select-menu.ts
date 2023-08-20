@@ -8,17 +8,16 @@ import { ButtonStyle } from 'discord-api-types/v10';
 import { createSelectMenuComponent } from '@/builders/component';
 import { api } from '@/core';
 import { findLanguage } from '@/services/piston';
-import { determineLocale } from '@/translate/functions';
-import { useTranslate } from '@/translate/use';
-import { codeBlock } from '@/utilities/discord-formatting';
-import { resolveEmoji } from '@/utilities/resolve-emoji';
+import { getTranslate } from '@/translations/determine-locale';
+import { codeBlock } from '@/utilities/interaction/discord-formatting';
+import { resolveEmoji } from '@/utilities/interaction/resolve-emoji';
 
 export default createSelectMenuComponent(
   (i) => i.data.custom_id.startsWith('snippets,'),
 
   async (interaction) => {
     const [, action] = interaction.data.custom_id.split(',');
-    const t = useTranslate(determineLocale(interaction));
+    const t = getTranslate(interaction);
 
     if (action === 'choose') {
       await api.interactions.defer(interaction.id, interaction.token, {
@@ -34,7 +33,7 @@ export default createSelectMenuComponent(
         return void (await api.interactions.editReply(
           interaction.application_id,
           interaction.token,
-          { content: t.snippets.view.unknown() },
+          { content: t.snippets.view.doesnt_exist() },
         ));
 
       const language = (await findLanguage(snippet.language))!;
@@ -53,14 +52,14 @@ export default createSelectMenuComponent(
             snippet.input
               ? {
                   inline: true,
-                  name: t.evaluate.input.name(),
+                  name: t.evaluate.input(),
                   value: snippet.input,
                 }
               : undefined,
             snippet.args
               ? {
                   inline: true,
-                  name: t.evaluate.args.name(),
+                  name: t.evaluate.args(),
                   value: snippet.args,
                 }
               : undefined,

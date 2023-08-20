@@ -1,28 +1,20 @@
-import {
-  ActionRowBuilder,
-  SlashCommandBuilder,
-  StringSelectMenuBuilder,
-} from '@discordjs/builders';
+import { ActionRowBuilder, StringSelectMenuBuilder } from '@discordjs/builders';
 import { PrismaClient } from '@prisma/client';
 import { createChatInputCommand } from '@/builders/command';
 import { api } from '@/core';
-import { determineLocale } from '@/translate/functions';
-import { useTranslate } from '@/translate/use';
-import { getUser } from '@/utilities/interaction-helpers';
+import { getTranslate } from '@/translations/determine-locale';
+import { applyLocalizations } from '@/translations/get-localizations';
+import { getUser } from '@/utilities/interaction/interaction-helpers';
 
 export default createChatInputCommand(
-  'snippets',
-  () =>
-    new SlashCommandBuilder()
-      .setName('t_snippets_command_name')
-      .setDescription('t_snippets_command_description'),
+  (builder) => applyLocalizations(builder, 'snippets'),
 
   async (interaction) => {
     await api.interactions.defer(interaction.id, interaction.token, {
       flags: 64,
     });
 
-    const t = useTranslate(determineLocale(interaction));
+    const t = getTranslate(interaction);
 
     const prisma = new PrismaClient();
 

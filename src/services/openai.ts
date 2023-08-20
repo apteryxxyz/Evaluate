@@ -28,20 +28,19 @@ export function createCompletion(
   return fetch(CURRENT_URL, { method: 'POST', headers, body }) //
     .then(async (response) => {
       if (response.ok)
-        return response.json() as Promise<ChatCompletionResponse>;
+        return response.json() as unknown as Promise<ChatCompletionResponse>;
       else
         throw new Error(
           'An error occurred while fetching from OpenAI API, ' +
             response.statusText,
         );
     })
-    .then((r) => r?.choices[0].message.content)
+    .then((r) => r.choices[0].message.content)
     .catch((e) => {
-      console.error(e);
       console.error('current url', CURRENT_URL);
       console.error('headers', headers);
       console.error('body', body);
-      return null;
+      throw e;
     });
 }
 

@@ -1,8 +1,8 @@
 import { createCompletion } from '@/services/openai';
-import { extractBoldText } from '@/utilities/discord-formatting';
-import { formatLanguageName } from '@/utilities/language-names';
+import { extractBoldText } from '@/utilities/interaction/discord-formatting';
+import { findLanguage } from './piston';
 
-const DETECT_LANGUAGE_SYSTEM_MESSAGE = `
+const IDENTIFY_CODE_SYSTEM_MESSAGE = `
 You are a programming language detection AI known as "Evaluate", you are not capable of doing anything else.
 Your task is to use your advanced machine learning algorithms and vast knowledge of programming languages to accurately detect the programming language used in the code.
 This involves analyzing the code to identify its syntax, patterns, and keywords.
@@ -19,16 +19,17 @@ Your task is crucial in helping users identify the language in which their code 
  * Detects the language of the given code.
  * @param options The options for the detection
  */
-export async function detectLanguage(options: DetectLanguageOptions) {
+export async function identifyCode(options: IdentifyCodeOptions) {
   return createCompletion([
-    { role: 'system', content: DETECT_LANGUAGE_SYSTEM_MESSAGE },
+    { role: 'system', content: IDENTIFY_CODE_SYSTEM_MESSAGE },
     { role: 'user', content: options.code },
   ])
-    .then((value) => {
+    .then(async (value) => {
+      if (value === null) return null;
       const language = extractBoldText(value).at(0);
       if (!language || value.toLowerCase().includes('unknown'))
         return undefined;
-      return formatLanguageName(language);
+      return findLanguage(language).then((result) => result ?? language);
     })
     .catch((error) => {
       console.error(error);
@@ -36,7 +37,7 @@ export async function detectLanguage(options: DetectLanguageOptions) {
     });
 }
 
-export interface DetectLanguageOptions {
+export interface IdentifyCodeOptions {
   code: string;
   language?: string;
 }
@@ -75,6 +76,7 @@ export async function explainError(options: ExplainErrorOptions) {
     },
   ])
     .then((value) => {
+      if (value === null) return null;
       return value.length > 1000 ? value.substring(0, 997) + '...' : value;
     })
     .catch((error) => {

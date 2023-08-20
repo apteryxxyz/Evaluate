@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  images: { domains: ['japi.rest'] },
+  experimental: { serverActions: true },
+  redirects: async () => require('./vercel.json').redirects ?? [],
+  rewrites: async () => require('./vercel.json').rewrites ?? [],
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
@@ -7,14 +12,10 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  redirects: async () => [
-    {
-      source: '/invite',
-      destination:
-        'https://discord.com/api/oauth2/authorize?client_id=946755134443102258&permissions=0&scope=bot%20applications.commands',
-      permanent: false,
-    },
-  ],
 };
 
-module.exports = nextConfig;
+const withBundleAnalyzer = require('@next/bundle-analyzer');
+
+module.exports = withBundleAnalyzer({
+  enabled: process.env['ANALYZE'] === 'true',
+})(nextConfig);

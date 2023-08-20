@@ -8,9 +8,10 @@ import { ApplicationCommandType, InteractionType } from 'discord-api-types/v10';
 import { isCommand } from '.';
 
 export interface ChatInputCommand {
-  name: string;
-  builder: () => Partial<SlashCommandBuilder> &
-    Pick<SlashCommandBuilder, 'toJSON'>;
+  type: ApplicationCommandType.ChatInput;
+  builder: (
+    builder: SlashCommandBuilder,
+  ) => Partial<SlashCommandBuilder> & Pick<SlashCommandBuilder, 'toJSON'>;
   autocomplete?: (
     interaction: APIApplicationCommandAutocompleteInteraction,
   ) => Promise<void>;
@@ -20,12 +21,16 @@ export interface ChatInputCommand {
 }
 
 export function createChatInputCommand(
-  name: string,
   builder: ChatInputCommand['builder'],
   handler: ChatInputCommand['handler'],
   autocomplete?: ChatInputCommand['autocomplete'],
 ) {
-  return { name, builder, autocomplete, handler } satisfies ChatInputCommand;
+  return {
+    type: ApplicationCommandType.ChatInput,
+    builder,
+    autocomplete,
+    handler,
+  } satisfies ChatInputCommand;
 }
 
 export function isChatInputCommand(

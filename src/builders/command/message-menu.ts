@@ -1,26 +1,25 @@
 import type { ContextMenuCommandBuilder } from '@discordjs/builders';
-import type { APIMessageApplicationCommandInteraction } from '@discordjs/core';
-import type { APIInteraction } from 'discord-api-types/v10';
+import type {
+  APIInteraction,
+  APIMessageApplicationCommandInteraction,
+} from 'discord-api-types/v10';
 import { ApplicationCommandType } from 'discord-api-types/v10';
 import { isCommand } from '.';
 
 export interface MessageMenuCommand {
-  name: string;
-  builder: () => ContextMenuCommandBuilder;
+  type: ApplicationCommandType.Message;
+  builder: (builder: ContextMenuCommandBuilder) => ContextMenuCommandBuilder;
   handler: (
     interaction: APIMessageApplicationCommandInteraction,
   ) => Promise<void>;
 }
 
 export function createMessageMenuCommand(
-  name: string,
-  builder: () => ContextMenuCommandBuilder,
-  handler: (
-    interaction: APIMessageApplicationCommandInteraction,
-  ) => Promise<void>,
+  builder: MessageMenuCommand['builder'],
+  handler: MessageMenuCommand['handler'],
 ): MessageMenuCommand {
   return {
-    name,
+    type: ApplicationCommandType.Message,
     builder,
     handler,
   };

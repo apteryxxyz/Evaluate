@@ -1,53 +1,20 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
 import { createChatInputCommand } from '@/builders/command';
-import { api } from '@/core';
-import { handleIdentifing } from '@/functions/identify';
-import { determineLocale } from '@/translate/functions';
-import { useTranslate } from '@/translate/use';
-import { getOption } from '@/utilities/interaction-helpers';
+import { handleIdentifing } from '@/interactions/handlers/identify';
+import { getTranslate } from '@/translations/determine-locale';
+import { applyLocalizations } from '@/translations/get-localizations';
+import { getOption } from '@/utilities/interaction/interaction-helpers';
 
 export default createChatInputCommand(
-  'identify',
-  () =>
-    new SlashCommandBuilder()
-      .setName('t_identify_command_name')
-      .setDescription('t_identify_command_description')
-      .addStringOption((option) =>
-        option
-          .setName('t_identify_code_name')
-          .setDescription('t_identify_code_description')
-          .setMinLength(4)
-          .setMaxLength(1000),
-      )
-      .addAttachmentOption((option) =>
-        option
-          .setName('t_identify_file_name')
-          .setDescription('t_identify_file_description'),
-      ),
+  (builder) =>
+    applyLocalizations(builder, 'identify').addStringOption((option) =>
+      applyLocalizations(option, 'identify.code')
+        .setMinLength(1)
+        .setMaxLength(1000),
+    ),
 
   async (interaction) => {
-    let code = getOption<string>(interaction.data, 'code')?.value;
-    const file = getOption<string>(interaction.data, 'file')?.attachment;
-    const t = useTranslate(determineLocale(interaction));
-
-    if (file) {
-      const large = () =>
-        api.interactions.reply(
-          interaction.id, //
-          interaction.token,
-          { content: t.capture.file.large() },
-        );
-
-      if (file.size > 1000) return large();
-      const content = await fetch(file.url).then((r) => r.text());
-      if (content.length > 1000) return large();
-      code = content;
-    }
-
-    return handleIdentifing(
-      useTranslate(determineLocale(interaction)),
-      interaction,
-      { code: [code ?? ''] },
-    );
+    const code = getOption<string>(interaction.data, 'code')?.value;
+    const t = getTranslate(interaction);
+    return handleIdentifing(t, interaction, { code: [code ?? ''] });
   },
 );

@@ -1,76 +1,43 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
 import { createChatInputCommand } from '@/builders/command';
 import { api } from '@/core';
-import { createEvaluateModal, handleEvaluating } from '@/functions/evaluate';
-import { determineLocale } from '@/translate/functions';
-import { useTranslate } from '@/translate/use';
-import { getOption } from '@/utilities/interaction-helpers';
+import {
+  createEvaluateModal,
+  handleEvaluating,
+} from '@/interactions/handlers/evaluate';
+import { getTranslate } from '@/translations/determine-locale';
+import { applyLocalizations } from '@/translations/get-localizations';
+import { getOption } from '@/utilities/interaction/interaction-helpers';
 
 export default createChatInputCommand(
-  'evaluate',
-  () =>
-    new SlashCommandBuilder()
-      .setName('t_evaluate_command_name')
-      .setDescription('t_evaluate_command_description')
+  (builder) =>
+    applyLocalizations(builder, 'evaluate')
       .addStringOption((option) =>
-        option
-          .setName('t_evaluate_language_name')
-          .setDescription('t_evaluate_language_description')
+        applyLocalizations(option, 'evaluate.language')
           .setMinLength(1)
           .setMaxLength(100),
       )
       .addStringOption((option) =>
-        option
-          .setName('t_evaluate_code_name')
-          .setDescription('t_evaluate_code_description')
+        applyLocalizations(option, 'evaluate.code')
           .setMinLength(1)
           .setMaxLength(4000),
       )
-      .addAttachmentOption((option) =>
-        option
-          .setName('t_evaluate_file_name')
-          .setDescription('t_evaluate_file_description'),
-      )
       .addStringOption((option) =>
-        option
-          .setName('t_evaluate_input_name')
-          .setDescription('t_evaluate_input_description')
+        applyLocalizations(option, 'evaluate.input')
           .setMinLength(1)
           .setMaxLength(500),
       )
       .addStringOption((option) =>
-        option
-          .setName('t_evaluate_args_name')
-          .setDescription('t_evaluate_args_description')
+        applyLocalizations(option, 'evaluate.args')
           .setMinLength(1)
           .setMaxLength(500),
       ),
-
   async (interaction) => {
-    let language = getOption<string>(interaction.data, 'language')?.value;
-    let code = getOption<string>(interaction.data, 'code')?.value;
-    const file = getOption<string>(interaction.data, 'file')?.attachment;
+    const language = getOption<string>(interaction.data, 'language')?.value;
+    const code = getOption<string>(interaction.data, 'code')?.value;
     const input = getOption<string>(interaction.data, 'input')?.value;
     const args = getOption<string>(interaction.data, 'arguments')?.value;
 
-    const t = useTranslate(determineLocale(interaction));
-
-    if (file) {
-      const large = () =>
-        api.interactions.reply(
-          interaction.id, //
-          interaction.token,
-          { content: t.evaluate.file.large() },
-        );
-
-      if (file.size > 4000) return large();
-      const content = await fetch(file.url).then((r) => r.text());
-      if (content.length > 4000) return large();
-
-      code = content;
-      const extension = file.filename.split('.').pop();
-      if (!language && extension) language = extension;
-    }
+    const t = getTranslate(interaction);
 
     if (language && code) {
       const options = { language, code, input, args };

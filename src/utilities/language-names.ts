@@ -80,6 +80,7 @@ export const LanguageNames = {
   Swift: ['swift'],
   TypeScript: ['typescript', 'ts'],
   BASIC: ['basic', 'qb'],
+  'BASIC.NET': ['basic.net', 'qb.net'],
   'VB.NET': ['vb.net', 'vb'],
   V: ['vlang', 'v'],
   Vyxal: ['vyxal'],

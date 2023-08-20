@@ -1,9 +1,8 @@
-import '@total-typescript/ts-reset';
 import type { MessageFormatElement } from '@formatjs/icu-messageformat-parser';
 import { parse, TYPE } from '@formatjs/icu-messageformat-parser';
 import type { Layer, Parameter, Parsed, Translations } from '../types';
 
-// FROM TRANSLATIONS TO LAYER
+/* FROM TRANSLATIONS TO LAYER */
 
 export function fromTranslationsToLayer(translations: Translations) {
   const result: Layer = {};
@@ -48,21 +47,20 @@ function fromMessageToParameter(
   return null;
 }
 
-// GENERATE STRUCTURE INTERFACE
+/* GENERATE STRUCTURE INTERFACE */
 
-function generateStructureInnerInterface(layer: Layer, indent = 0) {
+function generateStructureInnerInterface(layer: Layer) {
   const result: string[] = [];
-  const space = ' '.repeat(indent);
 
   for (const [key, value] of Object.entries(layer)) {
     if (isParsed(value)) {
       const content = value.value.replace(/\n/g, '\\n');
       const quote = determineQuote(content);
-      result.push(`${space}${key}: ${quote}${content}${quote};`);
+      result.push(`${key}: ${quote}${content}${quote};`);
     } else {
-      result.push(`${space}${key}: {`);
-      result.push(generateStructureInnerInterface(value, indent + 2));
-      result.push(`${space}};`);
+      result.push(`${key}: {`);
+      result.push(generateStructureInnerInterface(value));
+      result.push(`};`);
     }
   }
 
@@ -80,47 +78,49 @@ function determineQuote(value: string) {
   throw new Error('Unable to determine quote');
 }
 
-// GENERATE FUNCTIONS INTERFACE
+/* GENERATE FUNCTIONS INTERFACE */
 
-function generateFunctionsInnerInterface(layer: Layer, indent = 0) {
+function generateFunctionsInnerInterface(layer: Layer) {
   const result: string[] = [];
-  const space = ' '.repeat(indent);
 
   for (const [key, value] of Object.entries(layer)) {
     if (isParsed(value)) {
-      result.push(generateFunctionType(value, indent));
+      if (value.key === '$') continue;
+      const documenation = `/** ${value.value.replace(/\n/g, ' ')} */`;
+      const signature = generateFunctionSignature(value);
+      result.push(`${documenation}\n${key}${signature}`);
+    } else if ('$' in value && isParsed(value['$'])) {
+      const documenation = `/** ${value['$'].value.replace(/\n/g, ' ')} */`;
+      const signature = generateFunctionSignature(value['$']);
+      result.push(`${documenation}\n${key}:{\n${signature}`);
+      result.push(generateFunctionsInnerInterface(value));
+      result.push(`};`);
     } else {
-      result.push(`${space}${key}: {`);
-      result.push(generateFunctionsInnerInterface(value, indent + 2));
-      result.push(`${space}};`);
+      result.push(`${key}: {`);
+      result.push(generateFunctionsInnerInterface(value));
+      result.push(`};`);
     }
   }
 
   return result.join('\n');
 }
 
-function generateFunctionType(parsed: Parsed, indent = 0) {
-  const space = ' '.repeat(indent);
-  const jsDoc = `${space}/** ${parsed.value.replace(/\n/g, ' ')} */`;
-
-  if (parsed.parameters.length === 0)
-    return `${jsDoc}\n${space}${parsed.key}(): string;`;
-
+function generateFunctionSignature(parsed: Parsed) {
+  if (parsed.parameters.length === 0) return '(): string';
   const parameters = parsed.parameters
     .map(([key, type]) => `${key}: ${type}`)
     .join(', ');
-
-  return `${jsDoc}\n${space}${parsed.key}(arg: { ${parameters} }): string;`;
+  return `(arg: { ${parameters} }): string`;
 }
 
 export function buildInterfacesFile(layer: Layer) {
   return `
 export interface TranslationStructure {
-${generateStructureInnerInterface(layer, 2)}
+${generateStructureInnerInterface(layer)}
 }
 
 export interface TranslationFunctions {
-${generateFunctionsInnerInterface(layer, 2)}
+${generateFunctionsInnerInterface(layer)}
 }
     `.trim();
 }

@@ -1,4 +1,16 @@
 {
   "buildCommand": "yarn build",
-  "devCommand": "yarn dev"
+  "devCommand": "yarn dev",
+  "redirects": [
+    {
+      "source": "/bot",
+      "destination": "https://discord.com/api/oauth2/authorize?client_id=946755134443102258&permissions=0&scope=bot%20applications.commands",
+      "permanent": false
+    },
+    {
+      "source": "/translate",
+      "destination": "https://translate-evaluate.apteryx.xyz/",
+      "permanent": false
+    }
+  ]
 }

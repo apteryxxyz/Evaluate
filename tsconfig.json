@@ -6,7 +6,9 @@
     "outDir": "dist",
     "paths": {
       "@/*": ["./src/*"],
+      "@/app/*": ["./src/app/[locale]/*"],
       "translations": ["./.translations"],
+      "translations/*": ["./.translations/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     },
     "incremental": true,

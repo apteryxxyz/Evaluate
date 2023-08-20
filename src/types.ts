@@ -1,3 +1,5 @@
+import type { Locale } from 'translations';
+
 export type ParamType<TParam extends string> = TParam extends `${infer TName}[]`
   ? { [key in TName]: string[] }
   : { [key in TParam]: string };
@@ -11,17 +13,16 @@ export type Params<TParams extends string[]> = TParams extends [
   ? ParamType<TParam>
   : {};
 
-export type PageProps<
-  TParams extends string[] | undefined = undefined,
-  TSearchParams extends string[] | undefined = undefined,
-> = {
-  params: TParams extends string[] ? Params<TParams> : {};
-  searchParams: TSearchParams extends string[]
-    ? { [key in TSearchParams[number]]?: string | string[] }
-    : {};
+export type PageProps<TParams extends string[] | undefined = undefined> = {
+  params: (TParams extends string[] ? Params<TParams> : {}) & {
+    locale: Locale;
+  };
+  searchParams: Record<string, string | string[]>;
 } & {};
 
 export type LayoutProps<TParams extends string[] | undefined = undefined> =
   React.PropsWithChildren<{
-    params: TParams extends string[] ? Params<TParams> : {};
+    params: (TParams extends string[] ? Params<TParams> : {}) & {
+      locale: Locale;
+    };
   }>;

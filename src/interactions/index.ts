@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+import {
+  ContextMenuCommandBuilder,
+  SlashCommandBuilder,
+} from '@discordjs/builders';
 import type { ChatInputCommand, MessageMenuCommand } from '@/builders/command';
 import type {
   ButtonComponent,
@@ -17,17 +21,15 @@ export const chatInputCommands = (
   ] as ChatInputCommand[]
 ).reduce(
   (commands, command) => {
-    commands[command.name] = command;
+    commands[command.builder(new SlashCommandBuilder()).name!] = command;
     return commands;
   },
   {} as Record<string, ChatInputCommand>,
 );
 
-export const messageMenuCommands = (
-  [require('./identify/message-menu').default] as MessageMenuCommand[]
-).reduce(
+export const messageMenuCommands = ([] as MessageMenuCommand[]).reduce(
   (commands, command) => {
-    commands[command.name] = command;
+    commands[command.builder(new ContextMenuCommandBuilder()).name] = command;
     return commands;
   },
   {} as Record<string, MessageMenuCommand>,

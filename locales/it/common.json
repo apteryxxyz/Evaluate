@@ -1,0 +1,122 @@
+{
+  "native_name": "Italiano (Italia)",
+  "discord_bot": "Bot Discord",
+  "discord_server": "Server Discord",
+  "screen_reader": {
+    "toggle_theme": "Cambia tema",
+    "change_locale": "Cambia lingua"
+  },
+  "seo": {
+    "description": "Evaluate, il supremo esecutore di codice e identificatore linguaggi di programmazione. Esegui pezzi di codice in ogni linguaggio di programmazione con input e argomenti da linea di comando facoltativi. Identifica linguaggi di programmazione senza sforzo usando IA. Provalo ora!"
+  },
+  "not_found": {
+    "$": "Pagina non trovata",
+    "description": "La pagina che stavi cercando non esiste."
+  },
+  "languages": {
+    "$": "Lingue",
+    "search": "Cerca",
+    "search_languages": "Cerca lingue.",
+    "version": "Versione {version}"
+  },
+  "capture": {
+    "$": "Cattura",
+    "description": "Crea e condividi immagini del tuo codice.",
+    "code": {
+      "$": "Codice",
+      "description": "Il codice da visualizzare nell'immagine."
+    },
+    "result": {
+      "$": "Risultato",
+      "backup_service": "Il servizio preferito è andato in time-out, usando quello di backup.",
+      "service_down": "Il servizio di cattura è off, riprova più tardi."
+    }
+  },
+  "evaluate": {
+    "$": "Evaluate",
+    "description": "Esegui qualsiasi pezzo di codice in qualsiasi lingua, con input e argomenti da linea di comando facoltativi.",
+    "seo": {
+      "title": "{language} su Evaluate",
+      "description": "Esegui codice in {language} e altri linguaggi di programmazione senza sforzo con Evaluate. Fornisci il codice, input e argomenti da linea di comando facoltativi per ricevere output istantaneo. Fail il debug, ottimizza e migliora il tuo processo di programmazione eseguendo codice {language} ed esplorando vari linguaggi. Eleva la tua esperienza di programmazione con le capacita versatili dell' esecuzione codice di Evaluate."
+    },
+    "language": {
+      "$": "Lingua",
+      "description": "Il linguaggio di progrmmazione in cui eseguire il codice.",
+      "not_found": {
+        "$": "Lingua non trovata",
+        "description": "Non ho trovato un linguaggio che supporti con quel nome."
+      }
+    },
+    "code": {
+      "$": "Codice",
+      "description": "Il codice da eseguire."
+    },
+    "input": {
+      "$": "Input",
+      "description": "L'input da dare al programma."
+    },
+    "args": {
+      "$": "Argomenti",
+      "description": "Argomenti da linea di comando aggiuntivi da passare al programma."
+    },
+    "run": {
+      "$": "Esegui",
+      "ing": "Eseguendo"
+    },
+    "output": {
+      "$": "Output",
+      "press_run": "Premi Esegui per eseguire il programma e vedere l'output qui.",
+      "description": "L'output del programma.",
+      "compile_error": "Compilazione fallita. Perfavore controlla il tuo codice per errori di sintassi e prova ancora.",
+      "runtime_error": "Errore di Runtime. Perfavore controlla il tuo codice per errori logici e prova ancora.",
+      "no_output": "Nessun output è stato prodotto, assicurati che qualcosa è stato stampato in console.",
+      "too_long": "L'ouput eccede i limiti di lunghezza di Discord. Per una visualizzazione non ristretta, perfavore visita il [Sito di Evaluate]({url})."
+    },
+    "unauthorised": "Questo non è la tua evaluation, devi crearne una tua."
+  },
+  "explain": {
+    "$": "Spiega",
+    "title": "Spiegazione IA",
+    "description": "Usa l'IA per spiegare gli errori accaduti in qualsiasi linguaggio di programmazione.",
+    "internal_error": "C'è stato un errore cercando di contattare l'IA, perfavore riprova più tardi."
+  },
+  "identify": {
+    "$": "Identifica",
+    "ing": "Identificando",
+    "description": "Usa l'IA per identificare il linguaggio di programmazione di qualsiasi pezzo di codice.",
+    "code": {
+      "$": "Codice",
+      "description": "Il codice da cercare di identificare."
+    },
+    "prediction": {
+      "$": "Predizione",
+      "identified_as": "Identificato questo codice per essere {language}.",
+      "could_not_identify": "Non è stato possibile identificare la lingua di questo codice, può essere che non ci sono abbastanza informazioni oppure che non esista.",
+      "okay": "Okay"
+    }
+  },
+  "snippets": {
+    "$": "Snippet",
+    "description": "Gestisci i tuoi snippet salvati.",
+    "name": {
+      "$": "Nome",
+      "description": "Il nome dello snippet."
+    },
+    "save": {
+      "$": "Salva Snippet",
+      "reached_max": "Hai raggiunto il numero massimo di snippet salvati.",
+      "already_exists": "Hai già salvato quello snippet.",
+      "success": "Snippet salvato correttamente come {name}."
+    },
+    "list": {
+      "none": "Non hai nessuno snippet salvato.",
+      "placeholder": "Scegli uno snippet dei tuoi."
+    },
+    "view": {
+      "title": "Il tuo Snippet {name}",
+      "doesnt_exist": "Questo snippet non esiste.",
+      "unauthorised": "Questo non è il tuo snippet.",
+      "deleted": "Questo snippet è stato cancellato."
+    }
+  }
+}

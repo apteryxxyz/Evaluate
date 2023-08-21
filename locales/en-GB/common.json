@@ -91,7 +91,7 @@
     "$": "Explain",
     "title": "AI Explanation",
     "description": "Use AI to explain any error that occurred from any programming language.",
-    "internal_error": "An error occurred while trying contact the AI, please try again later."
+    "internal_error": "An error occurred while trying to contact the AI, please try again later."
   },
 
   "identify": {

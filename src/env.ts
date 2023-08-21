@@ -1,22 +1,21 @@
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import { z } from 'zod';
-
-const nodeEnv = process.env.NODE_ENV || 'development';
-dotenv.config({ path: `.env.${nodeEnv}` });
 
 const envSchema = z.object({
   NODE_ENV: z
     .enum(['development', 'production', 'preview', 'test'])
     .default('development'),
+  NEXT_PUBLIC_APP_URL: z.string().min(1),
+
   DISCORD_TOKEN: z.string().min(1),
-  DISCORD_CLIENT_PUBLIC_KEY: z.string().min(1),
+  DISCORD_PUBLIC_KEY: z.string().min(1),
   DISCORD_CLIENT_ID: z.string().min(1),
   DISCORD_CLIENT_SECRET: z.string().min(1),
-  DATABASE_URL: z.string().min(1),
-  START_TIMESTAMP: z.string().min(1).default('0'),
+
+  COCKROACH_DB_URL: z.string().min(1),
   OPENAI_API_URL: z.string().min(1),
-  NEXT_PUBLIC_APP_URL: z.string().min(1),
-  TYPE: z.enum(['unknown', 'interaction']).default('unknown'),
+
+  START_TIMESTAMP: z.string().min(1).default('0'),
 });
 
 export type Env = z.infer<typeof envSchema>;

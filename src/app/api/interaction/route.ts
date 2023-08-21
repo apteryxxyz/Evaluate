@@ -21,7 +21,6 @@ import {
 } from '@/interactions';
 
 export async function POST(request: NextRequest) {
-  process.env.TYPE = 'interaction';
   process.env.START_TIMESTAMP = Date.now().toString();
 
   const body = await request.json();
@@ -33,7 +32,7 @@ export async function POST(request: NextRequest) {
   const timestamp = request.headers.get('x-signature-timestamp');
   if (!signature || !timestamp) return new NextResponse(null, { status: 400 });
 
-  const key = process.env.DISCORD_CLIENT_PUBLIC_KEY;
+  const key = process.env.DISCORD_PUBLIC_KEY;
   if (!verifyKey(buffer, signature, timestamp, key))
     return new NextResponse(null, { status: 401 });
 

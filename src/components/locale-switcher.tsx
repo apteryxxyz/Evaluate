@@ -42,14 +42,9 @@ export function LocaleSwitcher() {
           </DropdownMenuItem>
         ))}
 
-        <DropdownMenuItem asChild>
-          <Button asChild>
-            <a
-              href="/translate"
-              className="hover:cursor-pointer"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
+        <DropdownMenuItem className="p-0" onClick={() => false}>
+          <Button asChild className="w-full">
+            <a href="/translate" target="_blank" rel="noreferrer noopener">
               Help Translate
             </a>
           </Button>

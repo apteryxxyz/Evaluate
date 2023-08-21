@@ -1,18 +1,12 @@
 import { escapeCodeBlock } from '@discordjs/builders';
 
-/**
- * Extract all the double asterisk text from a string.
- * @param content The string to extract from
- */
+/** Extract all the double asterisk text from a string. */
 export function extractBoldText(content: string) {
   return Array.from(content.match(/(\*\*)(.*?)\1/g) ?? []) //
     .map((match) => match.slice(2, -2));
 }
 
-/**
- * Extract all the code blocks from a string.
- * @param content The string to extract from
- */
+/** Extract all the code blocks from a string. */
 export function extractCodeBlocks(content: string) {
   const regex = /`{3}([\w#+]*\n)?([\S\s]*?)\n?`{3}|`([^\n`]+)`/gi;
 
@@ -34,22 +28,13 @@ export function extractCodeBlocks(content: string) {
   return codeBlocks;
 }
 
-/**
- * Wrap a string inside a code block.
- * @param content The string to wrap
- * @param maxLength The maximum length of the string before it gets truncated
- */
+/** Wrap a string inside a code block. */
 export function codeBlock<TContent extends string>(
   content: TContent,
   maxLength: number,
 ): `\`\`\`\n${TContent}\`\`\``;
 
-/**
- * Wrap a string inside a code block.
- * @param language The language to use for syntax highlighting
- * @param content The string to wrap
- * @param maxLength The maximum length of the string before it gets truncated
- */
+/** Wrap a string inside a code block. */
 export function codeBlock<TLanguage extends string, TContent extends string>(
   language: TLanguage,
   content: TContent,

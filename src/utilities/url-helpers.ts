@@ -2,6 +2,7 @@ import type { UrlObject } from 'url';
 import type { Locale } from 'translations';
 import { locales } from 'translations';
 
+/** Add a locale to a URL. */
 export function addLocale<T extends URL | UrlObject | string>(
   url: T,
   locale: Locale,
@@ -22,15 +23,35 @@ export function addLocale<T extends URL | UrlObject | string>(
   throw new Error('Invalid URL');
 }
 
+/** Remove a locale from a URL. */
+export function removeLocale<T extends URL | UrlObject | string>(url: T): T {
+  if (url instanceof URL) {
+    url.pathname = removeLocaleFromPathname(url.pathname);
+    return url;
+  } else if (typeof url === 'object') {
+    if (url.pathname) url.pathname = removeLocaleFromPathname(url.pathname);
+    return url;
+  } else if (typeof url === 'string') {
+    if (url.startsWith('/')) return removeLocaleFromPathname(url) as T;
+    const obj = new URL(url);
+    obj.pathname = removeLocaleFromPathname(obj.pathname);
+    return obj.toString() as T;
+  }
+
+  throw new Error('Invalid URL');
+}
+
+function removeLocaleFromPathname(pathname: string) {
+  const locale = locales.find((locale) => pathname.startsWith(`/${locale}`));
+  return locale ? pathname.replace(`/${locale}`, '') : pathname;
+}
+
+/** Remove a locale from a URL. */
 export function absoluteUrl(path = '/') {
   return new URL(path, process.env.NEXT_PUBLIC_APP_URL).toString();
 }
 
-export function getPathname(path: string) {
-  const locale = locales.find((locale) => path.startsWith(`/${locale}`));
-  return locale ? path.replace(`/${locale}`, '') : path;
-}
-
+/** Proxy an image URL before WSRV. */
 export function proxyImageUrl(
   url: string | URL,
   quality = 80,

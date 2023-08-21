@@ -143,6 +143,7 @@ export const LanguageNames = {
   Zsh: ['zsh'],
 };
 
+/** Format a programming language name. */
 export function formatLanguageName<T extends string>(
   language: T,
 ): T | keyof typeof LanguageNames {
@@ -163,6 +164,7 @@ export const RuntimeNames = {
   PowerShell: ['pwsh', 'powershell'],
 };
 
+/** Format a runtime name. */
 export function formatRuntimeName<T extends string>(
   runtime: T,
 ): T | keyof typeof RuntimeNames {

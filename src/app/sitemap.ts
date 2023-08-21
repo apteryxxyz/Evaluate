@@ -10,12 +10,15 @@ async function loadStaticPaths() {
   const manifestContent = await readFile(manifestPath, 'utf8');
   const manifest = JSON.parse(manifestContent) as RoutesManifest;
 
-  return manifest.staticRoutes.flatMap((route) =>
-    locales.map((locale) => ({
-      url: absoluteUrl(`/${locale}${route.page}`),
-      lastModified: new Date(),
-    })),
-  ) satisfies MetadataRoute.Sitemap;
+  return manifest.dynamicRoutes
+    .map((r) => r.page.replace('/[locale]', '') || '/')
+    .filter((r) => !r.includes('['))
+    .flatMap((route) =>
+      locales.map((locale) => ({
+        url: absoluteUrl(`/${locale}${route}`),
+        lastModified: new Date(),
+      })),
+    ) satisfies MetadataRoute.Sitemap;
 }
 
 async function loadDynamicPaths() {

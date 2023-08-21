@@ -5,6 +5,7 @@ import { baseLocale, locales } from 'translations';
 import { getTranslationFunctions } from 'translations/use';
 import { getUser } from '@/utilities/interaction/interaction-helpers';
 
+/** Get the translation functions for a locale. */
 export function getTranslate(
   ...params: [locale: Locale] | Parameters<typeof determineLocale>
 ) {
@@ -16,30 +17,17 @@ export function getTranslate(
     );
 }
 
-/**
- * Determine the locale from a pathname.
- * @param pathname The pathname to check
- */
+/** Determine the locale from a pathname. */
 export function determineLocale(pathname: string): Locale | undefined;
 
-/**
- * Determine the locale from a request, using multiple different methods.
- * @param pathname
- * @param headers
- * @param cookies
- * @platform next
- */
+/** Determine the locale from a request, using multiple different methods. */
 export function determineLocale(
   pathname: string,
   headers: Headers,
   cookies: RequestCookies,
 ): Locale;
 
-/**
- * Determine the locale from a Discord interaction.
- * @param interaction The interaction to check
- * @platform discord
- */
+/** Determine the locale from a Discord interaction. */
 export function determineLocale(interaction: APIInteraction): Locale;
 
 export function determineLocale(
@@ -53,6 +41,8 @@ export function determineLocale(
   if (typeof params[0] === 'string') {
     if (params.length === 1) {
       const [pathname] = params;
+
+      // Use route prefix
       const pathLocale = pathname.split('/')[1];
       if (locales.includes(pathLocale)) return pathLocale as Locale;
       return undefined;

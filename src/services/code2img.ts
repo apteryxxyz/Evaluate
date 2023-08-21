@@ -6,11 +6,7 @@ export const ThemeVariants = {
   },
 };
 
-/**
- * Generate a code image using the Code 2 Img API.
- * @param code The code that appears in the image
- * @param theme The theme to use
- */
+/** Generate a code image using the Code 2 Img API. */
 export function generateCodeImage({
   code,
   language = 'javascript',

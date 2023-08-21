@@ -16,17 +16,10 @@ export const CustomEmojis = {
 type ExtractId<T extends string> = T extends `${infer I}:a` ? I : T;
 type IsAnimated<T extends string> = T extends `${string}:a` ? true : false;
 
-/**
- * Resolve an emoji name to its Discord representation.
- * @param name The name of the emoji
- */
+/** Resolve an emoji name to its Discord representation. */
 export function resolveEmoji<TName extends string>(name: TName): `:${TName}:`;
 
-/**
- * Resolve an custom emoji name to its Discord representation.
- * @param name The name of the emoji
- * @param returnApi Whether to return the API representation of the emoji
- */
+/** Resolve an custom emoji name to its Discord representation. */
 export function resolveEmoji<
   TName extends keyof typeof CustomEmojis,
   TValue extends (typeof CustomEmojis)[TName],
@@ -36,11 +29,7 @@ export function resolveEmoji<
   returnApi?: false,
 ): `<${IsAnimated<TValue> extends true ? 'a' : ''}:${TName}:${TId}>`;
 
-/**
- * Resolve an custom emoji name to its Discord representation.
- * @param name The name of the emoji
- * @param returnApi Whether to return the API representation of the emoji
- */
+/** Resolve an custom emoji name to its Discord representation. */
 export function resolveEmoji<
   TName extends keyof typeof CustomEmojis,
   TValue extends (typeof CustomEmojis)[TName],
@@ -50,21 +39,13 @@ export function resolveEmoji<
   returnApi: true,
 ): { id: TId; name: TName; animated: IsAnimated<TValue> };
 
-/**
- * Resolve an unicode emoji name to its Discord representation.
- * @param name The name of the emoji
- * @param returnApi Whether to return the API representation of the emoji
- */
+/** Resolve an unicode emoji name to its Discord representation. */
 export function resolveEmoji<
   TName extends keyof typeof UnicodeEmojis,
   TValue extends (typeof UnicodeEmojis)[TName],
 >(name: TName, returnApi?: false): TValue;
 
-/**
- * Resolve an unicode emoji name to its Discord representation.
- * @param name The name of the emoji
- * @param returnApi Whether to return the API representation of the emoji
- */
+/** Resolve an unicode emoji name to its Discord representation. */
 export function resolveEmoji<
   TName extends keyof typeof UnicodeEmojis,
   TValue extends (typeof UnicodeEmojis)[TName],

@@ -1,5 +1,6 @@
 const CURRENT_URL = new URL(process.env.OPENAI_API_URL);
 
+/** Create a OpenAI chat completion for the given messages. */
 export function createCompletion(
   messages: ChatCompletionMessage[],
   options: CreateCompletionOptions = {
@@ -37,6 +38,7 @@ export function createCompletion(
     })
     .then((r) => r.choices[0].message.content)
     .catch((e) => {
+      // If an error occurs, something is wrong with the API
       console.error('current url', CURRENT_URL);
       console.error('headers', headers);
       console.error('body', body);

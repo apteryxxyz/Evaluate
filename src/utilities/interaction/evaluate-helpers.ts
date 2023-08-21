@@ -3,6 +3,7 @@ import type { TranslationFunctions } from 'translations';
 import { extractBoldText, extractCodeBlocks } from './discord-formatting';
 import { getEmbedField } from './embed-helpers';
 
+/** Get the options from an evaluate embed. */
 export function getEvaluateOptions(t: TranslationFunctions, embed: APIEmbed) {
   const language = extractBoldText(embed.description!).at(0)!;
   const code = extractCodeBlocks(embed.description!).at(0)!.code;

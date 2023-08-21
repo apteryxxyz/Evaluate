@@ -8,11 +8,7 @@ export const ThemeVariants = {
   },
 };
 
-/**
- * Generate a code image using the Carbonara API.
- * @param code The code that appears in the image
- * @param theme The theme to use
- */
+/** Generate a code image using the Carbonara API. */
 export function generateCodeImage({
   code,
   theme = 'default',

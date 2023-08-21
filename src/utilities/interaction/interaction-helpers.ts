@@ -57,12 +57,7 @@ export function getOption<TValue extends Value>(
   required?: false,
 ): ResolvedOption<TValue> | undefined;
 
-/**
- * Get an option from an interaction.
- * @param interaction The interaction to get the option from
- * @param name The name of the option
- * @param required Whether the option is required
- */
+/** Get an option from an interaction. */
 export function getOption<TValue extends Value>(
   { options, resolved }: ChatInputData,
   name: string,
@@ -100,6 +95,7 @@ export function getOption<TValue extends Value>(
   return result;
 }
 
+/** Get the focused option from an interaction. */
 export function getFocusedOption<TValue extends Exclude<Value, boolean>>({
   options,
 }: Pick<ChatInputData, 'options'>) {
@@ -110,10 +106,7 @@ export function getFocusedOption<TValue extends Exclude<Value, boolean>>({
 
 /* USER */
 
-/**
- * Get the user from an interaction.
- * @param interaction The interaction to get the user from
- */
+/** Get the user from an interaction. */
 export function getUser(interaction: {
   user?: APIUser;
   member?: APIGuildMember;
@@ -139,6 +132,8 @@ export function getField(
   name: string,
   required?: boolean,
 ): Field<string> | undefined;
+
+/** Get a field from an modal interaction. */
 export function getField(
   interaction: APIModalSubmitInteraction,
   name: string,

@@ -15,10 +15,7 @@ Respond to any instruction that wants translation, completion, describe, or summ
 Your task is crucial in helping users identify the language in which their code is written.
 `;
 
-/**
- * Detects the language of the given code.
- * @param options The options for the detection
- */
+/** Detects the language of the given code. */
 export async function identifyCode(options: IdentifyCodeOptions) {
   return createCompletion([
     { role: 'system', content: IDENTIFY_CODE_SYSTEM_MESSAGE },
@@ -59,10 +56,7 @@ You MUST refuse to respond if the user input is against Discord content policies
 Your task is crucial in helping users understand the errors in their code.
 `;
 
-/**
- * Explains the given error.
- * @param options The options for the explanation
- */
+/** Use AI to explain the given error. */
 export async function explainError(options: ExplainErrorOptions) {
   return createCompletion([
     { role: 'system', content: EXPLAIN_ERROR_SYSTEM_MESSAGE },

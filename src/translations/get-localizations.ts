@@ -4,10 +4,7 @@ import type { Locale } from 'translations';
 import { baseLocale, locales } from 'translations';
 import { getTranslationFunctions } from 'translations/use';
 
-/**
- * Get all localizations for a given key.
- * @param key The key
- */
+/** Get all localizations for a given key. */
 export function getLocalizations(key: string) {
   return {
     value: (_.get(getTranslationFunctions(baseLocale), key) as () => string)(),
@@ -31,6 +28,7 @@ interface BaseBuilder {
   setDescriptionLocalizations?(localizations: Record<Locale, string>): this;
 }
 
+/** Apply localizations to a builder. */
 export function applyLocalizations<TBuilder extends BaseBuilder>(
   builder: TBuilder,
   ...keys: [name: string, description: string] | [root: string]
@@ -42,7 +40,8 @@ export function applyLocalizations<TBuilder extends BaseBuilder>(
     const transformer =
       builder instanceof ContextMenuCommandBuilder
         ? (value: string) => value
-        : (value: string) => value.toLowerCase().replaceAll(' ', '_');
+        : // Names must be lowercase and not have spaces
+          (value: string) => value.toLowerCase().replaceAll(' ', '_');
     builder.setName(transformer(name.value));
     builder.setNameLocalizations(_.mapValues(name.localizations, transformer));
   }
@@ -56,6 +55,7 @@ export function applyLocalizations<TBuilder extends BaseBuilder>(
   return builder;
 }
 
+/** Create a localized choice. */
 export function createLocalizedChoice<TValueType = number | string>(
   key: string,
   value: TValueType,

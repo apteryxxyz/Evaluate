@@ -3,7 +3,7 @@ import type { Metadata } from 'next/types';
 import type { TranslationFunctions } from 'translations';
 import { locales } from 'translations';
 import { determineLocale } from '@/translations/determine-locale';
-import { absoluteUrl, getPathname } from '@/utilities/url-helpers';
+import { absoluteUrl, removeLocale } from '@/utilities/url-helpers';
 
 export function generateBaseMetadata(
   t: TranslationFunctions,
@@ -11,7 +11,7 @@ export function generateBaseMetadata(
   base: Metadata,
 ) {
   const locale = determineLocale(path);
-  const pathname = getPathname(path);
+  const pathname = removeLocale(path);
 
   const metadata = _.merge(
     {
@@ -29,7 +29,7 @@ export function generateBaseMetadata(
         t.evaluate.run(),
         t.evaluate.output(),
       ].map((s) => s.toLowerCase()),
-      themeColor: '#2fc086',
+      themeColor: '#2FC086',
       colorScheme: 'light dark',
       alternates: {
         languages: locales.reduce(

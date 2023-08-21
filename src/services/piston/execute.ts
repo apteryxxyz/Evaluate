@@ -39,6 +39,7 @@ export const pistonExecuteResultSchema = z.object({
 export type ExecuteCodeOptions = z.infer<typeof executeCodeOptionsSchema>;
 export type ExecuteCodeResult = Awaited<ReturnType<typeof executeCode>>;
 
+/** Execute code using the Piston API. */
 export async function executeCode(options: ExecuteCodeOptions) {
   const language = options.language.id.split('/');
 
@@ -72,6 +73,7 @@ export async function executeCode(options: ExecuteCodeOptions) {
   };
 }
 
+/** Parse command line arguments. */
 function parseArguments(args: string) {
   const tokens = new Lexer(args)
     .setQuotes([

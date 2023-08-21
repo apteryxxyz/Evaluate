@@ -31,6 +31,7 @@ export const pistonRuntimesSchema = z.array(
   }),
 );
 
+/** Fetch all languages from the Piston API. */
 export async function fetchLanguages() {
   const runtimes = await fetch('https://emkc.org/api/v2/piston/runtimes')
     .then((response) => response.json())
@@ -60,18 +61,10 @@ export async function fetchLanguages() {
     });
 }
 
+/** Get a single language by its ID. */
 export async function getLanguage(id: string) {
   const languages = await fetchLanguages();
   return languages.find((language) => language.id === id);
-}
-
-export async function searchLanguages(query: string) {
-  if (query.length === 0) return [];
-
-  const languages = await fetchLanguages();
-  const keys = ['id', 'name', 'aliases', 'runtime.id', 'runtime.name'];
-  const fuse = new Fuse(languages, { keys, threshold: 0.3 });
-  return fuse.search(query).map(({ item }) => item);
 }
 
 const PREFERRED_RUNTIMES = new Map([
@@ -79,6 +72,7 @@ const PREFERRED_RUNTIMES = new Map([
   ['typescript', undefined],
 ]);
 
+/** Find a single language using a resolvable. */
 export async function findLanguage(resolvable: string) {
   resolvable = resolvable.toLowerCase().trim();
   if (resolvable === '') return undefined;
@@ -101,4 +95,14 @@ export async function findLanguage(resolvable: string) {
 
     return runtime === language.runtime?.key;
   });
+}
+
+/** Search all language using a query. */
+export async function searchLanguages(query: string) {
+  if (query.length === 0) return [];
+
+  const languages = await fetchLanguages();
+  const keys = ['id', 'name', 'aliases', 'runtime.id', 'runtime.name'];
+  const fuse = new Fuse(languages, { keys, threshold: 0.3 });
+  return fuse.search(query).map(({ item }) => item);
 }

@@ -20,12 +20,8 @@ const envSchema = z.object({
   REQUEST_TYPE: z.enum(['interaction', 'unknown']).default('unknown'),
   START_TIMESTAMP: z.string().min(1).default('0'),
 
-  NEXT_PUBLIC_APP_URL: z
-    .string()
-    .default(() => eval('process.env.APP_URL') as string),
-  NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID: z
-    .string()
-    .default(() => eval('process.env.GOOGLE_MEASUREMENT_ID') as string),
+  NEXT_PUBLIC_APP_URL: z.string(),
+  NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;

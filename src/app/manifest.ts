@@ -1,6 +1,6 @@
 import { getLocalizations } from '@/translations/get-localizations';
 
-export default function manifest() {
+export default function Manifest() {
   const description = getLocalizations('seo.description').localizations;
 
   return {

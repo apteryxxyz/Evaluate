@@ -1,9 +1,9 @@
 const CURRENT_URL = new URL(process.env.OPENAI_API_URL);
 
 /** Create a OpenAI chat completion for the given messages. */
-export function createCompletion(
+export function createChatCompletion(
   messages: ChatCompletionMessage[],
-  options: CreateCompletionOptions = {
+  options: CreateChatCompletionOptions = {
     model: 'gpt-3.5-turbo',
     temperature: 0.5,
     frequency_penalty: 0,
@@ -46,7 +46,7 @@ export function createCompletion(
     });
 }
 
-export interface CreateCompletionOptions {
+export interface CreateChatCompletionOptions {
   model: 'gpt-3.5-turbo';
   frequency_penalty?: number;
   presence_penalty?: number;

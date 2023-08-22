@@ -1458,6 +1458,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/gtag.js@npm:^0.0.13":
+  version: 0.0.13
+  resolution: "@types/gtag.js@npm:0.0.13"
+  checksum: 9c56c961579cc7c0b5bb4d8b01ba59baffe91a47893ed9d0be8161c6d74e04cebdcee4bc5762704ba72be0c40cb9d5fc88844df52b990545d6982cf9f8a6d6a7
+  languageName: node
+  linkType: hard
+
 "@types/hast@npm:^2.0.0":
   version: 2.3.5
   resolution: "@types/hast@npm:2.3.5"
@@ -2913,6 +2920,7 @@ __metadata:
     "@radix-ui/react-slot": ^1.0.2
     "@total-typescript/ts-reset": ^0.5.1
     "@types/eslint": ^8.44.2
+    "@types/gtag.js": ^0.0.13
     "@types/lodash": ^4.14.197
     "@types/react": ^18.2.20
     "@types/react-dom": ^18.2.7

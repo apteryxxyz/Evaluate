@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next/types';
 import { absoluteUrl } from '@/utilities/url-helpers';
 
-export default function robots() {
+export default function Robots() {
   return {
     rules: [
       {

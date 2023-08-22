@@ -1,6 +1,7 @@
 import { executeServerAction } from 'next-sa/client';
 import { notFound } from 'next/navigation';
 import { getLanguage } from '@/app/actions';
+// import { fetchLanguages } from '@/services/piston';
 import { getTranslate } from '@/translations/determine-locale';
 import type { PageProps } from '@/types';
 import { generateBaseMetadata } from '../../metadata';
@@ -17,6 +18,12 @@ export async function generateMetadata(p: PageProps<['language[]']>) {
     description: t.evaluate.seo.description({ language: language.name }),
   });
 }
+
+// TODO: Some client renderering warning or something, need to fix this
+// export async function generateStaticParams() {
+//   const languages = await fetchLanguages();
+//   return languages.map((language) => ({ language: language.id.split('/') }));
+// }
 
 export default async function Page(p: PageProps<['language[]']>) {
   const input = decodeURIComponent(p.params.language.join('/'));

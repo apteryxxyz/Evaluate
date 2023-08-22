@@ -1,4 +1,4 @@
-import { createCompletion } from '@/services/openai';
+import { createChatCompletion } from '@/services/openai';
 import { extractBoldText } from '@/utilities/interaction/discord-formatting';
 import { findLanguage } from './piston';
 
@@ -17,7 +17,7 @@ Your task is crucial in helping users identify the language in which their code 
 
 /** Detects the language of the given code. */
 export async function identifyCode(options: IdentifyCodeOptions) {
-  return createCompletion([
+  return createChatCompletion([
     { role: 'system', content: IDENTIFY_CODE_SYSTEM_MESSAGE },
     { role: 'user', content: options.code },
   ])
@@ -58,7 +58,7 @@ Your task is crucial in helping users understand the errors in their code.
 
 /** Use AI to explain the given error. */
 export async function explainError(options: ExplainErrorOptions) {
-  return createCompletion([
+  return createChatCompletion([
     { role: 'system', content: EXPLAIN_ERROR_SYSTEM_MESSAGE },
     {
       role: 'user',

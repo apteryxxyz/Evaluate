@@ -21,6 +21,7 @@ import {
 } from '@/interactions';
 
 export async function POST(request: NextRequest) {
+  process.env.REQUEST_TYPE = 'interaction';
   process.env.START_TIMESTAMP = Date.now().toString();
 
   const body = await request.json();

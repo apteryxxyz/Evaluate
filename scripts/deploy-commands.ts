@@ -9,6 +9,11 @@ import { chatInputCommands, messageMenuCommands } from '@/interactions';
 
 void main(process.argv.length, process.argv);
 async function main(_argc: number, _argv: string[]) {
+  if (process.env.VERCEL_ENV !== 'production') {
+    console.info('Skipping command deployment because not in production.');
+    return;
+  }
+
   const commands = [];
   for (const command of [
     ...Object.values(chatInputCommands),

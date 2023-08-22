@@ -1,5 +1,5 @@
 {
-  "native_name": "Italiano (Italia)",
+  "native_name": "Italiano",
   "discord_bot": "Bot Discord",
   "discord_server": "Server Discord",
   "screen_reader": {
@@ -34,7 +34,7 @@
   },
   "evaluate": {
     "$": "Evaluate",
-    "description": "Esegui pezzi di codice in varie lingue, con input e argomenti da linea di comando facoltativi.",
+    "description": "Esegui qualsiasi pezzo di codice in qualsiasi lingua, con input e argomenti da linea di comando facoltativi.",
     "seo": {
       "title": "{language} su Evaluate",
       "description": "Esegui codice in {language} e altri linguaggi di programmazione senza sforzo con Evaluate. Fornisci il codice, input e argomenti da linea di comando facoltativi per ricevere output istantaneo. Fail il debug, ottimizza e migliora il tuo processo di programmazione eseguendo codice {language} ed esplorando vari linguaggi. Eleva la tua esperienza di programmazione con le capacita versatili dell' esecuzione codice di Evaluate."

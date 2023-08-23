@@ -29,19 +29,20 @@ const evaluateSchema = z.object({
 export default function Content(p: ContentProps) {
   const t = useTranslate();
   const searchParams = useSearchParams();
-  const autoRun = searchParams.get('run') === 'true';
+
+  const run = searchParams.get('run') === 'true';
+  const code = searchParams.get('code')?.toString();
+  const input = searchParams.get('input')?.toString();
+  const args = searchParams.get('args')?.toString();
 
   const evaluateForm = useForm<z.infer<typeof evaluateSchema>>({
     resolver: zodResolver(evaluateSchema),
-    defaultValues: {
-      code: searchParams.get('code')?.toString(),
-      input: searchParams.get('input')?.toString(),
-      args: searchParams.get('args')?.toString(),
-    },
+    defaultValues: { code, input, args },
   });
 
   const [isExecuting, setExecuting] = useState(false);
   const [result, setResult] = useState<ExecuteCodeResult | null>(null);
+
   const output = useMemo(() => {
     if (!result) return null;
     if (result.compile?.success === false) return result.compile.output;
@@ -70,8 +71,11 @@ export default function Content(p: ContentProps) {
   });
 
   useEffect(() => {
-    if (autoRun) void onSubmit();
-  }, []);
+    if (code) evaluateForm.setValue('code', code);
+    if (input) evaluateForm.setValue('input', input);
+    if (args) evaluateForm.setValue('args', args);
+    if (run) void onSubmit();
+  }, [run, code, input, args]);
 
   return (
     <>

@@ -1,10 +1,10 @@
 import { LanguagesIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { usePathname } from 'next/navigation';
 import type { Locale } from 'translations';
 import { languages } from 'translations';
 import { useTranslate } from '@/contexts/translate';
-import { addLocale } from '@/utilities/url-helpers';
+import { addLocale, removeLocale } from '@/utilities/url-helpers';
 import { Button } from './ui/button';
 import {
   DropdownMenu,
@@ -15,11 +15,7 @@ import {
 
 export function LocaleSwitcher() {
   const t = useTranslate();
-  const pathname = useMemo(() => {
-    if (typeof window === 'undefined') return '/';
-    const path = window.location.pathname;
-    return `/${path.split('/').slice(2).join('/')}`;
-  }, []);
+  const pathname = usePathname();
 
   return (
     <DropdownMenu>
@@ -34,7 +30,7 @@ export function LocaleSwitcher() {
         {Object.entries(languages).map(([locale, language]) => (
           <DropdownMenuItem key={locale} asChild>
             <Link
-              href={addLocale(pathname, locale as Locale)}
+              href={addLocale(removeLocale(pathname), locale as Locale)}
               className="hover:cursor-pointer"
             >
               {language}

@@ -3,7 +3,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguages } from '@/contexts/languages';
+import { useLocale } from '@/contexts/locale';
 import { useTranslate } from '@/contexts/translate';
+import { addLocale } from '@/utilities/url-helpers';
 import { IdentifyCodeButton } from './identify-code-button';
 import { LanguageSearchBar } from './language-search-bar';
 import { LocaleSwitcher } from './locale-switcher';
@@ -12,13 +14,14 @@ import { Button } from './ui/button';
 
 export function HeaderBar() {
   const t = useTranslate();
+  const locale = useLocale();
   const languages = useLanguages();
 
   return (
     <header className="container flex flex-col lg:flex-row gap-4 justify-between">
       <nav className="flex flex-wrap gap-4">
         <Link
-          href="/"
+          href={addLocale('/', locale)}
           className="flex items-center gap-2"
           onClick={() => languages.setFiltered(languages.initial)}
         >

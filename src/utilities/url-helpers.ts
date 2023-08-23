@@ -14,7 +14,7 @@ export function addLocale<T extends URL | UrlObject | string>(
     url.pathname = `/${locale}${url.pathname}`;
     return url;
   } else if (typeof url === 'string') {
-    if (url.startsWith('/')) return `/${locale}${url}` as T;
+    if (!url || url.startsWith('/')) return `/${locale}${url}` as T;
     const obj = new URL(url);
     obj.pathname = `/${locale}${obj.pathname}`;
     return obj.toString() as T;
@@ -32,7 +32,7 @@ export function removeLocale<T extends URL | UrlObject | string>(url: T): T {
     if (url.pathname) url.pathname = removeLocaleFromPathname(url.pathname);
     return url;
   } else if (typeof url === 'string') {
-    if (url.startsWith('/')) return removeLocaleFromPathname(url) as T;
+    if (!url || url.startsWith('/')) return removeLocaleFromPathname(url) as T;
     const obj = new URL(url);
     obj.pathname = removeLocaleFromPathname(obj.pathname);
     return obj.toString() as T;

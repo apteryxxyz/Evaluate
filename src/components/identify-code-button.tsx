@@ -59,15 +59,9 @@ export function IdentifyCodeButton() {
       const url = new URL(pathname, window.location.origin);
       url.searchParams.set('code', data.code);
 
-      if (url.href === window.location.href) {
-        setIdentifyOpen(false);
-        window.location.href = url.href;
-        window.location.reload();
-      } else {
-        router.push(url.href);
-        setIdentifyOpen(false);
-        identifyCodeForm.reset();
-      }
+      router.push(url.pathname + url.search);
+      setIdentifyOpen(false);
+      identifyCodeForm.reset();
     } else {
       setResult(language ?? null);
       setResultOpen(true);

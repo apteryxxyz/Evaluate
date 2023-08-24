@@ -17,7 +17,7 @@
     "$": "Languages",
     "search": "Search",
     "search_languages": "Search languages.",
-    "version": "Version {version}"
+    "version": "Version {language_version}"
   },
   "capture": {
     "$": "Capture",

@@ -17,7 +17,7 @@
     "$": "Lingue",
     "search": "Cerca",
     "search_languages": "Cerca lingue.",
-    "version": "Versione {version}"
+    "version": "Versione {language_version}"
   },
   "capture": {
     "$": "Cattura",
@@ -48,8 +48,8 @@
     "$": "Evaluate",
     "description": "Esegui pezzi di codice in varie lingue, con input e argomenti da linea di comando facoltativi.",
     "seo": {
-      "title": "{language} su Evaluate",
-      "description": "Esegui codice in {language} e altri linguaggi di programmazione senza sforzo con Evaluate. Fornisci il codice, input e argomenti da linea di comando facoltativi per ricevere output istantaneo. Fail il debug, ottimizza e migliora il tuo processo di programmazione eseguendo codice {language} ed esplorando vari linguaggi. Eleva la tua esperienza di programmazione con le capacita versatili dell' esecuzione codice di Evaluate."
+      "title": "{language_name} su Evaluate",
+      "description": "Esegui codice in {language_name} e altri linguaggi di programmazione senza sforzo con Evaluate. Fornisci il codice, input e argomenti da linea di comando facoltativi per ricevere output istantaneo. Fail il debug, ottimizza e migliora il tuo processo di programmazione eseguendo codice {language_name} ed esplorando vari linguaggi. Eleva la tua esperienza di programmazione con le capacita versatili dell' esecuzione codice di Evaluate."
     },
     "language": {
       "$": "Lingua",
@@ -118,14 +118,14 @@
       "$": "Salva Snippet",
       "reached_max": "Hai raggiunto il numero massimo di snippet salvati.",
       "already_exists": "Hai già salvato quello snippet.",
-      "success": "Snippet salvato correttamente come {name}."
+      "success": "Snippet salvato correttamente come {snippet_name}."
     },
     "list": {
       "none": "Non hai nessuno snippet salvato.",
       "placeholder": "Scegli uno snippet dei tuoi."
     },
     "view": {
-      "title": "Il tuo Snippet {name}",
+      "title": "Il tuo Snippet {snippet_name}",
       "doesnt_exist": "Questo snippet non esiste.",
       "unauthorised": "Questo non è il tuo snippet.",
       "deleted": "Questo snippet è stato cancellato."

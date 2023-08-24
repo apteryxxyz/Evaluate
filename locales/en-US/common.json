@@ -32,6 +32,18 @@
       "service_down": "Capture service is down, please try again later."
     }
   },
+  "files": {
+    "name": {
+      "$": "File Name",
+      "description": "The name of the file."
+    },
+    "content": {
+      "$": "File Content",
+      "description": "The contents of the file."
+    },
+    "untitled": "Untitled",
+    "main": "Main"
+  },
   "evaluate": {
     "$": "Evaluate",
     "description": "Evaluate any piece of code in any language with optional input and command line arguments.",

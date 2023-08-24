@@ -31,7 +31,7 @@ export async function handleIdentifing(
       .addFields({
         name: t.identify.prediction(),
         value: name
-          ? t.identify.prediction.identified_as({ language: bold(name) })
+          ? t.identify.prediction.identified_as({ language_name: bold(name) })
           : t.identify.prediction.could_not_identify(),
       });
 

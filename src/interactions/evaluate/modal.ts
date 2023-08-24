@@ -81,7 +81,7 @@ export default createModalComponent(
       return void (await api.interactions.editReply(
         interaction.application_id,
         interaction.token,
-        { content: t.snippets.save.success(data) },
+        { content: t.snippets.save.success({ snippet_name: data.name }) },
       ));
     }
   },

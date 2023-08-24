@@ -92,7 +92,7 @@ export default function Content(p: ContentProps) {
       <div>
         <h1 className="text-2xl font-bold">{p.language.name}</h1>
         <h2 className="text-lg font-medium">
-          {t.languages.version(p.language)}
+          {t.languages.version({ language_version: p.language.version })}
         </h2>
       </div>
 

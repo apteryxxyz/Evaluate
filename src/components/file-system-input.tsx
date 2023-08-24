@@ -32,7 +32,7 @@ export function FileSystemInput(p: FileSystemInputProps) {
             <TabsTrigger key={file.id} value={index.toString()}>
               <span>
                 {truncate(
-                  names[index]?.trim() || t.files.name.untitled(), //
+                  names[index]?.trim() || t.files.untitled(), //
                   { length: 32 },
                 )}
               </span>
@@ -41,7 +41,7 @@ export function FileSystemInput(p: FileSystemInputProps) {
                 <>
                   &nbsp;
                   <span className="text-sm font-medium text-muted-foreground">
-                    &#x28;{t.files.name.main()}&#x29;
+                    &#x28;{t.files.main()}&#x29;
                   </span>
                 </>
               )}

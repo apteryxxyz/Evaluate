@@ -128,7 +128,7 @@ export function IdentifyCodeButton() {
             <AlertDialogTitle>{t.identify.prediction()}</AlertDialogTitle>
             <AlertDialogDescription>
               {result
-                ? t.identify.prediction.identified_as({ language: result })
+                ? t.identify.prediction.identified_as({ language_name: result })
                 : t.identify.prediction.could_not_identify()}
             </AlertDialogDescription>
           </AlertDialogHeader>

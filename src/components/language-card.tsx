@@ -12,7 +12,9 @@ export function LanguageCard(p: Language) {
       <CardHeader>
         <CardTitle>{p.name}</CardTitle>
 
-        <CardDescription>{p.version && t.languages.version(p)}</CardDescription>
+        <CardDescription>
+          {p.version && t.languages.version({ language_version: p.version })}
+        </CardDescription>
       </CardHeader>
 
       <LinkWithLocale href={`/language/${p.id}`} className="inset-0 absolute" />

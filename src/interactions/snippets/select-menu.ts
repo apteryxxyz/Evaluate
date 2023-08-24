@@ -39,7 +39,7 @@ export default createSelectMenuComponent(
       const language = (await findLanguage(snippet.language))!;
 
       const embed = new EmbedBuilder()
-        .setTitle(t.snippets.view.title(snippet))
+        .setTitle(t.snippets.view.title({ snippet_name: snippet.name }))
         .setDescription(
           `**${language.name}** (${language.version})\n${codeBlock(
             language.key,

@@ -40,6 +40,20 @@
     }
   },
 
+  "files": {
+    "name": {
+      "$": "File Name",
+      "description": "The name of the file.",
+      "untitled": "Untitled",
+      "main": "Main"
+    },
+
+    "content": {
+      "$": "File Content",
+      "description": "The content of the file."
+    }
+  },
+
   "evaluate": {
     "$": "Evaluate",
     "description": "Evaluate any piece of code in any language with optional input and command line arguments.",

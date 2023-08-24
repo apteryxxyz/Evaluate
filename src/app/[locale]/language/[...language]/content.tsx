@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import _ from 'lodash';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
 import { executeServerAction } from 'next-sa/client';
 import { useSearchParams } from 'next/navigation';
@@ -8,6 +9,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { executeCode } from '@/app/actions';
+import { FileSystemInput } from '@/components/file-system-input';
 import { Button } from '@/components/ui/button';
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
@@ -21,9 +23,17 @@ interface ContentProps {
 }
 
 const evaluateSchema = z.object({
-  code: z.string().min(1).max(10000),
-  input: z.string().max(10000).optional(),
-  args: z.string().max(10000).optional(),
+  files: z
+    .array(
+      z.object({
+        name: z.string().max(100).optional(),
+        content: z.string().max(10000),
+      }),
+    )
+    .min(1)
+    .max(10),
+  input: z.string().max(2000).optional(),
+  args: z.string().max(2000).optional(),
 });
 
 export default function Content(p: ContentProps) {
@@ -37,7 +47,7 @@ export default function Content(p: ContentProps) {
 
   const evaluateForm = useForm<z.infer<typeof evaluateSchema>>({
     resolver: zodResolver(evaluateSchema),
-    defaultValues: { code, input, args },
+    defaultValues: { files: [{ content: code }], input, args },
   });
 
   const [isExecuting, setExecuting] = useState(false);
@@ -61,7 +71,7 @@ export default function Content(p: ContentProps) {
 
     const result = await executeServerAction(executeCode, {
       language: p.language,
-      files: [{ content: data.code }],
+      files: data.files,
       input: data.input,
       args: data.args,
     });
@@ -71,7 +81,7 @@ export default function Content(p: ContentProps) {
   });
 
   useEffect(() => {
-    if (code) evaluateForm.setValue('code', code);
+    if (code) evaluateForm.setValue('files.0.content', code);
     if (input) evaluateForm.setValue('input', input);
     if (args) evaluateForm.setValue('args', args);
     if (run) void onSubmit();
@@ -88,21 +98,7 @@ export default function Content(p: ContentProps) {
 
       <Form {...evaluateForm}>
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
-          <FormField
-            control={evaluateForm.control}
-            name="code"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel htmlFor={field.name}>{t.evaluate.code()}</FormLabel>
-                <Textarea
-                  {...field}
-                  id={field.name}
-                  placeholder={t.evaluate.code.description()}
-                  className="w-full"
-                />
-              </FormItem>
-            )}
-          />
+          <FileSystemInput control={evaluateForm.control} />
 
           <div className="flex flex-col md:flex-row gap-4">
             <FormField

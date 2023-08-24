@@ -6,13 +6,12 @@ export const executeCodeOptionsSchema = z.object({
   language: languageSchema,
   files: z.array(
     z.object({
-      name: z.string().optional(),
-      content: z.string(),
-      encoding: z.string().optional(),
+      name: z.string().max(100).optional(),
+      content: z.string().max(10000),
     }),
   ),
-  input: z.string().optional(),
-  args: z.string().optional(),
+  input: z.string().max(2000).optional(),
+  args: z.string().max(2000).optional(),
 });
 
 export const pistonExecuteResultSchema = z.object({

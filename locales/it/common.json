@@ -32,6 +32,18 @@
       "service_down": "Il servizio di cattura è off, riprova più tardi."
     }
   },
+  "files": {
+    "name": {
+      "$": "Nome File",
+      "description": "Il nome del file."
+    },
+    "content": {
+      "$": "Contenuto File",
+      "description": "Il contenuto del file."
+    },
+    "untitled": "Senza Titolo",
+    "main": "Principale"
+  },
   "evaluate": {
     "$": "Evaluate",
     "description": "Esegui pezzi di codice in varie lingue, con input e argomenti da linea di comando facoltativi.",

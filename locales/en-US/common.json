@@ -2,33 +2,26 @@
   "native_name": "English (US)",
   "discord_bot": "Discord Bot",
   "discord_server": "Discord Server",
-
   "screen_reader": {
     "toggle_theme": "Toggle theme",
     "change_locale": "Change locale"
   },
-
   "seo": {
     "description": "Evaluate, the ultimate code evaluation and programming language identification tool. Quickly evaluate code snippets in any programming language, with optional input and command-line arguments. Identify unknown programming languages effortlessly using AI. Try it now!"
   },
-
   "not_found": {
     "$": "Page not found",
     "description": "The page you were looking for doesn't exist."
   },
-
   "languages": {
     "$": "Languages",
-
     "search": "Search",
     "search_languages": "Search languages.",
     "version": "Version {language_version}"
   },
-
   "capture": {
     "$": "Capture",
     "description": "Create and share images of your source code.",
-
     "code": {
       "$": "Code",
       "description": "The source code to appear in the image."
@@ -39,7 +32,6 @@
       "service_down": "Capture service is down, please try again later."
     }
   },
-
   "files": {
     "name": {
       "$": "File Name",
@@ -49,20 +41,16 @@
       "$": "File Content",
       "description": "The contents of the file."
     },
-
     "untitled": "Untitled",
     "main": "Main"
   },
-
   "evaluate": {
     "$": "Evaluate",
     "description": "Evaluate any piece of code in any language with optional input and command line arguments.",
-
     "seo": {
       "title": "{language_name} on Evaluate",
       "description": "Run code in {language_name} and other programming languages effortlessly with Evaluate. Provide your source code, optional input, and command line arguments to receive instant outputs. Debug, optimize, and enhance your coding process by running {language_name} code and exploring various languages. Elevate your programming experience with Evaluate's versatile code evaluation capabilities."
     },
-
     "language": {
       "$": "Language",
       "description": "The programming language to evaluate the code in.",
@@ -83,7 +71,6 @@
       "$": "Arguments",
       "description": "Additional command line arguments to pass to the program."
     },
-
     "run": {
       "$": "Run",
       "ing": "Running"
@@ -97,22 +84,18 @@
       "no_output": "No output was produced, ensure something was printed to the console.",
       "too_long": "The output exceeded Discord's display limits. For an unrestricted view, please visit the [Evaluate website]({url})."
     },
-
     "unauthorised": "This is not your evaluation, you'll need to create your own."
   },
-
   "explain": {
     "$": "Explain",
     "title": "AI Explanation",
     "description": "Use AI to explain any error that occurred from any programming language.",
     "internal_error": "An error occurred while trying to contact the AI, please try again later."
   },
-
   "identify": {
     "$": "Identify",
     "ing": "Identifying",
     "description": "Use AI to identify the programming language of any piece of code.",
-
     "code": {
       "$": "Code",
       "description": "The source code to attempt to identify."
@@ -124,11 +107,9 @@
       "okay": "Okay"
     }
   },
-
   "snippets": {
     "$": "Snippets",
     "description": "Manage your saved code snippets.",
-
     "name": {
       "$": "Name",
       "description": "The name of the snippet."

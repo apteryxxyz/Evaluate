@@ -102,7 +102,7 @@
     },
     "prediction": {
       "$": "Predizione",
-      "identified_as": "Identificato questo codice per essere {language}.",
+      "identified_as": "Identificato questo codice per essere {language_name}.",
       "could_not_identify": "Non è stato possibile identificare la lingua di questo codice, può essere che non ci sono abbastanza informazioni oppure che non esista.",
       "okay": "Okay"
     }

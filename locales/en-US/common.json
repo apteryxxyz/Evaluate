@@ -17,7 +17,7 @@
     "$": "Languages",
     "search": "Search",
     "search_languages": "Search languages.",
-    "version": "Version {version}"
+    "version": "Version {language_version}"
   },
   "capture": {
     "$": "Capture",
@@ -32,12 +32,24 @@
       "service_down": "Capture service is down, please try again later."
     }
   },
+  "files": {
+    "name": {
+      "$": "File Name",
+      "description": "The name of the file."
+    },
+    "content": {
+      "$": "File Content",
+      "description": "The contents of the file."
+    },
+    "untitled": "Untitled",
+    "main": "Main"
+  },
   "evaluate": {
     "$": "Evaluate",
     "description": "Evaluate any piece of code in any language with optional input and command line arguments.",
     "seo": {
-      "title": "{language} on Evaluate",
-      "description": "Run code in {language} and other programming languages effortlessly with Evaluate. Provide your source code, optional input, and command line arguments to receive instant outputs. Debug, optimize, and enhance your coding process by running {language} code and exploring various languages. Elevate your programming experience with Evaluate's versatile code evaluation capabilities."
+      "title": "{language_name} on Evaluate",
+      "description": "Run code in {language_name} and other programming languages effortlessly with Evaluate. Provide your source code, optional input, and command line arguments to receive instant outputs. Debug, optimize, and enhance your coding process by running {language_name} code and exploring various languages. Elevate your programming experience with Evaluate's versatile code evaluation capabilities."
     },
     "language": {
       "$": "Language",
@@ -90,7 +102,7 @@
     },
     "prediction": {
       "$": "Prediction",
-      "identified_as": "Identified this code as being {language}.",
+      "identified_as": "Identified this code as being {language_name}.",
       "could_not_identify": "Could not identify this code's language, either there isn't enough information or it just doesn't exist.",
       "okay": "Okay"
     }
@@ -106,14 +118,14 @@
       "$": "Save Snippets",
       "reached_max": "You have reached the maximum number of saved snippets.",
       "already_exists": "You already have that snippet saved.",
-      "success": "Snippet saved successfully as {name}."
+      "success": "Snippet saved successfully as {snippet_name}."
     },
     "list": {
       "none": "You don't have any saved snippets.",
       "placeholder": "Choose a snippet of yours."
     },
     "view": {
-      "title": "Your Snippet {name}",
+      "title": "Your Snippet {snippet_name}",
       "doesnt_exist": "This snippet doesn't exist.",
       "unauthorised": "This is not your snippet.",
       "deleted": "This snippet has been deleted."

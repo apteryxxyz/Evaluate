@@ -11,6 +11,7 @@
     "build:i18n": "npx ts-node --transpile-only -r tsconfig-paths/register scripts/compile-translations",
     "build:prisma": "npx prisma generate",
     "build": "yarn build:i18n && yarn build:prisma && next build --no-lint && yarn deploy",
+    "ui:add": "npx shadcn-ui@latest add -y",
     "dev:tunnel": "npx localtunnel --port 3000 --subdomain evaluate",
     "dev:i18n": "yarn build:i18n && npx watch-cli -p \"locales/**\" -c \"yarn build:i18n\"",
     "dev:prisma": "npx prisma generate --watch",

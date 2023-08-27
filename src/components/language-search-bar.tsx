@@ -8,6 +8,7 @@ import { searchLanguages } from '@/app/actions';
 import { useLanguages } from '@/contexts/languages';
 import { useLocale } from '@/contexts/locale';
 import { useTranslate } from '@/contexts/translate';
+import { cn } from '@/utilities/class-name';
 import { addLocale } from '@/utilities/url-helpers';
 import { Button } from './ui/button';
 import { Form, FormControl, FormField, FormItem } from './ui/form';
@@ -15,7 +16,12 @@ import { Input } from './ui/input';
 
 const searchSchema = z.object({ query: z.string().max(52) });
 
-export function LanguageSearchBar() {
+interface LanguageSearchBarProps {
+  className?: string;
+  onSearchDone?: () => void;
+}
+
+export function LanguageSearchBar(p: LanguageSearchBarProps) {
   const locale = useLocale();
   const router = useRouter();
   const languages = useLanguages();
@@ -39,11 +45,15 @@ export function LanguageSearchBar() {
 
     router.push(addLocale('/', locale));
     languages.setIsSearching(false);
+    void p.onSearchDone?.();
   });
 
   return (
     <Form {...searchForm}>
-      <form onSubmit={onSubmit} className="flex gap-2 w-full">
+      <form
+        onSubmit={onSubmit}
+        className={cn('flex gap-2 w-full', p.className)}
+      >
         <FormField
           control={searchForm.control}
           name="query"

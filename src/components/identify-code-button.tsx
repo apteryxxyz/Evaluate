@@ -33,7 +33,11 @@ const identifyCodeSchema = z.object({
   code: z.string().min(1).max(1000),
 });
 
-export function IdentifyCodeButton() {
+interface IdentifyCodeButtonProps {
+  onIdentifyDone?: () => void;
+}
+
+export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
   const locale = useLocale();
   const t = useTranslate();
   const router = useRouter();
@@ -44,7 +48,7 @@ export function IdentifyCodeButton() {
   });
 
   const [isIdentifyOpen, setIdentifyOpen] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<string | undefined | null>();
   const [isResultOpen, setResultOpen] = useState(false);
   const [isIdentifying, setIdentifying] = useState(false);
 
@@ -61,9 +65,10 @@ export function IdentifyCodeButton() {
 
       router.push(url.pathname + url.search);
       setIdentifyOpen(false);
+      p.onIdentifyDone?.();
       identifyCodeForm.reset();
     } else {
-      setResult(language ?? null);
+      setResult(language);
       setResultOpen(true);
     }
 

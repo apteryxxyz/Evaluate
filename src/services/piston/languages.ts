@@ -45,7 +45,8 @@ export async function fetchLanguages() {
 
       return {
         id: `${runtime ? `${runtime}/` : ''}${data.language}` //
-          .replaceAll('.', 'dot'),
+          .replaceAll('.', 'dot')
+          .replaceAll('+', 'plus'),
         key: data.language,
         name: `${languageName}${runtimeName ? ` (${runtimeName})` : ''}`,
         aliases: data.aliases,

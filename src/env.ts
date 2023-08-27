@@ -11,7 +11,10 @@ const envSchema = z.object({
   DISCORD_CLIENT_ID: z.string().min(1),
   DISCORD_CLIENT_SECRET: z.string().min(1),
 
-  NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID: z.string(),
+  NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID: z
+    .string()
+    .regex(/^G-[A-Z0-9]+$/)
+    .optional(),
   COCKROACH_DB_URL: z.string().min(1),
   OPENAI_API_URL: z.string().min(1),
 

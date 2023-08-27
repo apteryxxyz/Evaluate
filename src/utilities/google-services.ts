@@ -1,7 +1,8 @@
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 /** Trigger a page view event. */
 export function triggerPageView(url: string) {
-  window.gtag('config', process.env.GOOGLE_MEASUREMENT_ID, {
+  if (!process.env.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID) return;
+  window.gtag('config', process.env.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID, {
     page_path: url,
   });
 }

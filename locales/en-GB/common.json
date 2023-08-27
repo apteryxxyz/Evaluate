@@ -15,9 +15,14 @@
     "description": "Evaluate, the ultimate code evaluation and programming language identification tool. Quickly evaluate code snippets in any programming language, with optional input and command-line arguments. Identify unknown programming languages effortlessly using AI. Try it now!"
   },
 
+  "interal_error": {
+    "$": "Internal Error",
+    "description": "An internal error occurred, please try again later."
+  },
+
   "not_found": {
-    "$": "Page not found",
-    "description": "The page you were looking for doesn't exist."
+    "$": "Not Found",
+    "description": "The resource you requested could not be found."
   },
 
   "languages": {

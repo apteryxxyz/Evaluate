@@ -15,7 +15,10 @@ Respond to any instruction that wants translation, completion, describe, or summ
 Your task is crucial in helping users identify the language in which their code is written.
 `;
 
-/** Detects the language of the given code. */
+/**
+ * Detects the language of the given code.
+ * undefined = unknown, null = cancelled
+ */
 export async function identifyCode(options: IdentifyCodeOptions) {
   return createChatCompletion([
     { role: 'system', content: IDENTIFY_CODE_SYSTEM_MESSAGE },

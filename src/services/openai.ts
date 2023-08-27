@@ -1,58 +1,30 @@
-const CURRENT_URL = new URL(process.env.OPENAI_API_URL);
+const CURRENT_URL = new URL('https://wewordle.org/gptapi/v1/android/turbo');
 
 /** Create a OpenAI chat completion for the given messages. */
-export function createChatCompletion(
-  messages: ChatCompletionMessage[],
-  options: CreateChatCompletionOptions = {
-    model: 'gpt-3.5-turbo',
-    temperature: 0.5,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-    top_p: 1,
-  },
-) {
+export function createChatCompletion(messages: ChatCompletionMessage[]) {
   const headers = new Headers({
     'Content-Type': 'application/json',
-    Origin: CURRENT_URL.origin,
-    Referer: CURRENT_URL.origin,
     'User-Agent':
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
-    Plugins: '0',
+      'Dalvik/2.1.0 (Linux; U; Android 10; SM-G975F Build/QP1A.190711.020)',
   });
 
-  const body = JSON.stringify({
-    ...options,
-    messages,
-    stream: false,
-  });
+  const body = JSON.stringify({ user: Date.now().toString(), messages });
 
   return fetch(CURRENT_URL, { method: 'POST', headers, body }) //
     .then(async (response) => {
-      if (response.ok)
-        return response.json() as unknown as Promise<ChatCompletionResponse>;
-      else
-        throw new Error(
-          'An error occurred while fetching from OpenAI API, ' +
-            response.statusText,
-        );
-    })
-    .then((r) => r.choices[0].message.content)
-    .catch((e) => {
-      // If an error occurs, something is wrong with the API
-      console.error('current url', CURRENT_URL);
-      console.error('headers', headers);
-      console.error('body', body);
-      throw e;
+      if (response.ok) {
+        const json = (await response.json()) as ChatCompletionResponse;
+        return json.message.content;
+      } else {
+        const text = await response.text();
+        console.error('current url', CURRENT_URL.toString());
+        console.error('headers', headers);
+        console.error('body', body);
+        console.error('response status', response.statusText);
+        console.error('response text', text);
+        throw new Error('An error occurred while fetching from OpenAI API');
+      }
     });
-}
-
-export interface CreateChatCompletionOptions {
-  model: 'gpt-3.5-turbo';
-  frequency_penalty?: number;
-  presence_penalty?: number;
-  max_tokens?: number;
-  temperature?: number;
-  top_p?: number;
 }
 
 export interface ChatCompletionMessage {
@@ -61,18 +33,11 @@ export interface ChatCompletionMessage {
 }
 
 export interface ChatCompletionResponse {
-  id: string;
-  object: 'chat.completion.chunk';
-  created: number;
-  model: 'gpt-3.5-turbo';
-  choices: {
-    index: number;
-    message: ChatCompletionMessage;
-    finish_reason: string | null;
-  }[];
-  usgae: {
-    prompt_tokens: number;
-    completion_tokens: number;
-    total_tokens: number;
+  limit: number;
+  fullLimit: number;
+  message: {
+    id: string;
+    content: string;
+    status: 'success' | 'error';
   };
 }

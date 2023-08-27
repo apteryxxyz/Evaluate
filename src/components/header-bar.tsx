@@ -50,7 +50,7 @@ export function HeaderBar() {
       <Sheet open={isMobileSheetOpen} onOpenChange={setIsMobileSheetOpen}>
         <SheetTrigger asChild>
           <Button className="ml-auto md:hidden" variant="outline">
-            <MapIcon size={16} />
+            <MapIcon />
             <span className="sr-only">{t.screen_reader.toggle_menu()}</span>
           </Button>
         </SheetTrigger>

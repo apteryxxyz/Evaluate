@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2Icon, SearchIcon } from 'lucide-react';
 import { executeServerAction } from 'next-sa/client';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { identifyCode } from '@/app/actions';
@@ -47,8 +47,20 @@ export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
     defaultValues: { code: '' },
   });
 
-  const [isIdentifyOpen, setIdentifyOpen] = useState(false);
   const [result, setResult] = useState<string | undefined | null>();
+
+  const [responseTitle, responseMessage] = useMemo(() => {
+    if (result === null)
+      return [t.interal_error(), t.interal_error.description()];
+    return [
+      t.identify.prediction(),
+      result
+        ? t.identify.prediction.identified_as({ language_name: result })
+        : t.identify.prediction.could_not_identify(),
+    ];
+  }, [result]);
+
+  const [isIdentifyOpen, setIdentifyOpen] = useState(false);
   const [isResultOpen, setResultOpen] = useState(false);
   const [isIdentifying, setIdentifying] = useState(false);
 
@@ -130,12 +142,8 @@ export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
       <AlertDialog open={isResultOpen} onOpenChange={setResultOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{t.identify.prediction()}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {result
-                ? t.identify.prediction.identified_as({ language_name: result })
-                : t.identify.prediction.could_not_identify()}
-            </AlertDialogDescription>
+            <AlertDialogTitle>{responseTitle}</AlertDialogTitle>
+            <AlertDialogDescription>{responseMessage}</AlertDialogDescription>
           </AlertDialogHeader>
 
           <AlertDialogFooter>
@@ -148,53 +156,3 @@ export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
     </>
   );
 }
-
-/*
-export function IdentifyCodeButton() {
-  const locale = useLocale();
-  const t = useTranslate();
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-
-  const identifyCodeForm = useForm({
-    resolver: zodResolver(identifyCodeSchema),
-    defaultValues: { code: '' },
-  });
-
-  const [isIdentifying, setIdentifying] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
-
-  const onSubmit = identifyCodeForm.handleSubmit(async (data) => {
-    if (isIdentifying) return;
-    setIdentifying(true);
-
-    const language = await executeServerAction(identifyCode, data.code);
-
-    if (language) {
-      if (typeof language === 'string') {
-        // TODO
-      } else {
-        const pathname = addLocale(`/language/${language.id}`, locale);
-        const url = new URL(pathname, window.location.origin);
-        url.searchParams.set('code', data.code);
-
-        if (url.href === window.location.href) {
-          setOpen(false);
-          window.location.href = url.href;
-          window.location.reload();
-        } else {
-          router.push(url.href);
-          setOpen(false);
-          identifyCodeForm.reset();
-        }
-      }
-    } else {
-      // TODO
-    }
-
-    setIdentifying(false);
-  });
-
-  
-}
-*/

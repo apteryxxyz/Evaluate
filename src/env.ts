@@ -16,7 +16,6 @@ const envSchema = z.object({
     .regex(/^G-[A-Z0-9]+$/)
     .optional(),
   COCKROACH_DB_URL: z.string().min(1),
-  OPENAI_API_URL: z.string().min(1),
 
   REQUEST_TYPE: z.enum(['interaction', 'unknown']).default('unknown'),
   START_TIMESTAMP: z.string().min(1).default('0'),

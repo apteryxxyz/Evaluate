@@ -3,15 +3,22 @@
   "discord_bot": "Discord Bot",
   "discord_server": "Discord Server",
   "screen_reader": {
-    "toggle_theme": "Toggle theme",
-    "change_locale": "Change locale"
+    "toggle_theme": "Toggle Theme",
+    "change_locale": "Change Locale",
+    "toggle_menu": "Toggle Navigation Menu",
+    "add_file": "Add File",
+    "remove_file": "Remove File"
   },
   "seo": {
     "description": "Evaluate, the ultimate code evaluation and programming language identification tool. Quickly evaluate code snippets in any programming language, with optional input and command-line arguments. Identify unknown programming languages effortlessly using AI. Try it now!"
   },
+  "interal_error": {
+    "$": "Internal Error",
+    "description": "An internal error occurred, please try again later."
+  },
   "not_found": {
-    "$": "Page not found",
-    "description": "The page you were looking for doesn't exist."
+    "$": "Not Found",
+    "description": "The resource you requested could not be found."
   },
   "languages": {
     "$": "Languages",

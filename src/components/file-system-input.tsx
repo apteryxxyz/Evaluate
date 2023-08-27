@@ -59,6 +59,7 @@ export function FileSystemInput(p: FileSystemInputProps) {
           disabled={files.fields.length >= 10}
         >
           <FilePlus2Icon />
+          <span className="sr-only">{t.screen_reader.add_file()}</span>
         </Button>
       </div>
 
@@ -121,6 +122,7 @@ export function FileSystemInput(p: FileSystemInputProps) {
               disabled={files.fields.length <= 1}
             >
               <Trash2Icon />
+              <span className="sr-only">{t.screen_reader.remove_file()}</span>
             </Button>
           </Card>
         </TabsContent>

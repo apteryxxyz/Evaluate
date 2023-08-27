@@ -71,7 +71,7 @@ export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
     const language = await executeServerAction(identifyCode, data.code);
 
     if (language && typeof language === 'object') {
-      const pathname = addLocale(`/language/${language.id}`, locale);
+      const pathname = addLocale(`/languages/${language.id}`, locale);
       const url = new URL(pathname, window.location.origin);
       url.searchParams.set('code', data.code);
 

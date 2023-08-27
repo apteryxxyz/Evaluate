@@ -7,8 +7,8 @@ import type { PageProps } from '@/types';
 import { generateBaseMetadata } from '../../metadata';
 import Content from './content';
 
-export async function generateMetadata(p: PageProps<['language[]']>) {
-  const input = decodeURIComponent(p.params.language.join('/'));
+export async function generateMetadata(p: PageProps<['id[]']>) {
+  const input = decodeURIComponent(p.params.id.join('/'));
   const language = await executeServerAction(getLanguage, input);
   if (!language) notFound();
 
@@ -25,8 +25,8 @@ export async function generateMetadata(p: PageProps<['language[]']>) {
 //   return languages.map((language) => ({ language: language.id.split('/') }));
 // }
 
-export default async function Page(p: PageProps<['language[]']>) {
-  const input = decodeURIComponent(p.params.language.join('/'));
+export default async function Page(p: PageProps<['id[]']>) {
+  const input = decodeURIComponent(p.params.id.join('/'));
   const language = await executeServerAction(getLanguage, input);
   if (!language) notFound();
 

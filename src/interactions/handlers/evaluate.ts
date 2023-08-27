@@ -55,7 +55,7 @@ export async function handleEvaluating(
     output = t.evaluate.output.no_output();
   } else if (output.length > 1000) {
     const url = new URL(
-      `/language/${language.id}`,
+      `/languages/${language.id}`,
       process.env.NEXT_PUBLIC_APP_URL,
     );
 

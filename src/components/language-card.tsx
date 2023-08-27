@@ -17,7 +17,10 @@ export function LanguageCard(p: Language) {
         </CardDescription>
       </CardHeader>
 
-      <LinkWithLocale href={`/language/${p.id}`} className="inset-0 absolute" />
+      <LinkWithLocale
+        href={`/languages/${p.id}`}
+        className="inset-0 absolute"
+      />
     </Card>
   );
 }

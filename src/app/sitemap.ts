@@ -26,7 +26,7 @@ async function loadDynamicPaths() {
 
   return languages.flatMap((language) =>
     locales.map((locale) => ({
-      url: absoluteUrl(`/${locale}/${language.id}`),
+      url: absoluteUrl(`/${locale}/languages/${language.id}`),
       lastModified: new Date(),
     })),
   ) satisfies MetadataRoute.Sitemap;

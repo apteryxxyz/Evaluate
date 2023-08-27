@@ -11,6 +11,11 @@
       "source": "/translate",
       "destination": "https://translate-evaluate.apteryx.xyz/",
       "permanent": false
+    },
+    {
+      "source": "/:locale/language/:id*",
+      "destination": "/:locale/languages/:id*",
+      "permanent": true
     }
   ]
 }

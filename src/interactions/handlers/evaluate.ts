@@ -61,14 +61,12 @@ export async function handleEvaluating(
 
     url.searchParams.set('utm_source', 'discord');
     url.searchParams.set('utm_medium', 'bot');
-    url.searchParams.set('utm_campaign', 'evaluate');
-    url.searchParams.set('utm_content', 'output');
-    url.searchParams.set('utm_term', 'too_long');
 
     url.searchParams.set('code', options.code);
     if (options.input) url.searchParams.set('input', options.input);
     if (options.args) url.searchParams.set('args', options.args);
     url.searchParams.set('run', 'true');
+
     output = t.evaluate.output.too_long({ url: url.toString() });
   } else {
     output = codeBlock(output, 1000);

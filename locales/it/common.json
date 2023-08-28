@@ -3,15 +3,22 @@
   "discord_bot": "Bot Discord",
   "discord_server": "Server Discord",
   "screen_reader": {
-    "toggle_theme": "Cambia tema",
-    "change_locale": "Cambia lingua"
+    "toggle_theme": "Cambia Tema",
+    "change_locale": "Cambia Lingua",
+    "toggle_menu": "Attiva/Disattiva Menù Navigazione",
+    "add_file": "Aggiungi File",
+    "remove_file": "Rimuovi File"
   },
   "seo": {
     "description": "Evaluate, il supremo esecutore di codice e identificatore linguaggi di programmazione. Esegui pezzi di codice in ogni linguaggio di programmazione con input e argomenti da linea di comando facoltativi. Identifica linguaggi di programmazione senza sforzo usando IA. Provalo ora!"
   },
+  "interal_error": {
+    "$": "Errore Interno",
+    "description": "C'è stato un errore interno, perfavore riprova più tardi."
+  },
   "not_found": {
-    "$": "Pagina non trovata",
-    "description": "La pagina che stavi cercando non esiste."
+    "$": "Non Trovato",
+    "description": "La risorsa richiesta non può essere trovata."
   },
   "languages": {
     "$": "Lingue",

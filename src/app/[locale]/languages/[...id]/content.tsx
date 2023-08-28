@@ -3,12 +3,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import _ from 'lodash';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
-import { executeServerAction } from 'next-sa/client';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { executeCode } from '@/app/actions';
+import type { POST } from '@/api/execute/route';
+import { useMutation } from '@/builders/api-route/client';
 import { FileSystemInput } from '@/components/file-system-input';
 import { Button } from '@/components/ui/button';
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
@@ -45,6 +45,8 @@ export default function Content(p: ContentProps) {
   const input = searchParams.get('input')?.toString();
   const args = searchParams.get('args')?.toString();
 
+  const executeCode = useMutation<typeof POST>('POST', '/api/execute');
+
   const evaluateForm = useForm<z.infer<typeof evaluateSchema>>({
     resolver: zodResolver(evaluateSchema),
     defaultValues: { files: [{ content: code }], input, args },
@@ -69,11 +71,13 @@ export default function Content(p: ContentProps) {
     if (isExecuting) return;
     setExecuting(true);
 
-    const result = await executeServerAction(executeCode, {
-      language: p.language,
-      files: data.files,
-      input: data.input,
-      args: data.args,
+    const result = await executeCode.mutate({
+      body: {
+        language: p.language,
+        files: data.files,
+        input: data.input,
+        args: data.args,
+      },
     });
 
     setResult(result);

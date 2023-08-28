@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2Icon, SearchIcon } from 'lucide-react';
-import { executeServerAction } from 'next-sa/client';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { searchLanguages } from '@/app/actions';
+import type { GET } from '@/api/languages/route';
+import { useMutation } from '@/builders/api-route/client';
 import { useLanguages } from '@/contexts/languages';
 import { useLocale } from '@/contexts/locale';
 import { useTranslate } from '@/contexts/translate';
@@ -27,6 +27,11 @@ export function LanguageSearchBar(p: LanguageSearchBarProps) {
   const languages = useLanguages();
   const t = useTranslate();
 
+  const { mutate: searchLanguages } = useMutation<typeof GET>(
+    'GET',
+    '/api/languages',
+  );
+
   const searchForm = useForm<z.infer<typeof searchSchema>>({
     resolver: zodResolver(searchSchema),
     defaultValues: { query: '' },
@@ -39,7 +44,7 @@ export function LanguageSearchBar(p: LanguageSearchBarProps) {
     if (query.length === 0) {
       languages.setFiltered(languages.initial);
     } else {
-      const newLanguages = await executeServerAction(searchLanguages, query);
+      const newLanguages = await searchLanguages({ search: { query } });
       languages.setFiltered(newLanguages);
     }
 

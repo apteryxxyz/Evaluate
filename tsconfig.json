@@ -5,8 +5,9 @@
     "baseUrl": ".",
     "outDir": "dist",
     "paths": {
-      "@/*": ["./src/*"],
       "@/app/*": ["./src/app/[locale]/*"],
+      "@/api/*": ["./src/app/api/*"],
+      "@/*": ["./src/*"],
       "translations": ["./.translations"],
       "translations/*": ["./.translations/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]

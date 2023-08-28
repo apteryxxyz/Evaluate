@@ -1,11 +1,10 @@
 'use server';
 
-import { executeServerAction } from 'next-sa/client';
+import { queryLanguages } from '@/api/languages/route';
 import type { PageProps } from '@/types';
-import { fetchLanguages } from './actions';
 import Content from './content';
 
 export default async function Page(_p: PageProps<['locale']>) {
-  const languages = await executeServerAction(fetchLanguages);
+  const languages = await queryLanguages({ search: {}, body: undefined });
   return <Content languages={languages} />;
 }

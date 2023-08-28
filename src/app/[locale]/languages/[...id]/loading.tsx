@@ -9,9 +9,13 @@ export default function Loading() {
       </div>
 
       <div className="flex flex-col gap-4">
-        <div className="space-y-2 w-full">
-          <Skeleton className="h-5 w-12" />
-          <Skeleton className="w-full h-[80px]" />
+        <div className="space-y-2">
+          <div className="flex gap-2">
+            <Skeleton className="h-9 w-full" />
+            <Skeleton className="h-9 w-14" />
+          </div>
+
+          <Skeleton className="h-60 w-full" />
         </div>
 
         <div className="flex flex-col md:flex-row gap-4">
@@ -26,7 +30,7 @@ export default function Loading() {
           </div>
         </div>
 
-        <Skeleton className="ml-auto h-10 w-20" />
+        <Skeleton className="ml-auto h-9 w-20" />
       </div>
 
       <div className="space-y-2 w-full">

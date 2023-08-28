@@ -1,11 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2Icon, SearchIcon } from 'lucide-react';
-import { executeServerAction } from 'next-sa/client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { identifyCode } from '@/app/actions';
+import type { POST } from '@/api/identify/route';
+import { useMutation } from '@/builders/api-route/client';
 import { useLocale } from '@/contexts/locale';
 import { useTranslate } from '@/contexts/translate';
 import { addLocale } from '@/utilities/url-helpers';
@@ -38,9 +38,11 @@ interface IdentifyCodeButtonProps {
 }
 
 export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
-  const locale = useLocale();
   const t = useTranslate();
+  const locale = useLocale();
   const router = useRouter();
+
+  const identifyCode = useMutation<typeof POST>('POST', '/api/identify');
 
   const identifyCodeForm = useForm({
     resolver: zodResolver(identifyCodeSchema),
@@ -48,7 +50,6 @@ export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
   });
 
   const [result, setResult] = useState<string | undefined | null>();
-
   const [responseTitle, responseMessage] = useMemo(() => {
     if (result === null)
       return [t.interal_error(), t.interal_error.description()];
@@ -68,7 +69,9 @@ export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
     if (isIdentifying) return;
     setIdentifying(true);
 
-    const language = await executeServerAction(identifyCode, data.code);
+    const language = await identifyCode
+      .mutate({ body: data.code })
+      .catch(() => null);
 
     if (language && typeof language === 'object') {
       const pathname = addLocale(`/languages/${language.id}`, locale);
@@ -87,6 +90,76 @@ export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
     setIdentifying(false);
   });
 
+  useEffect(() => {
+    if (isIdentifyOpen === false) identifyCodeForm.reset();
+  }, [isIdentifyOpen]);
+
+  return (
+    <>
+      <Dialog open={isIdentifyOpen} onOpenChange={setIdentifyOpen}>
+        <DialogTrigger asChild>
+          <Button variant="outline">{t.identify()}</Button>
+        </DialogTrigger>
+
+        <DialogContent>
+          <DialogTitle>{t.identify()}</DialogTitle>
+          <DialogDescription>{t.identify.description()}</DialogDescription>
+
+          <Form {...identifyCodeForm}>
+            <form onSubmit={onSubmit} className="flex flex-col gap-4">
+              <FormField
+                control={identifyCodeForm.control}
+                name="code"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder={t.identify.code.description()}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <Button type="submit" disabled={isIdentifying}>
+                {isIdentifying ? (
+                  <>
+                    <Loader2Icon className="mr-1 h-4 w-4 animate-spin" />
+                    {t.identify.ing()}
+                  </>
+                ) : (
+                  <>
+                    <SearchIcon className="mr-1 h-4 w-4" />
+                    {t.identify()}
+                  </>
+                )}
+              </Button>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
+
+      <AlertDialog open={isResultOpen} onOpenChange={setResultOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{responseTitle}</AlertDialogTitle>
+            <AlertDialogDescription>{responseMessage}</AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter>
+            <AlertDialogAction>
+              {t.identify.prediction.okay()}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+}
+
+/*
+export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
   useEffect(() => {
     if (isIdentifyOpen === false) {
       identifyCodeForm.reset();
@@ -156,3 +229,4 @@ export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
     </>
   );
 }
+*/

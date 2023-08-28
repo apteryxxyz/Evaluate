@@ -40,7 +40,7 @@ export default async function Page(p: PageProps<['id[]']>) {
 
   return (
     <Suspense fallback={<Loading />}>
-      <Content language={language} />;
+      <Content language={language} />
     </Suspense>
   );
 }

@@ -145,6 +145,13 @@ export const createApiRouteBuilder = <TOptions extends ApiRouteOptions = {}>(
       }
       /* --- Accepts End --- */
 
+      /* --- Referer Start --- */
+      const referer = request.headers.get('referer');
+      const url = process.env.NEXT_PUBLIC_APP_URL;
+      if (!referer || !url || !referer.startsWith(url))
+        return respondError(400, 'Invalid search parameters');
+      /* --- Referer End --- */
+
       /* --- Search & Body Start --- */
       const search = Object.fromEntries(request.nextUrl.searchParams);
       const body = await (contentType === CONTENT_TYPES.json

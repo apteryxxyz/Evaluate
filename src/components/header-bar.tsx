@@ -36,7 +36,9 @@ export function HeaderBar() {
           <IdentifyCodeButton />
 
           <Button variant="outline" asChild>
-            <Link href="/bot">{t.discord_bot()}</Link>
+            <a href="/bot" rel="noreferrer noopener" target="_blank">
+              {t.discord_bot()}
+            </a>
           </Button>
         </nav>
       </div>
@@ -79,7 +81,9 @@ export function HeaderBar() {
             onClick={() => setIsMobileSheetOpen(false)}
             asChild
           >
-            <Link href="/bot">{t.discord_bot()}</Link>
+            <a href="/bot" rel="noreferrer noopener" target="_blank">
+              {t.discord_bot()}
+            </a>
           </Button>
 
           <div className="flex justify-end">

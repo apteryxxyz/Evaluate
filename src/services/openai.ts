@@ -1,43 +1,91 @@
-const CURRENT_URL = new URL('https://wewordle.org/gptapi/v1/android/turbo');
-
 /** Create a OpenAI chat completion for the given messages. */
-export function createChatCompletion(messages: ChatCompletionMessage[]) {
+export async function createChatCompletion(messages: ChatMessage[]) {
+  const baseUrl = new URL('https://gptgo.ai/');
   const headers = new Headers({
-    'Content-Type': 'application/json',
+    // 'Content-Type': 'application/json',
+    Origin: baseUrl.origin,
+    Referer: baseUrl.origin + '/',
     'User-Agent':
       'Dalvik/2.1.0 (Linux; U; Android 10; SM-G975F Build/QP1A.190711.020)',
   });
 
-  const body = JSON.stringify({ user: Date.now().toString(), messages });
+  const getTokenUrl = new URL('/action_get_token.php', baseUrl);
+  getTokenUrl.search = new URLSearchParams({
+    q: formatPrompt(messages),
+    hlgpt: 'default',
+    hl: 'en',
+  }).toString();
 
-  return fetch(CURRENT_URL, { method: 'POST', headers, body }) //
-    .then(async (response) => {
-      if (response.ok) {
-        const json = (await response.json()) as ChatCompletionResponse;
-        return json.message.content;
-      } else {
-        const text = await response.text();
-        console.error('current url', CURRENT_URL.toString());
-        console.error('headers', headers);
-        console.error('body', body);
-        console.error('response status', response.statusText);
-        console.error('response text', text);
-        throw new Error('An error occurred while fetching from OpenAI API');
+  const token = await fetch(getTokenUrl, { method: 'GET', headers })
+    .then((r) => handleResponse(r, () => r.json() as Promise<TokenResponse>))
+    .then((json) => json.token);
+
+  const getCompletionUrl = new URL('/action_ai_gpt.php', baseUrl);
+  getCompletionUrl.search = new URLSearchParams({
+    token,
+  }).toString();
+
+  return fetch(getCompletionUrl, { method: 'GET', headers })
+    .then((r) => handleResponse(r, () => r.text()))
+    .then((data) => {
+      let final = '';
+      for (const line of data.split('\n')) {
+        if (!line.startsWith('data: ')) continue;
+        if (line.includes('[DONE]')) break;
+
+        const json = JSON.parse(
+          line.slice('data: '.length),
+        ) as CompletionLineResponse;
+        if (json.choices.length === 0) continue;
+        final += json.choices[0].delta.content ?? '';
       }
+
+      return final;
     });
 }
 
-export interface ChatCompletionMessage {
+interface ChatMessage {
   role: 'assistant' | 'system' | 'user';
   content: string;
 }
 
-export interface ChatCompletionResponse {
-  limit: number;
-  fullLimit: number;
-  message: {
-    id: string;
-    content: string;
-    status: 'success' | 'error';
-  };
+interface TokenResponse {
+  status: boolean;
+  token: string;
+}
+
+interface CompletionLineResponse {
+  id: string;
+  object: string;
+  created: number;
+  model: string;
+  choices: { index: 0; delta: { content?: string }; finish_reason: null }[];
+}
+
+function formatPrompt(messages: ChatMessage[]) {
+  switch (messages.length) {
+    case 0:
+      return '';
+    case 1:
+      return messages[0].content;
+    default:
+      return (
+        messages.map((m) => `${m.role}: ${m.content}`).join('\n') +
+        '\nassistant:'
+      );
+  }
+}
+
+async function handleResponse<T>(
+  response: Response,
+  okCallback: () => Promise<T>,
+) {
+  if (response.ok) {
+    return okCallback();
+  } else {
+    const text = await response.text();
+    console.error('response status', response.statusText);
+    console.error('response text', text);
+    throw new Error('An error occurred while fetching from OpenAI API');
+  }
 }

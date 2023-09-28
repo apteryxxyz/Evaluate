@@ -1,19 +1,3 @@
-// import chalk from 'chalk';
-
-// function formatPrefix(prefix: string) {
-//   const outParts = [`[${prefix}]`];
-
-//   const requestType = process.env.REQUEST_TYPE ?? 'unknown';
-//   if (requestType !== 'unknown') {
-//     const startTimestamp = process.env.START_TIMESTAMP;
-//     const timeElapsed = Date.now() - Number(startTimestamp);
-//     const elapsedString = timeElapsed.toString().padStart(5, ' ');
-//     outParts.push(`[${requestType.toString()}, ${elapsedString}ms]`);
-//   }
-
-//   return outParts.join(' ');
-// }
-
 import chalk from 'chalk';
 
 const levels = {

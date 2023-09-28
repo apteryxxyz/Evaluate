@@ -38,6 +38,9 @@ interface IdentifyCodeButtonProps {
 }
 
 export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
+  // Temporarily disabled until the API is fixed
+  return null;
+
   const t = useTranslate();
   const locale = useLocale();
   const router = useRouter();

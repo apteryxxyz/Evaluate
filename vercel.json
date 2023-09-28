@@ -1,6 +1,6 @@
 {
-  "buildCommand": "yarn build",
-  "devCommand": "yarn dev",
+  "buildCommand": "pnpm run build",
+  "devCommand": "pnpm run dev",
   "redirects": [
     {
       "source": "/bot",

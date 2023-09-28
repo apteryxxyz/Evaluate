@@ -34,15 +34,7 @@ const config = {
     '@next/next/no-html-link-for-pages': 'off',
     'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
   },
-  ignorePatterns: [
-    '.*rc.*',
-    '*.config.*',
-    '**/*.js',
-    'dist/',
-    '.yarn/*',
-    'yarn.lock',
-    '.yarnrc.yml',
-  ],
+  ignorePatterns: ['.*rc.*', '*.config.*', '**/*.js', 'dist/'],
   reportUnusedDisableDirectives: true,
 };
 

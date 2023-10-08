@@ -1,10 +1,7 @@
 import { createButtonComponent } from '@/builders/component';
 import { api } from '@/core';
 import { createCaptureModal } from '@/interactions/handlers/capture';
-import {
-  createEvaluateModal,
-  createSaveModal,
-} from '@/interactions/handlers/evaluate';
+import { createEvaluateModal } from '@/interactions/handlers/evaluate';
 import { handleExplaining } from '@/interactions/handlers/explain';
 import { getTranslate } from '@/translations/determine-locale';
 import { getEvaluateOptions } from '@/utilities/interaction/evaluate-helpers';
@@ -30,16 +27,6 @@ export default createButtonComponent(
 
       const modal = createEvaluateModal(t, options) //
         .setCustomId('evaluate,edit');
-
-      return api.interactions.createModal(
-        interaction.id,
-        interaction.token,
-        modal.toJSON(),
-      );
-    }
-
-    if (action === 'save') {
-      const modal = createSaveModal(t).setCustomId('evaluate,save');
 
       return api.interactions.createModal(
         interaction.id,

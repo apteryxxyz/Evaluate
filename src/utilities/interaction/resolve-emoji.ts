@@ -7,7 +7,6 @@ export const UnicodeEmojis = {
 export const CustomEmojis = {
   edit: '1137874868327682109',
   capture: '1137874864800268320',
-  save: '1137874862019448892',
   run: '1137874859855204412',
   delete: '1137874856256479325',
   explain: '1139362285912064111',

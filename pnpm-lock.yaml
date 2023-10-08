@@ -10,6 +10,9 @@ patchedDependencies:
     path: patches/@discordjs__core@1.0.1.patch
 
 dependencies:
+  '@builders/next':
+    specifier: ^0.1.0
+    version: 0.1.0(next@13.5.3)(react@18.2.0)(zod@3.22.2)
   '@discordjs/builders':
     specifier: ^1.6.5
     version: 1.6.5
@@ -376,6 +379,19 @@ packages:
       '@babel/helper-string-parser': 7.22.5
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
+
+  /@builders/next@0.1.0(next@13.5.3)(react@18.2.0)(zod@3.22.2):
+    resolution: {integrity: sha512-YQb5ogLu8Ri6DiJUiESkbQJvsLu/nrzICNE5Vs5HruuSusyu1CHMA9mmHLnK11Fkx8mIAJEPi4vJOlWRQCPKhw==}
+    peerDependencies:
+      next: '*'
+      react: '*'
+      zod: '*'
+    dependencies:
+      next: 13.5.3(@babel/core@7.23.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      zod: 3.22.2
+      zod-validation-error: 1.5.0(zod@3.22.2)
+    dev: false
 
   /@discordjs/builders@1.6.5:
     resolution: {integrity: sha512-SdweyCs/+mHj+PNhGLLle7RrRFX9ZAhzynHahMCLqp5Zeq7np7XC6/mgzHc79QoVlQ1zZtOkTTiJpOZu5V8Ufg==}
@@ -4150,6 +4166,15 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod-validation-error@1.5.0(zod@3.22.2):
+    resolution: {integrity: sha512-/7eFkAI4qV0tcxMBB/3+d2c1P6jzzZYdYSlBuAklzMuCrJu5bzJfHS0yVAS87dRHVlhftd6RFJDIvv03JgkSbw==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      zod: ^3.18.0
+    dependencies:
+      zod: 3.22.2
+    dev: false
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}

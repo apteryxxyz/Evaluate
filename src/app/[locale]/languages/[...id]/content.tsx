@@ -1,5 +1,6 @@
 'use client';
 
+import { useApiRouteMutation } from '@builders/next/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import _ from 'lodash';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
@@ -8,7 +9,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import type { POST } from '@/api/execute/route';
-import { useMutation } from '@/builders/api-route/client';
 import { FileSystemInput } from '@/components/file-system-input';
 import { Button } from '@/components/ui/button';
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form';
@@ -45,7 +45,7 @@ export default function Content(p: ContentProps) {
   const input = searchParams.get('input')?.toString();
   const args = searchParams.get('args')?.toString();
 
-  const executeCode = useMutation<typeof POST>('POST', '/api/execute');
+  const executeCode = useApiRouteMutation<typeof POST>('POST', '/api/execute');
 
   const evaluateForm = useForm<z.infer<typeof evaluateSchema>>({
     resolver: zodResolver(evaluateSchema),
@@ -71,7 +71,7 @@ export default function Content(p: ContentProps) {
     if (isExecuting) return;
     setExecuting(true);
 
-    const result = await executeCode.mutate({
+    const result = await executeCode.mutateAsync({
       body: {
         language: p.language,
         files: data.files,

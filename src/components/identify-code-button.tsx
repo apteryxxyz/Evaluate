@@ -1,3 +1,4 @@
+import { useApiRouteMutation } from '@builders/next/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2Icon, SearchIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -5,7 +6,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import type { POST } from '@/api/identify/route';
-import { useMutation } from '@/builders/api-route/client';
 import { useLocale } from '@/contexts/locale';
 import { useTranslate } from '@/contexts/translate';
 import { addLocale } from '@/utilities/url-helpers';
@@ -45,7 +45,10 @@ export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
   const locale = useLocale();
   const router = useRouter();
 
-  const identifyCode = useMutation<typeof POST>('POST', '/api/identify');
+  const identifyCode = useApiRouteMutation<typeof POST>(
+    'POST',
+    '/api/identify',
+  );
 
   const identifyCodeForm = useForm({
     resolver: zodResolver(identifyCodeSchema),
@@ -73,7 +76,7 @@ export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
     setIdentifying(true);
 
     const language = await identifyCode
-      .mutate({ body: data.code })
+      .mutateAsync({ body: data.code })
       .catch(() => null);
 
     if (language && typeof language === 'object') {

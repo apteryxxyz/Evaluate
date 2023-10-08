@@ -1,10 +1,10 @@
+import { useApiRouteMutation } from '@builders/next/client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2Icon, SearchIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import type { GET } from '@/api/languages/route';
-import { useMutation } from '@/builders/api-route/client';
 import { useLanguages } from '@/contexts/languages';
 import { useLocale } from '@/contexts/locale';
 import { useTranslate } from '@/contexts/translate';
@@ -27,7 +27,7 @@ export function LanguageSearchBar(p: LanguageSearchBarProps) {
   const languages = useLanguages();
   const t = useTranslate();
 
-  const { mutate: searchLanguages } = useMutation<typeof GET>(
+  const searchLanguages = useApiRouteMutation<typeof GET>(
     'GET',
     '/api/languages',
   );
@@ -44,7 +44,8 @@ export function LanguageSearchBar(p: LanguageSearchBarProps) {
     if (query.length === 0) {
       languages.setFiltered(languages.initial);
     } else {
-      const newLanguages = await searchLanguages({ search: { query } });
+      const newLanguages = await searchLanguages //
+        .mutateAsync({ search: { query } });
       languages.setFiltered(newLanguages);
     }
 

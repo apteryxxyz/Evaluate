@@ -21,6 +21,7 @@
     "prepare-for:production": "cp .env.production .env"
   },
   "dependencies": {
+    "@builders/next": "^0.1.0",
     "@discordjs/builders": "^1.6.5",
     "@discordjs/core": "^1.0.1",
     "@discordjs/rest": "^2.0.1",

@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { queryLanguages } from '@/api/languages/route';
+import { GET as queryLanguages } from '@/api/languages/route';
 import { fetchLanguages } from '@/services/piston';
+import type { Language } from '@/services/piston';
 import { getTranslate } from '@/translations/determine-locale';
 import type { PageProps } from '@/types';
 import { generateBaseMetadata } from '../../metadata';
@@ -14,7 +15,7 @@ export async function generateMetadata(p: PageProps<['id[]']>) {
     search: { id: input },
     body: undefined,
   })
-    .then((l) => l[0])
+    .then((l) => (l as unknown as Language[])[0])
     .catch(() => notFound());
 
   const t = getTranslate(p.params.locale);
@@ -35,7 +36,7 @@ export default async function Page(p: PageProps<['id[]']>) {
     search: { id: input },
     body: undefined,
   })
-    .then((l) => l[0])
+    .then((l) => (l as unknown as Language[])[0])
     .catch(() => notFound());
 
   return (

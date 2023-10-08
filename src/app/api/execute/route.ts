@@ -1,6 +1,6 @@
-import { createApiRoute } from '@/builders/api-route';
+import { ApiRouteBuilder } from '@builders/next/server';
 import { executeCode, executeCodeOptionsSchema } from '@/services/piston';
 
-export const { handler: POST } = createApiRoute()
-  .body('json', executeCodeOptionsSchema)
-  .definition(async ({ body }) => executeCode(body));
+export const POST = new ApiRouteBuilder()
+  .setBody('application/json', executeCodeOptionsSchema)
+  .setDefinition(async ({ body }) => executeCode(body));

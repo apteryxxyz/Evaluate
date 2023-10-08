@@ -17,7 +17,6 @@ export const chatInputCommands = (
     require('./capture/chat-input').default,
     require('./evaluate/chat-input').default,
     require('./identify/chat-input').default,
-    require('./snippets/chat-input').default,
   ] as ChatInputCommand[]
 ).reduce(
   (commands, command) => {
@@ -42,9 +41,6 @@ export const modalComponents = [
 
 export const buttonComponents = [
   require('./evaluate/button').default,
-  require('./snippets/button').default,
 ] as ButtonComponent[];
 
-export const selectMenuComponents = [
-  require('./snippets/select-menu').default,
-] as SelectMenuComponent[];
+export const selectMenuComponents = [] as SelectMenuComponent[];

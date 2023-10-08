@@ -123,11 +123,6 @@ export function createEvaluateResult(
       .setEmoji(resolveEmoji('edit', true)),
     new ButtonBuilder()
       .setStyle(ButtonStyle.Success)
-      .setCustomId('evaluate,save')
-      .setEmoji(resolveEmoji('save', true))
-      .setDisabled(!result.success),
-    new ButtonBuilder()
-      .setStyle(ButtonStyle.Success)
       .setCustomId('evaluate,capture')
       .setEmoji(resolveEmoji('capture', true))
       .setDisabled(!result.success),
@@ -197,25 +192,5 @@ export function createEvaluateModal(
       [languageInput, codeInput, inputInput, argsInput].map((input) =>
         new ActionRowBuilder<TextInputBuilder>().addComponents(input),
       ),
-    );
-}
-
-export function createSaveModal(
-  t: TranslationFunctions,
-  options?: Partial<{ name: string }>,
-) {
-  const nameInput = new TextInputBuilder()
-    .setCustomId('name')
-    .setStyle(TextInputStyle.Short)
-    .setLabel(t.snippets.name())
-    .setPlaceholder(t.snippets.name.description())
-    .setMinLength(1)
-    .setMaxLength(25);
-  if (options?.name) nameInput.setValue(options.name);
-
-  return new ModalBuilder()
-    .setTitle(t.snippets.save())
-    .setComponents(
-      new ActionRowBuilder<TextInputBuilder>().setComponents(nameInput),
     );
 }

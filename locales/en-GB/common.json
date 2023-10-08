@@ -131,31 +131,5 @@
       "could_not_identify": "Could not identify this code's language, either there isn't enough information or it just doesn't exist.",
       "okay": "Okay"
     }
-  },
-
-  "snippets": {
-    "$": "Snippets",
-    "description": "Manage your saved code snippets.",
-
-    "name": {
-      "$": "Name",
-      "description": "The name of the snippet."
-    },
-    "save": {
-      "$": "Save Snippets",
-      "reached_max": "You have reached the maximum number of saved snippets.",
-      "already_exists": "You already have that snippet saved.",
-      "success": "Snippet saved successfully as {snippet_name}."
-    },
-    "list": {
-      "none": "You don't have any saved snippets.",
-      "placeholder": "Choose a snippet of yours."
-    },
-    "view": {
-      "title": "Your Snippet {snippet_name}",
-      "doesnt_exist": "This snippet doesn't exist.",
-      "unauthorised": "This is not your snippet.",
-      "deleted": "This snippet has been deleted."
-    }
   }
 }

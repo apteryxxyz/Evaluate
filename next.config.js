@@ -2,7 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   images: { domains: ['japi.rest'] },
-  experimental: { serverActions: true },
   redirects: async () => require('./vercel.json').redirects ?? [],
   rewrites: async () => require('./vercel.json').rewrites ?? [],
   typescript: {

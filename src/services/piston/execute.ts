@@ -21,7 +21,7 @@ export const pistonExecuteResultSchema = z.object({
     stdout: z.string(),
     stderr: z.string(),
     output: z.string(),
-    code: z.number(),
+    code: z.number().nullable(),
     signal: z.string().nullable(),
   }),
   compile: z

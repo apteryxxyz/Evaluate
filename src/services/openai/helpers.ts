@@ -35,6 +35,7 @@ export async function handleResponse<T>(
     return okCallback();
   } else {
     const text = await response.text();
+    console.error('request url', response.url);
     console.error('response status', response.statusText);
     console.error('response text', text);
     throw new Error('An error occurred while fetching from OpenAI API');

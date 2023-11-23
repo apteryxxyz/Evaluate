@@ -21,7 +21,7 @@ export function HeaderBar() {
 
   return (
     <header className="container flex">
-      <div className="flex gap-2 w-full whitespace-nowrap">
+      <div className="flex whitespace-nowrap gap-6">
         <Link href={addLocale('/', locale)} className="flex items-center gap-2">
           <Image
             src="https://japi.rest/discord/v1/user/946755134443102258/avatar"
@@ -32,10 +32,10 @@ export function HeaderBar() {
           <span className="text-primary font-bold text-xl">Evaluate</span>
         </Link>
 
-        <nav className="hidden md:inline-block space-x-2">
+        <nav className="hidden md:inline-block">
           <IdentifyCodeButton />
 
-          <Button variant="outline" asChild>
+          <Button variant="ghost" asChild>
             <a href="/bot" rel="noreferrer noopener" target="_blank">
               {t.discord_bot()}
             </a>
@@ -51,7 +51,7 @@ export function HeaderBar() {
 
       <Sheet open={isMobileSheetOpen} onOpenChange={setIsMobileSheetOpen}>
         <SheetTrigger asChild>
-          <Button className="ml-auto md:hidden" variant="outline">
+          <Button className="ml-auto md:hidden" variant="ghost">
             <MapIcon />
             <span className="sr-only">{t.screen_reader.toggle_menu()}</span>
           </Button>
@@ -77,7 +77,7 @@ export function HeaderBar() {
           />
 
           <Button
-            variant="outline"
+            variant="ghost"
             onClick={() => setIsMobileSheetOpen(false)}
             asChild
           >

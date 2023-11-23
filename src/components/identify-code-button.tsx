@@ -104,7 +104,7 @@ export function IdentifyCodeButton(p: IdentifyCodeButtonProps) {
     <>
       <Dialog open={isIdentifyOpen} onOpenChange={setIdentifyOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">{t.identify()}</Button>
+          <Button variant="ghost">{t.identify()}</Button>
         </DialogTrigger>
 
         <DialogContent>

@@ -1,5 +1,10 @@
+import {
+  formatPrompt,
+  formatStreamedText,
+  handleResponse,
+  ignorePreviousMessages,
+} from './helpers';
 import type { ChatMessage } from './helpers';
-import { formatPrompt, handleResponse } from './helpers';
 
 /** Create a OpenAI chat completion for the given messages. */
 export async function createChatCompletion(messages: ChatMessage[]) {
@@ -11,44 +16,26 @@ export async function createChatCompletion(messages: ChatMessage[]) {
     Referer: url.origin + '/',
   });
 
-  const tokenUrl = new URL('https://gptgo.ai/action_get_token.php');
-  tokenUrl.search = new URLSearchParams({
-    q: formatPrompt(messages),
-    hlgpt: 'default',
-    hl: 'en',
-  }).toString();
-  const token = await fetch(tokenUrl, { method: 'GET', headers })
-    .then((r) => handleResponse(r, () => r.json()))
-    .then((json) => (json as { token: string }).token);
+  const tokenUrl = new URL('https://gptgo.ai/get_token.php');
+  const tokenForm = new FormData();
+  tokenForm.append('ask', formatPrompt(ignorePreviousMessages(messages)));
+  const token = await fetch(tokenUrl, {
+    method: 'POST',
+    headers,
+    body: tokenForm,
+  })
+    .then((r) => handleResponse(r, () => r.text()))
+    .then((t) => atob(t.slice(0xa, -0x14)));
 
-  const chatUrl = new URL('https://gptgo.ai/action_ai_gpt.php');
-  chatUrl.search = new URLSearchParams({ token }).toString();
-  return await fetch(chatUrl, { method: 'GET', headers })
+  const chatUrl = new URL('https://api.gptgo.ai/web.php');
+  chatUrl.search = new URLSearchParams({ array_chat: token }).toString();
+  return fetch(chatUrl, { method: 'GET', headers })
     .then((r) => handleResponse(r, () => r.text()))
     .then((text) => {
       try {
-        return text
-          .split('\n')
-          .filter(Boolean)
-          .slice(0, -2)
-          .map((l) => JSON.parse(l.replace('data: ', '')) as ChatResponse)
-          .reduce((acc, cur) => acc + cur.choices[0].delta.content ?? '', '');
+        return formatStreamedText(text);
       } catch {
         throw new Error('Could not parse response, likely rate limited');
       }
     });
-}
-
-interface ChatResponse {
-  id: string;
-  object: string;
-  created: number;
-  model: string;
-  choices: {
-    index: number;
-    delta: {
-      content?: string;
-    };
-    finish_reason: null | 'stop';
-  }[];
 }

@@ -1,6 +1,6 @@
 import * as CryptoJS from 'crypto-js';
 import type { ChatMessage } from './helpers';
-import { formatPrompt, grabSystemMessage, handleResponse } from './helpers';
+import { formatPrompt, handleResponse, sortMessages } from './helpers';
 
 /** Create a OpenAI chat completion for the given messages. */
 export async function createChatCompletion(messages: ChatMessage[]) {
@@ -15,7 +15,7 @@ export async function createChatCompletion(messages: ChatMessage[]) {
     Referer: webUrl.origin + '/',
   });
 
-  const [systemMessage, newMessages] = grabSystemMessage(messages);
+  const [systemMessage, ...newMessages] = sortMessages(messages);
   const body = JSON.stringify({
     systemMessage: systemMessage?.content,
     prompt: formatPrompt(newMessages),

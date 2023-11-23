@@ -20,7 +20,12 @@ export function generateMetadata(p: LayoutProps) {
   return generateBaseMetadata(t, `/${p.params.locale}`, {});
 }
 
-export default function Layout(p: LayoutProps) {
+export const viewport = {
+  themeColor: '#2FC086',
+  colorScheme: 'light dark',
+};
+
+export default function RootLayout(p: LayoutProps) {
   return (
     <HTMLProviders>
       <html key="html" lang={p.params.locale} className={inter.className}>

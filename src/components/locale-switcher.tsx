@@ -20,7 +20,7 @@ export function LocaleSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" className="aspect-square">
           <LanguagesIcon />
           <span className="sr-only">{t.screen_reader.change_locale()}</span>
         </Button>

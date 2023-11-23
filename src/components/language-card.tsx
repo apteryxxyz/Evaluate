@@ -20,6 +20,7 @@ export function LanguageCard(p: Language) {
       <LinkWithLocale
         href={`/languages/${p.id}`}
         className="inset-0 absolute"
+        prefetch={false}
       />
     </Card>
   );

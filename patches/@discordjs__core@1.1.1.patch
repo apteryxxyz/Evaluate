@@ -1,0 +1,33 @@
+diff --git a/package.json b/package.json
+index 079501b5f61a2fb6555e5acec5f62410cfcbb520..58e405fb4a71e5e5dac9f67ff1605602679dc13f 100644
+--- a/package.json
++++ b/package.json
+@@ -3,28 +3,6 @@
+   "name": "@discordjs/core",
+   "version": "1.1.1",
+   "description": "A thinly abstracted wrapper around the rest API, and gateway.",
+-  "exports": {
+-    ".": {
+-      "require": {
+-        "types": "./dist/index.d.ts",
+-        "default": "./dist/index.js"
+-      },
+-      "import": {
+-        "types": "./dist/index.d.mts",
+-        "default": "./dist/index.mjs"
+-      }
+-    },
+-    "./http-only": {
+-      "require": {
+-        "types": "./dist/http-only.d.ts",
+-        "default": "./dist/http-only.js"
+-      },
+-      "import": {
+-        "types": "./dist/http-only.d.mts",
+-        "default": "./dist/http-only.mjs"
+-      }
+-    }
+-  },
+   "main": "./dist/index.js",
+   "module": "./dist/index.mjs",
+   "types": "./dist/index.d.ts",

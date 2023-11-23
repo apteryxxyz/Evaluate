@@ -29,8 +29,6 @@ export function generateBaseMetadata(
         t.evaluate.run(),
         t.evaluate.output(),
       ].map((s) => s.toLowerCase()),
-      themeColor: '#2FC086',
-      colorScheme: 'light dark',
       alternates: {
         languages: locales.reduce(
           (acc, locale) => ({

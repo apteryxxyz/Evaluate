@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "compile": "node --no-warnings=ExperimentalWarning --loader ts-node/esm --experimental-specifier-resolution=node ./scripts/compile/index.ts && biome format src/generated --write",
+    "compile": "node --no-warnings=ExperimentalWarning --loader ts-node/esm --experimental-specifier-resolution=node ./scripts/compile/index.ts",
     "build": "pnpm compile && tsup",
     "format": "biome format src --write",
     "lint": "biome lint src",

@@ -36,7 +36,7 @@ export function DesktopNavigationBar() {
       <nav className="inline-flex items-center gap-6">
         <Button variant="ghost" asChild>
           <a
-            href="/platforms/discord-bot"
+            href="/products/discord-bot"
             rel="noreferrer noopener"
             target="_blank"
           >
@@ -97,7 +97,7 @@ export function MobileNavigationBar() {
             <nav className="grid grid-cols-2">
               <Button variant="outline" asChild>
                 <a
-                  href="/platforms/discord-bot"
+                  href="/products/discord-bot"
                   rel="noreferrer noopener"
                   target="_blank"
                 >

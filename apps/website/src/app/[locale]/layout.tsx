@@ -1,6 +1,8 @@
 import { locales } from '@evaluate/translate';
 import '@evaluate/ui/tailwind.css';
 import { Inter } from 'next/font/google';
+import { redirect } from 'next/navigation';
+import { GoogleAnalytics } from '~/components/google-analytics';
 import { LayoutProps } from '~/types';
 import { NavigationBar } from './_components/navigation-bar/navigation-bar';
 import { generateBaseMetadata } from './metadata';
@@ -20,9 +22,35 @@ export function generateMetadata(p: LayoutProps) {
 }
 
 export default function RootLayout(p: LayoutProps) {
+  if (p.params.locale.includes('.')) redirect(p.params.locale.replace('.', ''));
+
   return (
     <HTMLProviders>
       <html lang={p.params.locale} className={inter.className}>
+        <head key="head">
+          <GoogleAnalytics />
+
+          <meta name="darkreader-lock" />
+
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/favicon-16x16.png"
+          />
+        </head>
+
         <body className="flex pb-8 flex-col gap-8">
           <MainProviders locale={p.params.locale as 'en'}>
             <NavigationBar />

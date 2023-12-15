@@ -25,7 +25,7 @@
   },
   "scripts": {
     "add": "npx shadcn-ui@latest add",
-    "build": "tsup && resolve-tspaths",
+    "build": "tsup --onSuccess resolve-tspaths",
     "format": "biome format src --write",
     "lint": "biome lint src",
     "check": "tsc --noEmit"

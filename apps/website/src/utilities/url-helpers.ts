@@ -13,7 +13,7 @@ export function addLocale<T extends URL | UrlObject | string>(
   locale: Locale,
 ): T {
   if (typeof url === 'object') {
-    url.pathname = `/${locale}/${url.pathname}`;
+    url.pathname = `/${locale}${url.pathname}`;
     return url;
   }
 

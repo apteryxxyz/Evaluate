@@ -1,6 +1,7 @@
 import { locales } from '@evaluate/translate';
 import '@evaluate/ui/tailwind.css';
 import { Inter } from 'next/font/google';
+import { redirect } from 'next/navigation';
 import { GoogleAnalytics } from '~/components/google-analytics';
 import { LayoutProps } from '~/types';
 import { NavigationBar } from './_components/navigation-bar/navigation-bar';
@@ -21,6 +22,8 @@ export function generateMetadata(p: LayoutProps) {
 }
 
 export default function RootLayout(p: LayoutProps) {
+  if (p.params.locale.includes('.')) redirect(p.params.locale.replace('.', ''));
+
   return (
     <HTMLProviders>
       <html lang={p.params.locale} className={inter.className}>

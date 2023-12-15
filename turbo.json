@@ -1,0 +1,37 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "format": {
+      "dependsOn": ["^format"],
+      "inputs": ["src/**"],
+      "outputs": ["src/**"]
+    },
+    "lint": {
+      "dependsOn": ["format", "^lint"],
+      "inputs": ["src/**"]
+    },
+    "test": {
+      "dependsOn": ["lint", "build", "^test"],
+      "inputs": ["src/**", "test/**"]
+    },
+    "check": {
+      "dependsOn": ["^check"],
+      "inputs": ["src/**", "test/**"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**"],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "dist/**",
+        ".plasmo/**",
+        "build/**"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

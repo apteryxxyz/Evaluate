@@ -1,0 +1,32 @@
+{
+  "name": "@evaluate/execute",
+  "description": "Execute any source code in any programming language.",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "format": "biome format src --write",
+    "lint": "biome lint src",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "fuse.js": "^7.0.0",
+    "lexure": "^0.17.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "@config/tsup": "workspace:^",
+    "jest": "^29.7.0",
+    "tsup": "^8.0.1"
+  }
+}

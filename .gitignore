@@ -1,14 +1,8 @@
-# Node
 node_modules/
-
-# Secrets
-.env
-.env.*
-
-# Vercel
-.vercel/
-
-# Build
+dist/
+build/
+.turbo/
+.nx/
 .next/
-.translations/
-.contentlayer/
+.plasmo/
+.env.local

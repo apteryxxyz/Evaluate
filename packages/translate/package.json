@@ -1,0 +1,33 @@
+{
+  "name": "@evaluate/translate",
+  "description": "Handle translations and translating for all of Evaluate.",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "compile": "node --no-warnings=ExperimentalWarning --loader ts-node/esm --experimental-specifier-resolution=node ./scripts/compile/index.ts && biome format src/generated --write",
+    "build": "pnpm compile && tsup",
+    "format": "biome format src --write",
+    "lint": "biome lint src",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@formatjs/icu-messageformat-parser": "^2.7.3",
+    "intl-messageformat": "^10.5.8"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.21",
+    "@config/tsup": "workspace:^",
+    "@types/lodash": "^4.14.202",
+    "@types/node": "^20.10.4",
+    "ts-node": "^10.9.1",
+    "tsup": "^8.0.1"
+  }
+}

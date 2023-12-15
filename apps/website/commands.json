@@ -1,0 +1,95 @@
+[
+  {
+    "options": [
+      {
+        "type": 3,
+        "name": "code",
+        "name_localizations": {
+          "it": "codice"
+        },
+        "description": "The source code to appear in the image.",
+        "description_localizations": {
+          "it": "Il codice da visualizzare nell'immagine."
+        },
+        "required": false,
+        "max_length": 2000
+      }
+    ],
+    "name": "capture",
+    "name_localizations": {
+      "it": "cattura"
+    },
+    "description": "Create and share images of your source code.",
+    "description_localizations": {
+      "it": "Crea e condividi immagini del tuo codice."
+    }
+  },
+  {
+    "options": [
+      {
+        "type": 3,
+        "name": "language",
+        "name_localizations": {
+          "it": "lingua"
+        },
+        "description": "The programming language to evaluate the code in.",
+        "description_localizations": {
+          "it": "Il linguaggio di progrmmazione in cui eseguire il codice."
+        },
+        "required": false,
+        "max_length": 100,
+        "min_length": 1
+      },
+      {
+        "type": 3,
+        "name": "code",
+        "name_localizations": {
+          "it": "codice"
+        },
+        "description": "The source code to evaluate.",
+        "description_localizations": {
+          "it": "Il codice da eseguire."
+        },
+        "required": false,
+        "max_length": 4000,
+        "min_length": 1
+      },
+      {
+        "type": 3,
+        "name": "input",
+        "name_localizations": {
+          "it": "input"
+        },
+        "description": "The input to provide to the program.",
+        "description_localizations": {
+          "it": "L'input da dare al programma."
+        },
+        "required": false,
+        "max_length": 4000,
+        "min_length": 1
+      },
+      {
+        "type": 3,
+        "name": "arguments",
+        "name_localizations": {
+          "it": "argomenti"
+        },
+        "description": "Additional command line arguments to pass to the program.",
+        "description_localizations": {
+          "it": "Argomenti da linea di comando aggiuntivi da passare al programma."
+        },
+        "required": false,
+        "max_length": 500,
+        "min_length": 1
+      }
+    ],
+    "name": "evaluate",
+    "name_localizations": {
+      "it": "evaluate"
+    },
+    "description": "Evaluate any piece of code in any language with optional input and command line arguments.",
+    "description_localizations": {
+      "it": "Esegui pezzi di codice in varie lingue, con input e argomenti da linea di comando facoltativi."
+    }
+  }
+]

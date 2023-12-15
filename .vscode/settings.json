@@ -1,7 +1,4 @@
 {
-  "[cjs]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
@@ -19,5 +16,42 @@
     "titleBar.activeForeground": "#FFFFFF",
     "activityBarBadge.background": "#2FC086",
     "activityBarBadge.foreground": "#FFFFFF"
-  }
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit"
+  },
+  "cSpell.language": "en-GB",
+  "cSpell.words": [
+    "analyzer",
+    "biomejs",
+    "carbonara",
+    "clsx",
+    "CSUI",
+    "dialog",
+    "formatjs",
+    "geist",
+    "gtag",
+    "hookform",
+    "japi",
+    "Lexer",
+    "lexure",
+    "lucide",
+    "mantine",
+    "messageformat",
+    "plasmo",
+    "popover",
+    "prismjs",
+    "runtimes",
+    "shadcn",
+    "tailwindcss",
+    "tspaths",
+    "tsup",
+    "usehooks"
+  ],
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "preClassName",
+    "textareaClassName"
+  ]
 }

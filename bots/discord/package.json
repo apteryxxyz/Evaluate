@@ -1,0 +1,42 @@
+{
+  "name": "@evaluate/discord-bot",
+  "version": "1.0.0",
+  "description": "The Discord bot version of Evaluate.",
+  "type": "module",
+  "bin": {
+    "deploy-commands": "./scripts/deploy-commands.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "format": "biome format src --write",
+    "lint": "biome lint src",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@discordjs/builders": "^1.7.0",
+    "@discordjs/core": "^1.1.1",
+    "@discordjs/rest": "^2.2.0",
+    "@evaluate/capture": "workspace:^",
+    "@evaluate/execute": "workspace:^",
+    "@evaluate/translate": "workspace:^",
+    "@next/env": "^14.0.4",
+    "discord-api-types": "^0.37.66",
+    "discord-interactions": "^3.4.0",
+    "lodash": "^4.17.21",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@config/tsup": "workspace:^",
+    "@types/lodash": "^4.14.202",
+    "@types/node": "^20.10.4",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "tsup": "^8.0.1"
+  }
+}

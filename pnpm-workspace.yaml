@@ -1,0 +1,6 @@
+packages:
+  - 'apps/*'
+  - 'bots/*'
+  - 'configs/*'
+  - 'extensions/*'
+  - 'packages/*'

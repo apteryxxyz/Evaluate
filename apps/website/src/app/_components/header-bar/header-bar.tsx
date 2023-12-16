@@ -14,14 +14,9 @@ export function HeaderBar() {
   const t = useTranslate();
 
   return (
-    <header className="container h-14 flex items-center">
+    <header className="container h-14 flex items-center gap-2">
       <Link href="/" className="inline-flex items-center gap-2">
-        <Image
-          src="/android-chrome-192x192.png"
-          alt="Evaluate logo"
-          width={36}
-          height={36}
-        />
+        <Image src="/icon.png" alt="Evaluate logo" width={36} height={36} />
         <span className="text-primary font-bold text-xl">Evaluate</span>
       </Link>
 
@@ -47,7 +42,7 @@ export function HeaderBar() {
               className="inline-flex items-center justify-center gap-2"
             >
               <Image
-                src="/android-chrome-192x192.png"
+                src="/icon.png"
                 alt="Evaluate logo"
                 width={36}
                 height={36}

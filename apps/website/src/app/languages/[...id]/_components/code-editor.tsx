@@ -9,8 +9,10 @@ import Editor from 'react-simple-code-editor';
 
 import { cn } from '@evaluate/ui';
 import 'prismjs/themes/prism.min.css';
+import './code-editor.css';
 
-function getLanguageName(language: Language) {
+function getLanguageName(language?: Language) {
+  if (!language) return 'text';
   const values = [language.name, language.key, ...(language.aliases ?? [])] //
     .map((v) => v.toLowerCase());
   const languages = Object.entries(components.languages) //
@@ -19,10 +21,17 @@ function getLanguageName(language: Language) {
   return result ? result[0] : 'text';
 }
 
+function getLineNumberDimensions(code: string) {
+  const length = code.split('\n').length.toString().length;
+  const borderWidth = 18 + (length - 1) * 7;
+  const left = -12 - (length - 1) * 8;
+  return [borderWidth, left] as const;
+}
+
 export function CodeEditor(
   p: React.HTMLAttributes<HTMLDivElement> &
     Omit<TextareaProps, 'value' | 'onChange'> & {
-      language: Language;
+      language?: Language;
       code: string;
       setCode: (code: string) => void;
     },
@@ -30,6 +39,8 @@ export function CodeEditor(
   const name = useMemo(() => getLanguageName(p.language), [p.language]);
   const isPreloaded = useMemo(() => !!Prism.languages[name], [name]);
   const [isFocused, setIsFocused] = useState(false);
+  const [borderWidth, leftPosition] = //
+    useMemo(() => getLineNumberDimensions(p.code), [p.code]);
 
   return (
     <>
@@ -51,11 +62,24 @@ export function CodeEditor(
             Prism.highlight(code, grammar, name)
               // Operator style isn't correct when in dark mode, easiest way to fix
               .replaceAll('class="token operator"', 'class="token"')
+              .split('\n')
+              .map(
+                (l, i) => `<span
+                  class="line-number font-mono"
+                  data-line-number="${i + 1}"
+                >${l}</span>`,
+              )
+              .join('\n')
           );
         }}
         //
+        style={{
+          // @ts-expect-error - CSS variable
+          '--left-offset': `${leftPosition}px`,
+          borderLeftWidth: `${borderWidth}px`,
+        }}
         className={cn(
-          'min-h-[120px] rounded-md border border-input text-sm bg-transparent shadow',
+          '!overflow-visible min-h-[120px] rounded-md border border-input text-sm bg-transparent shadow',
           p.code && 'font-mono',
           isFocused && 'border-ring',
           p.code.length > 0 && '!font-mono',

@@ -1,22 +1,52 @@
 'use client';
 
-import { Locale, TranslateFunctions, getTranslate } from '@evaluate/translate';
-import { createContext, useContext, useMemo } from 'react';
+import {
+  Locale,
+  TranslateFunctions,
+  getTranslate,
+  locales,
+} from '@evaluate/translate';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
-type TranslateContextProps = TranslateFunctions & { locale: Locale };
+type TranslateContextProps =
+  | (TranslateFunctions & {
+      locale: Locale;
+      setLocale(locale: Locale): void;
+    })
+  | undefined;
 export const TranslateContext = //
   createContext<TranslateContextProps | null>(null);
 TranslateContext.displayName = 'TranslateContext';
 
-export function TranslateProvider(
-  p: React.PropsWithChildren<{ locale: Locale }>,
-) {
-  const translate = useMemo(() => getTranslate(p.locale), [p.locale]);
+export function TranslateProvider(p: React.PropsWithChildren) {
+  const [memory, setMemory] = useState<Locale>();
+  const translate = useMemo(() => memory && getTranslate(memory), [memory]);
+
+  useEffect(() => {
+    const storage = localStorage.getItem('evaluate.locale');
+    setMemory(storage && storage in locales ? (storage as Locale) : 'en');
+  }, []);
+
+  useEffect(() => {
+    if (memory) {
+      localStorage.setItem('evaluate.locale', memory);
+      document.documentElement.lang = memory;
+    }
+  }, [memory]);
+
+  const value = useMemo(
+    () =>
+      memory
+        ? Object.assign({}, translate, {
+            locale: memory,
+            setLocale: setMemory,
+          })
+        : undefined,
+    [translate, memory],
+  );
 
   return (
-    <TranslateContext.Provider
-      value={Object.assign({}, translate, { locale: p.locale })}
-    >
+    <TranslateContext.Provider value={value}>
       {p.children}
     </TranslateContext.Provider>
   );
@@ -27,7 +57,5 @@ export function TranslateProvider(
  * @returns a translate functions object
  */
 export function useTranslate() {
-  const translate = useContext(TranslateContext);
-  if (translate) return translate;
-  throw new Error('Translate not found');
+  return useContext(TranslateContext)!;
 }

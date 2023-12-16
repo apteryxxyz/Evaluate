@@ -1,6 +1,6 @@
 import { Skeleton } from '@evaluate/ui/skeleton';
 
-export default function Loading() {
+export default function LanguageLoading() {
   return (
     <>
       <div className="flex gap-1 items-end">

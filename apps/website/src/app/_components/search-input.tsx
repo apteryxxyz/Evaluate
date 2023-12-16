@@ -7,8 +7,8 @@ import { useHotkeys } from '@mantine/hooks';
 import { Loader2Icon, SearchIcon } from 'lucide-react';
 import { useCallback, useRef } from 'react';
 import { useEventListener } from 'usehooks-ts';
-import { useLanguages } from '~/contexts/languages';
 import { useTranslate } from '~/contexts/translate';
+import { useLanguages } from '~/contexts/languages';
 
 export function SearchInput() {
   const t = useTranslate();

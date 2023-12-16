@@ -1,6 +1,6 @@
 'use client';
 
-import type { Language } from '@evaluate/execute';
+import { Language } from '@evaluate/execute';
 import { Fragment } from 'react';
 import { useLanguages } from '~/contexts/languages';
 import { useTranslate } from '~/contexts/translate';
@@ -9,10 +9,13 @@ import {
   SkeletonLanguageCard,
 } from './_components/language-card';
 import { SearchInput } from './_components/search-input';
+import LoadingPage from './loading';
 
 export default function LanguagesContent(p: { languages: Language[] }) {
   const t = useTranslate();
   const { languages, filteredLanguages } = useLanguages(p.languages);
+
+  if (!t) return <LoadingPage />;
 
   return (
     <>

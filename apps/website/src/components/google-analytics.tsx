@@ -3,12 +3,10 @@
 import { usePathname } from 'next/navigation';
 import Script from 'next/script';
 import { useEffect } from 'react';
-import { removeLocale } from '~/utilities/url-helpers';
 
 export function triggerPageView(url: string) {
   const measurementId = process.env.NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID;
-  if (measurementId)
-    window.gtag('config', measurementId, { page_path: removeLocale(url) });
+  if (measurementId) window.gtag('config', measurementId, { page_path: url });
 }
 
 export function emitEvent(name: string, params: Record<string, unknown>) {

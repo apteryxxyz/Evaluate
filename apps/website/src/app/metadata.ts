@@ -1,13 +1,13 @@
-import { Locale, getTranslate, locales } from '@evaluate/translate';
+import { getTranslate, locales } from '@evaluate/translate';
 import _merge from 'lodash/merge';
 import { Metadata } from 'next';
 import { absoluteUrl } from '~/utilities/url-helpers';
 
 export function generateBaseMetadata(
-  [locale, pathname]: [Locale, string],
+  pathname: string,
   overrides: Metadata = {},
 ) {
-  const t = getTranslate(locale);
+  const t = getTranslate('en');
 
   const metadata = _merge(
     {
@@ -24,17 +24,6 @@ export function generateBaseMetadata(
         t.evaluate.run(),
         t.evaluate.output(),
       ].map((x) => x.toLowerCase()),
-
-      alternates: {
-        languages: locales.reduce(
-          (languages, locale) => ({
-            // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
-            ...languages,
-            [locale]: absoluteUrl(`/${locale}/${pathname}`),
-          }),
-          {},
-        ),
-      },
     } satisfies Metadata,
     overrides,
   );
@@ -45,10 +34,10 @@ export function generateBaseMetadata(
       type: 'website',
       title: metadata.title,
       description: metadata.description,
-      locale: locale ?? 'en',
+      locale: 'en',
       siteName: 'Evaluate',
-      alternateLocale: locales.filter((l) => l !== locale),
-      url: absoluteUrl(`/${locale}/${pathname}`),
+      alternateLocale: locales.filter((l) => l !== 'en'),
+      url: absoluteUrl(pathname),
     },
     twitter: {
       card: 'summary',

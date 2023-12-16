@@ -4,8 +4,9 @@ import { Alert, AlertDescription, AlertTitle } from '@evaluate/ui/alert';
 import { FileTerminalIcon } from 'lucide-react';
 import { useTranslate } from '~/contexts/translate';
 
-export default function NotFound() {
+export default function LanguageNotFound() {
   const t = useTranslate();
+  if (!t) return null;
 
   return (
     <Alert variant="destructive">

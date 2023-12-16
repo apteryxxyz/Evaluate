@@ -23,6 +23,10 @@ export default function RootLayout(p: LayoutProps) {
           <GoogleAnalytics />
 
           <meta name="darkreader-lock" />
+          <meta
+            name="google-adsense-account"
+            content="ca-pub-5722227635911083"
+          />
 
           <link
             rel="apple-touch-icon"

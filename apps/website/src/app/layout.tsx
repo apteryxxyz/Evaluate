@@ -1,10 +1,8 @@
-import { locales } from '@evaluate/translate';
 import '@evaluate/ui/tailwind.css';
 import { Inter } from 'next/font/google';
-import { redirect } from 'next/navigation';
 import { GoogleAnalytics } from '~/components/google-analytics';
 import { LayoutProps } from '~/types';
-import { NavigationBar } from './_components/navigation-bar/navigation-bar';
+import { HeaderBar } from './_components/header-bar/header-bar';
 import { generateBaseMetadata } from './metadata';
 import { HTMLProviders, MainProviders } from './providers';
 
@@ -13,21 +11,15 @@ const inter = Inter({
   display: 'swap',
 });
 
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
-
-export function generateMetadata(p: LayoutProps) {
-  return generateBaseMetadata([p.params.locale, '/']);
+export function generateMetadata() {
+  return generateBaseMetadata('/');
 }
 
 export default function RootLayout(p: LayoutProps) {
-  if (p.params.locale.includes('.')) redirect(p.params.locale.replace('.', ''));
-
   return (
     <HTMLProviders>
-      <html lang={p.params.locale} className={inter.className}>
-        <head key="head">
+      <html lang="en" className={inter.className}>
+        <head>
           <GoogleAnalytics />
 
           <meta name="darkreader-lock" />
@@ -52,8 +44,8 @@ export default function RootLayout(p: LayoutProps) {
         </head>
 
         <body className="flex pb-8 flex-col gap-8">
-          <MainProviders locale={p.params.locale as 'en'}>
-            <NavigationBar />
+          <MainProviders>
+            <HeaderBar />
 
             <main className="container flex flex-col flex-1 gap-6">
               {p.children}

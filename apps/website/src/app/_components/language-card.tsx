@@ -10,7 +10,6 @@ import {
 import { Skeleton } from '@evaluate/ui/skeleton';
 import Link from 'next/link';
 import { useTranslate } from '~/contexts/translate';
-import { addLocale } from '~/utilities/url-helpers';
 
 export function LanguageCard(p: Language) {
   const t = useTranslate();
@@ -26,7 +25,7 @@ export function LanguageCard(p: Language) {
       </CardHeader>
 
       <Link
-        href={addLocale(`/languages/${p.id}`, t.locale)}
+        href={`/languages/${p.id}`}
         className="inset-0 absolute"
         // The user is unlikely to click most cards, no point in prefetching
         prefetch={false}

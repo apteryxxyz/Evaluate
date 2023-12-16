@@ -21,8 +21,9 @@ import { CommandLineInput } from './_components/command-line-input';
 import { FileSystemInput } from './_components/file-system-input';
 import { ResultSection } from './_components/result-section';
 import { useModifierKey } from './_hooks/use-modifier-key';
+import LanguageLoading from './loading';
 
-export default function Content(p: { language: Language }) {
+export default function LanguageContent(p: { language: Language }) {
   const t = useTranslate();
 
   const searchParams = useSearchParams();
@@ -67,6 +68,8 @@ export default function Content(p: { language: Language }) {
     [],
     true,
   );
+
+  if (!t) return <LanguageLoading />;
 
   return (
     <>

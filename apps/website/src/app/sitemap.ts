@@ -1,9 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fetchLanguages } from '@evaluate/execute';
-import { locales } from '@evaluate/translate';
 import type { MetadataRoute } from 'next/types';
-import { absoluteUrl, addLocale } from '~/utilities/url-helpers';
+import { absoluteUrl } from '~/utilities/url-helpers';
 
 interface RoutesManifest {
   staticRoutes: { page: string }[];
@@ -36,8 +35,5 @@ async function loadDynamicPaths() {
 
 export default async function getSitemap() {
   const entries = [...(await loadStaticPaths()), ...(await loadDynamicPaths())];
-  const localised = entries //
-    .flatMap((e) => locales.map((l) => ({ ...e, url: addLocale(e.url, l) })));
-
-  return [...entries, ...localised] satisfies MetadataRoute.Sitemap;
+  return entries satisfies MetadataRoute.Sitemap;
 }

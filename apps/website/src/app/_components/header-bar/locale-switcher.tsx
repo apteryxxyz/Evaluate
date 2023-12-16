@@ -9,21 +9,19 @@ import {
   DropdownMenuTrigger,
 } from '@evaluate/ui/dropdown-menu';
 import { LanguagesIcon } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useTranslate } from '~/contexts/translate';
-import { addLocale, removeLocale } from '~/utilities/url-helpers';
 
 export function LocaleSwitcher() {
   const t = useTranslate();
-  const pathname = usePathname();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="aspect-square">
           <LanguagesIcon />
-          <span className="sr-only">{t.screen_reader.change_locale()}</span>
+          {t && (
+            <span className="sr-only">{t.screen_reader.change_locale()}</span>
+          )}
         </Button>
       </DropdownMenuTrigger>
 
@@ -32,20 +30,19 @@ export function LocaleSwitcher() {
           .slice(locales.length)
           .map(([key, name]) => (
             <DropdownMenuItem key={key} asChild>
-              <Link
-                href={addLocale(removeLocale(pathname), key as Locale)}
-                className="hover:cursor-pointer"
-                prefetch={false}
+              <Button
+                variant="ghost"
+                className="w-full cursor-pointer"
+                onClick={() => t.setLocale(key as Locale)}
               >
                 {name}
-              </Link>
+              </Button>
             </DropdownMenuItem>
           ))}
 
         <DropdownMenuItem className="p-0" onClick={() => false}>
           <Button asChild className="w-full">
             <a href="/translate" target="_blank" rel="noreferrer noopener">
-              {/* TODO: translate? */}
               Help Translate
             </a>
           </Button>

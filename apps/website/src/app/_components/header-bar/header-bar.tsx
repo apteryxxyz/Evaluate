@@ -5,6 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@evaluate/ui/sheet';
 import { MapIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguages } from '~/contexts/languages';
 import { useTranslate } from '~/contexts/translate';
 import { LocaleSwitcher } from './locale-switcher';
 import { NavigationBar } from './navigation-bar';
@@ -12,10 +13,15 @@ import { ThemeSwitcher } from './theme-switcher';
 
 export function HeaderBar() {
   const t = useTranslate();
+  const { languages, setFilteredLanguages } = useLanguages();
 
   return (
     <header className="container h-14 flex items-center gap-2">
-      <Link href="/" className="inline-flex items-center gap-2">
+      <Link
+        href="/"
+        className="inline-flex items-center gap-2"
+        onClick={() => setFilteredLanguages(languages)}
+      >
         <Image src="/icon.png" alt="Evaluate logo" width={36} height={36} />
         <span className="text-primary font-bold text-xl">Evaluate</span>
       </Link>

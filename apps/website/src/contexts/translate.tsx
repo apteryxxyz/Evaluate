@@ -19,30 +19,28 @@ export const TranslateContext = //
 TranslateContext.displayName = 'TranslateContext';
 
 export function TranslateProvider(p: React.PropsWithChildren) {
-  const [memory, setMemory] = useState<Locale>();
-  const translate = useMemo(() => memory && getTranslate(memory), [memory]);
+  const [locale, setLocale] = useState<Locale>();
+  const translate = useMemo(() => locale && getTranslate(locale), [locale]);
 
   useEffect(() => {
-    const storage = localStorage.getItem('evaluate.locale');
-    setMemory(storage && storage in locales ? (storage as Locale) : 'en');
-  }, []);
-
-  useEffect(() => {
-    if (memory) {
-      localStorage.setItem('evaluate.locale', memory);
-      document.documentElement.lang = memory;
+    if (locale) {
+      localStorage.setItem('evaluate.locale', locale);
+      document.documentElement.lang = locale;
+    } else {
+      const item = localStorage.getItem('evaluate.locale');
+      if (item && item in locales) {
+        setLocale(item as Locale);
+      } else {
+        const languages = window.navigator.languages;
+        const locale = languages.find((l) => locales.includes(l as Locale));
+        if (locale) setLocale(locale as Locale);
+      }
     }
-  }, [memory]);
+  }, [locale]);
 
   const value = useMemo(
-    () =>
-      memory
-        ? Object.assign({}, translate, {
-            locale: memory,
-            setLocale: setMemory,
-          })
-        : undefined,
-    [translate, memory],
+    () => locale && Object.assign({}, translate, { locale, setLocale }),
+    [translate, locale],
   );
 
   return (

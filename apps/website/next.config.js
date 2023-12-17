@@ -6,15 +6,15 @@ const nextConfig = {
 
   redirects: () => [
     {
-      source: '/:locale/language/:id*',
-      destination: '/:locale/language/:id',
-      permanent: true,
-    },
-    {
       source: '/products/discord-bot',
       destination:
         'https://discord.com/api/oauth2/authorize?client_id=946755134443102258&permissions=0&scope=bot%20applications.commands',
       permanent: false,
+    },
+    {
+      source: '/translate',
+      destination: 'https://translate.evaluate.run/',
+      permanent: true,
     },
   ],
 

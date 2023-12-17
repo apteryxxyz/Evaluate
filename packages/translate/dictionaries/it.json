@@ -9,6 +9,9 @@
     "add_file": "Aggiungi File",
     "remove_file": "Rimuovi File"
   },
+  "seo": {
+    "description": "Esplora una gamma diversificata di linguaggi di programmazione e strumenti con la nostra piattaforma online completa. Evaluate è lo strumento definitivo per la valutazione del codice, valuta rapidamente frammenti di codice in qualsiasi linguaggio di programmazione, con input opzionali e argomenti da linea di comando. Provalo ora!"
+  },
   "internal_error": {
     "$": "Errore Interno",
     "description": "C'è stato un errore interno, perfavore riprova più tardi."

@@ -15,25 +15,24 @@ async function loadStaticPaths(): Promise<MetadataRoute.Sitemap> {
     .then((c) => JSON.parse(c) as RoutesManifest)
     .catch(() => ({ staticRoutes: [], dynamicRoutes: [] }));
 
-  return manifest.dynamicRoutes
-    .map((r) => r.page.replace('/[locale]', '') || '/')
-    .filter((r) => !r.includes('['))
+  return manifest.staticRoutes
+    .filter((r) => !r.page.includes('[') && !r.page.startsWith('/_'))
     .map((r) => ({
-      url: absoluteUrl(r),
+      url: absoluteUrl(r.page),
       lastModified: new Date(),
-    })) satisfies MetadataRoute.Sitemap;
+    }));
 }
 
-async function loadDynamicPaths() {
+async function loadDynamicPaths(): Promise<MetadataRoute.Sitemap> {
   const languages = await fetchLanguages();
 
   return languages.map((l) => ({
     url: absoluteUrl(`/languages/${l.id}`),
     lastModified: new Date(),
-  })) satisfies MetadataRoute.Sitemap;
+  }));
 }
 
 export default async function getSitemap() {
-  const entries = [...(await loadStaticPaths()), ...(await loadDynamicPaths())];
-  return entries satisfies MetadataRoute.Sitemap;
+  return Promise.all([loadStaticPaths(), loadDynamicPaths()]) //
+    .then((entries) => entries.flat());
 }

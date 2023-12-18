@@ -23,6 +23,7 @@ export function GoogleAnalytics() {
   return (
     <>
       <Script
+        id="google-tag-manager"
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
       />
@@ -37,9 +38,8 @@ export function GoogleAnalytics() {
           function gtag(){dataLayer.push(arguments);}
 
           gtag('js', new Date());
-          gtag('config', '${measurementId}', {
-            page_path: window.location.pathname,
-          });
+          const page_path = window.location.pathname;
+          gtag('config', '${measurementId}', { page_path });
           `,
         }}
       />

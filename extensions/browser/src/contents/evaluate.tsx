@@ -18,7 +18,7 @@ export const config: PlasmoCSConfig = {
 };
 
 export const getOverlayAnchorList: PlasmoGetOverlayAnchorList = () =>
-  document.querySelectorAll('pre');
+  document.querySelectorAll('pre:not([data-evaluate-disabled="true"])');
 
 export const getStyle: PlasmoGetStyle = () => {
   const link = document.createElement('link');
@@ -32,7 +32,7 @@ export const getStyle: PlasmoGetStyle = () => {
   return style;
 };
 
-export default function EvaluateContentScript(p: PlasmoCSUIProps) {
+export default function Content(p: PlasmoCSUIProps) {
   const anchorRef = useRef<HTMLPreElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);

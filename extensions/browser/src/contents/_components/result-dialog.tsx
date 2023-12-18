@@ -39,6 +39,7 @@ export function ResultDialog(p: {
     }
   }, [p.result]);
 
+  if (!t) return null;
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent container={p.dialogRef.current!}>

@@ -53,6 +53,7 @@ export function CodeEditor(
 
       <Editor
         {..._omit(p, ['language', 'code', 'setCode'])}
+        language={name}
         value={p.code}
         onValueChange={p.setCode}
         highlight={(code) => {

@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  react-simple-code-editor@0.13.1:
+    hash: h4gsrqkoyrzapmaamu7ynyouoa
+    path: patches/react-simple-code-editor@0.13.1.patch
+
 importers:
 
   .:
@@ -67,7 +72,7 @@ importers:
         version: 7.49.0(react@18.2.0)
       react-simple-code-editor:
         specifier: ^0.13.1
-        version: 0.13.1(react-dom@18.2.0)(react@18.2.0)
+        version: 0.13.1(patch_hash=h4gsrqkoyrzapmaamu7ynyouoa)(react-dom@18.2.0)(react@18.2.0)
       usehooks-ts:
         specifier: ^2.9.1
         version: 2.9.1(react-dom@18.2.0)(react@18.2.0)
@@ -150,7 +155,7 @@ importers:
     devDependencies:
       tsup:
         specifier: ^8.0.1
-        version: 8.0.1(ts-node@10.9.2)(typescript@5.3.3)
+        version: 8.0.1(postcss@8.4.32)(typescript@5.3.3)
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -232,7 +237,7 @@ importers:
         version: 20.10.4
       tsup:
         specifier: ^8.0.1
-        version: 8.0.1(ts-node@10.9.2)(typescript@5.3.3)
+        version: 8.0.1(postcss@8.4.32)(typescript@5.3.3)
 
   packages/execute:
     dependencies:
@@ -257,7 +262,7 @@ importers:
         version: 29.7.0
       tsup:
         specifier: ^8.0.1
-        version: 8.0.1(ts-node@10.9.2)(typescript@5.3.3)
+        version: 8.0.1(postcss@8.4.32)(typescript@5.3.3)
 
   packages/translate:
     dependencies:
@@ -8217,7 +8222,7 @@ packages:
       use-sidecar: 1.1.2(@types/react@18.2.43)(react@18.2.0)
     dev: false
 
-  /react-simple-code-editor@0.13.1(react-dom@18.2.0)(react@18.2.0):
+  /react-simple-code-editor@0.13.1(patch_hash=h4gsrqkoyrzapmaamu7ynyouoa)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-XYeVwRZwgyKtjNIYcAEgg2FaQcCZwhbarnkJIV20U2wkCU9q/CPFBo8nRXrK4GXUz3AvbqZFsZRrpUTkqqEYyQ==}
     peerDependencies:
       react: '*'
@@ -8226,6 +8231,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
+    patched: true
 
   /react-style-singleton@2.2.1(@types/react@18.2.43)(react@18.2.0):
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}

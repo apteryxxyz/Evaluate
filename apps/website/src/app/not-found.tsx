@@ -11,10 +11,8 @@ export default function LanguageNotFound() {
   return (
     <Alert variant="destructive">
       <FileTerminalIcon />
-      <AlertTitle>{t.evaluate.language.not_found()}</AlertTitle>
-      <AlertDescription>
-        {t.evaluate.language.not_found.description()}
-      </AlertDescription>
+      <AlertTitle>{t.not_found()}</AlertTitle>
+      <AlertDescription>{t.not_found.description()}</AlertDescription>
     </Alert>
   );
 }

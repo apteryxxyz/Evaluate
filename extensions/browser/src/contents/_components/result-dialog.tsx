@@ -75,10 +75,11 @@ export function ResultDialog(p: {
           )}
 
           <div className="space-y-2">
-            <Label>{t.evaluate.output()}</Label>
+            <Label htmlFor="output">{t.evaluate.output()}</Label>
 
             <Textarea
               readOnly
+              name="output"
               value={formattedOutput ?? ''}
               placeholder={t.evaluate.output.no_output()}
               className={cn(

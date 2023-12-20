@@ -16,7 +16,7 @@ export function LocaleSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="aspect-square">
-          <LanguagesIcon />
+          <LanguagesIcon size={20} />
           {t && (
             <span className="sr-only">{t.screen_reader.change_locale()}</span>
           )}

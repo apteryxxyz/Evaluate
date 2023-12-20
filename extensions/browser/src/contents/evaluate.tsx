@@ -6,6 +6,7 @@ import type {
   PlasmoGetStyle,
 } from 'plasmo';
 import { useCallback, useRef, useState } from 'react';
+import { EnabledConsumer, EnabledProvider } from '~contexts/enabled';
 import { TranslateProvider } from '~contexts/translate';
 import { RunButton } from './_components/run-button';
 import { useElementBounds } from './_hooks/use-element-bounds';
@@ -14,7 +15,7 @@ import tailwind from 'data-text:../styles/tailwind.css';
 
 export const config: PlasmoCSConfig = {
   matches: ['<all_urls>'],
-  world: 'MAIN',
+  // world: 'MAIN',
 };
 
 export const getOverlayAnchorList: PlasmoGetOverlayAnchorList = () =>
@@ -32,7 +33,23 @@ export const getStyle: PlasmoGetStyle = () => {
   return style;
 };
 
-export default function Content(p: PlasmoCSUIProps) {
+export default function Providers(p: PlasmoCSUIProps) {
+  return (
+    <TranslateProvider>
+      <EnabledProvider>
+        <EnabledConsumer>
+          {({ isEnabledFor }) => {
+            const domain = window.location.hostname;
+            if (!isEnabledFor(domain)) return null;
+            return <Content {...p} />;
+          }}
+        </EnabledConsumer>
+      </EnabledProvider>
+    </TranslateProvider>
+  );
+}
+
+function Content(p: PlasmoCSUIProps) {
   const anchorRef = useRef<HTMLPreElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -45,26 +62,20 @@ export default function Content(p: PlasmoCSUIProps) {
   const [isHovered, setIsHovered] = useState(false);
   const onMove = useCallback(
     (event: MouseEvent) => {
-      const { pageX, pageY } = event;
-      const { left, top, width, height } = anchorBounds;
-
       // Unable to use onMouseEnter and onMouseLeave because the anchor
       // element often has other elements above it causing the mouse to
       // leave the anchor element even though the mouse is still within
       // the bounds of the anchor element
-      const isInside =
-        pageX >= left &&
-        pageX <= left + width &&
-        pageY >= top &&
-        pageY <= top + height;
-      setIsHovered(isInside);
+      const { pageX: x, pageY: y } = event;
+      const { left: l, top: t, width: w, height: h } = anchorBounds;
+      setIsHovered(x >= l && x <= l + w && y >= t && y <= t + h);
     },
     [anchorBounds],
   );
   addEventListener('mousemove', onMove);
 
   return (
-    <TranslateProvider>
+    <>
       <motion.div
         ref={overlayRef}
         style={{
@@ -83,6 +94,6 @@ export default function Content(p: PlasmoCSUIProps) {
         ref={dialogRef}
         style={{ fontFamily: 'Inter', maxHeight: '95dvh' }}
       />
-    </TranslateProvider>
+    </>
   );
 }

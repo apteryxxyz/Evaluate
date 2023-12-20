@@ -18,13 +18,14 @@
     "./label": "./dist/components/ui/label.js",
     "./sheet": "./dist/components/ui/sheet.js",
     "./skeleton": "./dist/components/ui/skeleton.js",
+    "./switch": "./dist/components/ui/switch.js",
     "./tabs": "./dist/components/ui/tabs.js",
     "./textarea": "./dist/components/ui/textarea.js",
     "./tailwind.css": "./src/styles/tailwind.css",
     "./tailwind.config.cjs": "./tailwind.config.cjs"
   },
   "scripts": {
-    "add": "npx shadcn-ui@latest add",
+    "ui:add": "npx shadcn-ui@latest add",
     "build": "tsup --onSuccess resolve-tspaths",
     "format": "biome format src --write",
     "lint": "biome lint src",
@@ -35,6 +36,7 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tabs": "^1.0.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",

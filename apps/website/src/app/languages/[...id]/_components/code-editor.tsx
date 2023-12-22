@@ -4,7 +4,7 @@ import _omit from 'lodash/omit';
 import Script from 'next/script';
 import Prism from 'prismjs';
 import components from 'prismjs/components.js';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Editor from 'react-simple-code-editor';
 
 import { cn } from '@evaluate/ui';
@@ -42,6 +42,16 @@ export function CodeEditor(
   const [borderWidth, leftPosition] = //
     useMemo(() => getLineNumberDimensions(p.code), [p.code]);
 
+  const ref = useRef<Editor>(null);
+  useEffect(() => {
+    // Add data-evaluate-disabled to the pre element so that it is not
+    // picked up by the browser extension
+    const textarea: HTMLTextAreaElement = Reflect.get(ref.current!, '_input');
+    const pre = textarea?.parentElement?.childNodes[0] as HTMLPreElement;
+    pre?.setAttribute('data-language', name);
+    pre?.setAttribute('data-evaluate-disabled', 'true');
+  }, [name]);
+
   return (
     <>
       {/* Dynamically load the syntax grammar stuff */}
@@ -53,7 +63,7 @@ export function CodeEditor(
 
       <Editor
         {..._omit(p, ['language', 'code', 'setCode'])}
-        language={name}
+        ref={ref}
         value={p.code}
         onValueChange={p.setCode}
         highlight={(code) => {

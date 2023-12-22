@@ -5,10 +5,5 @@
     "@biomejs/biome": "1.4.1",
     "turbo": "^1.11.1",
     "typescript": "^5.3.3"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "react-simple-code-editor@0.13.1": "patches/react-simple-code-editor@0.13.1.patch"
-    }
   }
 }

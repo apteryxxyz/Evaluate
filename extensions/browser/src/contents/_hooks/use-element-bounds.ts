@@ -49,12 +49,12 @@ export function useElementBounds(
         left: bounds.left + window.scrollX,
         top: bounds.top + window.scrollY,
       });
-    }),
+    }, 200),
     [],
   );
 
   for (const eventName of eventNames)
-    useEventListener(eventName as never, () => updateElementBounds());
+    useEventListener(eventName as never, updateElementBounds);
   useEffect(() => updateElementBounds(), [updateElementBounds]);
 
   return elementBounds.current;

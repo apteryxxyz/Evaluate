@@ -1,0 +1,8 @@
+.language-card {
+  background-image: radial-gradient(200px 200px at calc(var(--mouse-x, 0) * 1px) calc(var(--mouse-y, 0) * 1px),
+      hsl(var(--primary) / 0.2), transparent);
+  background-position: 50% 50%;
+  background-attachment: fixed;
+  position: relative;
+  touch-action: none;
+}

@@ -87,7 +87,7 @@ export function CodeEditor(
           borderLeftWidth: `${borderWidth}px`,
         }}
         className={cn(
-          '!overflow-visible min-h-[120px] rounded-md border border-input text-sm bg-transparent shadow',
+          '!overflow-visible min-h-[120px] rounded-md border border-input text-sm bg-transparent shadow duration-300',
           p.code && 'font-mono',
           isFocused && 'border-ring',
           p.code.length > 0 && '!font-mono',

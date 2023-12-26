@@ -12,6 +12,11 @@ const nextConfig = {
       permanent: false,
     },
     {
+      source: '/languages/:id*',
+      destination: '/:id*',
+      permanent: false,
+    },
+    {
       source: '/translate',
       destination: 'https://translate.evaluate.run/',
       permanent: true,

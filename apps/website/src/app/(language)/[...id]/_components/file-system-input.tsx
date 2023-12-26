@@ -79,6 +79,9 @@ export function FileSystemInput(p: {
                       {...field}
                       id={field.name}
                       placeholder={t.files.name.description()}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
                       onChange={(event) => {
                         field.onChange(event);
                         setFileNames((names) => {

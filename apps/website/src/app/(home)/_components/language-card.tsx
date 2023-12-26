@@ -10,12 +10,16 @@ import {
 import { Skeleton } from '@evaluate/ui/skeleton';
 import Link from 'next/link';
 import { useTranslate } from '~/contexts/translate';
+import './language-card.css';
 
 export function LanguageCard(p: Language) {
   const t = useTranslate();
 
   return (
-    <Card className="relative hover:scale-110 duration-300 hover:border-primary">
+    <Card
+      className="language-card relative duration-300 hover:border-primary"
+      data-glow
+    >
       <CardHeader>
         <CardTitle>{p.name}</CardTitle>
 
@@ -25,7 +29,7 @@ export function LanguageCard(p: Language) {
       </CardHeader>
 
       <Link
-        href={`/languages/${p.id}`}
+        href={p.id}
         className="inset-0 absolute"
         // The user is unlikely to click most cards, no point in prefetching
         prefetch={false}

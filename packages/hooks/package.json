@@ -1,0 +1,32 @@
+{
+  "name": "@evaluate/hooks",
+  "description": "Shared React hooks for Evaluate.",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./use-element-bounds": "./dist/hooks/use-element-bounds.js",
+    "./use-event-listener": "./dist/hooks/use-event-listener.js",
+    "./use-isomorphic-layout-effect": "./dist/hooks/use-isomorphic-layout-effect.js",
+    "./use-modifier-key": "./dist/hooks/use-modifier-key.js"
+  },
+  "scripts": {
+    "build": "tsup --onSuccess resolve-tspaths",
+    "format": "biome format src --write",
+    "lint": "biome lint src",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@config/tsup": "workspace:^",
+    "@types/lodash": "^4.14.202",
+    "@types/react": "^18.2.43",
+    "resolve-tspaths": "^0.8.17",
+    "tsup": "^8.0.1"
+  }
+}

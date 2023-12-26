@@ -16,7 +16,7 @@ export async function generateMetadata(p: PageProps<['id[]']>) {
   if (!language) notFound();
 
   const t = getTranslate('en');
-  return generateBaseMetadata(`/languages/${p.params.id}`, {
+  return generateBaseMetadata(`/${p.params.id}`, {
     title: t.evaluate.seo.title({ language_name: language.name }),
     description: t.evaluate.seo.description({ language_name: language.name }),
   });

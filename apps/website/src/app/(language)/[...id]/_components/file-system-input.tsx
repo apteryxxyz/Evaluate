@@ -19,8 +19,9 @@ export function FileSystemInput(p: {
 }) {
   const t = useTranslate();
   const [openedFile, setOpenedFile] = useState(0);
-  const [fileNames, setFileNames] = useState<string[]>([]);
   const files = useFieldArray({ ...p, name: 'files' });
+  const [fileNames, setFileNames] = //
+    useState(files.fields.map((f) => Reflect.get(f, 'name')));
 
   return (
     <Tabs

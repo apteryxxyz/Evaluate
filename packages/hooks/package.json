@@ -25,7 +25,7 @@
   "devDependencies": {
     "@config/tsup": "workspace:^",
     "@types/lodash": "^4.14.202",
-    "@types/react": "^18.2.43",
+    "@types/react": "^18.2.45",
     "resolve-tspaths": "^0.8.17",
     "tsup": "^8.0.1"
   }

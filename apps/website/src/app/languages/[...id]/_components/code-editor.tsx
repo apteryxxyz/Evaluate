@@ -44,12 +44,9 @@ export function CodeEditor(
 
   const ref = useRef<Editor>(null);
   useEffect(() => {
-    // Add data-evaluate-disabled to the pre element so that it is not
-    // picked up by the browser extension
     const textarea: HTMLTextAreaElement = Reflect.get(ref.current!, '_input');
     const pre = textarea?.parentElement?.childNodes[0] as HTMLPreElement;
     pre?.setAttribute('data-language', name);
-    pre?.setAttribute('data-evaluate-disabled', 'true');
   }, [name]);
 
   return (

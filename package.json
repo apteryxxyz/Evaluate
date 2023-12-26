@@ -1,6 +1,6 @@
 {
   "name": "evaluate",
-  "workspaces": ["configs/*", "apps/*", "bots/*", "extensions/*", "packages/*"],
+  "workspaces": ["configs/*", "apps/*", "bots/*", "packages/*"],
   "devDependencies": {
     "@biomejs/biome": "1.4.1",
     "turbo": "^1.11.1",

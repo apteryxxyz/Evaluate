@@ -54,5 +54,6 @@
     "className",
     "preClassName",
     "textareaClassName"
-  ]
+  ],
+  "tailwindCSS.experimental.configFile": "./packages/ui/tailwind.config.cjs"
 }

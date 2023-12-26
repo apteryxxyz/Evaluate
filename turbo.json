@@ -20,7 +20,7 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**"],
+      "inputs": ["src/**", "dictionaries/*.json"],
       "outputs": [
         ".next/**",
         "!.next/cache/**",

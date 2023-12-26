@@ -54,7 +54,7 @@
       "description": "The contents of the file."
     },
     "untitled": "Untitled",
-    "main": "Main"
+    "main": "Entrypoint"
   },
   "evaluate": {
     "$": "Evaluate",

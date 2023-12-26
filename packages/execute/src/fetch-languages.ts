@@ -1,12 +1,13 @@
 import Fuse from 'fuse.js';
 import { z } from 'zod';
-import { formatLanguageName, formatRuntimeName } from './format-names';
+import { resolveLanguageName, resolveRuntimeName } from './constants/index';
 
 export type Language = z.infer<typeof LanguageSchema>;
 export const LanguageSchema = z.object({
   id: z.string(),
   key: z.string(),
   version: z.string(),
+  short: z.string(),
   name: z.string(),
   aliases: z.array(z.string()).optional(),
   runtime: z
@@ -55,8 +56,9 @@ export async function fetchLanguages() {
     })
     .sort((a, b) => a.language.localeCompare(b.language))
     .map(({ runtime, ...language }) => {
-      const languageName = formatLanguageName(language.language);
-      const runtimeName = runtime && formatRuntimeName(runtime);
+      const languageName =
+        resolveLanguageName(language.language) ?? language.language;
+      const runtimeName = (runtime && resolveRuntimeName(runtime)) ?? runtime;
 
       return {
         id: `${runtime ? `${runtime}/` : ''}${language.language}`
@@ -64,6 +66,7 @@ export async function fetchLanguages() {
           .replaceAll('.', 'dot')
           .replaceAll('+', 'plus'),
         key: language.language,
+        short: languageName,
         name: `${languageName}${runtimeName ? ` (${runtimeName})` : ''}`,
         aliases: language.aliases,
         version: language.version,

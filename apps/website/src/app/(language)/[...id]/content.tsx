@@ -6,6 +6,7 @@ import {
   type ExecuteCodeResult,
   type Language,
   executeCode,
+  getLanguageFileName,
 } from '@evaluate/execute';
 import { useModifierKey } from '@evaluate/hooks';
 import { cn } from '@evaluate/ui';
@@ -27,13 +28,14 @@ export default function LanguageContent(p: { language: Language }) {
   const t = useTranslate();
 
   const searchParams = useSearchParams();
+  const name = getLanguageFileName(p.language.short);
   const code = atob(searchParams.get('code') ?? '');
   const input = atob(searchParams.get('input') ?? '');
   const args = atob(searchParams.get('args') ?? '');
 
   const executeCodeForm = useForm<Omit<ExecuteCodeOptions, 'language'>>({
     resolver: zodResolver(ExecuteCodeOptionsSchema.omit({ language: true })),
-    defaultValues: { files: [{ content: code }], input, args },
+    defaultValues: { files: [{ name, content: code }], input, args },
   });
 
   const [isExecuting, setIsExecuting] = useState(false);

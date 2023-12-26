@@ -15,6 +15,7 @@
   "dependencies": {
     "@evaluate/discord-bot": "workspace:^",
     "@evaluate/execute": "workspace:^",
+    "@evaluate/hooks": "workspace:^",
     "@evaluate/translate": "workspace:^",
     "@evaluate/ui": "workspace:^",
     "@hookform/resolvers": "^3.3.2",

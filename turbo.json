@@ -7,11 +7,11 @@
       "outputs": ["src/**"]
     },
     "lint": {
-      "dependsOn": ["format", "^lint"],
+      "dependsOn": ["^lint"],
       "inputs": ["src/**"]
     },
     "test": {
-      "dependsOn": ["lint", "build", "^test"],
+      "dependsOn": ["^test"],
       "inputs": ["src/**", "test/**"]
     },
     "check": {
@@ -28,6 +28,9 @@
         ".plasmo/**",
         "build/**"
       ]
+    },
+    "everything": {
+      "dependsOn": ["format", "lint", "check", "build", "test"]
     },
     "dev": {
       "cache": false,

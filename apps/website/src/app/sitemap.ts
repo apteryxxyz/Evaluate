@@ -27,7 +27,7 @@ async function loadDynamicPaths(): Promise<MetadataRoute.Sitemap> {
   const languages = await fetchLanguages();
 
   return languages.map((l) => ({
-    url: absoluteUrl(`/languages/${l.id}`),
+    url: absoluteUrl(`/${l.id}`),
     lastModified: new Date(),
   }));
 }

@@ -57,7 +57,7 @@ export async function handleEvaluating(
   if (!output.length) {
     output = t.evaluate.output.no_output();
   } else if (output.length > 1000) {
-    const url = new URL(`languages/${language.id}`, process.env.WEBSITE_URL);
+    const url = new URL(language.id, process.env.WEBSITE_URL);
 
     url.searchParams.set('utm_source', 'discord');
     url.searchParams.set('utm_medium', 'bot');

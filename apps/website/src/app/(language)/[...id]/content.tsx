@@ -7,6 +7,7 @@ import {
   type Language,
   executeCode,
 } from '@evaluate/execute';
+import { useModifierKey } from '@evaluate/hooks';
 import { cn } from '@evaluate/ui';
 import { Button } from '@evaluate/ui/button';
 import { Form } from '@evaluate/ui/form';
@@ -20,7 +21,6 @@ import { useTranslate } from '~/contexts/translate';
 import { CommandLineInput } from './_components/command-line-input';
 import { FileSystemInput } from './_components/file-system-input';
 import { ResultSection } from './_components/result-section';
-import { useModifierKey } from './_hooks/use-modifier-key';
 import LanguageLoading from './loading';
 
 export default function LanguageContent(p: { language: Language }) {

@@ -9,7 +9,8 @@
     ".": "./dist/index.js",
     "./use-element-bounds": "./dist/hooks/use-element-bounds.js",
     "./use-event-listener": "./dist/hooks/use-event-listener.js",
-    "./use-isomorphic-layout-effect": "./dist/hooks/use-isomorphic-layout-effect.js"
+    "./use-isomorphic-layout-effect": "./dist/hooks/use-isomorphic-layout-effect.js",
+    "./use-modifier-key": "./dist/hooks/use-modifier-key.js"
   },
   "scripts": {
     "build": "tsup --onSuccess resolve-tspaths",

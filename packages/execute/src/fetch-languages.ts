@@ -80,39 +80,6 @@ export async function fetchLanguages() {
       };
     });
 
-  /*
-  LastCachedLanguagesAt = Date.now();
-  CachedLanguages = runtimes
-    .filter(
-      (e, i, a) =>
-        !('runtime' in e) &&
-        a.findIndex((r) => r.language === e.language) === i,
-    )
-    .sort((a, b) => a.language.localeCompare(b.language))
-    .map(({ runtime, ...language }) => {
-      const languageName = formatLanguageName(language.language);
-      const runtimeName = runtime && formatRuntimeName(runtime);
-
-      return {
-        id: `${runtime ? `${runtime}/` : ''}${language.language}`
-          // URL safe ID
-          .replaceAll('.', 'dot')
-          .replaceAll('+', 'plus'),
-        key: language.language,
-        name: `${languageName}${runtimeName ? ` (${runtimeName})` : ''}`,
-        aliases: language.aliases,
-        version: language.version,
-        runtime: runtime
-          ? {
-              id: runtime,
-              key: runtime,
-              name: runtimeName ?? runtime,
-            }
-          : undefined,
-      };
-    });
-    */
-
   return CachedLanguages;
 }
 

@@ -56,7 +56,6 @@ export function SearchInput() {
       <Input
         ref={inputRef}
         placeholder={t.languages.search.description()}
-        // className="duration-300 hover:border-primary bg-glow"
         className="bg-transparent duration-300 hover:border-primary bg-glow"
       />
 

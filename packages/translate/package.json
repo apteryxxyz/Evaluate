@@ -1,6 +1,6 @@
 {
   "name": "@evaluate/translate",
-  "description": "Handle translations and translating for all of Evaluate.",
+  "description": "Handle translation dictionaries and translating for all of Evaluate.",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",

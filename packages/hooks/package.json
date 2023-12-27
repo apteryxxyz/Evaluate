@@ -1,6 +1,6 @@
 {
   "name": "@evaluate/hooks",
-  "description": "Shared React hooks for Evaluate.",
+  "description": "Shared React hooks for all Evaluates React projects.",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",

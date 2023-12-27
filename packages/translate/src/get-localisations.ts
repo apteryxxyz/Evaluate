@@ -23,7 +23,7 @@ export function getLocalisationsFor(key: string) {
 
 // The getLocalisationsFor function is used on the edge, and
 // lodash is not available there
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: any is required here
 function simpleGet(obj: any, path: string) {
   const [key, ...rest] = path.split('.');
   if (!key) return obj;

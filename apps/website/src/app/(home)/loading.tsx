@@ -4,8 +4,51 @@ import { SkeletonLanguageCard } from './_components/language-card';
 export default function LoadingPage() {
   return (
     <>
+      <div className="py-24 md:py-36 space-y-1">
+        <Skeleton
+          className="h-10 sm:h-12 md:h-14 w-full"
+          style={{ maxWidth: '1000px' }}
+        />
+        <Skeleton
+          className="h-10 sm:h-12 md:h-14 w-full"
+          style={{ maxWidth: '700px' }}
+        />
+        <Skeleton
+          className="h-10 sm:h-12 md:h-14 w-full md:hidden"
+          style={{ maxWidth: '300px' }}
+        />
+        <Skeleton
+          className="h-10 sm:h-12 md:h-14 w-full sm:hidden"
+          style={{ maxWidth: '300px' }}
+        />
+        <Skeleton
+          className="h-10 sm:h-12 md:h-14 w-full sm:hidden"
+          style={{ maxWidth: '300px' }}
+        />
+
+        <Skeleton className="h-5 md:h-6 w-full" style={{ maxWidth: '700px' }} />
+        <Skeleton className="h-5 md:h-6 w-full" style={{ maxWidth: '300px' }} />
+        <Skeleton
+          className="h-5 md:h-6 w-full sm:hidden"
+          style={{ maxWidth: '300px' }}
+        />
+        <Skeleton
+          className="h-5 md:h-6 w-full sm:hidden"
+          style={{ maxWidth: '300px' }}
+        />
+        <Skeleton
+          className="h-5 md:h-6 w-full sm:hidden"
+          style={{ maxWidth: '300px' }}
+        />
+      </div>
+
       <div>
-        <Skeleton className="w-36 h-8" />
+        <Skeleton className="h-8 w-36" />
+      </div>
+
+      <div className="flex gap-2">
+        <Skeleton className="h-8 w-full" />
+        <Skeleton className="h-8 w-8 md:w-32" />
       </div>
 
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">

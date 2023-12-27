@@ -10,16 +10,12 @@ import {
 import { Skeleton } from '@evaluate/ui/skeleton';
 import Link from 'next/link';
 import { useTranslate } from '~/contexts/translate';
-import './language-card.css';
 
 export function LanguageCard(p: Language) {
   const t = useTranslate();
 
   return (
-    <Card
-      className="language-card relative duration-300 hover:border-primary"
-      data-glow
-    >
+    <Card className="relative duration-300 hover:border-primary bg-transparent bg-glow">
       <CardHeader>
         <CardTitle>{p.name}</CardTitle>
 

@@ -1,7 +1,6 @@
 'use client';
 
 import { Language } from '@evaluate/execute';
-import { useEventListener } from '@evaluate/hooks';
 import { Fragment } from 'react';
 import { useLanguages } from '~/contexts/languages';
 import { useTranslate } from '~/contexts/translate';
@@ -10,17 +9,11 @@ import {
   SkeletonLanguageCard,
 } from './_components/language-card';
 import { SearchInput } from './_components/search-input';
-import './content.css';
 import LoadingPage from './loading';
 
 export default function LanguagesContent(p: { languages: Language[] }) {
   const t = useTranslate();
   const { languages, filteredLanguages } = useLanguages(p.languages);
-
-  useEventListener('pointermove', ({ x, y }) => {
-    document.documentElement.style.setProperty('--mouse-x', x.toFixed(2));
-    document.documentElement.style.setProperty('--mouse-y', y.toFixed(2));
-  });
 
   if (!t) return <LoadingPage />;
   return (

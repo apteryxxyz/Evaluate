@@ -7,8 +7,8 @@ import { useHotkeys } from '@mantine/hooks';
 import { Loader2Icon, SearchIcon } from 'lucide-react';
 import { useCallback, useRef } from 'react';
 import { useEventListener } from 'usehooks-ts';
-import { useTranslate } from '~/contexts/translate';
 import { useLanguages } from '~/contexts/languages';
+import { useTranslate } from '~/contexts/translate';
 
 export function SearchInput() {
   const t = useTranslate();
@@ -53,7 +53,12 @@ export function SearchInput() {
 
   return (
     <div className="flex gap-2">
-      <Input ref={inputRef} placeholder={t.languages.search.description()} />
+      <Input
+        ref={inputRef}
+        placeholder={t.languages.search.description()}
+        // className="duration-300 hover:border-primary bg-glow"
+        className="bg-transparent duration-300 hover:border-primary bg-glow"
+      />
 
       <Button
         type="button"

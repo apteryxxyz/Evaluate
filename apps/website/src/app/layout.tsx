@@ -1,10 +1,12 @@
-import '@evaluate/ui/tailwind.css';
 import { Inter } from 'next/font/google';
 import { GoogleAnalytics } from '~/components/google-analytics';
 import { LayoutProps } from '~/types';
 import { HeaderBar } from '../components/header-bar/header-bar';
 import { generateBaseMetadata } from './metadata';
 import { HTMLProviders, MainProviders } from './providers';
+
+import '@evaluate/ui/tailwind.css';
+import './layout.css';
 
 const inter = Inter({
   subsets: ['latin'],

@@ -1,12 +1,11 @@
 'use client';
 
 import { searchLanguages } from '@evaluate/execute';
+import { useEventListener, useHotKeys } from '@evaluate/hooks';
 import { Button } from '@evaluate/ui/button';
 import { Input } from '@evaluate/ui/input';
-import { useHotkeys } from '@mantine/hooks';
 import { Loader2Icon, SearchIcon } from 'lucide-react';
 import { useCallback, useRef } from 'react';
-import { useEventListener } from 'usehooks-ts';
 import { useLanguages } from '~/contexts/languages';
 import { useTranslate } from '~/contexts/translate';
 
@@ -46,10 +45,7 @@ export function SearchInput() {
   );
 
   // Listen for when the user presses ctrl+f or / and focus the input
-  useHotkeys([
-    ['ctrl+f', () => inputRef.current?.focus()],
-    ['/', () => inputRef.current?.focus()],
-  ]);
+  useHotKeys(['ctrl+f', '/'], () => inputRef.current?.focus(), [inputRef]);
 
   return (
     <div className="flex gap-2">

@@ -9,6 +9,7 @@
     ".": "./dist/index.js",
     "./use-element-bounds": "./dist/hooks/use-element-bounds.js",
     "./use-event-listener": "./dist/hooks/use-event-listener.js",
+    "./use-hot-keys": "./dist/hooks/use-hot-keys.js",
     "./use-isomorphic-layout-effect": "./dist/hooks/use-isomorphic-layout-effect.js",
     "./use-modifier-key": "./dist/hooks/use-modifier-key.js"
   },
@@ -20,7 +21,8 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "react-hotkeys-hook": "^4.4.1"
   },
   "devDependencies": {
     "@config/tsup": "workspace:^",

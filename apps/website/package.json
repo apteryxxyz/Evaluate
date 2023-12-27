@@ -19,7 +19,6 @@
     "@evaluate/translate": "workspace:^",
     "@evaluate/ui": "workspace:^",
     "@hookform/resolvers": "^3.3.3",
-    "@mantine/hooks": "^7.3.2",
     "@next/env": "^14.0.4",
     "lodash": "^4.17.21",
     "lucide-react": "^0.294.0",
@@ -30,7 +29,6 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.2",
     "react-simple-code-editor": "^0.13.1",
-    "usehooks-ts": "^2.9.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {

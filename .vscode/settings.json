@@ -37,7 +37,6 @@
     "Lexer",
     "lexure",
     "lucide",
-    "mantine",
     "messageformat",
     "plasmo",
     "popover",
@@ -46,8 +45,7 @@
     "shadcn",
     "tailwindcss",
     "tspaths",
-    "tsup",
-    "usehooks"
+    "tsup"
   ],
   "tailwindCSS.classAttributes": [
     "class",

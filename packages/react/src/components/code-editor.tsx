@@ -96,9 +96,8 @@ export function CodeEditor(
         onValueChange={p.setCode}
         highlight={(code) => {
           const grammar = Prism.languages[name];
-          if (!grammar) return code;
           return (
-            Prism.highlight(code, grammar, name)
+            (grammar ? Prism.highlight(code, grammar, name) : code)
               // Operator style isn't correct when in dark mode, easiest way to fix
               .replaceAll('class="token operator"', 'class="token"')
               .split('\n')

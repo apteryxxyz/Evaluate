@@ -46,7 +46,6 @@ export function CodeEditor(
     },
 ) {
   const name = useMemo(() => getLanguageName(p.language), [p.language]);
-  const isPreloaded = useMemo(() => !!Prism.languages[name], [name]);
   const [isFocused, setIsFocused] = useState(false);
   const [borderWidth, leftPosition, maxLength] = //
     useMemo(() => getLineNumberDimensions(p.code), [p.code]);
@@ -62,8 +61,8 @@ export function CodeEditor(
     <>
       {/* TODO: Add option to disable this, for the browser extension */}
       {/* Dynamically load the syntax grammar stuff */}
-      {!isPreloaded && (
-        <script
+      {!Prism.languages[name] && (
+        <Script
           src={`https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-${name}.js`}
         />
       )}

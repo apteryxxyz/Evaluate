@@ -16,6 +16,7 @@
     "./components/form": "./dist/components/form.js",
     "./components/input": "./dist/components/input.js",
     "./components/label": "./dist/components/label.js",
+    "./components/script": "./dist/components/script.js",
     "./components/sheet": "./dist/components/sheet.js",
     "./components/skeleton": "./dist/components/skeleton.js",
     "./components/switch": "./dist/components/switch.js",
@@ -32,7 +33,6 @@
     "./tailwind.config.js": "./tailwind.config.cjs",
     "./tailwind.css": "./tailwind.css"
   },
-
   "scripts": {
     "ui:add": "npx shadcn-ui@latest add",
     "build": "tsup --onSuccess resolve-tspaths",

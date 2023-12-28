@@ -5,9 +5,15 @@ import Prism from 'prismjs';
 import components from 'prismjs/components.js';
 import 'prismjs/themes/prism.min.css';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import SimpleEditor from 'react-simple-code-editor';
+import PossibleEditor from 'react-simple-code-editor';
 import { cn } from '~/utilities/class-name';
+import { Script } from './script';
 import type { TextareaProps } from './textarea';
+
+// Idk why we need to use default crap, but here it is
+// biome-ignore lint/suspicious/noExplicitAny: Needed
+const Editor: any =
+  'default' in PossibleEditor ? PossibleEditor.default : PossibleEditor;
 
 interface LanguageLike {
   short: string;
@@ -23,6 +29,8 @@ function getLanguageName(language?: LanguageLike) {
     language.name,
     language.key,
     ...(language.aliases ?? []),
+    // Remove any numbers for extra aliases, e.g. `python2` -> `python`
+    language.key.replace(/\d+/g, ''),
   ].map((v) => v.toLowerCase());
   const languages = Object.entries(components.languages) //
     .map(([key, value]) => [key, value.title, value.alias].flat());
@@ -46,12 +54,11 @@ export function CodeEditor(
     },
 ) {
   const name = useMemo(() => getLanguageName(p.language), [p.language]);
-  const isPreloaded = useMemo(() => !!Prism.languages[name], [name]);
   const [isFocused, setIsFocused] = useState(false);
   const [borderWidth, leftPosition, maxLength] = //
     useMemo(() => getLineNumberDimensions(p.code), [p.code]);
 
-  const ref = useRef<SimpleEditor>(null);
+  const ref = useRef<typeof Editor>(null);
   useEffect(() => {
     const textarea: HTMLTextAreaElement = Reflect.get(ref.current!, '_input');
     const pre = textarea?.parentElement?.childNodes[0] as HTMLPreElement;
@@ -62,8 +69,8 @@ export function CodeEditor(
     <>
       {/* TODO: Add option to disable this, for the browser extension */}
       {/* Dynamically load the syntax grammar stuff */}
-      {!isPreloaded && (
-        <script
+      {!Prism.languages[name] && (
+        <Script
           src={`https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-${name}.js`}
         />
       )}
@@ -87,16 +94,15 @@ export function CodeEditor(
         }}
       />
 
-      <SimpleEditor
+      <Editor
         {..._omit(p, ['language', 'code', 'setCode'])}
         ref={ref}
         value={p.code}
         onValueChange={p.setCode}
-        highlight={(code) => {
+        highlight={(code: string) => {
           const grammar = Prism.languages[name];
-          if (!grammar) return code;
           return (
-            Prism.highlight(code, grammar, name)
+            (grammar ? Prism.highlight(code, grammar, name) : code)
               // Operator style isn't correct when in dark mode, easiest way to fix
               .replaceAll('class="token operator"', 'class="token"')
               .split('\n')
@@ -111,7 +117,6 @@ export function CodeEditor(
         }}
         //
         style={{
-          // @ts-expect-error - CSS variable
           '--left-offset': `${leftPosition}px`,
           // When the editor is focused, the line numbers should be white
           '--line-number-colour': isFocused ? 'white' : 'black',

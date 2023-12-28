@@ -1,21 +1,20 @@
 'use client';
 
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from '@evaluate/react/components/alert';
-import { FileTerminalIcon } from 'lucide-react';
 import { useTranslate } from '~/contexts/translate';
 
 export default function ErrorPage() {
   const t = useTranslate();
+  if (!t) return null;
 
   return (
-    <Alert variant="destructive">
-      <FileTerminalIcon />
-      <AlertTitle>{t.internal_error()}</AlertTitle>
-      <AlertDescription>{t.internal_error.description()}</AlertDescription>
-    </Alert>
+    <div className="absolute inset-0 flex flex-col items-center justify-center">
+      <h2 className="text-8xl font-bold">500</h2>
+      <h3 className="text-4xl font-bold text-primary-gradient">
+        {t.internal_error()}
+      </h3>
+      <p className="text-md text-center text-muted-foreground">
+        {t.internal_error.description()}
+      </p>
+    </div>
   );
 }

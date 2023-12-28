@@ -7,6 +7,7 @@ import 'prismjs/themes/prism.min.css';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import SimpleEditor from 'react-simple-code-editor';
 import { cn } from '~/utilities/class-name';
+import { Script } from './script';
 import type { TextareaProps } from './textarea';
 
 interface LanguageLike {
@@ -23,6 +24,8 @@ function getLanguageName(language?: LanguageLike) {
     language.name,
     language.key,
     ...(language.aliases ?? []),
+    // Remove any numbers for extra aliases, e.g. `python2` -> `python`
+    language.key.replace(/\d+/g, ''),
   ].map((v) => v.toLowerCase());
   const languages = Object.entries(components.languages) //
     .map(([key, value]) => [key, value.title, value.alias].flat());

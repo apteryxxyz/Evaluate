@@ -1,15 +1,19 @@
 'use client';
 
 import type { ExecuteCodeOptions } from '@evaluate/execute';
-import { cn } from '@evaluate/ui';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@evaluate/ui/accordion';
-import { FormField, FormItem, FormLabel } from '@evaluate/ui/form';
-import { Textarea } from '@evaluate/ui/textarea';
+} from '@evaluate/react/components/accordion';
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@evaluate/react/components/form';
+import { Textarea } from '@evaluate/react/components/textarea';
+import { cn } from '@evaluate/react/utilities/class-name';
 import type { Control } from 'react-hook-form';
 import { useTranslate } from '~/contexts/translate';
 

@@ -1,4 +1,4 @@
-import { Skeleton } from '@evaluate/ui/skeleton';
+import { Skeleton } from '@evaluate/react/components/skeleton';
 
 export default function LanguageLoading() {
   return (

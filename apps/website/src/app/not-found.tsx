@@ -1,6 +1,10 @@
 'use client';
 
-import { Alert, AlertDescription, AlertTitle } from '@evaluate/ui/alert';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@evaluate/react/components/alert';
 import { FileTerminalIcon } from 'lucide-react';
 import { useTranslate } from '~/contexts/translate';
 

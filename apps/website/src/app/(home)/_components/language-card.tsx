@@ -6,8 +6,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@evaluate/ui/card';
-import { Skeleton } from '@evaluate/ui/skeleton';
+} from '@evaluate/react/components/card';
+import { Skeleton } from '@evaluate/react/components/skeleton';
 import Link from 'next/link';
 import { useTranslate } from '~/contexts/translate';
 

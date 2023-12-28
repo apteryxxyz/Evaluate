@@ -1,6 +1,6 @@
 'use client';
 
-import { useEventListener } from '@evaluate/hooks';
+import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { ServerThemeProvider } from 'next-themes';
 import { LanguagesProvider } from '~/contexts/languages';
 import { TranslateProvider } from '~/contexts/translate';

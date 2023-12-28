@@ -1,17 +1,26 @@
 'use client';
 
 import type { ExecuteCodeOptions, Language } from '@evaluate/execute';
-import { Button } from '@evaluate/ui/button';
-import { Card, CardHeader } from '@evaluate/ui/card';
-import { FormField, FormItem, FormLabel } from '@evaluate/ui/form';
-import { Input } from '@evaluate/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@evaluate/ui/tabs';
+import { Button } from '@evaluate/react/components/button';
+import { Card, CardHeader } from '@evaluate/react/components/card';
+import { CodeEditor } from '@evaluate/react/components/code-editor';
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@evaluate/react/components/form';
+import { Input } from '@evaluate/react/components/input';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@evaluate/react/components/tabs';
 import _truncate from 'lodash/truncate';
 import { FilePlus2Icon, Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 import { type Control, useFieldArray } from 'react-hook-form';
 import { useTranslate } from '~/contexts/translate';
-import { CodeEditor } from './code-editor';
 
 export function FileSystemInput(p: {
   control: Control<Omit<ExecuteCodeOptions, 'language'>, 'files'>;

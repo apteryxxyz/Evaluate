@@ -1,9 +1,10 @@
 'use client';
 
 import { searchLanguages } from '@evaluate/execute';
-import { useEventListener, useHotKeys } from '@evaluate/hooks';
-import { Button } from '@evaluate/ui/button';
-import { Input } from '@evaluate/ui/input';
+import { Button } from '@evaluate/react/components/button';
+import { Input } from '@evaluate/react/components/input';
+import { useEventListener } from '@evaluate/react/hooks/event-listener';
+import { useHotKeys } from '@evaluate/react/hooks/hot-keys';
 import { Loader2Icon, SearchIcon } from 'lucide-react';
 import { useCallback, useRef } from 'react';
 import { useLanguages } from '~/contexts/languages';

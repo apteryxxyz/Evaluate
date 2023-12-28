@@ -1,20 +1,29 @@
-import type { Language } from '@evaluate/execute';
-import type { TextareaProps } from '@evaluate/ui/textarea';
+'use client';
+
 import _omit from 'lodash/omit';
-import Script from 'next/script';
 import Prism from 'prismjs';
 import components from 'prismjs/components.js';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import Editor from 'react-simple-code-editor';
-
-import { cn } from '@evaluate/ui';
 import 'prismjs/themes/prism.min.css';
-import './code-editor.css';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import SimpleEditor from 'react-simple-code-editor';
+import { cn } from '~/utilities/class-name';
+import type { TextareaProps } from './textarea';
 
-function getLanguageName(language?: Language) {
+interface LanguageLike {
+  short: string;
+  name: string;
+  key: string;
+  aliases?: string[];
+}
+
+function getLanguageName(language?: LanguageLike) {
   if (!language) return 'text';
-  const values = [language.name, language.key, ...(language.aliases ?? [])] //
-    .map((v) => v.toLowerCase());
+  const values = [
+    language.short,
+    language.name,
+    language.key,
+    ...(language.aliases ?? []),
+  ].map((v) => v.toLowerCase());
   const languages = Object.entries(components.languages) //
     .map(([key, value]) => [key, value.title, value.alias].flat());
   const result = languages.find((m) => m.some((m) => values.includes(m)));
@@ -22,16 +31,16 @@ function getLanguageName(language?: Language) {
 }
 
 function getLineNumberDimensions(code: string) {
-  const length = code.split('\n').length.toString().length;
-  const borderWidth = 18 + (length - 1) * 7;
-  const left = -12 - (length - 1) * 8;
-  return [borderWidth, left] as const;
+  const maxLength = code.split('\n').length.toString().length;
+  const borderWidth = 18 + (maxLength - 1) * 7;
+  const left = -12 - (maxLength - 1) * 8;
+  return [borderWidth, left, maxLength] as const;
 }
 
 export function CodeEditor(
   p: React.HTMLAttributes<HTMLDivElement> &
     Omit<TextareaProps, 'value' | 'onChange'> & {
-      language?: Language;
+      language?: LanguageLike;
       code: string;
       setCode: (code: string) => void;
     },
@@ -39,10 +48,10 @@ export function CodeEditor(
   const name = useMemo(() => getLanguageName(p.language), [p.language]);
   const isPreloaded = useMemo(() => !!Prism.languages[name], [name]);
   const [isFocused, setIsFocused] = useState(false);
-  const [borderWidth, leftPosition] = //
+  const [borderWidth, leftPosition, maxLength] = //
     useMemo(() => getLineNumberDimensions(p.code), [p.code]);
 
-  const ref = useRef<Editor>(null);
+  const ref = useRef<SimpleEditor>(null);
   useEffect(() => {
     const textarea: HTMLTextAreaElement = Reflect.get(ref.current!, '_input');
     const pre = textarea?.parentElement?.childNodes[0] as HTMLPreElement;
@@ -51,14 +60,34 @@ export function CodeEditor(
 
   return (
     <>
+      {/* TODO: Add option to disable this, for the browser extension */}
       {/* Dynamically load the syntax grammar stuff */}
       {!isPreloaded && (
-        <Script
+        <script
           src={`https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-${name}.js`}
         />
       )}
 
-      <Editor
+      <style
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: Yeah boi
+        dangerouslySetInnerHTML={{
+          __html: `
+          .line-number:before {
+            position: absolute;
+            left: var(--left-offset);
+            content: attr(data-line-number);
+            color: var(--line-number-colour, white);
+          }
+
+          /* In dark mode, the line numbers should always be white */
+          .dark .line-number:before {
+            color: white !important;
+          }
+          `,
+        }}
+      />
+
+      <SimpleEditor
         {..._omit(p, ['language', 'code', 'setCode'])}
         ref={ref}
         value={p.code}
@@ -74,7 +103,7 @@ export function CodeEditor(
               .map(
                 (l, i) => `<span
                   class="line-number font-mono"
-                  data-line-number="${i + 1}"
+                  data-line-number="${String(i + 1).padStart(maxLength, ' ')}"
                 >${l}</span>`,
               )
               .join('\n')
@@ -84,6 +113,8 @@ export function CodeEditor(
         style={{
           // @ts-expect-error - CSS variable
           '--left-offset': `${leftPosition}px`,
+          // When the editor is focused, the line numbers should be white
+          '--line-number-colour': isFocused ? 'white' : 'black',
           borderLeftWidth: `${borderWidth}px`,
         }}
         className={cn(

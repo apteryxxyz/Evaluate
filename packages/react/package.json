@@ -1,0 +1,74 @@
+{
+  "name": "@evaluate/react",
+  "description": "Shared React components and hooks for Evaluates React projects.",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "./components/accordion": "./dist/components/accordion.js",
+    "./components/alert": "./dist/components/alert.js",
+    "./components/button": "./dist/components/button.js",
+    "./components/card": "./dist/components/card.js",
+    "./components/code-editor": "./dist/components/code-editor.js",
+    "./components/dialog": "./dist/components/dialog.js",
+    "./components/dropdown-menu": "./dist/components/dropdown-menu.js",
+    "./components/form": "./dist/components/form.js",
+    "./components/input": "./dist/components/input.js",
+    "./components/label": "./dist/components/label.js",
+    "./components/sheet": "./dist/components/sheet.js",
+    "./components/skeleton": "./dist/components/skeleton.js",
+    "./components/switch": "./dist/components/switch.js",
+    "./components/tabs": "./dist/components/tabs.js",
+    "./components/textarea": "./dist/components/textarea.js",
+    "./hooks/element-bounds": "./dist/hooks/use-element-bounds.js",
+    "./hooks/event-listener": "./dist/hooks/use-event-listener.js",
+    "./hooks/hot-keys": "./dist/hooks/use-hot-keys.js",
+    "./hooks/is-first-render": "./dist/hooks/use-is-first-render.js",
+    "./hooks/isomorphic-layout-effect": "./dist/hooks/use-isomorphic-layout-effect.js",
+    "./hooks/modifier-key": "./dist/hooks/use-modifier-key.js",
+    "./hooks/update-effect": "./dist/hooks/use-update-effect.js",
+    "./utilities/class-name": "./dist/utilities/class-name.js",
+    "./tailwind.config.js": "./tailwind.config.cjs",
+    "./tailwind.css": "./tailwind.css"
+  },
+
+  "scripts": {
+    "ui:add": "npx shadcn-ui@latest add",
+    "build": "tsup --onSuccess resolve-tspaths",
+    "format": "biome format src --write",
+    "lint": "biome lint src",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-switch": "^1.0.3",
+    "@radix-ui/react-tabs": "^1.0.4",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "lodash": "^4.17.21",
+    "lucide-react": "^0.294.0",
+    "prismjs": "^1.29.0",
+    "react": "^18.2.0",
+    "react-hotkeys-hook": "^4.4.1",
+    "react-simple-code-editor": "^0.13.1",
+    "tailwind-merge": "^2.2.0"
+  },
+  "peerDependencies": {
+    "react-hook-form": "^7.49.2",
+    "@hookform/resolvers": "^3.3.3"
+  },
+  "devDependencies": {
+    "react-hook-form": "^7.49.2",
+    "@config/tsup": "workspace:^",
+    "@types/lodash": "^4.14.202",
+    "@types/prismjs": "^1.26.3",
+    "@types/react": "^18.2.45",
+    "resolve-tspaths": "^0.8.17",
+    "tsup": "^8.0.1"
+  }
+}

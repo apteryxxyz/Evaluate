@@ -1,7 +1,7 @@
 'use client';
 
-import { cn } from '@evaluate/ui';
-import { Button } from '@evaluate/ui/button';
+import { Button } from '@evaluate/react/components/button';
+import { cn } from '@evaluate/react/utilities/class-name';
 import { useTranslate } from '~/contexts/translate';
 
 export function NavigationBar(p: { isHeader?: true } | { isSheet?: true }) {

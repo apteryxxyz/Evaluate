@@ -1,13 +1,13 @@
 'use client';
 
-import { Locale, locales } from '@evaluate/translate';
-import { Button } from '@evaluate/ui/button';
+import { Button } from '@evaluate/react/components/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@evaluate/ui/dropdown-menu';
+} from '@evaluate/react/components/dropdown-menu';
+import { Locale, locales } from '@evaluate/translate';
 import { LanguagesIcon } from 'lucide-react';
 import { useTranslate } from '~/contexts/translate';
 

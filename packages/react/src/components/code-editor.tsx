@@ -5,10 +5,15 @@ import Prism from 'prismjs';
 import components from 'prismjs/components.js';
 import 'prismjs/themes/prism.min.css';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import SimpleEditor from 'react-simple-code-editor';
+import PossibleEditor from 'react-simple-code-editor';
 import { cn } from '~/utilities/class-name';
 import { Script } from './script';
 import type { TextareaProps } from './textarea';
+
+// Idk why we need to use default crap, but here it is
+// biome-ignore lint/suspicious/noExplicitAny: Needed
+const Editor: any =
+  'default' in PossibleEditor ? PossibleEditor.default : PossibleEditor;
 
 interface LanguageLike {
   short: string;
@@ -53,7 +58,7 @@ export function CodeEditor(
   const [borderWidth, leftPosition, maxLength] = //
     useMemo(() => getLineNumberDimensions(p.code), [p.code]);
 
-  const ref = useRef<SimpleEditor>(null);
+  const ref = useRef<typeof Editor>(null);
   useEffect(() => {
     const textarea: HTMLTextAreaElement = Reflect.get(ref.current!, '_input');
     const pre = textarea?.parentElement?.childNodes[0] as HTMLPreElement;
@@ -89,12 +94,12 @@ export function CodeEditor(
         }}
       />
 
-      <SimpleEditor
+      <Editor
         {..._omit(p, ['language', 'code', 'setCode'])}
         ref={ref}
         value={p.code}
         onValueChange={p.setCode}
-        highlight={(code) => {
+        highlight={(code: string) => {
           const grammar = Prism.languages[name];
           return (
             (grammar ? Prism.highlight(code, grammar, name) : code)
@@ -112,7 +117,6 @@ export function CodeEditor(
         }}
         //
         style={{
-          // @ts-expect-error - CSS variable
           '--left-offset': `${leftPosition}px`,
           // When the editor is focused, the line numbers should be white
           '--line-number-colour': isFocused ? 'white' : 'black',

@@ -1,5 +1,0 @@
-.line-number:before {
-  position: absolute;
-  left: var(--left-offset);
-  content: attr(data-line-number);
-}

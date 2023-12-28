@@ -8,10 +8,11 @@ import {
   executeCode,
   getLanguageFileName,
 } from '@evaluate/execute';
-import { useHotKeys, useModifierKey } from '@evaluate/hooks';
-import { cn } from '@evaluate/ui';
-import { Button } from '@evaluate/ui/button';
-import { Form } from '@evaluate/ui/form';
+import { cn } from '@evaluate/react/utilities/class-name';
+import { Button } from '@evaluate/react/components/button';
+import { Form } from '@evaluate/react/components/form';
+import { useHotKeys } from '@evaluate/react/hooks/hot-keys';
+import { useModifierKey } from '@evaluate/react/hooks/modifier-key';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';

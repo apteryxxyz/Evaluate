@@ -15,9 +15,8 @@
   "dependencies": {
     "@evaluate/discord-bot": "workspace:^",
     "@evaluate/execute": "workspace:^",
-    "@evaluate/hooks": "workspace:^",
+    "@evaluate/react": "workspace:^",
     "@evaluate/translate": "workspace:^",
-    "@evaluate/ui": "workspace:^",
     "@hookform/resolvers": "^3.3.3",
     "@next/env": "^14.0.4",
     "lodash": "^4.17.21",

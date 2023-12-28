@@ -1,11 +1,11 @@
 import type { ExecuteCodeOptions, ExecuteCodeResult } from '@evaluate/execute';
-import { cn } from '@evaluate/ui';
-import { Label } from '@evaluate/ui/label';
+import { CodeEditor } from '@evaluate/react/components/code-editor';
+import { Label } from '@evaluate/react/components/label';
+import { cn } from '@evaluate/react/utilities/class-name';
 import _isEqual from 'lodash/isEqual';
 import { useMemo } from 'react';
 import { type Control, useWatch } from 'react-hook-form';
 import { useTranslate } from '~/contexts/translate';
-import { CodeEditor } from './code-editor';
 
 export function ResultSection(p: {
   control: Control<Omit<ExecuteCodeOptions, 'language'>>;
@@ -39,10 +39,11 @@ export function ResultSection(p: {
 
   return (
     <div className="space-y-2">
-      <Label>{t.evaluate.output()}</Label>
+      <Label htmlFor="output">{t.evaluate.output()}</Label>
 
       <CodeEditor
         readOnly
+        name="output"
         code={formattedOutput ?? ''}
         setCode={() => {}}
         placeholder={

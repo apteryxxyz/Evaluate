@@ -1,7 +1,11 @@
 'use client';
 
-import { Button } from '@evaluate/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@evaluate/ui/sheet';
+import { Button } from '@evaluate/react/components/button';
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from '@evaluate/react/components/sheet';
 import { MapIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';

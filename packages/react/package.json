@@ -28,7 +28,9 @@
     "./hooks/isomorphic-layout-effect": "./dist/hooks/use-isomorphic-layout-effect.js",
     "./hooks/modifier-key": "./dist/hooks/use-modifier-key.js",
     "./hooks/update-effect": "./dist/hooks/use-update-effect.js",
-    "./utilities/class-name": "./dist/utilities/class-name.js"
+    "./utilities/class-name": "./dist/utilities/class-name.js",
+    "./tailwind.config.js": "./tailwind.config.cjs",
+    "./tailwind.css": "./tailwind.css"
   },
 
   "scripts": {

@@ -5,7 +5,7 @@ import { HeaderBar } from '../components/header-bar/header-bar';
 import { generateBaseMetadata } from './metadata';
 import { HTMLProviders, MainProviders } from './providers';
 
-import '@evaluate/ui/tailwind.css';
+import '@evaluate/react/tailwind.css';
 import './layout.css';
 
 const inter = Inter({

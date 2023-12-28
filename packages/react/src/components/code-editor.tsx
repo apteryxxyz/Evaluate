@@ -79,7 +79,7 @@ export function CodeEditor(
             color: var(--line-number-colour, white);
           }
 
-          // In dark mode, the line numbers should always be white
+          /* In dark mode, the line numbers should always be white */
           .dark .line-number:before {
             color: white !important;
           }

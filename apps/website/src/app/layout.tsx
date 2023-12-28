@@ -20,8 +20,8 @@ export function generateMetadata() {
 export default function RootLayout(p: LayoutProps) {
   return (
     <HTMLProviders>
-      <html lang="en" className={inter.className}>
-        <head>
+      <html key="html" lang="en" className={inter.className}>
+        <head key="head">
           <GoogleAnalytics />
 
           <meta name="darkreader-lock" />
@@ -49,7 +49,7 @@ export default function RootLayout(p: LayoutProps) {
           />
         </head>
 
-        <body className="flex pb-8 flex-col gap-8">
+        <body key="body" className="flex pb-8 flex-col gap-8">
           <MainProviders>
             <HeaderBar />
 

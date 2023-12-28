@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import * as ReactDOM from 'react-dom';
 
 const LoadCache = new Set();
 
@@ -19,8 +18,5 @@ export function Script(p: { src: string }) {
     loadScript(p.src);
     hasEffectCalled.current = true;
   }, [p.src]);
-
-  // @ts-ignore
-  ReactDOM.preload(p.src, { as: 'script' });
   return null;
 }

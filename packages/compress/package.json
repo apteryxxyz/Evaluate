@@ -1,0 +1,28 @@
+{
+  "name": "@evaluate/compress",
+  "description": "Simple compression and decompression library.",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "format": "biome format src --write",
+    "lint": "biome lint src",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "pako": "^2.1.0"
+  },
+  "devDependencies": {
+    "@config/tsup": "workspace:^",
+    "@types/pako": "^2.0.3",
+    "tsup": "^8.0.1"
+  }
+}

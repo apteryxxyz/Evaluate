@@ -23,6 +23,7 @@
     "@discordjs/core": "^1.1.1",
     "@discordjs/rest": "^2.2.0",
     "@evaluate/capture": "workspace:^",
+    "@evaluate/compress": "workspace:^",
     "@evaluate/execute": "workspace:^",
     "@evaluate/translate": "workspace:^",
     "@next/env": "^14.0.4",

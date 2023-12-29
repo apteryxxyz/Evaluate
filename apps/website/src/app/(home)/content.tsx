@@ -1,7 +1,9 @@
 'use client';
 
 import { Language } from '@evaluate/execute';
-import { Fragment } from 'react';
+import { Separator } from '@evaluate/react/components/separator';
+import { useLocalStorage } from '@evaluate/react/hooks/local-storage';
+import { Fragment, useMemo } from 'react';
 import { useLanguages } from '~/contexts/languages';
 import { useTranslate } from '~/contexts/translate';
 import {
@@ -14,6 +16,11 @@ import LoadingPage from './loading';
 export default function LanguagesContent(p: { languages: Language[] }) {
   const t = useTranslate();
   const { languages, filteredLanguages } = useLanguages(p.languages);
+  const [pinned] = useLocalStorage<string[]>('evaluate.pinned', []);
+  const pinnedLanguages = useMemo(
+    () => languages.filter((l) => pinned.includes(l.id)),
+    [pinned, languages],
+  );
 
   if (!t) return <LoadingPage />;
   return (
@@ -45,18 +52,34 @@ export default function LanguagesContent(p: { languages: Language[] }) {
 
       <SearchInput />
 
-      <div className="min-h-[calc(100vh_-_100px)]">
-        <div className=" grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+      <div className="min-h-[calc(100vh_-_100px)] space-y-4">
+        {pinnedLanguages.length > 0 && (
+          <>
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+              {pinnedLanguages.map((l) => (
+                <Fragment key={l.id}>
+                  <LanguageCard {...l} key={l.key} />
+                </Fragment>
+              ))}
+            </div>
+
+            <Separator orientation="horizontal" decorative />
+          </>
+        )}
+
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
           {!languages.length &&
             [...(new Array(70) as unknown[])].map((_, index) => (
               <SkeletonLanguageCard key={String(index)} />
             ))}
 
-          {filteredLanguages.map((l) => (
-            <Fragment key={l.id}>
-              <LanguageCard {...l} key={l.key} />
-            </Fragment>
-          ))}
+          {filteredLanguages
+            .filter((l) => !pinnedLanguages.includes(l))
+            .map((l) => (
+              <Fragment key={l.id}>
+                <LanguageCard {...l} key={l.key} />
+              </Fragment>
+            ))}
         </div>
       </div>
     </>

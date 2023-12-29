@@ -1,3 +1,4 @@
+import { compress } from '@evaluate/compress';
 import { executeCode, findLanguage } from '@evaluate/execute';
 import { TranslateFunctions } from '@evaluate/translate';
 import { APIInteraction } from 'discord-api-types/v10';
@@ -61,10 +62,14 @@ export async function handleEvaluating(
 
     url.searchParams.set('utm_source', 'discord');
     url.searchParams.set('utm_medium', 'bot');
-
-    url.searchParams.set('code', btoa(_options.code));
-    if (_options.input) url.searchParams.set('input', btoa(_options.input));
-    if (_options.args) url.searchParams.set('args', btoa(_options.args));
+    url.searchParams.set(
+      'data',
+      compress({
+        files: [{ content: _options.code }],
+        input: _options.input ?? '',
+        args: _options.args ?? '',
+      }),
+    );
 
     output = t.evaluate.output.too_long({ url: url.toString() });
   } else {

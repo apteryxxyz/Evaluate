@@ -5,7 +5,7 @@ import { Button } from '@evaluate/react/components/button';
 import { Input } from '@evaluate/react/components/input';
 import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { useHotKeys } from '@evaluate/react/hooks/hot-keys';
-import { Loader2Icon, SearchIcon } from 'lucide-react';
+import { ListRestartIcon, Loader2Icon, SearchIcon } from 'lucide-react';
 import { useCallback, useRef } from 'react';
 import { useLanguages } from '~/contexts/languages';
 import { useTranslate } from '~/contexts/translate';
@@ -14,8 +14,13 @@ export function SearchInput() {
   const t = useTranslate();
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const { languages, isSearching, setIsSearching, setFilteredLanguages } =
-    useLanguages();
+  const {
+    languages,
+    filteredLanguages,
+    isSearching,
+    setIsSearching,
+    setFilteredLanguages,
+  } = useLanguages();
 
   const onClick = useCallback(() => {
     if (isSearching) return;
@@ -77,19 +82,29 @@ export function SearchInput() {
       >
         {isSearching ? (
           <>
-            <Loader2Icon className="h-4 w-4 animate-spin" />
+            <Loader2Icon size={16} className="animate-spin" />
             <span className="hidden md:block">
               &nbsp;{t.languages.search.ing()}
             </span>
           </>
         ) : (
           <>
-            <SearchIcon className="h-4 w-4" />
+            <SearchIcon size={16} />
             <span className="hidden md:block">
               &nbsp;{t.languages.search()}
             </span>
           </>
         )}
+      </Button>
+
+      <Button
+        size="icon"
+        className="aspect-square"
+        disabled={languages.length === filteredLanguages.length}
+        onClick={() => setFilteredLanguages(languages)}
+      >
+        <ListRestartIcon size={16} />
+        <span className="sr-only">{t.screen_reader.clear_search()}</span>
       </Button>
     </div>
   );

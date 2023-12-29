@@ -13,6 +13,7 @@
     "check": "tsc --noEmit"
   },
   "dependencies": {
+    "@evaluate/compress": "workspace:^",
     "@evaluate/discord-bot": "workspace:^",
     "@evaluate/execute": "workspace:^",
     "@evaluate/react": "workspace:^",

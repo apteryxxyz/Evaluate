@@ -9,7 +9,8 @@
     "add_file": "Add File",
     "remove_file": "Remove File",
     "pin_language": "Pin Language",
-    "unpin_language": "Unpin Language"
+    "unpin_language": "Unpin Language",
+    "clear_search": "Clear Search"
   },
   "seo": {
     "headline": "Code in any language, anytime, anywhere with Evaluate.",

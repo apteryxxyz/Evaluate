@@ -97,12 +97,12 @@ export default function LanguageContent(p: { language: Language }) {
             >
               {isExecuting ? (
                 <>
-                  <Loader2Icon className="h-4 w-4 animate-spin" />
+                  <Loader2Icon size={16} className="animate-spin" />
                   <span>&nbsp;{t.evaluate.run.ing()}</span>
                 </>
               ) : (
                 <>
-                  <PlayIcon className="h-4 w-4" />
+                  <PlayIcon size={16} />
                   <span>&nbsp;{t.evaluate.run()}</span>
                 </>
               )}

@@ -39,7 +39,7 @@ export function HeaderBar() {
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="md:hidden">
-              <MapIcon />
+              <MapIcon size={16} />
               {t && (
                 <span className="sr-only">{t.screen_reader.toggle_menu()}</span>
               )}

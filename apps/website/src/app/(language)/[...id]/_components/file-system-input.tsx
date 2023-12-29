@@ -70,7 +70,7 @@ export function FileSystemInput(p: {
           }}
           disabled={files.fields.length >= 10}
         >
-          <FilePlus2Icon />
+          <FilePlus2Icon size={16} />
           <span className="sr-only">{t.screen_reader.add_file()}</span>
         </Button>
       </div>
@@ -141,7 +141,7 @@ export function FileSystemInput(p: {
               }}
               disabled={files.fields.length <= 1}
             >
-              <Trash2Icon />
+              <Trash2Icon size={16} />
               <span className="sr-only">{t.screen_reader.remove_file()}</span>
             </Button>
           </Card>

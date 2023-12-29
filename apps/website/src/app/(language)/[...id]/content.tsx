@@ -8,11 +8,11 @@ import {
   executeCode,
   getLanguageFileName,
 } from '@evaluate/execute';
-import { cn } from '@evaluate/react/utilities/class-name';
 import { Button } from '@evaluate/react/components/button';
 import { Form } from '@evaluate/react/components/form';
 import { useHotKeys } from '@evaluate/react/hooks/hot-keys';
 import { useModifierKey } from '@evaluate/react/hooks/modifier-key';
+import { cn } from '@evaluate/react/utilities/class-name';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
@@ -62,7 +62,12 @@ export default function LanguageContent(p: { language: Language }) {
     },
   );
 
-  useHotKeys(['ctrl+enter', 'meta+enter'], () => onSubmit(), [onSubmit]);
+  useHotKeys(
+    ['ctrl+enter', 'meta+enter'], //
+    () => onSubmit(),
+    [onSubmit],
+    { enableOnFormTags: true },
+  );
 
   if (!t) return <LanguageLoading />;
 

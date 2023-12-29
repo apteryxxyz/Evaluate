@@ -46,7 +46,11 @@ export function SearchInput() {
   );
 
   // Listen for when the user presses ctrl+f or / and focus the input
-  useHotKeys(['ctrl+f', '/'], () => inputRef.current?.focus(), [inputRef]);
+  useHotKeys(
+    ['ctrl+f', '/'], //
+    () => inputRef.current?.focus(),
+    { preventDefault: true },
+  );
 
   return (
     <div className="flex gap-2">

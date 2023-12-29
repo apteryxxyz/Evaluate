@@ -7,7 +7,10 @@
     "change_locale": "Cambia Lingua",
     "toggle_menu": "Attiva/Disattiva Menù Navigazione",
     "add_file": "Aggiungi File",
-    "remove_file": "Rimuovi File"
+    "remove_file": "Rimuovi File",
+    "pin_language": "Aggiungi linguaggio ai preferiti",
+    "unpin_language": "Rimuovi linguaggio dai preferiti",
+    "clear_search": "Cancella Ricerca"
   },
   "seo": {
     "headline": "Programma in ogni lingua, quando vuoi, dove vuoi con Evaluate.",

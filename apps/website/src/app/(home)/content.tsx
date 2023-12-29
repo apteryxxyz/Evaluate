@@ -45,17 +45,19 @@ export default function LanguagesContent(p: { languages: Language[] }) {
 
       <SearchInput />
 
-      <div className="language-cards-container grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-        {!languages.length &&
-          [...(new Array(70) as unknown[])].map((_, index) => (
-            <SkeletonLanguageCard key={String(index)} />
-          ))}
+      <div className="min-h-[calc(100vh_-_100px)]">
+        <div className=" grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+          {!languages.length &&
+            [...(new Array(70) as unknown[])].map((_, index) => (
+              <SkeletonLanguageCard key={String(index)} />
+            ))}
 
-        {filteredLanguages.map((l) => (
-          <Fragment key={l.id}>
-            <LanguageCard {...l} key={l.key} />
-          </Fragment>
-        ))}
+          {filteredLanguages.map((l) => (
+            <Fragment key={l.id}>
+              <LanguageCard {...l} key={l.key} />
+            </Fragment>
+          ))}
+        </div>
       </div>
     </>
   );

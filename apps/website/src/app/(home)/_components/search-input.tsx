@@ -18,18 +18,24 @@ export function SearchInput() {
     useLanguages();
 
   const onClick = useCallback(() => {
-    // TIL we don't need useState where we're going
-    const query = inputRef.current?.value ?? '';
-
-    // If the input is empty, reset the filtered languages
-    if (!query.trim()) return setFilteredLanguages(languages);
-
     if (isSearching) return;
     setIsSearching(true);
 
-    return searchLanguages(query)
-      .then(setFilteredLanguages)
-      .finally(() => setIsSearching(false));
+    // TIL we don't need useState where we're going
+    const query = inputRef.current?.value ?? '';
+
+    try {
+      // If the input is empty, reset the filtered languages
+      if (!query.trim()) return setFilteredLanguages(languages);
+      else return searchLanguages(query).then(setFilteredLanguages);
+    } catch {
+    } finally {
+      setIsSearching(false);
+
+      // Scroll to the top of the languages list
+      const scrollAnchor = inputRef.current?.parentElement?.children[0];
+      scrollAnchor?.scrollIntoView({ behavior: 'smooth' });
+    }
   }, [isSearching, languages, setIsSearching, setFilteredLanguages]);
 
   // Listen for when the user presses enter while focused on the input
@@ -53,7 +59,10 @@ export function SearchInput() {
   );
 
   return (
-    <div className="flex gap-2">
+    <div className="relative flex gap-2">
+      {/* An anchor intended to define the position to scroll to when search */}
+      <div className="h-1 bg-transparent absolute top-[-80px]" />
+
       <Input
         ref={inputRef}
         placeholder={t.languages.search.description()}

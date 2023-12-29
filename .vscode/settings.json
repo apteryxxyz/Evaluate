@@ -38,11 +38,13 @@
     "lexure",
     "lucide",
     "messageformat",
+    "pako",
     "plasmo",
     "popover",
     "prismjs",
     "runtimes",
     "shadcn",
+    "sonner",
     "tailwindcss",
     "tspaths",
     "tsup"

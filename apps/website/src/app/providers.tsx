@@ -1,7 +1,8 @@
 'use client';
 
+import { Toaster } from '@evaluate/react/components/sonner';
 import { useEventListener } from '@evaluate/react/hooks/event-listener';
-import { ServerThemeProvider } from 'next-themes';
+import { ServerThemeProvider, useTheme } from 'next-themes';
 import { LanguagesProvider } from '~/contexts/languages';
 import { TranslateProvider } from '~/contexts/translate';
 
@@ -20,6 +21,8 @@ export function HTMLProviders(p: React.PropsWithChildren) {
 }
 
 export function MainProviders(p: React.PropsWithChildren) {
+  const { theme = 'system' } = useTheme();
+
   useEventListener('pointermove', ({ x, y }) => {
     document.documentElement.style.setProperty('--mouse-x', x.toFixed(2));
     document.documentElement.style.setProperty('--mouse-y', y.toFixed(2));
@@ -27,7 +30,10 @@ export function MainProviders(p: React.PropsWithChildren) {
 
   return (
     <TranslateProvider>
-      <LanguagesProvider>{p.children}</LanguagesProvider>
+      <LanguagesProvider>
+        {p.children}
+        <Toaster theme={theme as never} />
+      </LanguagesProvider>
     </TranslateProvider>
   );
 }

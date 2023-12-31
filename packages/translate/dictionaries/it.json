@@ -101,5 +101,12 @@
       "too_long": "L'ouput eccede i limiti di lunghezza di Discord. Per una visualizzazione non ristretta, perfavore visita il [Sito di Evaluate]({url})."
     },
     "unauthorised": "Questo non è la tua evaluation, devi crearne una tua."
+  },
+  "share": {
+    "copy_url": {
+      "$": "Copia l'URL di ricerca",
+      "success": "URL copiato negli appunti!",
+      "failed": "Non sono riuscito a copiare l'URL negli appunti!"
+    }
   }
 }

@@ -92,10 +92,10 @@ export default function LanguageContent(p: { language: Language }) {
     url.searchParams.set('data', data);
 
     copy(url.toString()).then((success) => {
-      if (!success) toast.error('Failed to copy URL to clipboard!');
-      else toast('Copied URL to clipboard!', { icon: <LinkIcon size={16} /> });
+      if (!success) toast.error(t.share.copy_url.failed());
+      else toast(t.share.copy_url.success(), { icon: <LinkIcon size={16} /> });
     });
-  }, [executeCodeForm, copy]);
+  }, [executeCodeForm, copy, t]);
 
   if (!t) return <LanguageLoading />;
 
@@ -121,6 +121,7 @@ export default function LanguageContent(p: { language: Language }) {
               onClick={copyShareUrlToClipboard}
             >
               <Share2Icon size={16} />
+              <span className="sr-only">{t.share.copy_url()}</span>
             </Button>
 
             <div className="w-full md:w-auto flex flex-col gap-1">

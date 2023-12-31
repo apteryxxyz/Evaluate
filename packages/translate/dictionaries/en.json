@@ -101,5 +101,12 @@
       "too_long": "The output exceeded Discord's display limits. For an unrestricted view, please visit the [Evaluate website]({url})."
     },
     "unauthorised": "This is not your evaluation, you'll need to create your own."
+  },
+  "share": {
+    "copy_url": {
+      "$": "Copy the search URL",
+      "success": "Copied URL to clipboard!",
+      "failed": "Failed to copy URL to clipboard!"
+    }
   }
 }

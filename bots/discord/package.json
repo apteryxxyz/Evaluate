@@ -13,10 +13,11 @@
     }
   },
   "scripts": {
-    "build": "tsup",
     "format": "biome format src --write",
     "lint": "biome lint src",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "build": "tsup",
+    "dev": "pnpm build --watch & npx localtunnel --port 3000 --subdomain apteryx-testing-bot"
   },
   "dependencies": {
     "@discordjs/builders": "^1.7.0",

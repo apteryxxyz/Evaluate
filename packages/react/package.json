@@ -39,11 +39,12 @@
     "./tailwind.css": "./tailwind.css"
   },
   "scripts": {
-    "ui:add": "npx shadcn-ui@latest add",
-    "build": "tsup --onSuccess resolve-tspaths",
     "format": "biome format src --write",
     "lint": "biome lint src",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "build": "tsup --onSuccess resolve-tspaths",
+    "dev": "tsup --watch",
+    "ui:add": "npx shadcn-ui@latest add"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",

@@ -3,14 +3,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev:next": "next dev --turbo",
-    "dev:tunnel": "npx localtunnel --port 3000 --subdomain evaluate",
-    "dev": "pnpm run \"/^dev:.*/\"",
-    "build": "next build",
-    "start": "next start",
     "format": "biome format src --write",
     "lint": "biome lint src",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "build": "next build",
+    "start": "next start",
+    "dev": "next dev --turbo"
   },
   "dependencies": {
     "@evaluate/compress": "workspace:^",

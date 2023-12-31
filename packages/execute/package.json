@@ -12,11 +12,12 @@
     }
   },
   "scripts": {
-    "build": "tsup",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "format": "biome format src --write",
     "lint": "biome lint src",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "build": "tsup",
+    "dev": "tsup --watch"
   },
   "dependencies": {
     "fuse.js": "^7.0.0",

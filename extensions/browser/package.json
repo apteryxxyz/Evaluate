@@ -31,12 +31,7 @@
     "tailwindcss": "^3.4.0"
   },
   "manifest": {
-    "host_permissions": [
-      "https://*/*"
-    ],
-    "permissions": [
-      "activeTab",
-      "tabs"
-    ]
+    "host_permissions": ["https://*/*"],
+    "permissions": ["activeTab", "tabs", "scripting"]
   }
 }

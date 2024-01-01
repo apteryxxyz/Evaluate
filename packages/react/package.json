@@ -44,7 +44,7 @@
     "lint": "biome lint src",
     "check": "tsc --noEmit",
     "build": "tsup --onSuccess resolve-tspaths",
-    "dev": "tsup --watch",
+    "dev": "pnpm build --watch",
     "ui:add": "npx shadcn-ui@latest add"
   },
   "dependencies": {

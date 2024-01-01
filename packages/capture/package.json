@@ -16,7 +16,7 @@
     "lint": "biome lint src",
     "check": "tsc --noEmit",
     "build": "tsup",
-    "dev": "tsup --watch"
+    "dev": "pnpm build --watch"
   },
   "devDependencies": {
     "@config/tsup": "workspace:^",

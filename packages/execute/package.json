@@ -17,7 +17,7 @@
     "check": "tsc --noEmit",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "build": "tsup",
-    "dev": "tsup --watch"
+    "dev": "pnpm build --watch"
   },
   "dependencies": {
     "fuse.js": "^7.0.0",

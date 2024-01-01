@@ -35,7 +35,7 @@ function getLanguageName(language?: LanguageLike) {
   const languages = Object.entries(components.languages) //
     .map(([key, value]) => [key, value.title, value.alias].flat());
   const result = languages.find((m) => m.some((m) => values.includes(m)));
-  return result ? result[0] : 'text';
+  return String(result?.[0] || 'text');
 }
 
 function getLineNumberDimensions(code: string) {

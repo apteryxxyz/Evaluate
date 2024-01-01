@@ -5,4 +5,4 @@ build/
 .nx/
 .next/
 .plasmo/
-.env.local
+.env*.local

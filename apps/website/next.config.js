@@ -12,7 +12,7 @@ const nextConfig = {
       permanent: false,
     },
     {
-      source: '/languages/:id*',
+      source: '/language(s)?/:id*',
       destination: '/:id*',
       permanent: false,
     },

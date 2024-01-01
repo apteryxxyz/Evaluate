@@ -10,6 +10,7 @@
     "build": "plasmo build"
   },
   "dependencies": {
+    "@evaluate/compress": "workspace:^",
     "@evaluate/execute": "workspace:^",
     "@evaluate/react": "workspace:^",
     "@evaluate/translate": "workspace:^",

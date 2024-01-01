@@ -64,6 +64,7 @@ export function RunButton(p: {
       <ResultDialog
         dialogRef={p.dialogRef}
         language={language}
+        code={code}
         result={result}
       />
     </>

@@ -1,4 +1,6 @@
+import { compress } from '@evaluate/compress';
 import { ExecuteCodeResult, Language } from '@evaluate/execute';
+import { Button } from '@evaluate/react/components/button';
 import { CodeEditor } from '@evaluate/react/components/code-editor';
 import {
   Dialog,
@@ -8,18 +10,26 @@ import {
 import { Label } from '@evaluate/react/components/label';
 import { useUpdateEffect } from '@evaluate/react/hooks/update-effect';
 import { cn } from '@evaluate/react/utilities/class-name';
+import { ExternalLinkIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useTranslate } from '~contexts/translate';
 
 export function ResultDialog(p: {
   dialogRef: React.RefObject<HTMLDivElement>;
   language?: Language;
+  code?: string;
   result?: ExecuteCodeResult;
 }) {
   const t = useTranslate();
 
   const [open, setOpen] = useState(false);
   useUpdateEffect(() => setOpen(true), [p.result]);
+  const url = useMemo(() => {
+    const url = new URL(p.language?.id ?? '', 'https://evaluate.run');
+    const data = compress({ files: [{ content: p.code ?? '' }] });
+    url.searchParams.set('data', data);
+    return url.toString();
+  }, [p.language, p.code]);
 
   const formattedOutput = useMemo(() => {
     switch (true) {
@@ -96,15 +106,25 @@ export function ResultDialog(p: {
                 formattedOutput && 'font-mono',
               )}
             />
+
+            {failStep && (
+              <p className="text-[0.8rem] font-medium text-destructive">
+                {failStep === 'compile'
+                  ? t.evaluate.output.compile_error()
+                  : t.evaluate.output.runtime_error()}
+              </p>
+            )}
           </div>
 
-          {failStep && (
-            <p className="text-[0.8rem] font-medium text-destructive">
-              {failStep === 'compile'
-                ? t.evaluate.output.compile_error()
-                : t.evaluate.output.runtime_error()}
-            </p>
-          )}
+          <div className="flex justify-end">
+            <Button asChild>
+              <a target="_blank" rel="noreferrer noopener" href={url}>
+                <ExternalLinkIcon size={16} />
+                {/* TODO: Not happy with the label "Open", figure something out later */}
+                <span>&nbsp;Open</span>
+              </a>
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

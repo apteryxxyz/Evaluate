@@ -172,6 +172,9 @@ importers:
 
   extensions/browser:
     dependencies:
+      '@evaluate/compress':
+        specifier: workspace:^
+        version: link:../../packages/compress
       '@evaluate/execute':
         specifier: workspace:^
         version: link:../../packages/execute

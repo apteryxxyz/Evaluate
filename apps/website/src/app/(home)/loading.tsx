@@ -1,5 +1,6 @@
 import { Skeleton } from '@evaluate/react/components/skeleton';
 import { SkeletonLanguageCard } from './_components/language-card';
+import { SkeletonSearchInput } from './_components/search-input';
 
 export default function LoadingPage() {
   return (
@@ -46,10 +47,7 @@ export default function LoadingPage() {
         <Skeleton className="h-8 w-36" />
       </div>
 
-      <div className="flex gap-2">
-        <Skeleton className="h-8 w-full" />
-        <Skeleton className="h-8 w-8 md:w-32" />
-      </div>
+      <SkeletonSearchInput />
 
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {new Array(70).fill(null).map((_, index) => (

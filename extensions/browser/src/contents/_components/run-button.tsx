@@ -9,6 +9,7 @@ import { Button } from '@evaluate/react/components/button';
 import { cn } from '@evaluate/react/utilities/class-name';
 import { Loader2Icon, PlayIcon, XIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
+import { LanguageDialog } from './language-dialog';
 import { ResultDialog } from './result-dialog';
 
 export function RunButton(p: {
@@ -17,7 +18,6 @@ export function RunButton(p: {
 }) {
   const [language, setLanguage] = useState<Language>();
   const [code, setCode] = useState<string>();
-  const canRun = !!language && !!code;
 
   useEffect(() => {
     getLanguageFromElement(p.preElement)
@@ -29,12 +29,20 @@ export function RunButton(p: {
   const [isExecuting, setIsExecuting] = useState(false);
   const [result, setResult] = useState<ExecuteCodeResult>();
 
-  const onClick = useCallback(async () => {
-    if (isExecuting || !language || !code) return;
+  const [resultOpen, setIsResultOpen] = useState(false);
+  const [languageOpen, setIsLanguageOpen] = useState(false);
+
+  const onRunClick = useCallback(async () => {
+    if (isExecuting) return;
+    if (code && !language) return setIsLanguageOpen(true);
+    if (!code || !language) return;
     setIsExecuting(true);
 
     return executeCode({ language, files: [{ content: code }] })
-      .then((result) => setResult(result))
+      .then((result) => {
+        setResult(result);
+        setIsResultOpen(true);
+      })
       .finally(() => setIsExecuting(false));
   }, [isExecuting, language, code]);
 
@@ -44,15 +52,12 @@ export function RunButton(p: {
         size="icon"
         className={cn(
           'aspect-square rounded-full m-2 w-7 h-7',
-          !canRun && 'bg-red-500 hover:bg-red-600',
+          !code && !language && 'bg-red-500 hover:bg-red-600',
         )}
-        onClick={onClick}
-        disabled={isExecuting || !canRun}
+        onClick={onRunClick}
+        disabled={isExecuting || (!code && !language)}
       >
-        {/* TODO: Add a tooltip to tell the user why this cannot run */}
-        {/* TODO: In the case of 'no language', Add a way for the user to be taken to the website where they can choose the language manually */}
-        {/* Maybe instead of a disabled X icon, show a button that will instead open a dialog saying crap with options */}
-        {!canRun ? (
+        {!code && !language ? (
           <XIcon className="w-5 h-5" />
         ) : isExecuting ? (
           <Loader2Icon className="animate-spin w-5 h-5" />
@@ -62,10 +67,19 @@ export function RunButton(p: {
       </Button>
 
       <ResultDialog
+        open={resultOpen}
+        onOpenChange={setIsResultOpen}
         dialogRef={p.dialogRef}
         language={language}
         code={code}
         result={result}
+      />
+
+      <LanguageDialog
+        open={languageOpen}
+        onOpenChange={setIsLanguageOpen}
+        dialogRef={p.dialogRef}
+        code={code}
       />
     </>
   );

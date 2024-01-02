@@ -2,19 +2,18 @@ import { compress } from '@evaluate/compress';
 import { ExecuteCodeResult, Language } from '@evaluate/execute';
 import { Button } from '@evaluate/react/components/button';
 import { CodeEditor } from '@evaluate/react/components/code-editor';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-} from '@evaluate/react/components/dialog';
+import { Dialog, DialogContent } from '@evaluate/react/components/dialog';
 import { Label } from '@evaluate/react/components/label';
-import { useUpdateEffect } from '@evaluate/react/hooks/update-effect';
 import { cn } from '@evaluate/react/utilities/class-name';
 import { ExternalLinkIcon } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { useTranslate } from '~contexts/translate';
+import { absoluteUrl } from '~utilities/url-helpers';
+import { DialogHeader } from './dialog-header';
 
 export function ResultDialog(p: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
   dialogRef: React.RefObject<HTMLDivElement>;
   language?: Language;
   code?: string;
@@ -22,12 +21,10 @@ export function ResultDialog(p: {
 }) {
   const t = useTranslate();
 
-  const [open, setOpen] = useState(false);
-  useUpdateEffect(() => setOpen(true), [p.result]);
-  const url = useMemo(() => {
-    const url = new URL(p.language?.id ?? '', 'https://evaluate.run');
+  const linkUrl = useMemo(() => {
+    const url = new URL(absoluteUrl(p.language?.id ?? '/'));
     const data = compress({ files: [{ content: p.code ?? '' }] });
-    url.searchParams.set('data', data);
+    url.searchParams.set('d', data);
     return url.toString();
   }, [p.language, p.code]);
 
@@ -55,25 +52,10 @@ export function ResultDialog(p: {
 
   if (!t) return null;
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={p.open} onOpenChange={p.onOpenChange}>
+      {/* Needs a max height */}
       <DialogContent container={p.dialogRef.current!}>
-        <DialogHeader>
-          {/* TODO: Replace this with env link */}
-          <a
-            className="inline-flex items-center gap-2 mr-auto"
-            target="_blank"
-            rel="noreferrer noopener"
-            href="https://evaluate.run"
-          >
-            <img
-              src="https://evaluate.run/icon.png"
-              alt="Evaluate logo"
-              width={36}
-              height={36}
-            />
-            <span className="text-primary font-bold text-xl">Evaluate</span>
-          </a>
-        </DialogHeader>
+        <DialogHeader />
 
         <div className="space-y-2">
           {p.language && (
@@ -118,10 +100,10 @@ export function ResultDialog(p: {
 
           <div className="flex justify-end">
             <Button asChild>
-              <a target="_blank" rel="noreferrer noopener" href={url}>
-                <ExternalLinkIcon size={16} />
+              <a target="_blank" rel="noreferrer noopener" href={linkUrl}>
                 {/* TODO: Not happy with the label "Open", figure something out later */}
-                <span>&nbsp;Open</span>
+                <span>Open&nbsp;</span>
+                <ExternalLinkIcon size={16} />
               </a>
             </Button>
           </div>

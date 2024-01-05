@@ -60,16 +60,15 @@ export async function handleEvaluating(
   } else if (output.length > 1000) {
     const url = new URL(language.id, process.env.WEBSITE_URL);
 
+    const data = compress({
+      files: [{ content: _options.code }],
+      input: _options.input ?? '',
+      args: _options.args ?? '',
+    });
+    url.searchParams.set('d', data);
     url.searchParams.set('utm_source', 'discord');
     url.searchParams.set('utm_medium', 'bot');
-    url.searchParams.set(
-      'data',
-      compress({
-        files: [{ content: _options.code }],
-        input: _options.input ?? '',
-        args: _options.args ?? '',
-      }),
-    );
+    url.searchParams.set('utm_campaign', 'result_too_long');
 
     output = t.evaluate.output.too_long({ url: url.toString() });
   } else {

@@ -23,6 +23,9 @@ export function LanguageDialog(p: {
     const url = new URL(absoluteUrl());
     const data = compress({ files: [{ content: p.code ?? '' }] });
     url.searchParams.set('d', data);
+    url.searchParams.set('utm_source', 'browser');
+    url.searchParams.set('utm_medium', 'extension');
+    url.searchParams.set('utm_campaign', 'language_not_detected');
     return url.toString();
   }, [p.code]);
 

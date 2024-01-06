@@ -16,6 +16,7 @@ export function RunButton(p: {
   preElement: HTMLPreElement;
   dialogRef: React.RefObject<HTMLDivElement>;
 }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguage] = useState<Language>();
   const [code, setCode] = useState<string>();
 
@@ -23,7 +24,8 @@ export function RunButton(p: {
     getLanguageFromElement(p.preElement)
       .then((language) => setLanguage(language!))
       .then(() => setCode(p.preElement.textContent ?? ''))
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setIsLoading(false));
   }, [p.preElement]);
 
   const [isExecuting, setIsExecuting] = useState(false);
@@ -52,12 +54,14 @@ export function RunButton(p: {
         size="icon"
         className={cn(
           'aspect-square rounded-full m-2 w-7 h-7',
-          !code && !language && 'bg-red-500 hover:bg-red-600',
+          (isLoading || (!code && !language)) && 'bg-red-500 hover:bg-red-600',
         )}
         onClick={onRunClick}
         disabled={isExecuting || (!code && !language)}
       >
-        {!code && !language ? (
+        {isLoading ? (
+          <Loader2Icon className="animate-spin w-5 h-5" />
+        ) : !code && !language ? (
           <XIcon className="w-5 h-5" />
         ) : isExecuting ? (
           <Loader2Icon className="animate-spin w-5 h-5" />

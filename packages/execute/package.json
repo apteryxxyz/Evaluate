@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@evaluate/languages": "workspace:^",
-    "lexure": "^0.17.0",
+    "lexure": "npm:@apteryxxyz/lexure@^0.17.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

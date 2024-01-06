@@ -29,7 +29,7 @@
   "Forth": ["forth"],
   "Fortran": ["fortran"],
   "FreeBASIC": ["freebasic"],
-  "F#.NET": ["f#.net", "fsharp.net"],
+  "F#.NET": ["f#.net", "fsharp.net", "fs.net"],
   "FSI": ["fsi"],
   "Go": ["go", "golang"],
   "GolfScript": ["golfscript"],
@@ -85,5 +85,11 @@
   "V": ["vlang", "v"],
   "Vyxal": ["vyxal"],
   "Yeethon": ["yeethon", "yee"],
-  "Zig": ["zig"]
+  "Zig": ["zig"],
+  "Node": ["node", "node.js"],
+  "Deno": ["deno"],
+  "GNU AWK": ["gawk", "awk"],
+  "Mono": ["mono"],
+  "GCC": ["gcc"],
+  ".NET": ["dotnet", ".net", "dot net"]
 }

@@ -1,6 +1,6 @@
 {
   "name": "@evaluate/execute",
-  "description": "Execute any source code in any programming language.",
+  "description": "TODO:",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",
@@ -20,12 +20,11 @@
     "dev": "tsup --watch"
   },
   "dependencies": {
-    "fuse.js": "^7.0.0",
-    "lexure": "^0.17.0",
+    "@evaluate/languages": "workspace:^",
+    "lexure": "npm:@apteryxxyz/lexure@^0.17.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.11",
     "@config/tsup": "workspace:^",
     "jest": "^29.7.0",
     "tsup": "^8.0.1"

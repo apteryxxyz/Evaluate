@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { fetchLanguages } from '@evaluate/execute';
+import { fetchLanguages } from '@evaluate/languages';
 import type { MetadataRoute } from 'next/types';
 import { absoluteUrl } from '~/utilities/url-helpers';
 

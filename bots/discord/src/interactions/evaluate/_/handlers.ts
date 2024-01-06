@@ -1,5 +1,6 @@
 import { compress } from '@evaluate/compress';
-import { executeCode, findLanguage } from '@evaluate/execute';
+import { executeCode } from '@evaluate/execute';
+import { findLanguage } from '@evaluate/languages';
 import { TranslateFunctions } from '@evaluate/translate';
 import { APIInteraction } from 'discord-api-types/v10';
 import { api } from '~/core';

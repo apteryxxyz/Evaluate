@@ -1,6 +1,7 @@
 'use client';
 
-import type { ExecuteCodeOptions, Language } from '@evaluate/execute';
+import type { ExecuteCodeOptions } from '@evaluate/execute';
+import type { Language } from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
 import { Card, CardHeader } from '@evaluate/react/components/card';
 import { CodeEditor } from '@evaluate/react/components/code-editor';

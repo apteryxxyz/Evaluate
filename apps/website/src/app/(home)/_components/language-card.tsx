@@ -1,6 +1,6 @@
 'use client';
 
-import type { Language } from '@evaluate/execute';
+import type { Language } from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
 import {
   Card,

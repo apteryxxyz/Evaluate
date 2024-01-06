@@ -1,4 +1,5 @@
-import { ExecuteCodeOptionsSchema, executeCode, getLanguage } from '../dist';
+import { getLanguage } from '@evaluate/languages';
+import { ExecuteCodeOptionsSchema, executeCode } from '../dist';
 
 describe('executeCode', () => {
   it('should execute code correctly', async () => {

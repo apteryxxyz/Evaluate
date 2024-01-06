@@ -1,6 +1,6 @@
 'use client';
 
-import { searchLanguages } from '@evaluate/execute';
+import { searchLanguages } from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
 import { Input } from '@evaluate/react/components/input';
 import { useEventListener } from '@evaluate/react/hooks/event-listener';

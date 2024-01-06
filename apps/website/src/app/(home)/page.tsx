@@ -1,4 +1,4 @@
-import { fetchLanguages } from '@evaluate/execute';
+import { fetchLanguages } from '@evaluate/languages';
 import LanguagesContent from './content';
 
 export default async function LanguagesPage() {

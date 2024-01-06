@@ -1,4 +1,4 @@
-import { fetchLanguages, getLanguage } from '@evaluate/execute';
+import { fetchLanguages, getLanguage } from '@evaluate/languages';
 import { getTranslate } from '@evaluate/translate';
 import { notFound } from 'next/navigation';
 import { generateBaseMetadata } from '~/app/metadata';

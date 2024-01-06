@@ -29,6 +29,9 @@ importers:
       '@evaluate/execute':
         specifier: workspace:^
         version: link:../../packages/execute
+      '@evaluate/languages':
+        specifier: workspace:^
+        version: link:../../packages/languages
       '@evaluate/react':
         specifier: workspace:^
         version: link:../../packages/react
@@ -117,6 +120,9 @@ importers:
       '@evaluate/execute':
         specifier: workspace:^
         version: link:../../packages/execute
+      '@evaluate/languages':
+        specifier: workspace:^
+        version: link:../../packages/languages
       '@evaluate/translate':
         specifier: workspace:^
         version: link:../../packages/translate
@@ -194,12 +200,12 @@ importers:
 
   packages/execute:
     dependencies:
-      fuse.js:
-        specifier: ^7.0.0
-        version: 7.0.0
+      '@evaluate/languages':
+        specifier: workspace:^
+        version: link:../languages
       lexure:
-        specifier: ^0.17.0
-        version: 0.17.0
+        specifier: npm:@apteryxxyz/lexure@^0.17.0
+        version: /@apteryxxyz/lexure@0.17.0
       zod:
         specifier: ^3.22.4
         version: 3.22.4
@@ -207,9 +213,25 @@ importers:
       '@config/tsup':
         specifier: workspace:^
         version: link:../../configs/tsup
-      '@types/jest':
-        specifier: ^29.5.11
-        version: 29.5.11
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0
+      tsup:
+        specifier: ^8.0.1
+        version: 8.0.1(ts-node@10.9.2)(typescript@5.3.3)
+
+  packages/languages:
+    dependencies:
+      fuse.js:
+        specifier: ^7.0.0
+        version: 7.0.0
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@config/tsup':
+        specifier: workspace:^
+        version: link:../../configs/tsup
       jest:
         specifier: ^29.7.0
         version: 29.7.0
@@ -349,6 +371,11 @@ packages:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.20
     dev: true
+
+  /@apteryxxyz/lexure@0.17.0:
+    resolution: {integrity: sha512-vmoD4qqv2A59BRrMP/9zqEq3Dr45+BICmqrLOg1EOGGHlDZFcDx7kYAtxhkquKcsPOy+QMDnkzC5szqg67+Ikw==}
+    engines: {node: '>=12.0.0'}
+    dev: false
 
   /@babel/code-frame@7.23.5:
     resolution: {integrity: sha512-CgH3s1a96LipHCmSUmYFPwY7MNx8C3avkq7i4Wl3cfa662ldtUe4VM1TPXX70pfmrlWTb6jLqTYrZyT2ZTJBgA==}
@@ -2382,13 +2409,6 @@ packages:
       '@types/istanbul-lib-report': 3.0.3
     dev: true
 
-  /@types/jest@29.5.11:
-    resolution: {integrity: sha512-S2mHmYIVe13vrm6q4kN6fLYYAka15ALQki/vgDC3mIukEOx8WJlv0kQPM+d4w8Gp6u0uSdKND04IlTXBv0rwnQ==}
-    dependencies:
-      expect: 29.7.0
-      pretty-format: 29.7.0
-    dev: true
-
   /@types/lodash@4.14.202:
     resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
     dev: true
@@ -3881,11 +3901,6 @@ packages:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
     engines: {node: '>=6'}
     dev: true
-
-  /lexure@0.17.0:
-    resolution: {integrity: sha512-0L8GqFgPW36sLNqxdp2VOOef5Ajpb98kc0Zk4AzE+Yf0xYTDndcT1vpFqwkTdrCCw+FV8DH4mC9NUw0RlARThA==}
-    engines: {node: '>=12.0.0'}
-    dev: false
 
   /lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}

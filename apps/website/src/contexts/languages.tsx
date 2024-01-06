@@ -1,7 +1,6 @@
 'use client';
 
-import type { Language } from '@evaluate/execute';
-import { setCachedLanguages } from '@evaluate/execute';
+import { type Language, setCachedLanguages } from '@evaluate/languages';
 import { createContext, useContext, useState } from 'react';
 
 export const LanguagesContext = createContext({

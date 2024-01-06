@@ -2,9 +2,7 @@
   "name": "@config/tsup",
   "type": "module",
   "main": "index.js",
-  "files": [
-    "index.js"
-  ],
+  "files": ["index.js"],
   "devDependencies": {
     "tsup": "^8.0.1",
     "typescript": "^5.3.3"

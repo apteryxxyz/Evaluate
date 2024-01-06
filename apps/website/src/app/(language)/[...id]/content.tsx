@@ -5,10 +5,9 @@ import {
   ExecuteCodeOptions,
   ExecuteCodeOptionsSchema,
   type ExecuteCodeResult,
-  type Language,
   executeCode,
-  getLanguageFileName,
 } from '@evaluate/execute';
+import { type Language, resolveLanguageFileName } from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
 import { Form } from '@evaluate/react/components/form';
 import { toast } from '@evaluate/react/components/sonner';
@@ -45,7 +44,7 @@ export default function LanguageContent(p: { language: Language }) {
     const input = atob(searchParams.get('input') ?? '');
     const args = atob(searchParams.get('args') ?? '');
 
-    const name = getLanguageFileName(p.language.short);
+    const name = resolveLanguageFileName(p.language.short);
     return { files: [{ name, content: code }], input, args };
   }, [searchParams, p.language.short]);
 

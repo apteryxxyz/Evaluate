@@ -14,7 +14,8 @@
       "recommended": true,
       "style": {
         "noNonNullAssertion": "off",
-        "noUselessElse": "off"
+        "noUselessElse": "off",
+        "noParameterAssign": "off"
       },
       "suspicious": {
         "noAssignInExpressions": "off"

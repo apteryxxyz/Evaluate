@@ -1,6 +1,6 @@
 'use client';
 
-import { Language } from '@evaluate/execute';
+import { Language } from '@evaluate/languages';
 import { Separator } from '@evaluate/react/components/separator';
 import { useLocalStorage } from '@evaluate/react/hooks/local-storage';
 import { Fragment, useMemo } from 'react';

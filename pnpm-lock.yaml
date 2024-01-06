@@ -29,6 +29,9 @@ importers:
       '@evaluate/execute':
         specifier: workspace:^
         version: link:../../packages/execute
+      '@evaluate/languages':
+        specifier: workspace:^
+        version: link:../../packages/languages
       '@evaluate/react':
         specifier: workspace:^
         version: link:../../packages/react
@@ -117,6 +120,9 @@ importers:
       '@evaluate/execute':
         specifier: workspace:^
         version: link:../../packages/execute
+      '@evaluate/languages':
+        specifier: workspace:^
+        version: link:../../packages/languages
       '@evaluate/translate':
         specifier: workspace:^
         version: link:../../packages/translate
@@ -194,9 +200,9 @@ importers:
 
   packages/execute:
     dependencies:
-      fuse.js:
-        specifier: ^7.0.0
-        version: 7.0.0
+      '@evaluate/languages':
+        specifier: workspace:^
+        version: link:../languages
       lexure:
         specifier: ^0.17.0
         version: 0.17.0
@@ -207,9 +213,25 @@ importers:
       '@config/tsup':
         specifier: workspace:^
         version: link:../../configs/tsup
-      '@types/jest':
-        specifier: ^29.5.11
-        version: 29.5.11
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0
+      tsup:
+        specifier: ^8.0.1
+        version: 8.0.1(ts-node@10.9.2)(typescript@5.3.3)
+
+  packages/languages:
+    dependencies:
+      fuse.js:
+        specifier: ^7.0.0
+        version: 7.0.0
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@config/tsup':
+        specifier: workspace:^
+        version: link:../../configs/tsup
       jest:
         specifier: ^29.7.0
         version: 29.7.0
@@ -2380,13 +2402,6 @@ packages:
     resolution: {integrity: sha512-pk2B1NWalF9toCRu6gjBzR69syFjP4Od8WRAX+0mmf9lAjCRicLOWc+ZrxZHx/0XRjotgkF9t6iaMJ+aXcOdZQ==}
     dependencies:
       '@types/istanbul-lib-report': 3.0.3
-    dev: true
-
-  /@types/jest@29.5.11:
-    resolution: {integrity: sha512-S2mHmYIVe13vrm6q4kN6fLYYAka15ALQki/vgDC3mIukEOx8WJlv0kQPM+d4w8Gp6u0uSdKND04IlTXBv0rwnQ==}
-    dependencies:
-      expect: 29.7.0
-      pretty-format: 29.7.0
     dev: true
 
   /@types/lodash@4.14.202:

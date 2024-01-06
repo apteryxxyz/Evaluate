@@ -24,6 +24,7 @@ export default function RootLayout(p: LayoutProps) {
         <head key="head">
           <GoogleAnalytics />
 
+          <meta name="evaluate-extension" content="disabled" />
           <meta name="darkreader-lock" />
           <meta
             name="google-adsense-account"

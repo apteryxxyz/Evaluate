@@ -57,7 +57,7 @@ export function ResultDialog(p: {
   return (
     <Dialog open={p.open} onOpenChange={p.onOpenChange}>
       {/* Needs a max height */}
-      <DialogContent container={p.dialogRef.current!}>
+      <DialogContent container={p.dialogRef.current!} className="max-w-5xl">
         <DialogHeader />
 
         <div className="space-y-2">

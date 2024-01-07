@@ -178,6 +178,9 @@ importers:
       '@evaluate/execute':
         specifier: workspace:^
         version: link:../../packages/execute
+      '@evaluate/languages':
+        specifier: workspace:^
+        version: link:../../packages/languages
       '@evaluate/react':
         specifier: workspace:^
         version: link:../../packages/react

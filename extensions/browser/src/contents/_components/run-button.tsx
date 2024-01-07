@@ -1,10 +1,9 @@
+import { ExecuteCodeResult, executeCode } from '@evaluate/execute';
 import {
-  ExecuteCodeResult,
   Language,
-  executeCode,
   findLanguage,
   resolveLanguageName,
-} from '@evaluate/execute';
+} from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
 import { cn } from '@evaluate/react/utilities/class-name';
 import { Loader2Icon, PlayIcon, XIcon } from 'lucide-react';

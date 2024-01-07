@@ -12,6 +12,7 @@
   "dependencies": {
     "@evaluate/compress": "workspace:^",
     "@evaluate/execute": "workspace:^",
+    "@evaluate/languages": "workspace:^",
     "@evaluate/react": "workspace:^",
     "@evaluate/translate": "workspace:^",
     "@plasmohq/storage": "^1.9.0",

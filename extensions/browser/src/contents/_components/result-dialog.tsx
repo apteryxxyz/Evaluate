@@ -1,5 +1,6 @@
 import { compress } from '@evaluate/compress';
-import { ExecuteCodeResult, Language } from '@evaluate/execute';
+import { ExecuteCodeResult } from '@evaluate/execute';
+import type { Language } from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
 import { CodeEditor } from '@evaluate/react/components/code-editor';
 import { Dialog, DialogContent } from '@evaluate/react/components/dialog';

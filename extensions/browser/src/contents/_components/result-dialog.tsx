@@ -105,8 +105,7 @@ export function ResultDialog(p: {
           <div className="flex justify-end">
             <Button asChild>
               <a target="_blank" rel="noreferrer noopener" href={linkUrl}>
-                {/* TODO: Not happy with the label "Open", figure something out later */}
-                <span>Open&nbsp;</span>
+                <span>{t.evaluate.code.edit()}&nbsp;</span>
                 <ExternalLinkIcon size={16} />
               </a>
             </Button>

@@ -3,7 +3,7 @@ import { Switch } from '@evaluate/react/components/switch';
 import { useEffect, useState } from 'react';
 import { TooltipWrapper } from '~components/tooltip-wrapper';
 import { EnabledProvider, useEnabled } from '~contexts/enabled';
-import { TranslateProvider } from '~contexts/translate';
+import { TranslateProvider, useTranslate } from '~contexts/translate';
 import { getDomain, getMetaTagContent } from '~utilities/active-tab';
 import '../styles/tailwind.css';
 import { HeaderBar } from './_components/header-bar';
@@ -25,6 +25,7 @@ export default function PopupWrapper() {
 }
 
 function Popup() {
+  const t = useTranslate();
   const { isEnabled, isEnabledFor, setEnabled, setEnabledFor } = useEnabled();
   const [domain, setDomain] = useState<string>();
   const [hasDisabledTag, setHasDisabledTag] = useState<boolean>();
@@ -38,9 +39,9 @@ function Popup() {
     <div className="flex flex-col gap-4 pt-4">
       <div className="flex">
         <div>
-          <Label htmlFor="enabled">Is Globally Enabled</Label>
+          <Label htmlFor="enabled">{t.toggle.globally()}</Label>
           <p className="text-xs text-muted-foreground">
-            Toggle this switch to enable/disable the extension globally.
+            {t.toggle.globally.description()}
           </p>
         </div>
 
@@ -54,17 +55,16 @@ function Popup() {
 
       <div className="flex">
         <div>
-          <Label htmlFor="current-enabled">Is Current Site Enabled</Label>
+          <Label htmlFor="current-enabled">{t.toggle.current_site()}</Label>
           <p className="text-xs text-muted-foreground">
-            Toggle this switch to enable/disable the extension on the current
-            website: <code className="inline">{domain}</code>.
+            {t.toggle.current_site.description()} (
+            <code className="inline">{domain}</code>).
           </p>
         </div>
 
         <TooltipWrapper
           content={
-            hasDisabledTag &&
-            'This website instructs the Evaluate extension to not run on this page.'
+            hasDisabledTag && t.toggle.current_site.disabled_by_meta_tag()
           }
         >
           <div className="ml-auto my-auto">

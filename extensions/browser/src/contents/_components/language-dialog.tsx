@@ -36,19 +36,16 @@ export function LanguageDialog(p: {
         <DialogHeader />
 
         <div>
-          <p>
-            Was unable to detect the programming of the code, would you like to
-            manually pick a language?
-          </p>
+          <p>{t.evaluate.language.not_detected()}</p>
         </div>
 
         <DialogFooter>
           <Button onClick={() => p.onOpenChange(false)} variant="secondary">
-            Cancel
+            {t.evaluate.language.not_detected.cancel()}
           </Button>
           <Button asChild>
             <a target="_blank" rel="noreferrer noopener" href={linkUrl}>
-              <span>Continue&nbsp;</span>
+              <span>[t.evaluate.language.not_detected.pick()]&nbsp;</span>
               <ExternalLinkIcon size={16} />
             </a>
           </Button>

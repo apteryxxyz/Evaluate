@@ -32,10 +32,10 @@ export default function LanguageContent(p: { language: Language }) {
   // Load the initial data from the URL search params
   const searchParams = useSearchParams();
   const initialData = useMemo(() => {
-    if (searchParams.has('data')) {
+    const data = searchParams.get('d') ?? searchParams.get('data');
+    if (data) {
       try {
-        const data = searchParams.get('data') as Compressed<ExecuteCodeOptions>;
-        return decompress(data);
+        return decompress(data as Compressed<ExecuteCodeOptions>);
       } catch {}
     }
 
@@ -88,7 +88,7 @@ export default function LanguageContent(p: { language: Language }) {
   const copyShareUrlToClipboard = useCallback(() => {
     const url = new URL(window.location.href);
     const data = compress(executeCodeForm.getValues());
-    url.searchParams.set('data', data);
+    url.searchParams.set('d', data);
 
     copy(url.toString()).then((success) => {
       if (!success) toast.error(t.share.copy_url.failed());

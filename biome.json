@@ -1,7 +1,14 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
   "files": {
-    "ignore": ["dist/", "build/", ".next/", ".plasmo", "node_modules/"]
+    "ignore": [
+      "dist/",
+      "build/",
+      ".next/",
+      ".plasmo",
+      "node_modules/",
+      "src/generated/"
+    ]
   },
   "formatter": {
     "enabled": true,

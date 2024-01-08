@@ -17,7 +17,7 @@
     "check": "tsc --noEmit",
     "compile": "node --no-warnings=ExperimentalWarning --loader ts-node/esm --experimental-specifier-resolution=node ./scripts/compile/index.ts",
     "build": "pnpm compile && pnpm tsup",
-    "dev": "npx watch-cli -p 'dictionaries/*.json' -c 'pnpm compile' & pnpm tsup --watch"
+    "dev": "npx watch-cli -p \"dictionaries/*.json\" -c \"pnpm compile\" & pnpm tsup --watch"
   },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "^2.7.3",

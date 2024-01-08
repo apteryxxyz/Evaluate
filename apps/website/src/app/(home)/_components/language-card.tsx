@@ -13,31 +13,32 @@ import { useLocalStorage } from '@evaluate/react/hooks/local-storage';
 import { cn } from '@evaluate/react/utilities/class-name';
 import { PinIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslate } from '~/contexts/translate';
 
 export function LanguageCard(p: Language) {
   const t = useTranslate();
 
-  const [isHovered, setIsHovered] = useState(false);
+  const linkHref = useMemo(() => {
+    // Pass the data from the current search params to the language page
+    // The browser extension uses this to prefill the editor
+    const currentParams = new URLSearchParams(window.location.search);
+    const data = currentParams.get('d');
+    if (!data) return p.id;
+    const nextParams = new URLSearchParams({ d: data });
+    return `/${p.id}?${nextParams.toString()}`;
+  }, [p.id]);
+
   const [pinned, setPinned] = useLocalStorage<string[]>('evaluate.pinned', []);
   const isPinned = useMemo(() => pinned.includes(p.id), [p.id, pinned]);
-  const togglePin = useCallback(
-    () =>
-      setPinned((r) =>
-        isPinned ? r.filter((id) => id !== p.id) : [...r, p.id],
-      ),
-    [isPinned, p.id, setPinned],
-  );
+  const togglePin = useCallback(() => {
+    if (!isPinned) setPinned((r) => [...r, p.id]);
+    else setPinned((r) => r.filter((id) => id !== p.id));
+  }, [isPinned, p.id, setPinned]);
 
+  if (!t) return <SkeletonLanguageCard />;
   return (
-    <Card
-      className="relative duration-300 hover:border-primary bg-transparent bg-glow"
-      onMouseOver={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onFocus={() => setIsHovered(true)}
-      onBlur={() => setTimeout(() => setIsHovered(false), 2000)}
-    >
+    <Card className="group relative duration-300 hover:border-primary bg-transparent bg-glow">
       <CardHeader>
         <CardTitle>{p.name}</CardTitle>
 
@@ -47,7 +48,7 @@ export function LanguageCard(p: Language) {
       </CardHeader>
 
       <Link
-        href={p.id}
+        href={linkHref}
         className="inset-0 absolute"
         // The user is unlikely to click most cards, no point in prefetching
         prefetch={false}
@@ -59,7 +60,7 @@ export function LanguageCard(p: Language) {
           variant="ghost"
           className={cn(
             'hidden duration-300 text-muted-foreground !bg-transparent',
-            (isHovered || isPinned) && 'flex',
+            isPinned ? 'flex' : 'group-hover:flex',
           )}
           onClick={togglePin}
         >

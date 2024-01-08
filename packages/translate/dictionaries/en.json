@@ -72,11 +72,17 @@
       "not_found": {
         "$": "Language not found",
         "description": "Couldn't find a supported language with that name."
+      },
+      "not_detected": {
+        "$": "Was unable to detect the programming of the code, would you like to manually pick a language?",
+        "cancel": "Cancel",
+        "pick": "Pick Language"
       }
     },
     "code": {
       "$": "Code",
-      "description": "The source code to evaluate."
+      "description": "The source code to evaluate.",
+      "edit": "Edit Code"
     },
     "extra_options": "Additional Options",
     "input": {
@@ -107,6 +113,17 @@
       "$": "Copy the search URL",
       "success": "Copied URL to clipboard!",
       "failed": "Failed to copy URL to clipboard!"
+    }
+  },
+  "toggle": {
+    "globally": {
+      "$": "Is Globally Enabled",
+      "description": "Toggle this switch to enable/disable the extension globally."
+    },
+    "current_site": {
+      "$": "Is Current Site Enabled",
+      "description": "Toggle this switch to enable/disable the extension on the current website.",
+      "disabled_by_meta_tag": "This website instructs the Evaluate extension to not run on this page."
     }
   }
 }

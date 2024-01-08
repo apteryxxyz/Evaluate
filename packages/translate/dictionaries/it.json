@@ -72,11 +72,17 @@
       "not_found": {
         "$": "Lingua non trovata",
         "description": "Non ho trovato un linguaggio che supporti con quel nome."
+      },
+      "not_detected": {
+        "$": "Non sono stato in grado di riconoscere il linguaggio di programmazione del codice, vorresti sceglierlo manualmente?",
+        "cancel": "Annulla",
+        "pick": "Scegli Lingua"
       }
     },
     "code": {
       "$": "Codice",
-      "description": "Il codice da eseguire."
+      "description": "Il codice da eseguire.",
+      "edit": "Modifica Codice"
     },
     "extra_options": "Opzioni Aggiuntive",
     "input": {
@@ -107,6 +113,17 @@
       "$": "Copia l'URL di ricerca",
       "success": "URL copiato negli appunti!",
       "failed": "Non sono riuscito a copiare l'URL negli appunti!"
+    }
+  },
+  "toggle": {
+    "globally": {
+      "$": "È Abilitata Globalmente",
+      "description": "Attiva/disattiva questo switch per abilitare/disabilitare l'estensione globalmente."
+    },
+    "current_site": {
+      "$": "È Abilitata nel Sito Corrente",
+      "description": "Attiva/disattiva questo switch per abilitare/disabilitare l'estensione in questo sito web.",
+      "disabled_by_meta_tag": "Questo sito dice all'estensione di Evaluate di non venir eseguita in questa pagina."
     }
   }
 }

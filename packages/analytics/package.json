@@ -1,0 +1,29 @@
+{
+  "name": "@evaluate/analytics",
+  "description": "TODO:",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "./client": {
+      "import": "./dist/client.js",
+      "types": "./dist/client.d.ts"
+    },
+    "./server": {
+      "import": "./dist/server.js",
+      "types": "./dist/server.d.ts"
+    }
+  },
+  "scripts": {
+    "format": "biome format src --write",
+    "lint": "biome lint src",
+    "check": "tsc --noEmit",
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "devDependencies": {
+    "@config/tsup": "workspace:^",
+    "tsup": "^8.0.1"
+  }
+}

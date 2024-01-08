@@ -8,6 +8,7 @@ import { Button } from '@evaluate/react/components/button';
 import { cn } from '@evaluate/react/utilities/class-name';
 import { Loader2Icon, PlayIcon, XIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
+import { useAnalytics } from '~contexts/analytics';
 import { LanguageDialog } from './language-dialog';
 import { ResultDialog } from './result-dialog';
 
@@ -15,6 +16,8 @@ export function RunButton(p: {
   preElement: HTMLPreElement;
   dialogRef: React.RefObject<HTMLDivElement>;
 }) {
+  const analytics = useAnalytics();
+
   const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguage] = useState<Language>();
   const [code, setCode] = useState<string>();
@@ -39,13 +42,26 @@ export function RunButton(p: {
     if (!code || !language) return;
     setIsExecuting(true);
 
-    return executeCode({ language, files: [{ content: code }] })
-      .then((result) => {
-        setResult(result);
-        setIsResultOpen(true);
-      })
-      .finally(() => setIsExecuting(false));
-  }, [isExecuting, language, code]);
+    const result = await executeCode({ language, files: [{ content: code }] });
+
+    setResult(result);
+    setIsResultOpen(true);
+    setIsExecuting(false);
+
+    let output;
+    if (result.run.success === false) output = result.run.output;
+    else if (result.compile?.success === false) output = result.compile.output;
+    else output = result.run.output;
+
+    void analytics?.track('code executed', {
+      platform: 'browser extension',
+      'language id': language.id,
+      'was successful':
+        result.run.success && (!result.compile || result.compile.success),
+      'code length': code.length,
+      'output length': output.length,
+    });
+  }, [analytics, isExecuting, language, code]);
 
   return (
     <>

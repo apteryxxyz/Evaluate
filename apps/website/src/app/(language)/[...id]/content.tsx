@@ -20,6 +20,7 @@ import { LinkIcon, Loader2Icon, PlayIcon, Share2Icon } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useAnalytics } from '~/contexts/analytics';
 import { useTranslate } from '~/contexts/translate';
 import { CommandLineInput } from './_components/command-line-input';
 import { FileSystemInput } from './_components/file-system-input';
@@ -28,6 +29,7 @@ import LanguageLoading from './loading';
 
 export default function LanguageContent(p: { language: Language }) {
   const t = useTranslate();
+  const analytics = useAnalytics();
 
   // Load the initial data from the URL search params
   const searchParams = useSearchParams();
@@ -60,16 +62,34 @@ export default function LanguageContent(p: { language: Language }) {
   const [result, setResult] = useState<ExecuteCodeResult>();
 
   const onSubmit = executeCodeForm.handleSubmit(
-    (options) => {
+    async (options) => {
       if (isExecuting) return;
       setIsExecuting(true);
 
-      return executeCode({ ...options, language: p.language })
-        .then((result) => {
-          setResult(result);
-          setOptions(options);
-        })
-        .finally(() => setIsExecuting(false));
+      const result = await executeCode({ ...options, language: p.language });
+
+      setResult(result);
+      setOptions(options);
+      setIsExecuting(false);
+
+      let output;
+      if (result.run.success === false) output = result.run.output;
+      else if (result.compile?.success === false)
+        output = result.compile.output;
+      else output = result.run.output;
+
+      void analytics?.track('code executed', {
+        platform: 'website',
+        'language id': p.language.id,
+        'was successful':
+          result.run.success && (!result.compile || result.compile.success),
+        'code length': options.files
+          .map((f) => f.content.length)
+          .reduce((a, b) => a + b, 0),
+        'output length': output.length,
+        'input provided': Boolean(options.input),
+        'args provided': Boolean(options.args),
+      });
     },
     () => {
       setHasFormError(true);

@@ -114,6 +114,9 @@ importers:
       '@discordjs/rest':
         specifier: ^2.2.0
         version: 2.2.0
+      '@evaluate/analytics':
+        specifier: workspace:^
+        version: link:../../packages/analytics
       '@evaluate/capture':
         specifier: workspace:^
         version: link:../../packages/capture
@@ -175,6 +178,9 @@ importers:
 
   extensions/browser:
     dependencies:
+      '@evaluate/analytics':
+        specifier: workspace:^
+        version: link:../../packages/analytics
       '@evaluate/compress':
         specifier: workspace:^
         version: link:../../packages/compress
@@ -236,6 +242,15 @@ importers:
       tailwindcss:
         specifier: ^3.4.0
         version: 3.4.0
+
+  packages/analytics:
+    devDependencies:
+      '@config/tsup':
+        specifier: workspace:^
+        version: link:../../configs/tsup
+      tsup:
+        specifier: ^8.0.1
+        version: 8.0.1(ts-node@10.9.2)(typescript@5.3.3)
 
   packages/capture:
     devDependencies:

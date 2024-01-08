@@ -26,9 +26,8 @@ export function ResultDialog(p: {
     const url = new URL(absoluteUrl(p.language?.id ?? '/'));
     const data = compress({ files: [{ content: p.code ?? '' }] });
     url.searchParams.set('d', data);
-    url.searchParams.set('utm_source', 'browser');
-    url.searchParams.set('utm_medium', 'extension');
-    url.searchParams.set('utm_campaign', 'result_open');
+    url.searchParams.set('utm_source', 'browser_extension');
+    url.searchParams.set('utm_content', 'edit_code');
     return url.toString();
   }, [p.language, p.code]);
 

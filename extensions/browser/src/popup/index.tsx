@@ -2,6 +2,7 @@ import { Label } from '@evaluate/react/components/label';
 import { Switch } from '@evaluate/react/components/switch';
 import { useEffect, useState } from 'react';
 import { TooltipWrapper } from '~components/tooltip-wrapper';
+import { AnalyticsProvider, useAnalytics } from '~contexts/analytics';
 import { EnabledProvider, useEnabled } from '~contexts/enabled';
 import { TranslateProvider, useTranslate } from '~contexts/translate';
 import { getDomain, getMetaTagContent } from '~utilities/active-tab';
@@ -11,21 +12,34 @@ import { HeaderBar } from './_components/header-bar';
 export default function PopupWrapper() {
   return (
     <div className="w-96 flex flex-col p-4 pt-0">
-      <TranslateProvider>
-        <HeaderBar />
+      <AnalyticsProvider>
+        <TranslateProvider>
+          <HeaderBar />
 
-        <EnabledProvider>
-          <main className="flex flex-col">
-            <Popup />
-          </main>
-        </EnabledProvider>
-      </TranslateProvider>
+          <EnabledProvider>
+            <main className="flex flex-col">
+              <Popup />
+            </main>
+          </EnabledProvider>
+        </TranslateProvider>
+      </AnalyticsProvider>
     </div>
   );
 }
 
 function Popup() {
   const t = useTranslate();
+  const analytics = useAnalytics();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Trigger popup opened event
+  useEffect(
+    () =>
+      void analytics?.track('popup opened', {
+        platform: 'browser extension',
+      }),
+    [],
+  );
+
   const { isEnabled, isEnabledFor, setEnabled, setEnabledFor } = useEnabled();
   const [domain, setDomain] = useState<string>();
   const [hasDisabledTag, setHasDisabledTag] = useState<boolean>();

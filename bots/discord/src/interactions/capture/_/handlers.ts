@@ -1,7 +1,7 @@
 import { generateCodeImage } from '@evaluate/capture';
 import { TranslateFunctions } from '@evaluate/translate';
 import { APIInteraction } from 'discord-api-types/v10';
-import { api } from '~/core';
+import { analytics, api } from '~/core';
 
 /**
  * Handle the capturing of code.
@@ -18,6 +18,12 @@ export async function handleCapturing(
 
   const imageBuffer = await generateCodeImage(code) //
     .catch(() => null);
+
+  void analytics?.track('capture created', {
+    platform: 'discord bot',
+    'was successful': Boolean(imageBuffer),
+    'code length': code.length,
+  });
 
   return api.interactions.editReply(
     interaction.application_id,

@@ -2,9 +2,9 @@ import { Locale, locales } from '.';
 
 // =============== Pathname ===============
 
-function determinePathnameLocale(pathname: string) {
+export function determinePathnameLocale(pathname: string) {
   const pathLocale = pathname.split('/')[1];
-  if (pathLocale && pathLocale in locales) return pathLocale as Locale;
+  if (pathLocale?.match(/\d{2}|\d{2}-\d{2}/)) return pathLocale;
   return undefined;
 }
 
@@ -18,15 +18,13 @@ interface InteractionLike {
   member?: { user?: { locale?: string } };
 }
 
-function determineInteractionLocale(interaction: InteractionLike) {
-  const possibleLocale =
+export function determineInteractionLocale(interaction: InteractionLike) {
+  return (
     interaction.locale ??
     interaction.user?.locale ??
     interaction.member?.user?.locale ??
-    interaction.guild_locale;
-  if (possibleLocale && possibleLocale in locales)
-    return possibleLocale as Locale;
-  return undefined;
+    interaction.guild_locale
+  );
 }
 
 // =============== NextRequest ===============
@@ -37,21 +35,14 @@ interface NextRequestLike {
   headers: Headers;
 }
 
-function determineNextRequestLocale(request: NextRequestLike) {
+export function determineNextRequestLocale(request: NextRequestLike) {
   const cookieValue = request.cookies.get('evaluate.locale')?.value;
-  if (cookieValue && cookieValue in locales) return cookieValue as Locale;
+  if (cookieValue && cookieValue in locales) return [cookieValue] as [Locale];
 
-  const acceptLanguage = request.headers.get('accept-language');
-  if (acceptLanguage) {
-    const languages = acceptLanguage
-      .split(',')
-      .map((l) => l.split(';')[0]?.split('-')[0]);
-    for (const language of languages) {
-      if (language && language in locales) return language as Locale;
-    }
-  }
-
-  return determinePathnameLocale(request.nextUrl.pathname);
+  return request.headers
+    .get('accept-language')
+    ?.split(',')
+    .map((l) => l.split(';')[0]?.split('-')[0]);
 }
 
 // =============== Combined ===============
@@ -70,17 +61,21 @@ export function determineLocale(
 ) {
   if (typeof value === 'string') {
     const pathLocale = determinePathnameLocale(value);
-    if (pathLocale) return pathLocale;
+    if (pathLocale && pathLocale in locales) return pathLocale;
   }
 
   if (typeof value === 'object' && 'nextUrl' in value) {
     const nextRequestLocale = determineNextRequestLocale(value);
-    if (nextRequestLocale) return nextRequestLocale;
+    if (nextRequestLocale && nextRequestLocale.length > 0) {
+      const foundLanguage = nextRequestLocale.find((l) => l && l in locales);
+      if (foundLanguage) return foundLanguage as Locale;
+    }
   }
 
   if (typeof value === 'object' && 'id' in value) {
     const interactionLocale = determineInteractionLocale(value);
-    if (interactionLocale) return interactionLocale;
+    if (interactionLocale && interactionLocale in locales)
+      return interactionLocale;
   }
 
   return returnDefaultIfNotFound ? locales[0] : undefined;

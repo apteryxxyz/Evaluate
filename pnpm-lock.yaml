@@ -20,6 +20,9 @@ importers:
 
   apps/website:
     dependencies:
+      '@evaluate/analytics':
+        specifier: workspace:^
+        version: link:../../packages/analytics
       '@evaluate/compress':
         specifier: workspace:^
         version: link:../../packages/compress

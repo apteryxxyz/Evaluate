@@ -12,6 +12,7 @@ export const LanguagesContext = createContext({
   setIsSearching: (_: boolean) => {},
 });
 LanguagesContext.displayName = 'LanguagesContext';
+export const LanguagesConsumer = LanguagesContext.Consumer;
 
 export function LanguagesProvider(p: React.PropsWithChildren) {
   const [languages, setLanguages] = useState<Language[]>([]);

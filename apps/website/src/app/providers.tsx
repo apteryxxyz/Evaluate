@@ -3,6 +3,7 @@
 import { Toaster } from '@evaluate/react/components/sonner';
 import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { ServerThemeProvider, useTheme } from 'next-themes';
+import { AnalyticsProvider } from '~/contexts/analytics';
 import { LanguagesProvider } from '~/contexts/languages';
 import { TranslateProvider } from '~/contexts/translate';
 
@@ -29,11 +30,13 @@ export function MainProviders(p: React.PropsWithChildren) {
   });
 
   return (
-    <TranslateProvider>
-      <LanguagesProvider>
-        {p.children}
-        <Toaster theme={theme as never} />
-      </LanguagesProvider>
-    </TranslateProvider>
+    <AnalyticsProvider>
+      <TranslateProvider>
+        <LanguagesProvider>
+          {p.children}
+          <Toaster theme={theme as never} />
+        </LanguagesProvider>
+      </TranslateProvider>
+    </AnalyticsProvider>
   );
 }

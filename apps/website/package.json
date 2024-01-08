@@ -11,6 +11,7 @@
     "dev": "next dev --turbo"
   },
   "dependencies": {
+    "@evaluate/analytics": "workspace:^",
     "@evaluate/compress": "workspace:^",
     "@evaluate/discord-bot": "workspace:^",
     "@evaluate/execute": "workspace:^",

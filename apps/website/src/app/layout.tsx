@@ -1,5 +1,4 @@
 import { Inter } from 'next/font/google';
-import { GoogleAnalytics } from '~/components/google-analytics';
 import { LayoutProps } from '~/types';
 import { HeaderBar } from '../components/header-bar/header-bar';
 import { generateBaseMetadata } from './metadata';
@@ -22,8 +21,6 @@ export default function RootLayout(p: LayoutProps) {
     <HTMLProviders>
       <html key="html" lang="en" className={inter.className}>
         <head key="head">
-          <GoogleAnalytics />
-
           <meta name="evaluate-extension" content="disabled" />
           <meta name="darkreader-lock" />
           <meta

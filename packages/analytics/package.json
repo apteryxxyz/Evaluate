@@ -3,18 +3,12 @@
   "description": "TODO:",
   "version": "1.0.0",
   "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
-    "./extensions/browser": {
-      "import": "./dist/browser-extension.js",
-      "types": "./dist/browser-extension.d.ts"
-    },
-    "./bots/discord": {
-      "import": "./dist/discord-bot.js",
-      "types": "./dist/discord-bot.d.ts"
-    },
-    "./apps/website": {
-      "import": "./dist/website-app.js",
-      "types": "./dist/website-app.d.ts"
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "scripts": {

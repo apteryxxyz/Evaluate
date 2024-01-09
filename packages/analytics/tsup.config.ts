@@ -1,3 +1,3 @@
 import defineConfig from '@config/tsup';
 
-export default defineConfig({ entry: ['src/platforms/*.ts'] });
+export default defineConfig({ entry: ['src/index.ts'] });

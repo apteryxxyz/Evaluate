@@ -1,8 +1,9 @@
-import { Analytics } from '@evaluate/analytics/extensions/browser';
+import { BrowserExtensionAnalytics } from '@evaluate/analytics';
 import { createContext, useContext, useMemo } from 'react';
 import { absoluteUrl } from '~/utilities/url-helpers';
 
-export const AnalyticsContext = createContext<Analytics<'client'> | null>(null);
+export const AnalyticsContext = //
+  createContext<BrowserExtensionAnalytics | null>(null);
 AnalyticsContext.displayName = 'AnalyticsContext';
 export const AnalyticsConsumer = AnalyticsContext.Consumer;
 
@@ -15,7 +16,7 @@ export function AnalyticsProvider(p: React.PropsWithChildren) {
 
   const analytics = useMemo(
     () =>
-      new Analytics(
+      new BrowserExtensionAnalytics(
         process.env.PLASMO_PUBLIC_UMAMI_ID!,
         absoluteUrl('/api/send'),
       ),

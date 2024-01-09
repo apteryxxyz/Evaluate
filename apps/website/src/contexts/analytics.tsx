@@ -1,9 +1,10 @@
-import { Analytics } from '@evaluate/analytics/apps/website';
+import { WebsiteAnalytics } from '@evaluate/analytics';
 import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useMemo } from 'react';
 import { absoluteUrl } from '~/utilities/url-helpers';
 
-export const AnalyticsContext = createContext<Analytics | null>(null);
+export const AnalyticsContext = //
+  createContext<WebsiteAnalytics | null>(null);
 AnalyticsContext.displayName = 'AnalyticsContext';
 export const AnalyticsConsumer = AnalyticsContext.Consumer;
 
@@ -16,7 +17,7 @@ export function AnalyticsProvider(p: React.PropsWithChildren) {
 
   const analytics = useMemo(
     () =>
-      new Analytics(
+      new WebsiteAnalytics(
         process.env.NEXT_PUBLIC_UMAMI_ID!,
         absoluteUrl('/api/send'),
       ),

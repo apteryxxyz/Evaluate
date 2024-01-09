@@ -1,5 +1,5 @@
 {
-  "name": "@config/tsup",
+  "name": "@configs/tsup",
   "type": "module",
   "main": "index.js",
   "files": ["index.js"],

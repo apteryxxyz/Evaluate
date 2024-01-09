@@ -1,4 +1,4 @@
-import defineConfig from '@config/tsup';
+import { defineConfig } from '@configs/tsup';
 
 export default defineConfig({
   entry: ['src/**/*'],

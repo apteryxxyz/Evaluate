@@ -1,6 +1,6 @@
 {
   "name": "@evaluate/analytics",
-  "description": "TODO:",
+  "description": "Umami analytics for both client and server apps.",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",
@@ -19,7 +19,7 @@
     "dev": "tsup --watch"
   },
   "devDependencies": {
-    "@config/tsup": "workspace:^",
+    "@configs/tsup": "workspace:^",
     "tsup": "^8.0.1"
   }
 }

@@ -22,7 +22,7 @@
     "pako": "^2.1.0"
   },
   "devDependencies": {
-    "@config/tsup": "workspace:^",
+    "@configs/tsup": "workspace:^",
     "@types/pako": "^2.0.3",
     "tsup": "^8.0.1"
   }

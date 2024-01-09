@@ -1,2 +1,5 @@
-import defineConfig from '@config/tsup';
-export default defineConfig({ entry: ['src/index.ts'] });
+import { defineConfig } from '@configs/tsup';
+
+export default defineConfig({
+  entry: ['src/index.ts'],
+});

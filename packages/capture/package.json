@@ -19,7 +19,7 @@
     "dev": "pnpm build --watch"
   },
   "devDependencies": {
-    "@config/tsup": "workspace:^",
+    "@configs/tsup": "workspace:^",
     "@types/node": "^20.10.7",
     "tsup": "^8.0.1"
   }

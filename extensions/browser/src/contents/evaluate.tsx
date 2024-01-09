@@ -94,6 +94,7 @@ export function Content(p: PlasmoCSUIProps) {
       </motion.div>
 
       <div
+        className="text-black"
         ref={dialogRef}
         style={{ fontFamily: 'Inter', maxHeight: '95dvh' }}
       />

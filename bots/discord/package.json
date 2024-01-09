@@ -23,6 +23,7 @@
     "@discordjs/builders": "^1.7.0",
     "@discordjs/core": "^1.1.1",
     "@discordjs/rest": "^2.2.0",
+    "@evaluate/analytics": "workspace:^",
     "@evaluate/capture": "workspace:^",
     "@evaluate/compress": "workspace:^",
     "@evaluate/execute": "workspace:^",
@@ -37,7 +38,7 @@
   "devDependencies": {
     "@config/tsup": "workspace:^",
     "@types/lodash": "^4.14.202",
-    "@types/node": "^20.10.6",
+    "@types/node": "^20.10.7",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tsup": "^8.0.1"

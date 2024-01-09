@@ -1,3 +1,4 @@
+import { determineInteractionLocale } from '@evaluate/translate';
 import {
   APIInteraction,
   InteractionResponseType,
@@ -7,6 +8,7 @@ import { verifyKey } from 'discord-interactions';
 import { isButton } from './builders/button';
 import { isAutocomplete, isChatInputCommand } from './builders/chat-input';
 import { isModal } from './builders/modal';
+import { analytics } from './core';
 import {
   buttonComponents,
   chatInputCommands,
@@ -37,6 +39,10 @@ export default async function handler(request: Request) {
       console.info('Detected as ping, responding with pong');
       return Response.json({ type: InteractionResponseType.Pong });
     }
+
+    analytics?.append('platform', 'discord bot');
+    analytics?.append('url', '/api/interaction');
+    analytics?.append('language', determineInteractionLocale(interaction));
 
     if (isChatInputCommand(interaction) || isAutocomplete(interaction)) {
       const command = chatInputCommands[interaction.data.name];

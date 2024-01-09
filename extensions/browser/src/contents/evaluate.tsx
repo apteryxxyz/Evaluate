@@ -8,6 +8,7 @@ import type {
   PlasmoGetStyle,
 } from 'plasmo';
 import { useCallback, useRef, useState } from 'react';
+import { AnalyticsProvider } from '~contexts/analytics';
 import { EnabledConsumer, EnabledProvider } from '~contexts/enabled';
 import { TranslateProvider } from '~contexts/translate';
 import { RunButton } from './_components/run-button';
@@ -35,17 +36,19 @@ export const getStyle: PlasmoGetStyle = () => {
 
 export default function ContentWrapper(p: PlasmoCSUIProps) {
   return (
-    <TranslateProvider>
-      <EnabledProvider>
-        <EnabledConsumer>
-          {({ isEnabledFor }) => {
-            const domain = window.location.hostname;
-            if (!isEnabledFor(domain)) return null;
-            return <Content {...p} />;
-          }}
-        </EnabledConsumer>
-      </EnabledProvider>
-    </TranslateProvider>
+    <AnalyticsProvider>
+      <TranslateProvider>
+        <EnabledProvider>
+          <EnabledConsumer>
+            {({ isEnabledFor }) => {
+              const domain = window.location.hostname;
+              if (!isEnabledFor(domain)) return null;
+              return <Content {...p} />;
+            }}
+          </EnabledConsumer>
+        </EnabledProvider>
+      </TranslateProvider>
+    </AnalyticsProvider>
   );
 }
 

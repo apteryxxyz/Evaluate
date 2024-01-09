@@ -1,6 +1,6 @@
 {
-  "name": "@evaluate/capture",
-  "description": "Generate a pretty image of some source code.",
+  "name": "@evaluate/analytics",
+  "description": "TODO:",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",
@@ -16,11 +16,10 @@
     "lint": "biome lint src",
     "check": "tsc --noEmit",
     "build": "tsup",
-    "dev": "pnpm build --watch"
+    "dev": "tsup --watch"
   },
   "devDependencies": {
     "@config/tsup": "workspace:^",
-    "@types/node": "^20.10.7",
     "tsup": "^8.0.1"
   }
 }

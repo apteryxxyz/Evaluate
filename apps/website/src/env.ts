@@ -3,11 +3,11 @@ import { z } from 'zod';
 export const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production']).default('development'),
 
+  WEBSITE_URL: z.string().url(),
   NEXT_PUBLIC_WEBSITE_URL: z.string().url(),
-  NEXT_PUBLIC_GOOGLE_MEASUREMENT_ID: z
-    .string()
-    .regex(/^G-[A-Z0-9]+$/)
-    .optional(),
+
+  UMAMI_ID: z.string().optional(),
+  NEXT_PUBLIC_UMAMI_ID: z.string().optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;

@@ -17,6 +17,7 @@ type TranslateContextProps =
 export const TranslateContext = //
   createContext<TranslateContextProps | null>(null);
 TranslateContext.displayName = 'TranslateContext';
+export const TranslateConsumer = TranslateContext.Consumer;
 
 export function TranslateProvider(p: React.PropsWithChildren) {
   const [locale, setLocale] = useState<Locale>();

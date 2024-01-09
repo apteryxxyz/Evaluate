@@ -3,7 +3,7 @@ import { executeCode } from '@evaluate/execute';
 import { findLanguage } from '@evaluate/languages';
 import { TranslateFunctions } from '@evaluate/translate';
 import { APIInteraction } from 'discord-api-types/v10';
-import { api } from '~/core';
+import { analytics, api } from '~/core';
 import { codeBlock } from '~/utilities/discord-formatting';
 import { createEvaluateResult } from './builders';
 
@@ -56,6 +56,17 @@ export async function handleEvaluating(
   else if (result.compile?.success === false) output = result.compile.output;
   else output = result.run.output;
 
+  void analytics?.track('code executed', {
+    platform: 'discord bot',
+    'language id': language.id,
+    'was successful':
+      result.run.success && (!result.compile || result.compile.success),
+    'code length': _options.code.length,
+    'output length': output.length,
+    'input provided': Boolean(_options.input),
+    'args provided': Boolean(_options.args),
+  });
+
   if (!output.length) {
     output = t.evaluate.output.no_output();
   } else if (output.length > 1000) {
@@ -67,9 +78,8 @@ export async function handleEvaluating(
       args: _options.args ?? '',
     });
     url.searchParams.set('d', data);
-    url.searchParams.set('utm_source', 'discord');
-    url.searchParams.set('utm_medium', 'bot');
-    url.searchParams.set('utm_campaign', 'result_too_long');
+    url.searchParams.set('utm_source', 'discord_bot');
+    url.searchParams.set('utm_content', 'result_too_long');
 
     output = t.evaluate.output.too_long({ url: url.toString() });
   } else {

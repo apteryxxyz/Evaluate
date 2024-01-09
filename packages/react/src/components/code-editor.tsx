@@ -3,7 +3,6 @@
 import _omit from 'lodash/omit';
 import Prism from 'prismjs';
 import components from 'prismjs/components.js';
-import 'prismjs/themes/prism.min.css';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PossibleEditor from 'react-simple-code-editor';
 import { cn } from '~/utilities/class-name';
@@ -67,13 +66,20 @@ export function CodeEditor(
 
   return (
     <>
-      {/* TODO: Add option to disable this, for the browser extension */}
       {/* Dynamically load the syntax grammar stuff */}
       {!Prism.languages[name] && (
         <Script
           src={`https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/components/prism-${name}.js`}
         />
       )}
+
+      {/* [BROWSER EXTENSION] Importing prism theme via esm import affects the whole page, manually declare theme here to fix */}
+      <style
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: Yeah boi
+        dangerouslySetInnerHTML={{
+          __html: `code[class*="language-"],pre[class*="language-"]{color:black;text-shadow:0 1px white;font-family:Consolas,Monaco,'Andale Mono',monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*="language-"]::-moz-selection,pre[class*="language-"] ::-moz-selection,code[class*="language-"]::-moz-selection,code[class*="language-"] ::-moz-selection{text-shadow:none;background:#b3d4fc}pre[class*="language-"]::selection,pre[class*="language-"] ::selection,code[class*="language-"]::selection,code[class*="language-"] ::selection{text-shadow:none;background:#b3d4fc}@media print{code[class*="language-"],pre[class*="language-"]{text-shadow:none}}pre[class*="language-"]{padding:1em;margin:.5em 0;overflow:auto}:not(pre)>code[class*="language-"],pre[class*="language-"]{background:#f5f2f0}:not(pre)>code[class*="language-"]{padding:.1em;border-radius:.3em}.token.comment,.token.prolog,.token.doctype,.token.cdata{color:slategray}.token.punctuation{color:#999}.namespace{opacity:.7}.token.property,.token.tag,.token.boolean,.token.number,.token.constant,.token.symbol,.token.deleted{color:#905}.token.selector,.token.attr-name,.token.string,.token.char,.token.builtin,.token.inserted{color:#690}.token.operator,.token.entity,.token.url,.language-css .token.string,.style .token.string{color:#a67f59;background:hsla(0,0,100%,.5)}.token.atrule,.token.attr-value,.token.keyword{color:#07a}.token.function{color:#dd4a68}.token.regex,.token.important,.token.variable{color:#e90}.token.important,.token.bold{font-weight:bold}.token.italic{font-style:italic}.token.entity{cursor:help}`,
+        }}
+      />
 
       <style
         // biome-ignore lint/security/noDangerouslySetInnerHtml: Yeah boi

@@ -8,11 +8,7 @@ AnalyticsContext.displayName = 'AnalyticsContext';
 export const AnalyticsConsumer = AnalyticsContext.Consumer;
 
 export function AnalyticsProvider(p: React.PropsWithChildren) {
-  if (
-    process.env.NODE_ENV !== 'production' ||
-    !process.env.PLASMO_PUBLIC_UMAMI_ID
-  )
-    return <>{p.children}</>;
+  if (!process.env.PLASMO_PUBLIC_UMAMI_ID) return <>{p.children}</>;
 
   const analytics = useMemo(
     () =>

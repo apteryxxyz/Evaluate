@@ -3,15 +3,20 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   if (
     process.env.NODE_ENV === 'production' &&
-    request.headers.get('x-umami-id') === process.env.UMAMI_ID
+    request.headers.get('x-umami-id') !== process.env.UMAMI_ID
   )
-    await fetch('https://us.umami.is/api/send', {
-      method: 'POST',
-      headers: request.headers,
-      body: await request.text(),
-    });
+    return new NextResponse(null, { status: 403 });
 
-  return new NextResponse(null, { status: 201 });
+  const response = await fetch('https://us.umami.is/api/send', {
+    method: 'POST',
+    headers: request.headers,
+    body: await request.text(),
+  });
+
+  return new NextResponse(await response.text(), {
+    status: response.status,
+    headers: response.headers,
+  });
 }
 
 export async function OPTIONS() {

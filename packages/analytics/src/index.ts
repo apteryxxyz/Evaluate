@@ -14,7 +14,7 @@ export abstract class Analytics {
   protected async _send(payload: Record<string, unknown>, type = 'event') {
     const headers = new Headers({
       'content-type': 'application/json',
-      'x-umami-id': this.endpointId,
+      'x-umami-id': this.websiteId,
     });
 
     if (typeof window === 'undefined')
@@ -90,7 +90,7 @@ export class WebsiteAnalytics extends Analytics {
         !document.title || document.title === 'undefined'
           ? undefined
           : document.title,
-      url: `${window.location.pathname}${searchParams}`,
+      url: `${window.location.pathname}?${searchParams}`,
       referrer: document.referrer,
       ...this._payload,
     };

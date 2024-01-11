@@ -7,21 +7,25 @@ export async function POST(request: NextRequest) {
   )
     return new NextResponse(null, { status: 403 });
 
-  try {
-    const response = await fetch('https://us.umami.is/api/send', {
-      method: 'POST',
-      headers: request.headers,
-      body: await request.text(),
-    });
+  const response = await fetch(
+    'https://us.umami.is/api/send', //
+    { method: 'POST', headers: request.headers, body: request.body },
+  );
+  void response;
 
-    return new NextResponse(await response.text(), {
-      status: response.status,
-      headers: response.headers,
-    });
-  } catch (error) {
-    console.log(error);
-    return new NextResponse(null, { status: 500 });
-  }
+  return new NextResponse(null);
+
+  // const headers = new Headers(request.headers);
+  // const body = await request.text();
+  // const response = await fetch(
+  //   'https://us.umami.is/api/send', //
+  //   { method: 'POST', headers, body },
+  // );
+
+  // return new NextResponse(null, {
+  //   status: response.status,
+  //   headers: response.headers,
+  // });
 }
 
 // export async function OPTIONS() {

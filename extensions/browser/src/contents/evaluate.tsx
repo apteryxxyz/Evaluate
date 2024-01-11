@@ -10,6 +10,7 @@ import type {
 import { useCallback, useRef, useState } from 'react';
 import { AnalyticsProvider } from '~contexts/analytics';
 import { EnabledConsumer, EnabledProvider } from '~contexts/enabled';
+import { ThemeProvider } from '~contexts/theme';
 import { TranslateProvider } from '~contexts/translate';
 import { RunButton } from './_components/run-button';
 // @ts-ignore
@@ -43,7 +44,22 @@ export default function ContentWrapper(p: PlasmoCSUIProps) {
             {({ isEnabledFor }) => {
               const domain = window.location.hostname;
               if (!isEnabledFor(domain)) return null;
-              return <Content {...p} />;
+
+              return (
+                <ThemeProvider
+                  getTargets={() =>
+                    Array.from(document.querySelectorAll('plasmo-csui')) //
+                      .flatMap(
+                        (s) =>
+                          s.shadowRoot?.getElementById(
+                            'plasmo-shadow-container',
+                          ) ?? null,
+                      )
+                  }
+                >
+                  <Content {...p} />
+                </ThemeProvider>
+              );
             }}
           </EnabledConsumer>
         </EnabledProvider>
@@ -94,7 +110,6 @@ export function Content(p: PlasmoCSUIProps) {
       </motion.div>
 
       <div
-        className="text-black"
         ref={dialogRef}
         style={{ fontFamily: 'Inter', maxHeight: '95dvh' }}
       />

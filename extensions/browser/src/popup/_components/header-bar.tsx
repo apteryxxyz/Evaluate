@@ -1,5 +1,6 @@
 import { absoluteUrl } from '~utilities/url-helpers';
 import { LocaleSwitcher } from './locale-switcher';
+import { ThemeSwitcher } from './theme-switcher';
 
 export function HeaderBar() {
   return (
@@ -20,6 +21,7 @@ export function HeaderBar() {
       </a>
 
       <div className="ml-auto">
+        <ThemeSwitcher />
         <LocaleSwitcher />
       </div>
     </header>

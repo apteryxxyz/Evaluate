@@ -30,7 +30,14 @@ export async function fetchLanguages(): Promise<Language[]> {
       .filter((r, i, a) => {
         // If it has a runtime, it's not a duplicate
         if ('runtime' in r) return true;
-        return a.findIndex((r2) => r2.language === r.language) === i;
+
+        return (
+          a.findIndex((r2) => {
+            if ('runtime' in r2) return false;
+            if ('runtime' in r && !('runtime' in r2)) return false;
+            return r2.language === r.language;
+          }) === i
+        );
       })
       .sort((a, b) => a.language.localeCompare(b.language))
       .map(({ runtime, ...language }) => {
@@ -98,7 +105,7 @@ export async function findLanguage(
     // For example: By default 'javascript' will return 'deno' due to
     // being alphabetically first, but we want to prefer 'node' over 'deno'
     const preferredRuntime = resolvePreferredRuntime(language.key);
-    if (!preferredRuntime) return true;
+    if (!preferredRuntime && !language.runtime) return true;
     return language.runtime?.key === preferredRuntime;
   });
 }

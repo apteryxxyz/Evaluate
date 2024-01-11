@@ -20,7 +20,7 @@ export function defineConfig(options) {
       minifySyntax: true,
       //
       dts: true,
-      sourcemap: false,
+      sourcemap: true,
     },
     options,
   );

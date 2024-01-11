@@ -4,7 +4,6 @@
   "exclude": ["node_modules", "dist", "coverage", "test", "tests"],
   "compileOnSave": true,
   "compilerOptions": {
-    // Type Checking
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "exactOptionalPropertyTypes": false,
@@ -17,7 +16,6 @@
     "noUnusedParameters": true,
     "strict": true,
 
-    // Modules
     "allowArbitraryExtensions": false,
     "allowImportingTsExtensions": false,
     "module": "ESNext",
@@ -26,9 +24,7 @@
     "resolvePackageJsonExports": true,
     "resolvePackageJsonImports": true,
 
-    // Emit
     "declaration": true,
-    // "composite": true,
     "declarationMap": true,
     "importHelpers": false,
     "newLine": "lf",
@@ -37,13 +33,11 @@
     "removeComments": false,
     "sourceMap": true,
 
-    // Interop Constraints
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
 
-    // Language and Environment
     "experimentalDecorators": true,
     "lib": ["ESNext"],
     "target": "ES2022",

@@ -7,9 +7,8 @@ import env from '@next/env';
 
 void main(process.argv.length, process.argv);
 async function main(_argc, _argv) {
-  const commands = await readFile('./commands.json', 'utf-8').then((data) =>
-    JSON.parse(data),
-  );
+  const commands = await readFile('./commands.json', 'utf-8') //
+    .then((data) => JSON.parse(data));
 
   env.loadEnvConfig('./', process.env.NODE_ENV !== 'production');
   const rest = new REST({ version: '10' }) //

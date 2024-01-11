@@ -3,14 +3,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "format": "biome format src --write",
-    "lint": "biome lint src",
+    "format": "biome format . --write",
+    "lint": "biome lint .",
     "check": "tsc --noEmit",
     "dev": "plasmo dev",
-    "build": "pnpm run \"/^build:.*/\"",
+    "build": "pnpm build:chrome & pnpm build:firefox && pnpm build:edge & pnpm build:opera & pnpm build:brave",
     "build:chrome": "plasmo build --target=chrome-mv3 --zip",
     "build:firefox": "plasmo build --target=firefox-mv3 --zip",
-    "build:edge": "plasmo build --target=edge-mv3 --zip"
+    "build:edge": "plasmo build --target=edge-mv3 --zip",
+    "build:opera": "plasmo build --target=opera-mv3 --zip",
+    "build:brave": "plasmo build --target=brave-mv3 --zip"
   },
   "dependencies": {
     "@evaluate/analytics": "workspace:^",
@@ -39,6 +41,12 @@
   },
   "manifest": {
     "name": "Evaluate - Execute Any Code, Any Where",
+    "short_name": "Evaluate",
+    "description": "Code in any language, anytime, anywhere with Evaluate.",
+    "version": "0.0.0",
+    "author": "Apteryx Software",
+    "homepage_url": "https://evaluate.run",
+    "manifest_version": 3,
     "host_permissions": ["https://*/*"],
     "permissions": ["activeTab", "tabs", "scripting"]
   }

@@ -40,8 +40,8 @@
     "./tailwind.css": "./tailwind.css"
   },
   "scripts": {
-    "format": "biome format src --write",
-    "lint": "biome lint src",
+    "format": "biome format . --write",
+    "lint": "biome lint .",
     "check": "tsc --noEmit",
     "build": "tsup --onSuccess resolve-tspaths",
     "dev": "pnpm build --watch",
@@ -75,7 +75,7 @@
     "react-hook-form": "^7.49.2"
   },
   "devDependencies": {
-    "@config/tsup": "workspace:^",
+    "@configs/tsup": "workspace:^",
     "@types/lodash": "^4.14.202",
     "@types/pako": "^2.0.3",
     "@types/prismjs": "^1.26.3",

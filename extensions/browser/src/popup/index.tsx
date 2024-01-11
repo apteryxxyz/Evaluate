@@ -4,26 +4,30 @@ import { useEffect, useState } from 'react';
 import { TooltipWrapper } from '~components/tooltip-wrapper';
 import { AnalyticsProvider, useAnalytics } from '~contexts/analytics';
 import { EnabledProvider, useEnabled } from '~contexts/enabled';
+import { ThemeProvider } from '~contexts/theme';
 import { TranslateProvider, useTranslate } from '~contexts/translate';
 import { getDomain, getMetaTagContent } from '~utilities/active-tab';
-import '../styles/tailwind.css';
 import { HeaderBar } from './_components/header-bar';
+
+import '../styles/tailwind.css';
 
 export default function PopupWrapper() {
   return (
-    <div className="w-96 flex flex-col p-4 pt-0">
-      <AnalyticsProvider>
-        <TranslateProvider>
-          <HeaderBar />
+    <ThemeProvider getTargets={() => [document.documentElement]}>
+      <div className="w-96 flex flex-col p-4 pt-0">
+        <AnalyticsProvider>
+          <TranslateProvider>
+            <HeaderBar />
 
-          <EnabledProvider>
-            <main className="flex flex-col">
-              <Popup />
-            </main>
-          </EnabledProvider>
-        </TranslateProvider>
-      </AnalyticsProvider>
-    </div>
+            <EnabledProvider>
+              <main className="flex flex-col">
+                <Popup />
+              </main>
+            </EnabledProvider>
+          </TranslateProvider>
+        </AnalyticsProvider>
+      </div>
+    </ThemeProvider>
   );
 }
 

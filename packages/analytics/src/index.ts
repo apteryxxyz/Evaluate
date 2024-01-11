@@ -1,4 +1,4 @@
-export abstract class Analytics {
+abstract class Analytics {
   public constructor(
     public readonly websiteId: string,
     public readonly endpointId: string,

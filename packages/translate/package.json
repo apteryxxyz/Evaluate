@@ -5,6 +5,7 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "typings": "src/index.ts",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -12,19 +13,21 @@
     }
   },
   "scripts": {
-    "format": "biome format src --write",
-    "lint": "biome lint src",
+    "format": "biome format . --write",
+    "lint": "biome lint .",
     "check": "tsc --noEmit",
     "compile": "node --no-warnings=ExperimentalWarning --loader ts-node/esm --experimental-specifier-resolution=node ./scripts/compile/index.ts",
     "build": "pnpm compile && pnpm tsup",
-    "dev": "npx watch-cli -p \"dictionaries/*.json\" -c \"pnpm compile\" & pnpm tsup --watch"
+    "dev": "pnpm run \"/^dev:.*/\"",
+    "dev:build": "pnpm build --watch",
+    "dev:watch": "npx watch-cli -p \"dictionaries/*.json\" -c \"pnpm compile\""
   },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "^2.7.3",
     "intl-messageformat": "^10.5.8"
   },
   "devDependencies": {
-    "@config/tsup": "workspace:^",
+    "@configs/tsup": "workspace:^",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.7",
     "lodash": "^4.17.21",

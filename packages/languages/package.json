@@ -1,6 +1,6 @@
 {
   "name": "@evaluate/languages",
-  "description": "Execute any source code in any programming language.",
+  "description": "Handles for language fetching from the Piston API.",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",
@@ -12,8 +12,8 @@
     }
   },
   "scripts": {
-    "format": "biome format src --write",
-    "lint": "biome lint src",
+    "format": "biome format . --write",
+    "lint": "biome lint .",
     "check": "tsc --noEmit",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "build": "tsup",
@@ -24,7 +24,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@config/tsup": "workspace:^",
+    "@configs/tsup": "workspace:^",
     "jest": "^29.7.0",
     "tsup": "^8.0.1"
   }

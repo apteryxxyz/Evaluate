@@ -148,7 +148,7 @@ importers:
         specifier: ^3.22.4
         version: 3.22.4
     devDependencies:
-      '@config/tsup':
+      '@configs/tsup':
         specifier: workspace:^
         version: link:../../configs/tsup
       '@types/lodash':
@@ -245,7 +245,7 @@ importers:
 
   packages/analytics:
     devDependencies:
-      '@config/tsup':
+      '@configs/tsup':
         specifier: workspace:^
         version: link:../../configs/tsup
       tsup:
@@ -254,7 +254,7 @@ importers:
 
   packages/capture:
     devDependencies:
-      '@config/tsup':
+      '@configs/tsup':
         specifier: workspace:^
         version: link:../../configs/tsup
       '@types/node':
@@ -270,7 +270,7 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0
     devDependencies:
-      '@config/tsup':
+      '@configs/tsup':
         specifier: workspace:^
         version: link:../../configs/tsup
       '@types/pako':
@@ -292,7 +292,7 @@ importers:
         specifier: ^3.22.4
         version: 3.22.4
     devDependencies:
-      '@config/tsup':
+      '@configs/tsup':
         specifier: workspace:^
         version: link:../../configs/tsup
       jest:
@@ -311,7 +311,7 @@ importers:
         specifier: ^3.22.4
         version: 3.22.4
     devDependencies:
-      '@config/tsup':
+      '@configs/tsup':
         specifier: workspace:^
         version: link:../../configs/tsup
       jest:
@@ -390,7 +390,7 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.1)
     devDependencies:
-      '@config/tsup':
+      '@configs/tsup':
         specifier: workspace:^
         version: link:../../configs/tsup
       '@types/lodash':
@@ -424,7 +424,7 @@ importers:
         specifier: ^10.5.8
         version: 10.5.8
     devDependencies:
-      '@config/tsup':
+      '@configs/tsup':
         specifier: workspace:^
         version: link:../../configs/tsup
       '@types/lodash':

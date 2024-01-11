@@ -12,8 +12,8 @@
     }
   },
   "scripts": {
-    "format": "biome format src --write",
-    "lint": "biome lint src",
+    "format": "biome format . --write",
+    "lint": "biome lint .",
     "check": "tsc --noEmit",
     "build": "tsup",
     "dev": "pnpm build --watch"
@@ -22,7 +22,7 @@
     "pako": "^2.1.0"
   },
   "devDependencies": {
-    "@config/tsup": "workspace:^",
+    "@configs/tsup": "workspace:^",
     "@types/pako": "^2.0.3",
     "tsup": "^8.0.1"
   }

@@ -20,7 +20,14 @@ const nextConfig = {
       source: '/translate',
       destination: 'https://translate.evaluate.run/',
       permanent: true,
-    },
+    }
+  ],
+
+  rewrites: () => [
+    {
+      source: '/api/send',
+      destination: 'https://us.umami.is/api/send',
+    }
   ],
 
   typescript: {

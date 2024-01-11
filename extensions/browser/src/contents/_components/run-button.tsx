@@ -110,17 +110,23 @@ async function getLanguageFromElement(anchorElement: HTMLPreElement) {
     ...Array.from(anchorElement.children),
   ].filter((e): e is HTMLElement => e instanceof HTMLElement);
 
-  const names = possibleElements
-    .flatMap((e) => {
-      // <pre data-language="typescript" />
-      const dataLanguage = e.getAttribute('data-language') ?? '';
-      // <pre class="language-typescript" />
-      const className = e.className.split(/ |-/);
-      return [dataLanguage, ...className];
-    })
-    .filter((e, i, a) => e && a.indexOf(e) === i);
+  for (const element of possibleElements) {
+    const dataLanguage = element.getAttribute('data-language');
+    const matchedLanguage = element.className.match(/language-([a-z]+)/)?.[0];
 
-  for (const name of [...names.map(resolveLanguageName), ...names]) {
+    if (dataLanguage) {
+      const language = await findLanguage(dataLanguage);
+      if (language) return language;
+    }
+    if (matchedLanguage) {
+      const language = await findLanguage(matchedLanguage);
+      if (language) return language;
+    }
+  }
+
+  for (const name of possibleElements.flatMap((e) =>
+    e.className.split(/ |-/),
+  )) {
     if (!name) continue;
     const language = await findLanguage(name);
     if (language) return language;

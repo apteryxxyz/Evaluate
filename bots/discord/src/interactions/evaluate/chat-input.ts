@@ -33,7 +33,7 @@ export default createChatInputCommand(
     const language = getOption<string>(interaction.data, 'language')?.value;
     const code = getOption<string>(interaction.data, 'code')?.value;
     const input = getOption<string>(interaction.data, 'input')?.value;
-    const args = getOption<string>(interaction.data, 'args')?.value;
+    const args = getOption<string>(interaction.data, 'arguments')?.value;
 
     const t = getTranslate(determineLocale(interaction));
 

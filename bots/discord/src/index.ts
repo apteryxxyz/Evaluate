@@ -14,18 +14,8 @@ import {
   chatInputCommands,
   modalComponents,
 } from './interactions';
-import { Readable } from 'stream';
 
-async function getAsOnChunk(stream: Readable) {
-  return new Promise<string>((resolve, reject) => {
-    const chunks: Uint8Array[] = [];
-    stream.on('data', (chunk: Uint8Array) => chunks.push(chunk));
-    stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf-8')));
-    stream.on('error', reject);
-  });
-}
-
-async function getAsReader(stream: ReadableStream) {
+async function getAsReader(stream: ReadableStream<Uint8Array>) {
   const reader = stream.getReader();
   const chunks: Uint8Array[] = [];
   while (true) {
@@ -36,7 +26,7 @@ async function getAsReader(stream: ReadableStream) {
   return Buffer.concat(chunks).toString('utf-8');
 }
 
-async function getAsForChunk(stream: ReadableStream) {
+async function getAsForChunk(stream: ReadableStream<Uint8Array>) {
   const chunks = [];
   for await (const chunk of stream as unknown as Uint8Array[]) 
     chunks.push(chunk);
@@ -44,40 +34,34 @@ async function getAsForChunk(stream: ReadableStream) {
   
 }
 
-export default async function handler(request: Request & { body: Buffer[] }) {
+export default async function handler(request: Request) {
   // DEBUGGING CRAP STARTS HERE
   const allHeaders: Record<string, string> = {};
   request.headers.forEach((value, key) => {    allHeaders[key] = value;  });
   console.log('Request headers', allHeaders);
-  
-  try {
-    const asText = await request.clone().text();
-  console.log('Request body as text', asText);
-  } catch (error) {
-    console.log('Request body as text', 'errored', error);
-  }
+  console.log('Request body', request.body);
 
   try {
-    const asStream = await getAsOnChunk(request.clone().body as unknown as Readable);
-  console.log('Request body as on chunk', asStream);
-  } catch (error) {
-    console.log('Request body as on chunk', 'errored', error);
-  }
-
-  try {
-    const asReader = await getAsReader(request.clone().body as unknown as ReadableStream);
-  console.log('Request body as reader', asReader);
+    const asReader = await getAsReader(request.body!);
+  console.log('Request body as reader', JSON.stringify(asReader));
   }
   catch (error) {
     console.log('Request body as reader', 'errored', error);
   }
 
   try {
-    const asForChunk = await getAsForChunk(request.clone().body as unknown as ReadableStream);
-  console.log('Request body as for chunk', asForChunk);
+    const asForChunk = await getAsForChunk(request.body!);
+  console.log('Request body as for chunk', JSON.stringify(asForChunk));
   }
   catch (error) {
     console.log('Request body as for chunk', 'errored', error);
+  }
+
+  try {
+    const asText = await request.clone().text();
+  console.log('Request body as text', JSON.stringify(asText));
+  } catch (error) {
+    console.log('Request body as text', 'errored', error);
   }
 
   // DEBUGGING CRAP ENDS HERE

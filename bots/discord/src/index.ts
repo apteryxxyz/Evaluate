@@ -15,58 +15,9 @@ import {
   modalComponents,
 } from './interactions';
 
-async function getAsReader(stream: ReadableStream<Uint8Array>) {
-  const reader = stream.getReader();
-  const chunks: Uint8Array[] = [];
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    chunks.push(value);
-  }
-  return Buffer.concat(chunks).toString('utf-8');
-}
-
-async function getAsForChunk(stream: ReadableStream<Uint8Array>) {
-  const chunks = [];
-  for await (const chunk of stream as unknown as Uint8Array[]) 
-    chunks.push(chunk);
-  return Buffer.concat(chunks).toString('utf-8');
-  
-}
-
 export default async function handler(request: Request) {
-  // DEBUGGING CRAP STARTS HERE
-  const allHeaders: Record<string, string> = {};
-  request.headers.forEach((value, key) => {    allHeaders[key] = value;  });
-  console.log('Request headers', allHeaders);
-  console.log('Request body', request.body);
+  const body = await request.json();
 
-  try {
-    const asReader = await getAsReader(request.body!);
-  console.log('Request body as reader', JSON.stringify(asReader));
-  }
-  catch (error) {
-    console.log('Request body as reader', 'errored', error);
-  }
-
-  try {
-    const asForChunk = await getAsForChunk(request.body!);
-  console.log('Request body as for chunk', JSON.stringify(asForChunk));
-  }
-  catch (error) {
-    console.log('Request body as for chunk', 'errored', error);
-  }
-
-  try {
-    const asText = await request.clone().text();
-  console.log('Request body as text', JSON.stringify(asText));
-  } catch (error) {
-    console.log('Request body as text', 'errored', error);
-  }
-
-  // DEBUGGING CRAP ENDS HERE
-
-  const body = await request.json().catch(() => ({}));
   const buffer = Buffer.from(JSON.stringify(body));
   if (buffer.length === 0) return new Response(null, { status: 400 });
 

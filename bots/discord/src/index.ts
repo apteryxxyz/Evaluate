@@ -14,6 +14,35 @@ import {
   chatInputCommands,
   modalComponents,
 } from './interactions';
+import { Readable } from 'stream';
+
+async function getAsOnChunk(stream: Readable) {
+  return new Promise<string>((resolve, reject) => {
+    const chunks: Uint8Array[] = [];
+    stream.on('data', (chunk: Uint8Array) => chunks.push(chunk));
+    stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf-8')));
+    stream.on('error', reject);
+  });
+}
+
+async function getAsReader(stream: ReadableStream) {
+  const reader = stream.getReader();
+  const chunks: Uint8Array[] = [];
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+  }
+  return Buffer.concat(chunks).toString('utf-8');
+}
+
+async function getAsForChunk(stream: ReadableStream) {
+  const chunks = [];
+  for await (const chunk of stream as unknown as Uint8Array[]) 
+    chunks.push(chunk);
+  return Buffer.concat(chunks).toString('utf-8');
+  
+}
 
 export default async function handler(request: Request & { body: Buffer[] }) {
   // DEBUGGING CRAP STARTS HERE
@@ -29,13 +58,28 @@ export default async function handler(request: Request & { body: Buffer[] }) {
   }
 
   try {
-    const [, asStreamClone] = request.clone().body?.tee() ?? [];
-  const decoder = new TextDecoder();
-  const asStreamText = decoder.decode(asStreamClone as any);
-  console.log('Request body as stream', asStreamText);
+    const asStream = await getAsOnChunk(request.clone().body as unknown as Readable);
+  console.log('Request body as on chunk', asStream);
   } catch (error) {
-    console.log('Request body as stream', 'errored', error);
+    console.log('Request body as on chunk', 'errored', error);
   }
+
+  try {
+    const asReader = await getAsReader(request.clone().body as unknown as ReadableStream);
+  console.log('Request body as reader', asReader);
+  }
+  catch (error) {
+    console.log('Request body as reader', 'errored', error);
+  }
+
+  try {
+    const asForChunk = await getAsForChunk(request.clone().body as unknown as ReadableStream);
+  console.log('Request body as for chunk', asForChunk);
+  }
+  catch (error) {
+    console.log('Request body as for chunk', 'errored', error);
+  }
+
   // DEBUGGING CRAP ENDS HERE
 
   const body = await request.json().catch(() => ({}));

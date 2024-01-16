@@ -33,7 +33,9 @@ export function TranslateProvider(p: React.PropsWithChildren) {
         setLocale(item as Locale);
       } else {
         const languages = window.navigator.languages;
-        const locale = languages.find((l) => locales.includes(l as Locale));
+        const locale = languages
+          .map((l) => l.split('-')[0]!)
+          .find((l) => locales.includes(l as Locale));
         if (locale) setLocale(locale as Locale);
       }
     }

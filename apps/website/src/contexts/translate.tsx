@@ -37,6 +37,7 @@ export function TranslateProvider(p: React.PropsWithChildren) {
           .map((l) => l.split('-')[0]!)
           .find((l) => locales.includes(l as Locale));
         if (locale) setLocale(locale as Locale);
+        else setLocale('en');
       }
     }
   }, [locale]);

@@ -15,26 +15,30 @@ import {
   modalComponents,
 } from './interactions';
 
-async function getRequestBody(request: Request & { body: Buffer[] }) {
-  if (!request.body) return '';
-
-  const chunks = [];
-  for await (const chunk of request.body) chunks.push(chunk);
-  return Buffer.concat(chunks).toString();
-}
-
 export default async function handler(request: Request & { body: Buffer[] }) {
-  // TODO: ===== TEMPORARY CHANGE =====
-  console.log('Received request', request.body, request.body?.length);
-  console.log('Transfer encoding', request.headers.get('transfer-encoding'));
+  // DEBUGGING CRAP STARTS HERE
+  const allHeaders: Record<string, string> = {};
+  request.headers.forEach((value, key) => {    allHeaders[key] = value;  });
+  console.log('Request headers', allHeaders);
+  
+  try {
+    const asText = await request.clone().text();
+  console.log('Request body as text', asText);
+  } catch (error) {
+    console.log('Request body as text', 'errored', error);
+  }
 
-  const body =
-    request.headers.get('transfer-encoding') === 'chunked'
-      ? await getRequestBody(request)
-          .then(JSON.parse)
-          .catch(() => '')
-      : await request.json().catch(() => '');
+  try {
+    const [, asStreamClone] = request.clone().body?.tee() ?? [];
+  const decoder = new TextDecoder();
+  const asStreamText = decoder.decode(asStreamClone as any);
+  console.log('Request body as stream', asStreamText);
+  } catch (error) {
+    console.log('Request body as stream', 'errored', error);
+  }
+  // DEBUGGING CRAP ENDS HERE
 
+  const body = await request.json().catch(() => ({}));
   const buffer = Buffer.from(JSON.stringify(body));
   if (buffer.length === 0) return new Response(null, { status: 400 });
 

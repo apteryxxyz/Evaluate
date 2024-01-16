@@ -15,8 +15,25 @@ import {
   modalComponents,
 } from './interactions';
 
-export default async function handler(request: Request) {
-  const body = await request.json();
+async function getRequestBody(request: Request & { body: Buffer[] }) {
+  if (!request.body) return '';
+
+  const chunks = [];
+  for await (const chunk of request.body) chunks.push(chunk);
+  return Buffer.concat(chunks).toString();
+}
+
+export default async function handler(request: Request & { body: Buffer[] }) {
+  // TODO: ===== TEMPORARY CHANGE =====
+  console.log('Received request', request.body, request.body?.length);
+  console.log('Transfer encoding', request.headers.get('transfer-encoding'));
+
+  const body =
+    request.headers.get('transfer-encoding') === 'chunked'
+      ? await getRequestBody(request)
+          .then(JSON.parse)
+          .catch(() => '')
+      : await request.json().catch(() => '');
 
   const buffer = Buffer.from(JSON.stringify(body));
   if (buffer.length === 0) return new Response(null, { status: 400 });

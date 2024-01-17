@@ -22,7 +22,7 @@ export function ResultDialog(p: {
 }) {
   const t = useTranslate();
 
-  const linkUrl = useMemo(() => {
+  const editCodeUrl = useMemo(() => {
     const url = new URL(absoluteUrl(p.language?.id ?? '/'));
     const data = compress({ files: [{ content: p.code ?? '' }] });
     url.searchParams.set('d', data);
@@ -30,6 +30,15 @@ export function ResultDialog(p: {
     url.searchParams.set('utm_content', 'edit_code');
     return url.toString();
   }, [p.language, p.code]);
+
+  const pickLanguageUrl = useMemo(() => {
+    const url = new URL(absoluteUrl());
+    const data = compress({ files: [{ content: p.code ?? '' }] });
+    url.searchParams.set('d', data);
+    url.searchParams.set('utm_source', 'browser_extension');
+    url.searchParams.set('utm_content', 'change_language');
+    return url.toString();
+  }, [p.code]);
 
   const formattedOutput = useMemo(() => {
     switch (true) {
@@ -103,7 +112,16 @@ export function ResultDialog(p: {
 
           <div className="flex justify-end">
             <Button asChild>
-              <a target="_blank" rel="noreferrer noopener" href={linkUrl}>
+              <a
+                target="_blank"
+                rel="noreferrer noopener"
+                href={pickLanguageUrl}
+              >
+                <span>{t.evaluate.language.not_detected.pick()}</span>
+              </a>
+            </Button>
+            <Button asChild>
+              <a target="_blank" rel="noreferrer noopener" href={editCodeUrl}>
                 <span>{t.evaluate.code.edit()}&nbsp;</span>
                 <ExternalLinkIcon size={16} />
               </a>

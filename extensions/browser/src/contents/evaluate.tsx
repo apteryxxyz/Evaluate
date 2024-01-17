@@ -7,7 +7,7 @@ import type {
   PlasmoGetOverlayAnchorList,
   PlasmoGetStyle,
 } from 'plasmo';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnalyticsProvider } from '~contexts/analytics';
 import { EnabledConsumer, EnabledProvider } from '~contexts/enabled';
 import { ThemeProvider } from '~contexts/theme';
@@ -73,6 +73,8 @@ export function Content(p: PlasmoCSUIProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   Reflect.set(anchorRef, 'current', p.anchor!.element);
+
+ 
 
   const anchorBounds = useElementBounds(anchorRef, 'ref', ['resize', 'scroll']);
   const overlayBounds = useElementBounds(overlayRef, 'state', ['resize']);

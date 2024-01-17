@@ -15,7 +15,6 @@
     "build:brave": "plasmo build --target=brave-mv3 --zip"
   },
   "dependencies": {
-    "@evaluate/analytics": "workspace:^",
     "@evaluate/compress": "workspace:^",
     "@evaluate/execute": "workspace:^",
     "@evaluate/languages": "workspace:^",
@@ -25,6 +24,7 @@
     "framer-motion": "^10.17.9",
     "lodash": "^4.17.21",
     "lucide-react": "^0.294.0",
+    "posthog-js": "npm:@apteryxxyz/posthog-js@^1.98.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zod": "^3.22.4"

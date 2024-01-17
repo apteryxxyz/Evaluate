@@ -4,7 +4,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production']).default('development'),
 
   WEBSITE_URL: z.string().url(),
-  UMAMI_ID: z.string().min(1).optional(),
+  POSTHOG_KEY: z.string().min(1).optional(),
 
   DISCORD_TOKEN: z.string().min(1),
   DISCORD_PUBLIC_KEY: z.string().min(1),

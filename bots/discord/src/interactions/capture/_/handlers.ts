@@ -2,6 +2,7 @@ import { generateCodeImage } from '@evaluate/capture';
 import { TranslateFunctions } from '@evaluate/translate';
 import { APIInteraction } from 'discord-api-types/v10';
 import { analytics, api } from '~/core';
+import { getUser } from '~/utilities/interaction-helpers';
 
 /**
  * Handle the capturing of code.
@@ -19,10 +20,17 @@ export async function handleCapturing(
   const imageBuffer = await generateCodeImage(code) //
     .catch(() => null);
 
-  void analytics?.track('capture created', {
-    platform: 'discord bot',
-    'was successful': Boolean(imageBuffer),
-    'code length': code.length,
+  void analytics?.capture({
+    distinctId: getUser(interaction)?.id!,
+    event: 'capture created',
+    properties: {
+      platform: 'discord bot',
+      'guild id': interaction.guild_id,
+      'channel id': interaction.channel?.id,
+
+      'code length': code.length,
+      'was successful': Boolean(imageBuffer),
+    },
   });
 
   return api.interactions.editReply(

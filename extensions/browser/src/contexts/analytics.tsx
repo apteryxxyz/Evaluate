@@ -3,6 +3,7 @@ import { useStorage } from '@plasmohq/storage/hook';
 import posthog from 'posthog-js';
 import { PostHogProvider, usePostHog } from 'posthog-js/react';
 import { useEffect } from 'react';
+import { absoluteUrl } from '~utilities/url-helpers';
 
 export function AnalyticsProvider(p: React.PropsWithChildren) {
   const [distinctId, setDistinctId] = useStorage('distinct_id', '...');
@@ -19,8 +20,8 @@ export function AnalyticsProvider(p: React.PropsWithChildren) {
     });
 
     posthog.init(process.env.PLASMO_PUBLIC_POSTHOG_KEY, {
-      // api_host: absoluteUrl('/ingest'),
-      // ui_host: 'https://app.posthog.com/',
+      api_host: absoluteUrl('/ingest'),
+      ui_host: 'https://app.posthog.com/',
       capture_pageview: false,
       capture_pageleave: false,
       autocapture: false,

@@ -78,17 +78,17 @@ export default function LanguageContent(p: { language: Language }) {
         output = result.compile.output;
       else output = result.run.output;
 
-      void analytics?.track('code executed', {
+      void analytics?.capture('code executed', {
         platform: 'website',
         'language id': p.language.id,
-        'was successful':
-          result.run.success && (!result.compile || result.compile.success),
         'code length': options.files
           .map((f) => f.content.length)
           .reduce((a, b) => a + b, 0),
         'output length': output.length,
         'input provided': Boolean(options.input),
         'args provided': Boolean(options.args),
+        'was successful':
+          result.run.success && (!result.compile || result.compile.success),
       });
     },
     () => {

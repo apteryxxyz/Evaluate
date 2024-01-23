@@ -15,23 +15,9 @@ import {
 } from './interactions';
 import { getUser } from './utilities/interaction-helpers';
 
-async function getRequestBody(request: Request & { body: Buffer[] }) {
-  if (!request.body) return '';
-
-  const chunks = [];
-  for await (const chunk of request.body) chunks.push(chunk);
-  return Buffer.concat(chunks).toString();
-}
-
-export default async function handler(request: Request & { body: Buffer[] }) {
-  const body =
-    request.headers.get('transfer-encoding') === 'chunked'
-      ? await getRequestBody(request)
-          .then(JSON.parse)
-          .catch(() => '')
-      : await request.json().catch(() => '');
-
-  const buffer = Buffer.from(body);
+export default async function handler(request: Request) {
+  const body = await request.json().catch(() => null);
+  const buffer = Buffer.from(JSON.stringify(body));
   if (buffer.length === 0) return new Response(null, { status: 400 });
 
   const signature = request.headers.get('X-Signature-Ed25519');

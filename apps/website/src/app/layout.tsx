@@ -5,7 +5,16 @@ import { generateBaseMetadata } from './metadata';
 import { HTMLProviders, MainProviders } from './providers';
 
 import '@evaluate/react/tailwind.css';
+import dynamic from 'next/dynamic';
 import './layout.css';
+
+const PageView = dynamic(
+  async () => {
+    const { PageView } = await import('../components/page-view');
+    return { default: PageView };
+  },
+  { ssr: false },
+);
 
 const inter = Inter({
   subsets: ['latin'],
@@ -50,6 +59,7 @@ export default function RootLayout(p: LayoutProps) {
         <body key="body" className="flex pb-8 flex-col gap-8">
           <MainProviders>
             <HeaderBar />
+            <PageView />
 
             <main className="container flex flex-col flex-1 gap-6">
               {p.children}

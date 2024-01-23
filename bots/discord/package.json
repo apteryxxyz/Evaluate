@@ -17,9 +17,7 @@
     "lint": "biome lint .",
     "check": "tsc --noEmit",
     "build": "tsup",
-    "dev": "pnpm run \"/^dev:.*/\"",
-    "dev:build": "pnpm build --watch",
-    "dev:tunnel": "npx localtunnel --port 3000 --subdomain apteryx-testing-bot"
+    "dev": "pnpm build --watch"
   },
   "dependencies": {
     "@discordjs/builders": "^1.7.0",

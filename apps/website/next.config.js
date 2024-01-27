@@ -29,7 +29,7 @@ const nextConfig = {
       destination: 'https://us.umami.is/api/send',
     },
     {
-      source: '/ingest/:path*',
+      source: '/ingest2/:path*',
       destination: 'https://app.posthog.com/:path*',
     },
   ],

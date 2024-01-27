@@ -1,8 +1,8 @@
 import { Label } from '@evaluate/react/components/label';
 import { Switch } from '@evaluate/react/components/switch';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { TooltipWrapper } from '~components/tooltip-wrapper';
-import { AnalyticsProvider, useAnalytics } from '~contexts/analytics';
+import { AnalyticsProvider, analytics } from '~contexts/analytics';
 import { EnabledProvider, useEnabled } from '~contexts/enabled';
 import { ThemeProvider } from '~contexts/theme';
 import { TranslateProvider, useTranslate } from '~contexts/translate';
@@ -33,25 +33,41 @@ export default function PopupWrapper() {
 
 function Popup() {
   const t = useTranslate();
-  const analytics = useAnalytics();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Trigger popup opened event
-  useEffect(
-    () =>
-      void analytics?.track('popup opened', {
-        platform: 'browser extension',
-      }),
-    [],
-  );
+  useEffect(() => {
+    void analytics.capture('popup opened');
+    return () => void analytics.capture('popup closed');
+  }, []);
 
   const { isEnabled, isEnabledFor, setEnabled, setEnabledFor } = useEnabled();
   const [domain, setDomain] = useState<string>();
   const [hasDisabledTag, setHasDisabledTag] = useState<boolean>();
   useEffect(() => {
     getDomain().then(setDomain);
-    getMetaTagContent().then(console.log);
     getMetaTagContent().then((c) => setHasDisabledTag(c === 'disabled'));
   }, []);
+
+  const setGloballyEnabled = useCallback(
+    (checked: boolean) => {
+      analytics.capture('toggle globally enabled', {
+        'old value': !checked,
+        'new value': checked,
+      });
+      setEnabled(checked);
+    },
+    [setEnabled],
+  );
+  const setCurrentSiteEnabled = useCallback(
+    (checked: boolean) => {
+      analytics.capture('toggle current site enabled', {
+        domain: domain,
+        'old value': !checked,
+        'new value': checked,
+      });
+      setEnabledFor(domain!, checked);
+    },
+    [domain, setEnabledFor],
+  );
 
   return (
     <div className="flex flex-col gap-4 pt-4">
@@ -66,7 +82,7 @@ function Popup() {
         <Switch
           name="enabled"
           checked={isEnabled}
-          onCheckedChange={setEnabled}
+          onCheckedChange={setGloballyEnabled}
           className="ml-auto my-auto"
         />
       </div>
@@ -90,7 +106,7 @@ function Popup() {
               name="current-enabled"
               checked={isEnabledFor(domain!) && !hasDisabledTag}
               disabled={!isEnabled || hasDisabledTag}
-              onCheckedChange={(c) => setEnabledFor(domain!, c)}
+              onCheckedChange={setCurrentSiteEnabled}
             />
           </div>
         </TooltipWrapper>

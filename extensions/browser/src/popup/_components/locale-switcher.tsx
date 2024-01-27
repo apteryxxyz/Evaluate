@@ -7,10 +7,23 @@ import {
 } from '@evaluate/react/components/dropdown-menu';
 import { Locale, locales } from '@evaluate/translate';
 import { LanguagesIcon } from 'lucide-react';
+import { useCallback } from 'react';
+import { analytics } from '~contexts/analytics';
 import { useTranslate } from '~contexts/translate';
 
 export function LocaleSwitcher() {
   const t = useTranslate();
+
+  const setLocale = useCallback(
+    (key: string) => {
+      analytics.capture('locale changed', {
+        'old locale': t.locale,
+        'new locale': key,
+      });
+      t.setLocale(key as Locale);
+    },
+    [t.locale, t.setLocale],
+  );
 
   return (
     <DropdownMenu>
@@ -31,7 +44,7 @@ export function LocaleSwitcher() {
               <Button
                 variant="ghost"
                 className="w-full cursor-pointer"
-                onClick={() => t.setLocale(key as Locale)}
+                onClick={() => setLocale(key as Locale)}
               >
                 {name}
               </Button>

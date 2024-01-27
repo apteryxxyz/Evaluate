@@ -6,8 +6,8 @@ export const envSchema = z.object({
   WEBSITE_URL: z.string().url(),
   NEXT_PUBLIC_WEBSITE_URL: z.string().url(),
 
-  UMAMI_ID: z.string().optional(),
-  NEXT_PUBLIC_UMAMI_ID: z.string().optional(),
+  POSTHOG_KEY: z.string().min(1).optional(),
+  NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;

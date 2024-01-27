@@ -5,6 +5,7 @@ import { TranslateFunctions } from '@evaluate/translate';
 import { APIInteraction } from 'discord-api-types/v10';
 import { analytics, api } from '~/core';
 import { codeBlock } from '~/utilities/discord-formatting';
+import { getUser } from '~/utilities/interaction-helpers';
 import { createEvaluateResult } from './builders';
 
 /**
@@ -56,15 +57,22 @@ export async function handleEvaluating(
   else if (result.compile?.success === false) output = result.compile.output;
   else output = result.run.output;
 
-  void analytics?.track('code executed', {
-    platform: 'discord bot',
-    'language id': language.id,
-    'was successful':
-      result.run.success && (!result.compile || result.compile.success),
-    'code length': _options.code.length,
-    'output length': output.length,
-    'input provided': Boolean(_options.input),
-    'args provided': Boolean(_options.args),
+  void analytics?.capture({
+    distinctId: getUser(interaction)?.id!,
+    event: 'code executed',
+    properties: {
+      platform: 'discord bot',
+      'guild id': interaction.guild_id,
+      'channel id': interaction.channel?.id,
+
+      'language id': language.id,
+      'code length': _options.code.length,
+      'output length': output.length,
+      'input provided': Boolean(_options.input),
+      'args provided': Boolean(_options.args),
+      'was successful':
+        result.run.success && (!result.compile || result.compile.success),
+    },
   });
 
   if (!output.length) {

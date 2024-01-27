@@ -1,36 +1,20 @@
-import { WebsiteAnalytics } from '@evaluate/analytics';
-import { usePathname } from 'next/navigation';
-import { createContext, useContext, useEffect, useMemo } from 'react';
+'use client';
+
+import posthog from 'posthog-js';
+import { PostHogProvider, usePostHog } from 'posthog-js/react';
 import { absoluteUrl } from '~/utilities/url-helpers';
 
-export const AnalyticsContext = //
-  createContext<WebsiteAnalytics | null>(null);
-AnalyticsContext.displayName = 'AnalyticsContext';
-export const AnalyticsConsumer = AnalyticsContext.Consumer;
+if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
+  posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
+    api_host: absoluteUrl('/ingest'),
+    ui_host: 'https://app.posthog.com/',
+    capture_pageview: false,
+  });
+}
 
 export function AnalyticsProvider(p: React.PropsWithChildren) {
-  if (!process.env.NEXT_PUBLIC_UMAMI_ID) return <>{p.children}</>;
-
-  const analytics = useMemo(
-    () =>
-      new WebsiteAnalytics(
-        process.env.NEXT_PUBLIC_UMAMI_ID!,
-        absoluteUrl('/api/send'),
-      ),
-    [],
-  );
-
-  const pathname = usePathname();
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Trigger page view on pathname change
-  useEffect(() => void analytics.track(), [pathname]);
-
-  return (
-    <AnalyticsContext.Provider value={analytics}>
-      {p.children}
-    </AnalyticsContext.Provider>
-  );
+  return <PostHogProvider client={posthog}>{p.children}</PostHogProvider>;
 }
 
-export function useAnalytics() {
-  return useContext(AnalyticsContext);
-}
+export const useAnalytics = usePostHog;
+export const analytics = posthog;

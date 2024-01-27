@@ -2,18 +2,28 @@
 
 import { Button } from '@evaluate/react/components/button';
 import { MoonIcon, SunIcon } from 'lucide-react';
+import { useCallback } from 'react';
 import { useTranslate } from '~/contexts/translate';
+import { analytics } from '~contexts/analytics';
 import { useTheme } from '~contexts/theme';
 
 export function ThemeSwitcher() {
   const t = useTranslate();
   const { theme, setTheme } = useTheme();
 
+  const toggleTheme = useCallback(() => {
+    analytics.capture('theme changed', {
+      'old theme': theme,
+      'new theme': theme === 'light' ? 'dark' : 'light',
+    });
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  }, [theme, setTheme]);
+
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+      onClick={toggleTheme}
       className="aspect-square"
     >
       <SunIcon

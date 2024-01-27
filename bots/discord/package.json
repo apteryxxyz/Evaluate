@@ -17,15 +17,12 @@
     "lint": "biome lint .",
     "check": "tsc --noEmit",
     "build": "tsup",
-    "dev": "pnpm run \"/^dev:.*/\"",
-    "dev:build": "pnpm build --watch",
-    "dev:tunnel": "npx localtunnel --port 3000 --subdomain apteryx-testing-bot"
+    "dev": "pnpm build --watch"
   },
   "dependencies": {
     "@discordjs/builders": "^1.7.0",
     "@discordjs/core": "^1.1.1",
     "@discordjs/rest": "^2.2.0",
-    "@evaluate/analytics": "workspace:^",
     "@evaluate/capture": "workspace:^",
     "@evaluate/compress": "workspace:^",
     "@evaluate/execute": "workspace:^",
@@ -35,6 +32,7 @@
     "discord-api-types": "^0.37.67",
     "discord-interactions": "^3.4.0",
     "lodash": "^4.17.21",
+    "posthog-node": "^3.5.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

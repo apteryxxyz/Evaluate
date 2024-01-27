@@ -1,14 +1,10 @@
 import { ExecuteCodeResult, executeCode } from '@evaluate/execute';
-import {
-  Language,
-  findLanguage,
-  resolveLanguageName,
-} from '@evaluate/languages';
+import { Language, findLanguage } from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
 import { cn } from '@evaluate/react/utilities/class-name';
 import { Loader2Icon, PlayIcon, XIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import { useAnalytics } from '~contexts/analytics';
+import { analytics } from '~contexts/analytics';
 import { LanguageDialog } from './language-dialog';
 import { ResultDialog } from './result-dialog';
 
@@ -16,8 +12,6 @@ export function RunButton(p: {
   preElement: HTMLPreElement;
   dialogRef: React.RefObject<HTMLDivElement>;
 }) {
-  const analytics = useAnalytics();
-
   const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguage] = useState<Language>();
   const [code, setCode] = useState<string>();
@@ -53,15 +47,16 @@ export function RunButton(p: {
     else if (result.compile?.success === false) output = result.compile.output;
     else output = result.run.output;
 
-    void analytics?.track('code executed', {
-      platform: 'browser extension',
+    analytics.capture('code executed', {
       'language id': language.id,
-      'was successful':
-        result.run.success && (!result.compile || result.compile.success),
       'code length': code.length,
       'output length': output.length,
+      'input provided': false,
+      'arguments provided': false,
+      'was successful':
+        result.run.success && (!result.compile || result.compile.success),
     });
-  }, [analytics, isExecuting, language, code]);
+  }, [isExecuting, language, code]);
 
   return (
     <>
@@ -74,12 +69,10 @@ export function RunButton(p: {
         onClick={onRunClick}
         disabled={isExecuting || (!code && !language)}
       >
-        {isLoading ? (
+        {isLoading || isExecuting ? (
           <Loader2Icon className="animate-spin w-5 h-5" />
         ) : !code && !language ? (
           <XIcon className="w-5 h-5" />
-        ) : isExecuting ? (
-          <Loader2Icon className="animate-spin w-5 h-5" />
         ) : (
           <PlayIcon className="ml-0.5 w-5 h-5" />
         )}

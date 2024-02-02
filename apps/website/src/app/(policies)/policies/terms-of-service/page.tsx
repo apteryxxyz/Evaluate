@@ -21,7 +21,7 @@ export default function TermsOfServicePage() {
         </h1>
 
         <p className="block text-sm text-muted-foreground">
-          This privacy policy are only available in English.
+          These terms of service are only available in English.
         </p>
       </div>
 

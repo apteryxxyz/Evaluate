@@ -1,14 +1,14 @@
 import {
+  type MessageFormatElement,
+  TYPE,
+  parse,
+} from '@formatjs/icu-messageformat-parser';
+import type {
   Parameter,
   Translation,
   Translations,
   UnparsedTranslations,
 } from '../types';
-import {
-  parse,
-  type MessageFormatElement,
-  TYPE,
-} from '@formatjs/icu-messageformat-parser';
 
 /**
  * Parse a raw translation object into a fully parsed translation object.

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo } from 'react';
 import { useAnalytics } from '~/contexts/analytics';
@@ -20,6 +21,11 @@ export function PageView() {
     analytics?.capture('$pageview', { $current_url: url });
     return () => void analytics?.capture('$pageleave', { $current_url: url });
   }, [analytics, pathname]);
+
+  useEventListener(
+    'beforeunload',
+    () => void analytics?.capture('$pageleave', { $current_url: url }),
+  );
 
   return null;
 }

@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import { LayoutProps } from '~/types';
-import { HeaderBar } from '../components/header-bar/header-bar';
+import { FooterBar } from '../components/footer-bar';
+import { HeaderBar } from '../components/header-bar';
 import { generateBaseMetadata } from './metadata';
 import { HTMLProviders, MainProviders } from './providers';
 
@@ -65,6 +66,8 @@ export default function RootLayout(p: LayoutProps) {
             <main className="container flex flex-col flex-1 gap-6">
               {p.children}
             </main>
+
+            <FooterBar />
           </MainProviders>
         </body>
       </html>

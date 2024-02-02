@@ -41,7 +41,7 @@ export function SearchInput() {
     setFilteredLanguages,
   } = useLanguages();
 
-  const onSearchClick = useCallback(() => {
+  const triggerSearch = useCallback(() => {
     if (isSearching) return;
     setIsSearching(true);
 
@@ -76,7 +76,7 @@ export function SearchInput() {
       if (e.key !== 'Enter') return;
       e.preventDefault();
       inputRef.current?.blur();
-      onSearchClick();
+      triggerSearch();
     },
     inputRef,
   );
@@ -92,6 +92,63 @@ export function SearchInput() {
   return (
     <div className="relative flex gap-2">
       {/* An anchor intended to define the position to scroll to when search */}
+      <div className="h-1 bg-transparent absolute top-[-80px]" />
+
+      <Input
+        ref={inputRef}
+        placeholder={t.languages.search.description()}
+        className="bg-transparent duration-300 hover:border-primary bg-glow"
+        onChange={triggerSearch}
+      />
+
+      {/* Now that search is triggered on every change, should we keep the search button? */}
+      <Button
+        type="button"
+        className="md:w-32"
+        onClick={triggerSearch}
+        disabled={isSearching}
+      >
+        {isSearching ? (
+          <>
+            <Loader2Icon size={16} className="animate-spin" />
+            <span className="hidden md:block">
+              &nbsp;{t.languages.search.ing()}
+            </span>
+          </>
+        ) : (
+          <>
+            <SearchIcon size={16} />
+            <span className="hidden md:block">
+              &nbsp;{t.languages.search()}
+            </span>
+          </>
+        )}
+      </Button>
+
+      <Button
+        size="icon"
+        className="aspect-square"
+        disabled={languages.length === filteredLanguages.length}
+        onClick={() => {
+          inputRef.current!.value = '';
+          triggerSearch();
+        }}
+      >
+        <ListRestartIcon size={16} />
+        <span className="sr-only">{t.screen_reader.clear_search()}</span>
+      </Button>
+    </div>
+  );
+}
+
+/*
+export function SearchInput() {
+  
+
+  if (!t) return <SkeletonSearchInput />;
+  return (
+    <div className="relative flex gap-2">
+      {/* An anchor intended to define the position to scroll to when search *}
       <div className="h-1 bg-transparent absolute top-[-80px]" />
 
       <Input
@@ -130,137 +187,6 @@ export function SearchInput() {
         onClick={() => {
           inputRef.current!.value = '';
           onSearchClick();
-        }}
-      >
-        <ListRestartIcon size={16} />
-        <span className="sr-only">{t.screen_reader.clear_search()}</span>
-      </Button>
-    </div>
-  );
-}
-
-/*
-export function SearchInput() {
-  const t = useTranslate();
-
-  const inputRef = useRef<HTMLInputElement>(null);
-  const scrollToSearchInput = useCallback(() => {
-    const scrollAnchor = inputRef.current?.parentElement?.children[0];
-    scrollAnchor?.scrollIntoView({ behavior: 'smooth' });
-  }, []);
-
-  const {
-    languages,
-    filteredLanguages,
-    isSearching,
-    setIsSearching,
-    setFilteredLanguages,
-  } = useLanguages();
-
-  const onClick = useCallback(() => {
-    if (isSearching) return;
-    setIsSearching(true);
-
-    try {
-      // TIL we don't need useState where we're going
-      const query = inputRef.current?.value?.trim() ?? '';
-      const newSearchParams = new URLSearchParams(window.location.search);
-      if (query) {
-        newSearchParams.set('q', query);
-        window.location.search = newSearchParams.toString();
-        return searchLanguages(query).then(setFilteredLanguages);
-      } else {
-        newSearchParams.delete('q');
-        window.location.search = newSearchParams.toString();
-        return setFilteredLanguages(languages);
-      }
-    } catch {
-    } finally {
-      setIsSearching(false);
-      scrollToSearchInput();
-    }
-  }, [
-    scrollToSearchInput,
-    isSearching,
-    languages,
-    setIsSearching,
-    setFilteredLanguages,
-  ]);
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const query = searchParams.get('q');
-    if (query) {
-      inputRef.current!.value = query;
-      onClick();
-    }
-
-    const data = searchParams.get('d') ?? searchParams.get('data');
-    if (data) scrollToSearchInput();
-  }, []);
-
-  // Listen for when the user presses enter while focused on the input
-  // and trigger the search button
-  useEventListener(
-    'keydown',
-    (e) => {
-      if (e.key !== 'Enter') return;
-      e.preventDefault();
-      inputRef.current?.blur();
-      onClick();
-    },
-    inputRef,
-  );
-
-  // Listen for when the user presses ctrl+f or / and focus the input
-  useHotKeys(
-    ['ctrl+f', '/'], //
-    () => inputRef.current?.focus(),
-    { preventDefault: true },
-  );
-
-  if (!t) return <SkeletonSearchInput />;
-  return (
-    <div className="relative flex gap-2">
-      {/* An anchor intended to define the position to scroll to when search *}
-      <div className="h-1 bg-transparent absolute top-[-80px]" />
-
-      <Input
-        ref={inputRef}
-        placeholder={t.languages.search.description()}
-        className="bg-transparent duration-300 hover:border-primary bg-glow"
-      />
-
-      <Button
-        type="button"
-        className="md:w-32"
-        onClick={onClick}
-        disabled={isSearching}
-      >
-        {isSearching ? (
-          <>
-            <Loader2Icon size={16} className="animate-spin" />
-            <span className="hidden md:block">
-              &nbsp;{t.languages.search.ing()}
-            </span>
-          </>
-        ) : (
-          <>
-            <SearchIcon size={16} />
-            <span className="hidden md:block">
-              &nbsp;{t.languages.search()}
-            </span>
-          </>
-        )}
-      </Button>
-
-      <Button
-        size="icon"
-        className="aspect-square"
-        disabled={languages.length === filteredLanguages.length}
-        onClick={() => {
-          inputRef.current!.value = '';
-          onClick();
         }}
       >
         <ListRestartIcon size={16} />

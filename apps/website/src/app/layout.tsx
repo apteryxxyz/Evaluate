@@ -54,12 +54,13 @@ export default function RootLayout(p: LayoutProps) {
             sizes="16x16"
             href="/favicon-16x16.png"
           />
+
+          <PageView />
         </head>
 
         <body key="body" className="flex pb-8 flex-col gap-8">
           <MainProviders>
             <HeaderBar />
-            <PageView />
 
             <main className="container flex flex-col flex-1 gap-6">
               {p.children}

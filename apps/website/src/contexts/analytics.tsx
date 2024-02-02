@@ -9,6 +9,7 @@ if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
     api_host: absoluteUrl('/ingest2'),
     ui_host: 'https://app.posthog.com/',
     capture_pageview: false,
+    capture_pageleave: false,
   });
 }
 

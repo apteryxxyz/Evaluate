@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useAnalytics } from '~/contexts/analytics';
 
 export function PageView() {
@@ -9,13 +9,17 @@ export function PageView() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const url = useMemo(() => {
+    let url = window.origin + pathname;
+    if (searchParams.toString()) url += `?${searchParams.toString()}`;
+    return url;
+  }, [pathname, searchParams]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: url is not a dependency
   useEffect(() => {
-    if (analytics && pathname) {
-      let url = window.origin + pathname;
-      if (searchParams.toString()) url += `?${searchParams.toString()}`;
-      analytics.capture('$pageview', { $current_url: url });
-    }
-  }, [analytics, pathname, searchParams]);
+    analytics?.capture('$pageview', { $current_url: url });
+    return () => void analytics?.capture('$pageleave', { $current_url: url });
+  }, [analytics, pathname]);
 
   return null;
 }

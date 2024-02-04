@@ -23,14 +23,14 @@
     "dev:watch": "npx watch-cli -p \"dictionaries/*.json\" -c \"pnpm compile\""
   },
   "dependencies": {
-    "@formatjs/icu-messageformat-parser": "^2.7.3",
-    "intl-messageformat": "^10.5.8"
+    "@formatjs/icu-messageformat-parser": "^2.7.6",
+    "intl-messageformat": "^10.5.11"
   },
   "devDependencies": {
     "@configs/tsup": "workspace:^",
-    "lodash": "^4.17.21",
     "@types/lodash": "^4.14.202",
-    "@types/node": "^20.10.7",
+    "@types/node": "^20.11.16",
+    "lodash": "^4.17.21",
     "ts-node": "^10.9.2",
     "tsup": "^8.0.1"
   }

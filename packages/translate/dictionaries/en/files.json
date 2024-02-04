@@ -1,0 +1,29 @@
+{
+  "files": {
+    "$": "Files",
+
+    "name": {
+      "$": "File Name",
+      "description": "The contents of the file.",
+      "main": "Entrypoint",
+      "untitled": "Untitled"
+    },
+    "content": {
+      "$": "File Content",
+      "description": "The contents of the file."
+    },
+
+    "add_file": "Add File",
+    "remove_file": "Remove File"
+  },
+
+  "share": {
+    "$": "Share",
+
+    "copy_url": {
+      "$": "Copy the search URL",
+      "success": "Copied URL to clipboard.",
+      "failure": "Failed to copy URL to clipboard."
+    }
+  }
+}

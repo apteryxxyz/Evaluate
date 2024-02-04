@@ -2,8 +2,7 @@ export function buildGetFile(locales: Record<string, string>) {
   return `
 // This file is generated automatically, any changes will be overwritten
 
-import IntlMessageFormat from 'intl-messageformat';
-import _ from 'lodash';
+import { IntlMessageFormat } from 'intl-messageformat';
 import type { Locale } from './locales';
 import type { TranslateFunctions } from './interfaces';
 ${Object.keys(locales)
@@ -17,9 +16,12 @@ type AnyFunction = (...args: any[]) => unknown;
 function wrapTarget(target: AnyObject, fn: AnyFunction): AnyFunction | AnyObject {
   if (typeof target === 'string') return fn.bind(null, target);
   return Object.assign(
-    Object.defineProperty(() => target?.$, 'name', { writable: true }),
+    Object.defineProperty(fn.bind(null, target?.$), 'name', { writable: true }),
     target,
   );
+
+  // if (typeof target === 'object' && '$' in target) return wrapTarget(target.$ as AnyObject, fn);
+  // return target;
 }
 
 function createProxy(target: AnyObject, fn: AnyFunction): AnyFunction | AnyObject {
@@ -30,10 +32,9 @@ function createProxy(target: AnyObject, fn: AnyFunction): AnyFunction | AnyObjec
 }
 
 export function getTranslate(locale: Locale) {
-  let translations: AnyObject = en;
+  let translations: AnyObject = {};
   ${Object.keys(locales)
-    .filter((l) => l !== 'en')
-    .map((l) => `if (locale === '${l}') translations = _.merge(en, ${l});`)
+    .map((l) => `if (locale === '${l}') translations = ${l};`)
     .join('\n  ')}
 
   return createProxy(translations, ((text: string, args: Parameters<IntlMessageFormat['format']>[0]) => {

@@ -1,0 +1,14 @@
+{
+  "capture": {
+    "$": "Cattura",
+    "description": "Crea e condividi immagini del tuo codice.",
+    "code": {
+      "$": "Codice",
+      "description": "Il codice da visualizzare nell'immagine."
+    },
+    "output": {
+      "$": "Output",
+      "service_down": "Il servizio di cattura è off, riprova più tardi."
+    }
+  }
+}

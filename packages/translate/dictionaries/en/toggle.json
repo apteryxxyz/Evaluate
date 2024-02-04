@@ -1,0 +1,15 @@
+{
+  "toggle": {
+    "browser_extension": {
+      "globally": {
+        "$": "Is Globally Enabled",
+        "description": "Toggle this switch to enable/disable the extension globally."
+      },
+      "current_site": {
+        "$": "Is Current Site Enabled",
+        "description": "Toggle this switch to enable/disable the extension on the current website.",
+        "disabled_by_meta_tag": "This website instructs the Evaluate extension to not run on this page."
+      }
+    }
+  }
+}

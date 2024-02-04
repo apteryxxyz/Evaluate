@@ -28,17 +28,17 @@
     "@evaluate/execute": "workspace:^",
     "@evaluate/languages": "workspace:^",
     "@evaluate/translate": "workspace:^",
-    "@next/env": "^14.0.4",
+    "@next/env": "^14.1.0",
     "discord-api-types": "^0.37.67",
     "discord-interactions": "^3.4.0",
     "lodash": "^4.17.21",
-    "posthog-node": "^3.5.0",
+    "posthog-node": "^3.6.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@configs/tsup": "workspace:^",
     "@types/lodash": "^4.14.202",
-    "@types/node": "^20.10.7",
+    "@types/node": "^20.11.16",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tsup": "^8.0.1"

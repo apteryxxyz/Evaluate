@@ -30,9 +30,7 @@ export function LocaleSwitcher() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="aspect-square">
           <LanguagesIcon size={16} />
-          {t && (
-            <span className="sr-only">{t.screen_reader.change_locale()}</span>
-          )}
+          {t && <span className="sr-only">{t.sr.change_locale()}</span>}
         </Button>
       </DropdownMenuTrigger>
 

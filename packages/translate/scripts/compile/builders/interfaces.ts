@@ -4,18 +4,20 @@ function generateFunctionsInnerInterface(translations: Translations) {
   const result: string[] = [];
 
   for (const [key, value] of Object.entries(translations)) {
+    if (key === '$') continue;
+
     if (isTranslation(value)) {
       const documentation = `/** ${value.value.replace(/\n/g, ' ')} */`;
       const signature = generateFunctionSignature(value);
-      result.push(`${documentation}\n${key}${signature}`);
+      result.push(`${documentation}\n"${key}"${signature}`);
     } else if ('$' in value && isTranslation(value.$)) {
       const documentation = `/** ${value.$.value.replace(/\n/g, ' ')} */`;
       const signature = generateFunctionSignature(value.$);
-      result.push(`${documentation}\n${key}:{\n${signature}`);
+      result.push(`${documentation}\n"${key}":{\n${signature}`);
       result.push(generateFunctionsInnerInterface(value));
       result.push('};');
     } else {
-      result.push(`${key}: {`);
+      result.push(`"${key}": {`);
       result.push(generateFunctionsInnerInterface(value));
       result.push('};');
     }
@@ -25,12 +27,12 @@ function generateFunctionsInnerInterface(translations: Translations) {
 }
 
 function generateFunctionSignature(translation: Translation) {
-  if (translation.parameters.length === 0) return '(): string';
+  if (translation.parameters.length === 0) return `(): "${translation.value}"`;
   const parameters = translation.parameters
     .filter(([key], i, s) => s.findIndex(([k]) => k === key) === i)
-    .map(([key, type]) => `${key}: ${type}`)
+    .map(([key, type]) => `"${key}": ${type}`)
     .join(', ');
-  return `(arg: { ${parameters} }): string`;
+  return `(arg: { ${parameters} }): "${translation.value}"`;
 }
 
 export function buildInterfacesFile(translations: Translations) {

@@ -8,27 +8,40 @@ import { handleEvaluating } from './_/handlers';
 
 export default createChatInputCommand(
   (builder) =>
-    applyLocalisations(builder, 'evaluate')
+    applyLocalisations(builder, ['evaluate', 'evaluate.description'])
       .addStringOption((option) =>
-        applyLocalisations(option, 'evaluate.language')
+        applyLocalisations(option, [
+          'evaluate.language',
+          'evaluate.language.description',
+        ])
           .setMinLength(1)
           .setMaxLength(100),
       )
       .addStringOption((option) =>
-        applyLocalisations(option, 'evaluate.code')
+        applyLocalisations(option, [
+          'evaluate.code',
+          'evaluate.code.description',
+        ])
           .setMinLength(1)
           .setMaxLength(4000),
       )
       .addStringOption((option) =>
-        applyLocalisations(option, 'evaluate.input')
+        applyLocalisations(option, [
+          'evaluate.input',
+          'evaluate.input.description',
+        ])
           .setMinLength(1)
           .setMaxLength(4000),
       )
       .addStringOption((option) =>
-        applyLocalisations(option, 'evaluate.args')
+        applyLocalisations(option, [
+          'evaluate.args',
+          'evaluate.args.description',
+        ])
           .setMinLength(1)
           .setMaxLength(500),
       ),
+
   async (interaction) => {
     const language = getOption<string>(interaction.data, 'language')?.value;
     const code = getOption<string>(interaction.data, 'code')?.value;

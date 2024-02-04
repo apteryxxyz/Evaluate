@@ -42,7 +42,7 @@ export async function handleEvaluating(
     return api.interactions[action === 'new' ? 'editReply' : 'followUp'](
       interaction.application_id,
       interaction.token,
-      { content: t.evaluate.language.not_found(), flags: 64 },
+      { content: t.language.not_resolved.description(), flags: 64 },
     );
 
   const options = {
@@ -89,7 +89,7 @@ export async function handleEvaluating(
     url.searchParams.set('utm_source', 'discord_bot');
     url.searchParams.set('utm_content', 'result_too_long');
 
-    output = t.evaluate.output.too_long({ url: url.toString() });
+    output = t.evaluate.output.too_long.discord_bot({ url: url.toString() });
   } else {
     output = codeBlock(output, 1000);
   }

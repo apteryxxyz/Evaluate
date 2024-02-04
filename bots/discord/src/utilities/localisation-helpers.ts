@@ -1,13 +1,13 @@
 import { ContextMenuCommandBuilder } from '@discordjs/builders';
-import { type Locale, getLocalisationsFor } from '@evaluate/translate';
+import { getLocalisationsFor } from '@evaluate/translate';
 import _get from 'lodash/get';
 import _mapValues from 'lodash/mapValues';
 
 interface BuilderLike {
   setName?(name: string): this;
-  setNameLocalizations?(localizations: Record<Locale, string>): this;
+  setNameLocalizations?(localizations: object): this;
   setDescription?(description: string): this;
-  setDescriptionLocalizations?(localizations: Record<Locale, string>): this;
+  setDescriptionLocalizations?(localizations: object): this;
 }
 
 /**
@@ -18,13 +18,10 @@ interface BuilderLike {
  */
 export function applyLocalisations<TBuilder extends BuilderLike>(
   builder: TBuilder,
-  ..._keys: [name: string, description: string] | [root: string]
-) {
-  const keys: [string, string] =
-    _keys.length === 1 ? [_keys[0], `${_keys[0]}.description`] : _keys;
-
+  [nameKey, descriptionKey]: [name: string, description: string],
+): TBuilder {
   if (builder.setName && builder.setNameLocalizations) {
-    const { value, localizations } = getLocalisationsFor(keys[0]);
+    const { value, localizations } = getLocalisationsFor(nameKey);
     const transformer =
       builder instanceof ContextMenuCommandBuilder
         ? (value: string) => value
@@ -36,7 +33,7 @@ export function applyLocalisations<TBuilder extends BuilderLike>(
   }
 
   if (builder.setDescription && builder.setDescriptionLocalizations) {
-    const { value, localizations } = getLocalisationsFor(keys[1]);
+    const { value, localizations } = getLocalisationsFor(descriptionKey);
     builder.setDescription(value);
     builder.setDescriptionLocalizations(localizations);
   }

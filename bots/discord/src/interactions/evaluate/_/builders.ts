@@ -55,7 +55,7 @@ export function createEvaluateModal(
   if (options?.input) inputInput.setValue(options.input);
 
   const argsInput = new TextInputBuilder()
-    .setCustomId('args')
+    .setCustomId('arguments')
     .setStyle(TextInputStyle.Paragraph)
     .setLabel(t.evaluate.args())
     .setPlaceholder(t.evaluate.args.description())

@@ -45,7 +45,7 @@ export function FileSystemInput(p: {
             <TabsTrigger key={file.id} value={i.toString()}>
               <span>
                 {_truncate(
-                  fileNames[i]?.trim() || t.files.untitled(), //
+                  fileNames[i]?.trim() || t.files.name.untitled(), //
                   { length: 32 },
                 )}
               </span>
@@ -54,7 +54,7 @@ export function FileSystemInput(p: {
                 <>
                   &nbsp;
                   <span className="text-sm font-medium text-muted-foreground">
-                    ({t.files.main()})
+                    ({t.files.name.main()})
                   </span>
                 </>
               )}
@@ -72,7 +72,7 @@ export function FileSystemInput(p: {
           disabled={files.fields.length >= 10}
         >
           <FilePlus2Icon size={16} />
-          <span className="sr-only">{t.screen_reader.add_file()}</span>
+          <span className="sr-only">{t.files.add_file()}</span>
         </Button>
       </div>
 
@@ -143,7 +143,7 @@ export function FileSystemInput(p: {
               disabled={files.fields.length <= 1}
             >
               <Trash2Icon size={16} />
-              <span className="sr-only">{t.screen_reader.remove_file()}</span>
+              <span className="sr-only">{t.files.remove_file()}</span>
             </Button>
           </Card>
         </TabsContent>

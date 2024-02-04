@@ -43,7 +43,7 @@ export function LanguageCard(p: Language) {
         <CardTitle>{p.name}</CardTitle>
 
         <CardDescription>
-          {p.version && t.languages.version({ language_version: p.version })}
+          {p.version && t.language.version({ language_version: p.version })}
         </CardDescription>
       </CardHeader>
 
@@ -66,9 +66,7 @@ export function LanguageCard(p: Language) {
         >
           <PinIcon size={16} fill={isPinned ? 'currentColor' : undefined} />
           <span className="sr-only">
-            {isPinned
-              ? t.screen_reader.unpin_language()
-              : t.screen_reader.pin_language()}
+            {isPinned ? t.language.pin() : t.language.unpin()}
           </span>
         </Button>
       </div>

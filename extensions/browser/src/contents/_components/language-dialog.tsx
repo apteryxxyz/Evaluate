@@ -35,16 +35,16 @@ export function LanguageDialog(p: {
         <DialogHeader />
 
         <div>
-          <p>{t.evaluate.language.not_detected()}</p>
+          <p>{t.language.not_detected()}</p>
         </div>
 
         <DialogFooter>
           <Button onClick={() => p.onOpenChange(false)} variant="secondary">
-            {t.evaluate.language.not_detected.cancel()}
+            {t.language.not_detected.cancel()}
           </Button>
           <Button asChild>
             <a target="_blank" rel="noreferrer noopener" href={linkUrl}>
-              <span>{t.evaluate.language.not_detected.pick()}&nbsp;</span>
+              <span>{t.language.not_detected.confirm()}&nbsp;</span>
               <ExternalLinkIcon size={16} />
             </a>
           </Button>

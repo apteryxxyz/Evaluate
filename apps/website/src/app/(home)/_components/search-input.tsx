@@ -96,7 +96,7 @@ export function SearchInput() {
 
       <Input
         ref={inputRef}
-        placeholder={t.languages.search.description()}
+        placeholder={t.language.filter.search.placeholder()}
         className="bg-transparent duration-300 hover:border-primary bg-glow"
         onChange={triggerSearch}
       />
@@ -112,14 +112,14 @@ export function SearchInput() {
           <>
             <Loader2Icon size={16} className="animate-spin" />
             <span className="hidden md:block">
-              &nbsp;{t.languages.search.ing()}
+              &nbsp;{t.language.filter.search.ing()}
             </span>
           </>
         ) : (
           <>
             <SearchIcon size={16} />
             <span className="hidden md:block">
-              &nbsp;{t.languages.search()}
+              &nbsp;{t.language.filter.search()}
             </span>
           </>
         )}
@@ -135,67 +135,11 @@ export function SearchInput() {
         }}
       >
         <ListRestartIcon size={16} />
-        <span className="sr-only">{t.screen_reader.clear_search()}</span>
+        <span className="sr-only">{t.language.filter.search.reset()}</span>
       </Button>
     </div>
   );
 }
-
-/*
-export function SearchInput() {
-  
-
-  if (!t) return <SkeletonSearchInput />;
-  return (
-    <div className="relative flex gap-2">
-      {/* An anchor intended to define the position to scroll to when search *}
-      <div className="h-1 bg-transparent absolute top-[-80px]" />
-
-      <Input
-        ref={inputRef}
-        placeholder={t.languages.search.description()}
-        className="bg-transparent duration-300 hover:border-primary bg-glow"
-      />
-
-      <Button
-        type="button"
-        className="md:w-32"
-        onClick={onSearchClick}
-        disabled={isSearching}
-      >
-        {isSearching ? (
-          <>
-            <Loader2Icon size={16} className="animate-spin" />
-            <span className="hidden md:block">
-              &nbsp;{t.languages.search.ing()}
-            </span>
-          </>
-        ) : (
-          <>
-            <SearchIcon size={16} />
-            <span className="hidden md:block">
-              &nbsp;{t.languages.search()}
-            </span>
-          </>
-        )}
-      </Button>
-
-      <Button
-        size="icon"
-        className="aspect-square"
-        disabled={languages.length === filteredLanguages.length}
-        onClick={() => {
-          inputRef.current!.value = '';
-          onSearchClick();
-        }}
-      >
-        <ListRestartIcon size={16} />
-        <span className="sr-only">{t.screen_reader.clear_search()}</span>
-      </Button>
-    </div>
-  );
-}
-*/
 
 export function SkeletonSearchInput() {
   return (

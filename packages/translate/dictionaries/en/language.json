@@ -1,0 +1,41 @@
+{
+  "language": {
+    "$": "Language",
+    "s": "Languages",
+
+    "version": {
+      "$": "Version {language_version}"
+    },
+
+    "pin": "Pin to top",
+    "unpin": "Unpin from top",
+    "filter": {
+      "$": "Filter",
+      "search": {
+        "$": "Search",
+        "ing": "Searching",
+        "placeholder": "Search languages...",
+        "reset": "Reset search query"
+      }
+    },
+
+    "no_results": {
+      "$": "No languages found",
+      "description": "There are no languages that match your search criteria."
+    },
+    "not_found": {
+      "$": "Language not found",
+      "description": "The language you are looking for does not exist."
+    },
+    "not_resolved": {
+      "$": "Language not found",
+      "description": "Was unable to resolve the language you are looking for, try again with a different name."
+    },
+    "not_detected": {
+      "$": "Language not detected",
+      "description": "Was unable to detect the language of the code you provided, would you like to pick manually?",
+      "confirm": "Pick Language",
+      "cancel": "Cancel"
+    }
+  }
+}

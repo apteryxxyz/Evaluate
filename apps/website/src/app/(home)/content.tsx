@@ -31,7 +31,7 @@ export default function LanguagesContent(p: { languages: Language[] }) {
           style={{ maxWidth: '1000px' }}
           // biome-ignore lint/security/noDangerouslySetInnerHtml: Needed to use `.replace` on the translation
           dangerouslySetInnerHTML={{
-            __html: t.seo
+            __html: t.seo['/']
               .headline()
               .replace(
                 /Evaluate(\.)?/,
@@ -42,12 +42,12 @@ export default function LanguagesContent(p: { languages: Language[] }) {
         />
 
         <p className="pt-2" style={{ maxWidth: '700px' }}>
-          {t.seo.sub_headline()}
+          {t.seo['/'].sub_headline()}
         </p>
       </section>
 
       <div>
-        <h1 className="text-2xl font-bold">{t.languages()}</h1>
+        <h1 className="text-2xl font-bold">{t.language.s()}</h1>
       </div>
 
       <SearchInput />

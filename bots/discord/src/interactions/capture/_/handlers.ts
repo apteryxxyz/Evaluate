@@ -1,5 +1,4 @@
 import { generateCodeImage } from '@evaluate/capture';
-import { TranslateFunctions } from '@evaluate/translate';
 import { APIInteraction } from 'discord-api-types/v10';
 import { analytics, api } from '~/core';
 import { getUser } from '~/utilities/interaction-helpers';
@@ -11,7 +10,6 @@ import { getUser } from '~/utilities/interaction-helpers';
  * @param code the code to capture
  */
 export async function handleCapturing(
-  t: TranslateFunctions,
   interaction: APIInteraction,
   code: string,
 ) {
@@ -33,21 +31,20 @@ export async function handleCapturing(
     },
   });
 
+  // just let discord handle the error
+  if (!imageBuffer) return;
+
   return api.interactions.editReply(
     interaction.application_id,
     interaction.token,
-    imageBuffer
-      ? {
-          files: [
-            {
-              contentType: 'image/png',
-              name: 'evaluate.png',
-              data: Buffer.from(imageBuffer),
-            },
-          ],
-        }
-      : {
-          content: t.capture.result.service_down(),
+    {
+      files: [
+        {
+          contentType: 'image/png',
+          name: 'evaluate.png',
+          data: Buffer.from(imageBuffer),
         },
+      ],
+    },
   );
 }

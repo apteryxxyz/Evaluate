@@ -8,8 +8,14 @@ import { handleCapturing } from './_/handlers';
 
 export default createChatInputCommand(
   (builder) =>
-    applyLocalisations(builder, 'capture').addStringOption((option) =>
-      applyLocalisations(option, 'capture.code').setMaxLength(2000),
+    applyLocalisations(builder, [
+      'capture',
+      'capture.description',
+    ]).addStringOption((option) =>
+      applyLocalisations(option, [
+        'capture.code',
+        'capture.code.description',
+      ]).setMaxLength(2000),
     ),
 
   async (interaction) => {
@@ -17,7 +23,7 @@ export default createChatInputCommand(
     const t = getTranslate(determineLocale(interaction));
 
     if (code) {
-      return handleCapturing(t, interaction, code);
+      return handleCapturing(interaction, code);
     } else {
       const modal = createCaptureModal(t, { code }) //
         .setCustomId('capture,new');

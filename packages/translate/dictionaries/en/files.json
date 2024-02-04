@@ -4,7 +4,7 @@
 
     "name": {
       "$": "File Name",
-      "description": "The contents of the file.",
+      "description": "The name of the file.",
       "main": "Entrypoint",
       "untitled": "Untitled"
     },

@@ -1,0 +1,38 @@
+{
+  "language": {
+    "$": "Lingua",
+    "s": "Lingue",
+    "version": {
+      "$": "Versione {language_version}"
+    },
+    "pin": "Blocca in alto",
+    "unpin": "Sblocca dall'alto",
+    "filter": {
+      "$": "Filtra",
+      "search": {
+        "$": "Cerca",
+        "ing": "Cercando",
+        "placeholder": "Cerca lingue...",
+        "reset": "Cancella query di ricerca"
+      }
+    },
+    "no_results": {
+      "$": "Nessuna lingua trovata",
+      "description": "Non ci sono linguaggi che corrispondono ai tuoi criteri di ricerca."
+    },
+    "not_found": {
+      "$": "Lingua non trovata",
+      "description": "La lingua che stai cercando non esiste."
+    },
+    "not_resolved": {
+      "$": "Lingua non trovata",
+      "description": "Non sono in grando di trovare la lingua che stai cercando, prova con un nome diverso."
+    },
+    "not_detected": {
+      "$": "Lingua non rilevata",
+      "description": "Non sono in grado di rilevare la lingua del codice che hai fornito, vorresti sceglierla manualmente?",
+      "confirm": "Scegli Lingua",
+      "cancel": "Annulla"
+    }
+  }
+}

@@ -423,9 +423,6 @@ importers:
       intl-messageformat:
         specifier: ^10.5.8
         version: 10.5.8
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
     devDependencies:
       '@configs/tsup':
         specifier: workspace:^
@@ -436,6 +433,9 @@ importers:
       '@types/node':
         specifier: ^20.10.7
         version: 20.10.7
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.10.7)(typescript@5.3.3)

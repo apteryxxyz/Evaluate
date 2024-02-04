@@ -90,11 +90,7 @@ export function ResultDialog(p: {
               name="output"
               code={formattedOutput ?? ''}
               setCode={() => {}}
-              placeholder={
-                p.result
-                  ? t.evaluate.output.no_output()
-                  : t.evaluate.output.press_run()
-              }
+              placeholder={t.evaluate.output.no_output()}
               className={cn(
                 failStep !== null && 'border-2 border-destructive',
                 formattedOutput && 'font-mono',
@@ -117,7 +113,7 @@ export function ResultDialog(p: {
                 rel="noreferrer noopener"
                 href={pickLanguageUrl}
               >
-                <span>{t.evaluate.language.not_detected.pick()}</span>
+                <span>{t.language.not_detected.confirm()}</span>
               </a>
             </Button>
             <Button asChild>

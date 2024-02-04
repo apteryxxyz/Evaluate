@@ -13,9 +13,9 @@ export function generateBaseMetadata(
     {
       metadataBase: new URL(absoluteUrl()),
       title: 'Evaluate',
-      description: t.seo.description(),
+      description: t.seo['/'].description(),
       keywords: [
-        t.languages(),
+        t.language.s(),
         t.evaluate(),
         t.evaluate.code(),
         t.evaluate.input(),

@@ -47,9 +47,7 @@ export function ResultSection(p: {
         code={formattedOutput ?? ''}
         setCode={() => {}}
         placeholder={
-          p.result
-            ? t.evaluate.output.no_output()
-            : t.evaluate.output.press_run()
+          p.result ? t.evaluate.output.no_output() : t.evaluate.run.press()
         }
         className={cn(
           failStep !== null && 'border-2 border-destructive',

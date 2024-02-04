@@ -1,4 +1,3 @@
-import { determineLocale, getTranslate } from '@evaluate/translate';
 import { createModalComponent, isMessageModal } from '~/builders/modal';
 import { api } from '~/core';
 import { getField } from '~/utilities/interaction-helpers';
@@ -22,8 +21,7 @@ export default createModalComponent(
       );
     }
 
-    const t = getTranslate(determineLocale(interaction));
     const code = getField(interaction, 'code', true).value;
-    return handleCapturing(t, interaction, code);
+    return handleCapturing(interaction, code);
   },
 );

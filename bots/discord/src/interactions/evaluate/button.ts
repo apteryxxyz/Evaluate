@@ -14,7 +14,7 @@ export default createButtonComponent(
 
     if (getUser(interaction)?.id !== interaction.message?.interaction?.user?.id)
       return api.interactions.reply(interaction.id, interaction.token, {
-        content: t.evaluate.unauthorised(),
+        content: t.evaluate.not_yours(),
         flags: 64,
       });
 

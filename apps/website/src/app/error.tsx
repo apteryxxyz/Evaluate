@@ -10,10 +10,10 @@ export default function ErrorPage() {
     <div className="absolute inset-0 flex flex-col items-center justify-center">
       <h2 className="text-8xl font-bold">500</h2>
       <h3 className="text-4xl font-bold text-primary-gradient">
-        {t.internal_error()}
+        {t.errors.internal_error()}
       </h3>
       <p className="text-md text-center text-muted-foreground">
-        {t.internal_error.description()}
+        {t.errors.internal_error.description()}
       </p>
     </div>
   );

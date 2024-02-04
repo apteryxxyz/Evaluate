@@ -34,7 +34,7 @@ export function ThemeSwitcher() {
         size={16}
         className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
       />
-      {t && <span className="sr-only">{t.screen_reader.toggle_theme()}</span>}
+      {t && <span className="sr-only">{t.sr.toggle_theme()}</span>}
     </Button>
   );
 }

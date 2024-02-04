@@ -73,9 +73,11 @@ function Popup() {
     <div className="flex flex-col gap-4 pt-4">
       <div className="flex">
         <div>
-          <Label htmlFor="enabled">{t.toggle.globally()}</Label>
+          <Label htmlFor="enabled">
+            {t.toggle.browser_extension.globally()}
+          </Label>
           <p className="text-xs text-muted-foreground">
-            {t.toggle.globally.description()}
+            {t.toggle.browser_extension.globally.description()}
           </p>
         </div>
 
@@ -89,16 +91,19 @@ function Popup() {
 
       <div className="flex">
         <div>
-          <Label htmlFor="current-enabled">{t.toggle.current_site()}</Label>
+          <Label htmlFor="current-enabled">
+            {t.toggle.browser_extension.current_site()}
+          </Label>
           <p className="text-xs text-muted-foreground">
-            {t.toggle.current_site.description()} (
+            {t.toggle.browser_extension.current_site.description()} (
             <code className="inline">{domain}</code>).
           </p>
         </div>
 
         <TooltipWrapper
           content={
-            hasDisabledTag && t.toggle.current_site.disabled_by_meta_tag()
+            hasDisabledTag &&
+            t.toggle.browser_extension.current_site.disabled_by_meta_tag()
           }
         >
           <div className="ml-auto my-auto">

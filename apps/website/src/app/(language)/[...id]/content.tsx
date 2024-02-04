@@ -111,7 +111,7 @@ export default function LanguageContent(p: { language: Language }) {
     url.searchParams.set('d', data);
 
     copy(url.toString()).then((success) => {
-      if (!success) toast.error(t.share.copy_url.failed());
+      if (!success) toast.error(t.share.copy_url.failure());
       else toast(t.share.copy_url.success(), { icon: <LinkIcon size={16} /> });
     });
   }, [executeCodeForm, copy, t]);
@@ -123,7 +123,7 @@ export default function LanguageContent(p: { language: Language }) {
       <div>
         <h1 className="inline text-2xl font-bold">{p.language.name} </h1>
         <h2 className="inline font-medium text-muted-foreground text-md">
-          ({t.languages.version({ language_version: p.language.version })})
+          ({t.language.version({ language_version: p.language.version })})
         </h2>
       </div>
 

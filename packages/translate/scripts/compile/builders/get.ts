@@ -3,6 +3,7 @@ export function buildGetFile(locales: Record<string, string>) {
 // This file is generated automatically, any changes will be overwritten
 
 import IntlMessageFormat from 'intl-messageformat';
+import _ from 'lodash';
 import type { Locale } from './locales';
 import type { TranslateFunctions } from './interfaces';
 ${Object.keys(locales)
@@ -29,9 +30,10 @@ function createProxy(target: AnyObject, fn: AnyFunction): AnyFunction | AnyObjec
 }
 
 export function getTranslate(locale: Locale) {
-  let translations: AnyObject = {};
+  let translations: AnyObject = en;
   ${Object.keys(locales)
-    .map((l) => `if (locale === '${l}') translations = ${l};`)
+    .filter((l) => l !== 'en')
+    .map((l) => `if (locale === '${l}') translations = _.merge(en, ${l});`)
     .join('\n  ')}
 
   return createProxy(translations, ((text: string, args: Parameters<IntlMessageFormat['format']>[0]) => {

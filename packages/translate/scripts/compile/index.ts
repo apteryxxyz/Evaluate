@@ -13,8 +13,7 @@ async function main(_argc: number, _argv: string[]) {
   const saveDirectory = join(rootPath, 'src/generated');
 
   const baseLocaleKey = 'en';
-  const localeKeys = await listDirectory(join(rootPath, 'dictionaries')) //
-    .then((files) => files.map((file) => file.replace('.json', '')));
+  const localeKeys = await listDirectory(join(rootPath, 'dictionaries'));
   if (!localeKeys.includes(baseLocaleKey))
     throw new Error(`Base locale '${baseLocaleKey}' not found`);
 
@@ -26,13 +25,9 @@ async function main(_argc: number, _argv: string[]) {
     const localeUnparsedTranslations = await readTranslations(localeKey);
     locales[localeKey] = String(localeUnparsedTranslations.native_name);
 
-    const allUnparsedTranslations = _merge(
-      baseUnparsedTranslations,
-      localeUnparsedTranslations,
-    );
     await writeFile(
       join(saveDirectory, `${localeKey}.json`),
-      JSON.stringify(allUnparsedTranslations, null, 2),
+      JSON.stringify(localeUnparsedTranslations, null, 2),
     );
   }
 

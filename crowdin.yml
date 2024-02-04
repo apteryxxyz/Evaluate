@@ -1,3 +1,3 @@
 files:
   - source: /packages/translate/dictionaries/en/*.json
-    translation: /packages/translate/dictionaries/%two_letters_code%/%original_file_name%.json
+    translation: /packages/translate/dictionaries/%two_letters_code%/%original_file_name%

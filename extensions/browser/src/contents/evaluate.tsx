@@ -112,6 +112,7 @@ export function Content(p: PlasmoCSUIProps) {
       <div
         ref={dialogRef}
         style={{ fontFamily: 'Inter', maxHeight: '95dvh' }}
+        className="text-black dark:text-white"
       />
     </>
   );

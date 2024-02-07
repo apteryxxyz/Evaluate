@@ -1,7 +1,10 @@
 import { compress } from '@evaluate/compress';
 import { executeCode } from '@evaluate/execute';
 import { findLanguage } from '@evaluate/languages';
-import { TranslateFunctions } from '@evaluate/translate';
+import {
+  TranslateFunctions,
+  determineInteractionLocale,
+} from '@evaluate/translate';
 import { APIInteraction } from 'discord-api-types/v10';
 import { analytics, api } from '~/core';
 import { codeBlock } from '~/utilities/discord-formatting';
@@ -62,9 +65,8 @@ export async function handleEvaluating(
     event: 'code executed',
     properties: {
       platform: 'discord bot',
+      locale: determineInteractionLocale(interaction),
       'guild id': interaction.guild_id,
-      'channel id': interaction.channel?.id,
-
       'language id': language.id,
       'code length': _options.code.length,
       'output length': output.length,

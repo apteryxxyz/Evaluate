@@ -22,10 +22,10 @@ export function PageView() {
     return () => void analytics?.capture('$pageleave', { $current_url: url });
   }, [analytics, pathname]);
 
-  // useEventListener(
-  //   'beforeunload',
-  //   () => void analytics?.capture('$pageleave', { $current_url: url }),
-  // );
+  useEventListener(
+    'beforeunload',
+    () => void analytics?.capture('$pageleave', { $current_url: url }),
+  );
 
   return null;
 }

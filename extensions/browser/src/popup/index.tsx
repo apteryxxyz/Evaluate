@@ -1,5 +1,6 @@
 import { Label } from '@evaluate/react/components/label';
 import { Switch } from '@evaluate/react/components/switch';
+import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { useCallback, useEffect, useState } from 'react';
 import { TooltipWrapper } from '~components/tooltip-wrapper';
 import { AnalyticsProvider, analytics } from '~contexts/analytics';

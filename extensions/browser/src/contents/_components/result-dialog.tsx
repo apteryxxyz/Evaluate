@@ -10,6 +10,7 @@ import { ExternalLinkIcon } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslate } from '~contexts/translate';
 import { absoluteUrl } from '~utilities/url-helpers';
+import { wrapCapture } from '~utilities/wrap-capture';
 import { DialogHeader } from './dialog-header';
 
 export function ResultDialog(p: {
@@ -106,17 +107,18 @@ export function ResultDialog(p: {
             )}
           </div>
 
-          <div className="flex justify-end">
-            <Button asChild>
+          <div className="flex justify-end gap-2">
+            <Button asChild onClick={wrapCapture(() => true)}>
               <a
                 target="_blank"
                 rel="noreferrer noopener"
                 href={pickLanguageUrl}
               >
-                <span>{t.language.not_detected.confirm()}</span>
+                <span>{t.language.not_detected.confirm()}&nbsp;</span>
+                <ExternalLinkIcon size={16} />
               </a>
             </Button>
-            <Button asChild>
+            <Button asChild onClick={wrapCapture(() => true)}>
               <a target="_blank" rel="noreferrer noopener" href={editCodeUrl}>
                 <span>{t.evaluate.code.edit()}&nbsp;</span>
                 <ExternalLinkIcon size={16} />

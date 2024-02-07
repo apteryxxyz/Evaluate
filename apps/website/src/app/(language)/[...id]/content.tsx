@@ -79,7 +79,6 @@ export default function LanguageContent(p: { language: Language }) {
       else output = result.run.output;
 
       void analytics?.capture('code executed', {
-        platform: 'website',
         'language id': p.language.id,
         'code length': options.files
           .map((f) => f.content.length)

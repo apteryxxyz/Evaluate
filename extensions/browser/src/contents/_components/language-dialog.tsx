@@ -9,6 +9,7 @@ import { ExternalLinkIcon } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslate } from '~contexts/translate';
 import { absoluteUrl } from '~utilities/url-helpers';
+import { wrapCapture } from '~utilities/wrap-capture';
 import { DialogHeader } from './dialog-header';
 
 export function LanguageDialog(p: {
@@ -34,15 +35,16 @@ export function LanguageDialog(p: {
       <DialogContent container={p.dialogRef.current!}>
         <DialogHeader />
 
-        <div>
-          <p>{t.language.not_detected()}</p>
+        <div className="space-y-2">
+          <h1 className="text-lg font-bold">{t.language.not_detected()}</h1>
+          <p className="text-sm">{t.language.not_detected.description()}</p>
         </div>
 
         <DialogFooter>
           <Button onClick={() => p.onOpenChange(false)} variant="secondary">
             {t.language.not_detected.cancel()}
           </Button>
-          <Button asChild>
+          <Button asChild onClick={wrapCapture(() => true)}>
             <a target="_blank" rel="noreferrer noopener" href={linkUrl}>
               <span>{t.language.not_detected.confirm()}&nbsp;</span>
               <ExternalLinkIcon size={16} />

@@ -5,6 +5,7 @@ import {
   ModalBuilder,
   TextInputBuilder,
 } from '@discordjs/builders';
+import { compress } from '@evaluate/compress';
 import type { ExecuteCodeOptions, ExecuteCodeResult } from '@evaluate/execute';
 import { TranslateFunctions } from '@evaluate/translate';
 import { ButtonStyle, TextInputStyle } from 'discord-api-types/v10';
@@ -113,16 +114,32 @@ export function createEvaluateResult(
 
   if (settings.static) return { embeds: [embed.toJSON()] };
 
+  // const externalLink = result
+
+  const url = new URL(options.language.id, process.env.WEBSITE_URL);
+  const data = compress({
+    files: [{ content: options.files[0]!.content }],
+    input: options.input ?? '',
+    args: options.args ?? '',
+  });
+  url.searchParams.set('d', data);
+  url.searchParams.set('utm_source', 'discord_bot');
+  url.searchParams.set('utm_content', 'open_in_website');
+
   const buttons = new ActionRowBuilder<ButtonBuilder>().setComponents(
     new ButtonBuilder()
       .setStyle(ButtonStyle.Success)
       .setCustomId('evaluate,edit')
-      .setEmoji(resolveEmoji('edit', true)),
+      .setEmoji(resolveEmoji('pencil', true)),
     new ButtonBuilder()
       .setStyle(ButtonStyle.Success)
       .setCustomId('evaluate,capture')
-      .setEmoji(resolveEmoji('capture', true))
+      .setEmoji(resolveEmoji('camera', true))
       .setDisabled(!result.success),
+    new ButtonBuilder()
+      .setStyle(ButtonStyle.Link)
+      .setEmoji(resolveEmoji('globe', true))
+      .setURL(url.toString()),
   );
 
   return {

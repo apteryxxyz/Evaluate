@@ -116,7 +116,10 @@ export function createEvaluateResult(
 
   // const externalLink = result
 
-  const url = new URL(options.language.id, process.env.WEBSITE_URL);
+  const url = new URL(
+    `/languages/${options.language.id}`,
+    process.env.WEBSITE_URL,
+  );
   const data = compress({
     files: [{ content: options.files[0]!.content }],
     input: options.input ?? '',

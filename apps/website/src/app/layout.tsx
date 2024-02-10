@@ -7,6 +7,7 @@ import { HTMLProviders, MainProviders } from './providers';
 
 import '@evaluate/react/tailwind.css';
 import dynamic from 'next/dynamic';
+import Script from 'next/script';
 import './layout.css';
 
 const PageView = dynamic(
@@ -33,9 +34,11 @@ export default function RootLayout(p: LayoutProps) {
         <head key="head">
           <meta name="evaluate-extension" content="disabled" />
           <meta name="darkreader-lock" />
-          <meta
-            name="google-adsense-account"
-            content="ca-pub-5722227635911083"
+
+          <Script
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5722227635911083"
+            strategy="afterInteractive"
+            crossOrigin="anonymous"
           />
 
           <link

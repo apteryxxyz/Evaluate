@@ -24,7 +24,7 @@ export function ResultDialog(p: {
   const t = useTranslate();
 
   const editCodeUrl = useMemo(() => {
-    const url = new URL(absoluteUrl(p.language?.id ?? '/'));
+    const url = new URL(absoluteUrl(`/languages/${p.language?.id ?? ''}`));
     const data = compress({ files: [{ content: p.code ?? '' }] });
     url.searchParams.set('d', data);
     url.searchParams.set('utm_source', 'browser_extension');

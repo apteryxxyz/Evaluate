@@ -1,10 +1,11 @@
+import { fetchLanguages } from '@evaluate/languages';
 import withBundleAnalyser from '@next/bundle-analyzer';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
 
-  redirects: () => [
+  redirects: async () => [
     {
       source: '/products/discord-bot',
       destination:
@@ -12,8 +13,15 @@ const nextConfig = {
       permanent: false,
     },
     {
-      source: '/language(s)?/:id*',
-      destination: '/:id*',
+      source: `/:id(${await fetchLanguages().then((l) =>
+        l.map((l) => l.id).join('|'),
+      )})`,
+      destination: '/languages/:id',
+      permanent: false,
+    },
+    {
+      source: '/language/:id',
+      destination: '/languages/:id',
       permanent: false,
     },
     {
@@ -24,10 +32,6 @@ const nextConfig = {
   ],
 
   rewrites: () => [
-    {
-      source: '/api/send',
-      destination: 'https://us.umami.is/api/send',
-    },
     {
       source: '/ingest2/:path*',
       destination: 'https://app.posthog.com/:path*',

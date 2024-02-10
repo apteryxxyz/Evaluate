@@ -43,11 +43,10 @@
     "name": "Evaluate - Execute Any Code, Any Where",
     "short_name": "Evaluate",
     "description": "Code in any language, anytime, anywhere with Evaluate.",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "author": "Apteryx Software",
     "homepage_url": "https://evaluate.run",
     "manifest_version": 3,
-    "host_permissions": ["https://*/*"],
-    "permissions": ["activeTab", "tabs", "scripting"]
+    "permissions": ["activeTab", "scripting"]
   }
 }

@@ -22,8 +22,10 @@ export function AnalyticsProvider(p: React.PropsWithChildren) {
       if (distinctId) register(distinctId);
 
       posthog.init(process.env.PLASMO_PUBLIC_POSTHOG_KEY, {
-        api_host: absoluteUrl('/ingest2'),
-        ui_host: 'https://app.posthog.com/',
+        ...(process.env.NODE_ENV === 'production' && {
+          api_host: absoluteUrl('/ingest2'),
+          ui_host: 'https://app.posthog.com/',
+        }),
         capture_pageview: false,
         capture_pageleave: false,
         autocapture: false,

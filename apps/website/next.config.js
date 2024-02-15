@@ -41,17 +41,17 @@ const nextConfig = {
     }
   ],
 
-  headers: () => [
-    {
-      source: '/api/ingest/:path*',
-      headers: [
-        {
-          key: 'Access-Control-Allow-Origin',
-          value: '*',
-        },
-      ],
-    }
-  ],
+  // headers: () => [
+  //   {
+  //     source: '/api/ingest/:path*',
+  //     headers: [
+  //       {
+  //         key: 'Access-Control-Allow-Origin',
+  //         value: '*',
+  //       },
+  //     ],
+  //   }
+  // ],
 
   typescript: {
     // !! WARN !!

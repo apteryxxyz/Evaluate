@@ -13,9 +13,8 @@ const nextConfig = {
       permanent: false,
     },
     {
-      source: `/:id(${await fetchLanguages().then((l) =>
-        l.map((l) => l.id).join('|'),
-      )})`,
+      source: `/:id(${await fetchLanguages()//
+        .then((l) => l.map((l) => l.id).join('|'))})`,
       destination: '/languages/:id',
       permanent: false,
     },
@@ -31,25 +30,27 @@ const nextConfig = {
     },
   ],
 
-  headers: () => [
-    {
-      source: '/ingest3/:path*',
-      headers: [
-        { key: 'Access-Control-Allow-Origin', value: '*' },
-        { key: 'Access-Control-Allow-Methods', value: 'OPTIONS,GET,POST' },
-      ],
-    },
-  ],
-
   rewrites: () => [
     {
       source: '/ingest2/:path*',
       destination: 'https://app.posthog.com/:path*',
     },
     {
-      source: '/ingest3/:path*',
+      source: '/api/ingest/:path*',
       destination: 'https://app.posthog.com/:path*',
-    },
+    }
+  ],
+
+  headers: () => [
+    {
+      source: '/api/ingest/:path*',
+      headers: [
+        {
+          key: 'Access-Control-Allow-Origin',
+          value: '*',
+        },
+      ],
+    }
   ],
 
   typescript: {

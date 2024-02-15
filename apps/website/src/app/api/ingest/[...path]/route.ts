@@ -5,21 +5,21 @@ async function handler(request: NextRequest) {
   const url = new URL(pathname, 'https://app.posthog.com/');
   url.search = request.nextUrl.searchParams.toString();
 
-  console.log('[api/ingest]', {
-    from: request.nextUrl.toString(),
-    to: url.toString(),
-  });
+  try {
+    const response = await fetch(url.toString(), {
+      method: request.method,
+      headers: request.headers,
+      body: request.body ? await request.arrayBuffer() : undefined,
+    });
 
-  const response = await fetch(url.toString(), {
-    method: request.method,
-    headers: request.headers,
-    body: request.body ? await request.arrayBuffer() : undefined,
-  });
-
-  return new NextResponse(response.body, {
-    status: response.status,
-    headers: response.headers,
-  });
+    return new NextResponse(await response.arrayBuffer(), {
+      status: response.status,
+      headers: response.headers,
+    });
+  } catch (error) {
+    console.error('[api/ingest]', error);
+    return new NextResponse(null, { status: 500 });
+  }
 }
 
 export const GET = handler;

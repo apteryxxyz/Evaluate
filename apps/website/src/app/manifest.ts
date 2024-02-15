@@ -6,8 +6,8 @@ export default function Manifest() {
   return {
     name: 'Evaluate',
     short_name: 'Evaluate',
-    theme_color: '#2FC086',
-    background_color: '#FFFFFF',
+    theme_color: '#2fc186',
+    background_color: '#ffffff',
     description: t.seo['/'].description(),
     display: 'standalone',
     lang: 'en',

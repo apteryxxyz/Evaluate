@@ -30,8 +30,6 @@ export function TranslateProvider(p: React.PropsWithChildren) {
 
   useEffect(() => {
     void storage.get<string | undefined>('locale').then((locale) => {
-      console.log({ locale });
-
       if (locale) {
         setMemoryLocale(locale as Locale);
       } else {

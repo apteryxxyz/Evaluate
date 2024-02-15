@@ -26,6 +26,6 @@
   "devDependencies": {
     "@configs/tsup": "workspace:^",
     "jest": "^29.7.0",
-    "tsup": "^8.0.1"
+    "tsup": "^8.0.2"
   }
 }

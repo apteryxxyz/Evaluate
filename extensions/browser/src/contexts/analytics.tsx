@@ -12,8 +12,10 @@ export function AnalyticsProvider(p: React.PropsWithChildren) {
       posthog.register({
         distinct_id: id,
         platform: 'browser extension',
-        locale: window.navigator.language,
-        $set: { platform: 'browser extension' },
+        $set: {
+          platform: 'browser extension',
+          'preferred locale': window.navigator.language,
+        },
       });
     }
 
@@ -23,13 +25,14 @@ export function AnalyticsProvider(p: React.PropsWithChildren) {
 
       posthog.init(process.env.PLASMO_PUBLIC_POSTHOG_KEY, {
         ...(process.env.NODE_ENV === 'production' && {
-          api_host: absoluteUrl('/ingest2'),
-          ui_host: 'https://app.posthog.com/',
+          api_host: absoluteUrl('/api/ingest'),
+          ui_host: 'https://app.posthog.com',
         }),
         capture_pageview: false,
         capture_pageleave: false,
         autocapture: false,
         disable_compression: true,
+        disable_session_recording: true,
         loaded: () => {
           if (distinctId) return;
           void storage.set('distinct_id', posthog.get_distinct_id());

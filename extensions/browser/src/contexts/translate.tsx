@@ -2,9 +2,16 @@
 
 import type { Locale, TranslateFunctions } from '@evaluate/translate';
 import { getTranslate, locales } from '@evaluate/translate';
-import { useStorage } from '@plasmohq/storage/hook';
+import { Storage } from '@plasmohq/storage';
 import { Loader2Icon } from 'lucide-react';
-import { createContext, useContext, useEffect, useMemo } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 type TranslateContextProps = TranslateFunctions & {
   locale: Locale;
@@ -15,17 +22,31 @@ export const TranslateContext = //
 TranslateContext.displayName = 'TranslateContext';
 export const TranslateConsumer = TranslateContext.Consumer;
 
+const storage = new Storage();
+
 export function TranslateProvider(p: React.PropsWithChildren) {
-  const [locale, setLocale] = useStorage<Locale>('locale');
+  const [locale, setMemoryLocale] = useState<Locale>();
   const translate = useMemo(() => locale && getTranslate(locale), [locale]);
 
   useEffect(() => {
-    if (!locale) {
-      const { languages } = window.navigator;
-      const locale = languages.find((l) => locales.includes(l as Locale));
-      if (locale) setLocale(locale as Locale);
-    }
-  }, [locale, setLocale]);
+    void storage.get<string | undefined>('locale').then((locale) => {
+      console.log({ locale });
+
+      if (locale) {
+        setMemoryLocale(locale as Locale);
+      } else {
+        const { languages } = window.navigator;
+        const locale = languages.find((l) => locales.includes(l as Locale));
+        storage.set('locale', (locale as Locale) ?? 'en');
+        setMemoryLocale((locale as Locale) ?? 'en');
+      }
+    });
+  }, []);
+
+  const setLocale = useCallback((locale: Locale) => {
+    storage.set('locale', locale);
+    setMemoryLocale(locale);
+  }, []);
 
   const value = useMemo(
     () => locale && Object.assign({}, translate, { locale, setLocale }),

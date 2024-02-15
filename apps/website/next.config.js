@@ -31,9 +31,23 @@ const nextConfig = {
     },
   ],
 
+  headers: () => [
+    {
+      source: '/ingest3/:path*',
+      headers: [
+        { key: 'Access-Control-Allow-Origin', value: '*' },
+        { key: 'Access-Control-Allow-Methods', value: 'OPTIONS,GET,POST' },
+      ],
+    },
+  ],
+
   rewrites: () => [
     {
       source: '/ingest2/:path*',
+      destination: 'https://app.posthog.com/:path*',
+    },
+    {
+      source: '/ingest3/:path*',
       destination: 'https://app.posthog.com/:path*',
     },
   ],

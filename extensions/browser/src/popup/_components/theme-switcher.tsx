@@ -13,8 +13,9 @@ export function ThemeSwitcher() {
 
   const toggleTheme = useCallback(() => {
     analytics.capture('theme changed', {
-      'old theme': theme,
-      'new theme': theme === 'light' ? 'dark' : 'light',
+      'old value': theme,
+      'new value': theme === 'light' ? 'dark' : 'light',
+      platform: 'browser extension',
     });
     setTheme(theme === 'light' ? 'dark' : 'light');
   }, [theme, setTheme]);

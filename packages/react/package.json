@@ -79,9 +79,9 @@
     "@types/lodash": "^4.14.202",
     "@types/pako": "^2.0.3",
     "@types/prismjs": "^1.26.3",
-    "@types/react": "^18.2.52",
-    "react-hook-form": "^7.50.0",
+    "@types/react": "^18.2.55",
+    "react-hook-form": "^7.50.1",
     "resolve-tspaths": "^0.8.17",
-    "tsup": "^8.0.1"
+    "tsup": "^8.0.2"
   }
 }

@@ -45,13 +45,13 @@ export default async function handler(request: Request) {
       event: 'interaction received',
       properties: {
         platform: 'discord bot',
-        locale: determineInteractionLocale(interaction),
         'interaction type': InteractionType[interaction.type],
         'guild id': interaction.guild_id,
 
         $set: {
           platform: 'discord',
           username: getUser(interaction)?.username,
+          'preferred locale': determineInteractionLocale(interaction),
         },
       },
     });

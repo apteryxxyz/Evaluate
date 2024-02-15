@@ -24,7 +24,7 @@
     "framer-motion": "^10.18.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.294.0",
-    "posthog-js": "npm:@apteryxxyz/posthog-js@^1.104.6",
+    "posthog-js": "npm:@apteryxxyz/posthog-js@^1.105.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zod": "^3.22.4"
@@ -32,11 +32,11 @@
   "devDependencies": {
     "@types/chrome": "^0.0.254",
     "@types/lodash": "^4.14.202",
-    "@types/node": "^20.11.16",
-    "@types/react": "^18.2.54",
+    "@types/node": "^20.11.18",
+    "@types/react": "^18.2.55",
     "autoprefixer": "^10.4.17",
     "plasmo": "^0.84.2",
-    "postcss": "^8.4.34",
+    "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1"
   },
   "manifest": {
@@ -47,6 +47,9 @@
     "author": "Apteryx Software",
     "homepage_url": "https://evaluate.run",
     "manifest_version": 3,
-    "permissions": ["activeTab", "scripting"]
+    "permissions": [
+      "activeTab",
+      "scripting"
+    ]
   }
 }

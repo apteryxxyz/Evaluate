@@ -1,5 +1,4 @@
 import { generateCodeImage } from '@evaluate/capture';
-import { determineInteractionLocale } from '@evaluate/translate';
 import { APIInteraction } from 'discord-api-types/v10';
 import { analytics, api } from '~/core';
 import { getUser } from '~/utilities/interaction-helpers';
@@ -24,7 +23,6 @@ export async function handleCapturing(
     event: 'capture created',
     properties: {
       platform: 'discord bot',
-      locale: determineInteractionLocale(interaction),
       'guild id': interaction.guild_id,
       'code length': code.length,
       'was successful': Boolean(imageBuffer),

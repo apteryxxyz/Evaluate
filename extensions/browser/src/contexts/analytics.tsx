@@ -12,8 +12,10 @@ export function AnalyticsProvider(p: React.PropsWithChildren) {
       posthog.register({
         distinct_id: id,
         platform: 'browser extension',
-        locale: window.navigator.language,
-        $set: { platform: 'browser extension' },
+        $set: {
+          platform: 'browser extension',
+          'preferred locale': window.navigator.language,
+        },
       });
     }
 

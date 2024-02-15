@@ -13,7 +13,7 @@ const nextConfig = {
       permanent: false,
     },
     {
-      source: `/:id(${await fetchLanguages()//
+      source: `/:id(${await fetchLanguages() //
         .then((l) => l.map((l) => l.id).join('|'))})`,
       destination: '/languages/:id',
       permanent: false,
@@ -38,7 +38,7 @@ const nextConfig = {
     {
       source: '/api/ingest/:path*',
       destination: 'https://app.posthog.com/:path*',
-    }
+    },
   ],
 
   typescript: {

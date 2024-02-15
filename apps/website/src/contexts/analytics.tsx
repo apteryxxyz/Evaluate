@@ -14,8 +14,10 @@ if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
 
   posthog.register({
     platform: 'website',
-    locale: window.navigator.language,
-    $set: { platform: 'website' },
+    $set: {
+      platform: 'website',
+      'preferred locale': window.navigator.language,
+    },
   });
 }
 

@@ -1,7 +1,14 @@
 'use client';
 
 import { useStorage } from '@plasmohq/storage/hook';
-import { createContext, useCallback, useContext } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { getMetaTagContent } from '~utilities/active-tab';
 
 type EnabledContextProps = {
   isEnabled: boolean;
@@ -18,9 +25,15 @@ export function EnabledProvider(p: React.PropsWithChildren) {
   const [isEnabled, setEnabled] = useStorage<boolean>('enabled');
   const [disabledFor, setDisabledFor] = useStorage<string[]>('disabledFor', []);
 
+  const [hasDisabledTag, setHasDisabledTag] = useState<boolean>();
+  useEffect(() => {
+    getMetaTagContent().then((c) => setHasDisabledTag(c === 'disabled'));
+  }, []);
+
   const isEnabledFor = useCallback(
-    (domain: string) => isEnabled && !disabledFor.includes(domain),
-    [isEnabled, disabledFor],
+    (domain: string) =>
+      !hasDisabledTag && isEnabled && !disabledFor.includes(domain),
+    [hasDisabledTag, isEnabled, disabledFor],
   );
 
   const setEnabledFor = useCallback(

@@ -88,6 +88,7 @@ export function ResultDialog(p: {
 
             <CodeEditor
               readOnly
+              disableSyntaxHighlighting
               name="output"
               code={formattedOutput ?? ''}
               setCode={() => {}}

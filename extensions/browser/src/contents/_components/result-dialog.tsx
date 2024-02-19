@@ -2,7 +2,7 @@ import { compress } from '@evaluate/compress';
 import { ExecuteCodeResult } from '@evaluate/execute';
 import type { Language } from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
-import { CodeEditor } from '@evaluate/react/components/code-editor';
+import { NumberedEditor } from '@evaluate/react/components/code-editor/numbered-editor';
 import { Dialog, DialogContent } from '@evaluate/react/components/dialog';
 import { Label } from '@evaluate/react/components/label';
 import { cn } from '@evaluate/react/utilities/class-name';
@@ -86,12 +86,11 @@ export function ResultDialog(p: {
           <div className="space-y-2">
             <Label htmlFor="output">{t.evaluate.output()}</Label>
 
-            <CodeEditor
+            <NumberedEditor
               readOnly
-              disableSyntaxHighlighting
               name="output"
               code={formattedOutput ?? ''}
-              setCode={() => {}}
+              onCodeChange={() => {}}
               placeholder={t.evaluate.output.no_output()}
               className={cn(
                 failStep !== null && 'border-2 border-destructive',

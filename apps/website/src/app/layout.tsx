@@ -81,15 +81,13 @@ export default function RootLayout(p: LayoutProps) {
           <PageView />
         </head>
 
-        <body key="body" className="flex flex-col h-full">
+        <body key="body" className="flex h-full flex-col py-8 gap-8">
           <MainProviders>
             <HeaderBar />
 
-            {/* <main className="container flex flex-col flex-1 h-full gap-6">
+            <main className="container flex flex-col flex-[1_0_auto] gap-6">
               {p.children}
-            </main> */}
-
-            <main className="container flex-1">{p.children}</main>
+            </main>
 
             <FooterBar className="flex-shrink-0" />
           </MainProviders>

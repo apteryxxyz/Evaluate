@@ -1,21 +1,14 @@
+import { cn } from '@evaluate/react/utilities/class-name';
 import Link from 'next/link';
 
-export function FooterBar() {
+export function FooterBar(p: { className?: string }) {
   return (
-    <footer className="flex flex-shrink-0 flex-col items-center justify-center pb-8 text-sm text-foreground/20">
-      {/* <p>
-        Made by{' '}
-        <a
-          className="hover:text-foreground/40 duration-200"
-          href="https://apteryx.xyz/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Apteryx
-        </a>{' '}
-        in New Zealand
-      </p> */}
-
+    <footer
+      className={cn(
+        'flex flex-col items-center justify-center pb-8 text-sm text-foreground/20',
+        p.className,
+      )}
+    >
       <p>
         <Link
           href="/policies/privacy-policy"

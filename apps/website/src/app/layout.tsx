@@ -30,7 +30,7 @@ export function generateMetadata() {
 export default function RootLayout(p: LayoutProps) {
   return (
     <HTMLProviders>
-      <html key="html" lang="en" className={inter.className}>
+      <html key="html" lang="en" className={`${inter.className} h-full`}>
         <head key="head">
           <meta name="evaluate-extension" content="disabled" />
           <meta name="darkreader-lock" />
@@ -81,15 +81,15 @@ export default function RootLayout(p: LayoutProps) {
           <PageView />
         </head>
 
-        <body key="body" className="flex pb-8 flex-col gap-8">
+        <body key="body" className="flex h-full flex-col py-8 gap-8">
           <MainProviders>
             <HeaderBar />
 
-            <main className="container flex flex-col flex-1 gap-6">
+            <main className="container flex flex-col flex-[1_0_auto] gap-6">
               {p.children}
             </main>
 
-            <FooterBar />
+            <FooterBar className="flex-shrink-0" />
           </MainProviders>
         </body>
       </html>

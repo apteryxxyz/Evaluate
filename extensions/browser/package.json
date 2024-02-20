@@ -40,16 +40,13 @@
     "tailwindcss": "^3.4.1"
   },
   "manifest": {
-    "name": "Evaluate - Execute Any Code, Any Where",
+    "name": "Evaluate - Execute Any Code, Anywhere, Anytime",
     "short_name": "Evaluate",
     "description": "Code in any language, anytime, anywhere with Evaluate.",
     "version": "0.0.2",
     "author": "Apteryx Software",
     "homepage_url": "https://evaluate.run",
     "manifest_version": 3,
-    "permissions": [
-      "activeTab",
-      "scripting"
-    ]
+    "permissions": ["activeTab", "scripting"]
   }
 }

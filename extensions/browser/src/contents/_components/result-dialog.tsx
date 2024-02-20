@@ -114,7 +114,7 @@ export function ResultDialog(p: {
                 rel="noreferrer noopener"
                 href={pickLanguageUrl}
               >
-                <span>{t.language.not_detected.confirm()}&nbsp;</span>
+                <span>{t.language.change()}&nbsp;</span>
                 <ExternalLinkIcon size={16} />
               </a>
             </Button>

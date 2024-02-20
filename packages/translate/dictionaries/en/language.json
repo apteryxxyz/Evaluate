@@ -19,6 +19,8 @@
       }
     },
 
+    "change": "Change Language",
+
     "no_results": {
       "$": "No languages found",
       "description": "There are no languages that match your search criteria."

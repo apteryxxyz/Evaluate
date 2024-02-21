@@ -21,7 +21,8 @@ export function HighlightedEditor(
 
   const highlighter = useCallback(
     (code: string) => {
-      const grammar = Prism.languages[name ?? 'plaintext']!;
+      const grammar = name && Prism.languages[name];
+      if (!grammar) return code;
       return Prism.highlight(code, grammar, name);
     },
     [name],

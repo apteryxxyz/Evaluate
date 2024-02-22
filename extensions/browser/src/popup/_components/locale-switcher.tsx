@@ -17,8 +17,9 @@ export function LocaleSwitcher() {
   const setLocale = useCallback(
     (key: string) => {
       analytics.capture('locale changed', {
-        'old locale': t.locale,
-        'new locale': key,
+        'old value': t.locale,
+        'new value': key,
+        platform: 'browser extension',
       });
       t.setLocale(key as Locale);
     },

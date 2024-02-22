@@ -1,33 +1,46 @@
-// import { webcrypto } from 'crypto';
-import { useStorage } from '@plasmohq/storage/hook';
+import { Storage } from '@plasmohq/storage';
 import posthog from 'posthog-js';
 import { PostHogProvider, usePostHog } from 'posthog-js/react';
 import { useEffect } from 'react';
 import { absoluteUrl } from '~utilities/url-helpers';
 
+const storage = new Storage();
+
 export function AnalyticsProvider(p: React.PropsWithChildren) {
-  const [distinctId, setDistinctId] = useStorage('distinct_id', '...');
-
   useEffect(() => {
-    if (!process.env.PLASMO_PUBLIC_POSTHOG_KEY) return;
-    // still waiting for storage to be ready
-    if (distinctId === '...') return;
+    function register(id: string) {
+      posthog.register({
+        distinct_id: id,
+        platform: 'browser extension',
+        $set: {
+          platform: 'browser extension',
+          'preferred locale': window.navigator.language,
+        },
+      });
+    }
 
-    if (distinctId) posthog.register({ distinct_id: distinctId });
-    posthog.register({
-      platform: 'browser extension',
-      locale: window.navigator.language,
-    });
+    void storage.get<string | undefined>('distinct_id').then((distinctId) => {
+      if (!process.env.PLASMO_PUBLIC_POSTHOG_KEY) return;
+      if (distinctId) register(distinctId);
 
-    posthog.init(process.env.PLASMO_PUBLIC_POSTHOG_KEY, {
-      api_host: absoluteUrl('/ingest2'),
-      ui_host: 'https://app.posthog.com/',
-      capture_pageview: false,
-      capture_pageleave: false,
-      autocapture: false,
-      loaded: () => setDistinctId(posthog.get_distinct_id()),
+      posthog.init(process.env.PLASMO_PUBLIC_POSTHOG_KEY, {
+        ...(process.env.NODE_ENV === 'production' && {
+          api_host: absoluteUrl('/api/ingest'),
+          ui_host: 'https://app.posthog.com',
+        }),
+        capture_pageview: false,
+        capture_pageleave: false,
+        autocapture: false,
+        disable_compression: true,
+        disable_session_recording: true,
+        loaded: () => {
+          if (distinctId) return;
+          void storage.set('distinct_id', posthog.get_distinct_id());
+          register(posthog.get_distinct_id());
+        },
+      });
     });
-  }, [distinctId, setDistinctId]);
+  }, []);
 
   return <PostHogProvider client={posthog}>{p.children}</PostHogProvider>;
 }

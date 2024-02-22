@@ -2,7 +2,7 @@ import { compress } from '@evaluate/compress';
 import { ExecuteCodeResult } from '@evaluate/execute';
 import type { Language } from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
-import { CodeEditor } from '@evaluate/react/components/code-editor';
+import { NumberedEditor } from '@evaluate/react/components/code-editor/numbered-editor';
 import { Dialog, DialogContent } from '@evaluate/react/components/dialog';
 import { Label } from '@evaluate/react/components/label';
 import { cn } from '@evaluate/react/utilities/class-name';
@@ -10,6 +10,7 @@ import { ExternalLinkIcon } from 'lucide-react';
 import { useMemo } from 'react';
 import { useTranslate } from '~contexts/translate';
 import { absoluteUrl } from '~utilities/url-helpers';
+import { wrapCapture } from '~utilities/wrap-capture';
 import { DialogHeader } from './dialog-header';
 
 export function ResultDialog(p: {
@@ -23,7 +24,7 @@ export function ResultDialog(p: {
   const t = useTranslate();
 
   const editCodeUrl = useMemo(() => {
-    const url = new URL(absoluteUrl(p.language?.id ?? '/'));
+    const url = new URL(absoluteUrl(`/languages/${p.language?.id ?? ''}`));
     const data = compress({ files: [{ content: p.code ?? '' }] });
     url.searchParams.set('d', data);
     url.searchParams.set('utm_source', 'browser_extension');
@@ -85,11 +86,11 @@ export function ResultDialog(p: {
           <div className="space-y-2">
             <Label htmlFor="output">{t.evaluate.output()}</Label>
 
-            <CodeEditor
+            <NumberedEditor
               readOnly
               name="output"
               code={formattedOutput ?? ''}
-              setCode={() => {}}
+              onCodeChange={() => {}}
               placeholder={t.evaluate.output.no_output()}
               className={cn(
                 failStep !== null && 'border-2 border-destructive',
@@ -106,17 +107,18 @@ export function ResultDialog(p: {
             )}
           </div>
 
-          <div className="flex justify-end">
-            <Button asChild>
+          <div className="flex justify-end gap-2">
+            <Button asChild onClick={wrapCapture(() => true)}>
               <a
                 target="_blank"
                 rel="noreferrer noopener"
                 href={pickLanguageUrl}
               >
-                <span>{t.language.not_detected.confirm()}</span>
+                <span>{t.language.change()}&nbsp;</span>
+                <ExternalLinkIcon size={16} />
               </a>
             </Button>
-            <Button asChild>
+            <Button asChild onClick={wrapCapture(() => true)}>
               <a target="_blank" rel="noreferrer noopener" href={editCodeUrl}>
                 <span>{t.evaluate.code.edit()}&nbsp;</span>
                 <ExternalLinkIcon size={16} />

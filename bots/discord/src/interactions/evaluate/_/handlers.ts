@@ -63,8 +63,6 @@ export async function handleEvaluating(
     properties: {
       platform: 'discord bot',
       'guild id': interaction.guild_id,
-      'channel id': interaction.channel?.id,
-
       'language id': language.id,
       'code length': _options.code.length,
       'output length': output.length,
@@ -78,7 +76,7 @@ export async function handleEvaluating(
   if (!output.length) {
     output = t.evaluate.output.no_output();
   } else if (output.length > 1000) {
-    const url = new URL(language.id, process.env.WEBSITE_URL);
+    const url = new URL(`/languages/${language.id}`, process.env.WEBSITE_URL);
 
     const data = compress({
       files: [{ content: _options.code }],

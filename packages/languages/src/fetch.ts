@@ -28,6 +28,8 @@ export async function fetchLanguages(): Promise<Language[]> {
     runtimes
       // Filter out languages with duplicate names
       .filter((r, i, a) => {
+        if (r.language === 'brainfuck') return false;
+
         // If it has a runtime, it's not a duplicate
         if ('runtime' in r) return true;
 

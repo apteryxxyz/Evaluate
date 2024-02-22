@@ -35,8 +35,7 @@ function Popup() {
   const t = useTranslate();
 
   useEffect(() => {
-    void analytics.capture('popup opened');
-    return () => void analytics.capture('popup closed');
+    void analytics.capture('popup opened', { platform: 'browser extension' });
   }, []);
 
   const { isEnabled, isEnabledFor, setEnabled, setEnabledFor } = useEnabled();
@@ -52,6 +51,7 @@ function Popup() {
       analytics.capture('toggle globally enabled', {
         'old value': !checked,
         'new value': checked,
+        platform: 'browser extension',
       });
       setEnabled(checked);
     },
@@ -63,6 +63,7 @@ function Popup() {
         domain: domain,
         'old value': !checked,
         'new value': checked,
+        platform: 'browser extension',
       });
       setEnabledFor(domain!, checked);
     },

@@ -24,9 +24,9 @@ export function LanguageCard(p: Language) {
     // The browser extension uses this to prefill the editor
     const currentParams = new URLSearchParams(window.location.search);
     const data = currentParams.get('d');
-    if (!data) return p.id;
+    if (!data) return `/languages/${p.id}`;
     const nextParams = new URLSearchParams({ d: data });
-    return `/${p.id}?${nextParams.toString()}`;
+    return `/languages/${p.id}?${nextParams.toString()}`;
   }, [p.id]);
 
   const [pinned, setPinned] = useLocalStorage<string[]>('evaluate.pinned', []);

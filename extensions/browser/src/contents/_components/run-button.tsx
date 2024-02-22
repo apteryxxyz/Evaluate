@@ -5,6 +5,8 @@ import { cn } from '@evaluate/react/utilities/class-name';
 import { Loader2Icon, PlayIcon, XIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { analytics } from '~contexts/analytics';
+import { useTranslate } from '~contexts/translate';
+import { wrapCapture } from '~utilities/wrap-capture';
 import { LanguageDialog } from './language-dialog';
 import { ResultDialog } from './result-dialog';
 
@@ -12,6 +14,8 @@ export function RunButton(p: {
   preElement: HTMLPreElement;
   dialogRef: React.RefObject<HTMLDivElement>;
 }) {
+  const t = useTranslate();
+
   const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguage] = useState<Language>();
   const [code, setCode] = useState<string>();
@@ -66,7 +70,7 @@ export function RunButton(p: {
           'aspect-square rounded-full m-2 w-7 h-7',
           (isLoading || (!code && !language)) && 'bg-red-500 hover:bg-red-600',
         )}
-        onClick={onRunClick}
+        onClick={wrapCapture(onRunClick)}
         disabled={isExecuting || (!code && !language)}
       >
         {isLoading || isExecuting ? (
@@ -74,7 +78,10 @@ export function RunButton(p: {
         ) : !code && !language ? (
           <XIcon className="w-5 h-5" />
         ) : (
-          <PlayIcon className="ml-0.5 w-5 h-5" />
+          <>
+            <span className="sr-only">{t.evaluate.run()}</span>
+            <PlayIcon className="ml-0.5 w-5 h-5" />
+          </>
         )}
       </Button>
 

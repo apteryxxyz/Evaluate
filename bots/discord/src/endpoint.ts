@@ -1,3 +1,4 @@
+import { determineInteractionLocale } from '@evaluate/translate';
 import {
   APIInteraction,
   InteractionResponseType,
@@ -44,14 +45,13 @@ export default async function handler(request: Request) {
       event: 'interaction received',
       properties: {
         platform: 'discord bot',
-        'interaction type': interaction.type,
+        'interaction type': InteractionType[interaction.type],
         'guild id': interaction.guild_id,
-        'channel id': interaction.channel?.id,
 
         $set: {
           platform: 'discord',
-          name: getUser(interaction)?.global_name,
           username: getUser(interaction)?.username,
+          'preferred locale': determineInteractionLocale(interaction),
         },
       },
     });

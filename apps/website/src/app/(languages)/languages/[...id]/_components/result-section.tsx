@@ -1,5 +1,5 @@
 import type { ExecuteCodeOptions, ExecuteCodeResult } from '@evaluate/execute';
-import { CodeEditor } from '@evaluate/react/components/code-editor';
+import { NumberedEditor } from '@evaluate/react/components/code-editor/numbered-editor';
 import { Label } from '@evaluate/react/components/label';
 import { cn } from '@evaluate/react/utilities/class-name';
 import _isEqual from 'lodash/isEqual';
@@ -41,11 +41,11 @@ export function ResultSection(p: {
     <div className="space-y-2">
       <Label htmlFor="output">{t.evaluate.output()}</Label>
 
-      <CodeEditor
+      <NumberedEditor
         readOnly
         name="output"
         code={formattedOutput ?? ''}
-        setCode={() => {}}
+        onCodeChange={() => {}}
         placeholder={
           p.result ? t.evaluate.output.no_output() : t.evaluate.run.press()
         }

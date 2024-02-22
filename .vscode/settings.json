@@ -12,10 +12,10 @@
     "**/node_modules": true
   },
   "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#2FC086",
-    "titleBar.activeForeground": "#FFFFFF",
-    "activityBarBadge.background": "#2FC086",
-    "activityBarBadge.foreground": "#FFFFFF"
+    "titleBar.activeBackground": "#2fc186",
+    "titleBar.activeForeground": "#fff",
+    "activityBarBadge.background": "#2fc186",
+    "activityBarBadge.foreground": "#fff"
   },
   "editor.codeActionsOnSave": {
     "source.organizeImports.biome": "explicit"
@@ -24,6 +24,7 @@
   "cSpell.words": [
     "analyzer",
     "apteryx",
+    "autocapture",
     "biomejs",
     "carbonara",
     "clsx",

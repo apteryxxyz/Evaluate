@@ -4,7 +4,7 @@ import type { ExecuteCodeOptions } from '@evaluate/execute';
 import type { Language } from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
 import { Card, CardHeader } from '@evaluate/react/components/card';
-import { CodeEditor } from '@evaluate/react/components/code-editor';
+import { HighlightedEditor } from '@evaluate/react/components/code-editor/highlighted-editor';
 import {
   FormField,
   FormItem,
@@ -114,12 +114,14 @@ export function FileSystemInput(p: {
                     <FormLabel htmlFor={field.name}>
                       {t.files.content()}
                     </FormLabel>
-                    <CodeEditor
+                    <HighlightedEditor
                       {...field}
                       language={p.language}
                       code={field.value}
                       placeholder={t.files.content.description()}
-                      setCode={(c) => field.onChange({ target: { value: c } })}
+                      onCodeChange={(c) =>
+                        field.onChange({ target: { value: c } })
+                      }
                     />
                   </FormItem>
                 )}

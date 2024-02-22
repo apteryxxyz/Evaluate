@@ -24,8 +24,6 @@ export async function handleCapturing(
     properties: {
       platform: 'discord bot',
       'guild id': interaction.guild_id,
-      'channel id': interaction.channel?.id,
-
       'code length': code.length,
       'was successful': Boolean(imageBuffer),
     },

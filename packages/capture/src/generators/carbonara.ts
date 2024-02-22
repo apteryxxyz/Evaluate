@@ -1,6 +1,6 @@
 export const ThemeVariants = {
   default: {
-    backgroundColor: '#2fc086',
+    backgroundColor: '#2fc186',
     windowControls: false,
     // prettify: true,
     paddingHorizontal: '32px',

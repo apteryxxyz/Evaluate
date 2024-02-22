@@ -13,21 +13,23 @@ import { useLocalStorage } from '@evaluate/react/hooks/local-storage';
 import { cn } from '@evaluate/react/utilities/class-name';
 import { PinIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 import { useTranslate } from '~/contexts/translate';
+import { addLocale } from '../../../../utilities/url-helpers';
 
 export function LanguageCard(p: Language) {
   const t = useTranslate();
+  const searchParams = useSearchParams();
 
   const linkHref = useMemo(() => {
     // Pass the data from the current search params to the language page
     // The browser extension uses this to prefill the editor
-    const currentParams = new URLSearchParams(window.location.search);
-    const data = currentParams.get('d');
+    const data = searchParams.get('d');
     if (!data) return `/languages/${p.id}`;
     const nextParams = new URLSearchParams({ d: data });
     return `/languages/${p.id}?${nextParams.toString()}`;
-  }, [p.id]);
+  }, [p.id, searchParams]);
 
   const [pinned, setPinned] = useLocalStorage<string[]>('evaluate.pinned', []);
   const isPinned = useMemo(() => pinned.includes(p.id), [p.id, pinned]);
@@ -48,7 +50,7 @@ export function LanguageCard(p: Language) {
       </CardHeader>
 
       <Link
-        href={linkHref}
+        href={addLocale(linkHref, t.locale)}
         className="inset-0 absolute"
         // The user is unlikely to click most cards, no point in prefetching
         prefetch={false}

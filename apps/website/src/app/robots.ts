@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next/types';
 import { absoluteUrl } from '~/utilities/url-helpers';
 
-export default function Robots() {
+export default function Robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
@@ -11,6 +11,6 @@ export default function Robots() {
       },
     ],
     host: absoluteUrl(),
-    sitemap: absoluteUrl('sitemap.xml'),
-  } satisfies MetadataRoute.Robots;
+    sitemap: absoluteUrl('/sitemap.xml'),
+  };
 }

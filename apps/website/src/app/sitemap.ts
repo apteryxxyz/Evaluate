@@ -1,8 +1,9 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fetchLanguages } from '@evaluate/languages';
+import { locales } from '@evaluate/translate';
 import type { MetadataRoute } from 'next/types';
-import { absoluteUrl } from '~/utilities/url-helpers';
+import { absoluteUrl, addLocale } from '~/utilities/url-helpers';
 
 interface RoutesManifest {
   staticRoutes: { page: string }[];
@@ -18,7 +19,7 @@ async function loadStaticPaths(): Promise<MetadataRoute.Sitemap> {
   return manifest.staticRoutes
     .filter((r) => !r.page.includes('[') && !r.page.startsWith('/_'))
     .map((r) => ({
-      url: absoluteUrl(r.page),
+      url: absoluteUrl(r.page as '/'),
       lastModified: new Date(),
     }));
 }
@@ -33,6 +34,12 @@ async function loadDynamicPaths(): Promise<MetadataRoute.Sitemap> {
 }
 
 export default async function getSitemap() {
-  return Promise.all([loadStaticPaths(), loadDynamicPaths()]) //
-    .then((entries) => entries.flat());
+  const staticPaths = await loadStaticPaths();
+  const dynamicPaths = await loadDynamicPaths();
+  const combinedPaths = [...staticPaths, ...dynamicPaths];
+
+  const localisedPaths = combinedPaths.flatMap((e) =>
+    locales.slice(1).map((l) => ({ ...e, url: addLocale(e.url, l) })),
+  );
+  return [...combinedPaths, ...localisedPaths];
 }

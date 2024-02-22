@@ -4,8 +4,8 @@ import { Button } from '@evaluate/react/components/button';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useCallback } from 'react';
-import { analytics } from '~/contexts/analytics';
 import { useTranslate } from '~/contexts/translate';
+import { analytics } from '~/contexts/analytics';
 
 export function ThemeSwitcher() {
   const t = useTranslate();

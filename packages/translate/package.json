@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "^2.7.6",
+    "@formatjs/intl-localematcher": "^0.5.4",
     "intl-messageformat": "^10.5.11"
   },
   "devDependencies": {

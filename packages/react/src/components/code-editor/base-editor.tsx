@@ -39,7 +39,7 @@ export const BaseEditor = forwardRef((
   return (
     <Editor
       ref={editorRef}
-      {..._omit(p, ['language', 'code', 'setCode'])}
+      {..._omit(p, ['language', 'highlighter', 'dynamicStyle', 'code', 'setCode'])}
       value={p.code}
       onValueChange={p.onCodeChange}
       highlight={p.highlighter ?? ((code) => code)}

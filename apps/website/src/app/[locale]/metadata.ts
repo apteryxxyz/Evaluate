@@ -1,13 +1,13 @@
-import { getTranslate, locales } from '@evaluate/translate';
+import { Locale, getTranslate, locales } from '@evaluate/translate';
 import _merge from 'lodash/merge';
-import { Metadata } from 'next';
+import type { Metadata } from 'next/types';
 import { absoluteUrl } from '~/utilities/url-helpers';
 
 export function generateBaseMetadata(
-  pathname: string,
+  [locale, pathname]: [Locale, `/${string}`],
   overrides: Metadata = {},
 ) {
-  const t = getTranslate('en');
+  const t = getTranslate(locale);
 
   const metadata = _merge(
     {
@@ -30,14 +30,25 @@ export function generateBaseMetadata(
 
   return {
     ...metadata,
+    alternates: {
+      languages: locales.reduce(
+        (acc, locale) =>
+          Object.assign(acc, {
+            [locale]: absoluteUrl(`/${locale}${pathname}`),
+          }),
+        {},
+      ),
+    },
     openGraph: {
       type: 'website',
       title: metadata.title,
       description: metadata.description,
-      locale: 'en',
+      locale: locale ?? 'en',
       siteName: 'Evaluate',
-      alternateLocale: locales.filter((l) => l !== 'en'),
-      url: absoluteUrl(pathname),
+      alternateLocale: locales.filter((l) => l !== locale),
+      url: absoluteUrl(
+        locale === locales[0] ? pathname : `/${locale}${pathname}`,
+      ),
     },
     twitter: {
       card: 'summary',
@@ -45,5 +56,5 @@ export function generateBaseMetadata(
       description: metadata.description,
       creator: '@apteryxxyz',
     },
-  };
+  } satisfies Metadata;
 }

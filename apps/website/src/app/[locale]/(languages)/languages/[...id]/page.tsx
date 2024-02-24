@@ -15,8 +15,8 @@ export async function generateMetadata(p: PageProps<['id[]']>) {
   const language = await getLanguage(id).catch(() => void 0);
   if (!language) notFound();
 
-  const t = getTranslate('en');
-  return generateBaseMetadata(`/languages/${p.params.id}`, {
+  const t = getTranslate(p.params.locale);
+  return generateBaseMetadata([p.params.locale, `/languages/${p.params.id}`], {
     title: t.seo['/[...id]'].title({ language_name: language.name }),
     description: t.seo['/[...id]'] //
       .description({ language_name: language.name }),
@@ -27,6 +27,5 @@ export default async function LanguagePage(p: PageProps<['id[]']>) {
   const id = decodeURIComponent(p.params.id.join('/'));
   const language = await getLanguage(id).catch(() => void 0);
   if (!language) notFound();
-
   return <LanguageContent language={language} />;
 }

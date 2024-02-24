@@ -11,7 +11,7 @@ import {
   SkeletonLanguageCard,
 } from './_components/language-card';
 import { SearchInput } from './_components/search-input';
-import LoadingPage from './loading';
+import LanguagesSkeleton from './loading';
 
 export default function LanguagesContent(p: { languages: Language[] }) {
   const t = useTranslate();
@@ -22,7 +22,7 @@ export default function LanguagesContent(p: { languages: Language[] }) {
     [pinned, languages],
   );
 
-  if (!t) return <LoadingPage />;
+  if (!t) return <LanguagesSkeleton />;
   return (
     <>
       <section className="py-24 md:py-36">

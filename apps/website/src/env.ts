@@ -15,8 +15,8 @@ export const env = envSchema.parse(process.env);
 
 declare global {
   namespace NodeJS {
-    // eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
     interface ProcessEnv extends Env {
+      // @ts-ignore
       [key: Uppercase<string>]: string | undefined;
     }
   }

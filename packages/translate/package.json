@@ -24,12 +24,13 @@
   },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "^2.7.6",
+    "@formatjs/intl-localematcher": "^0.5.4",
     "intl-messageformat": "^10.5.11"
   },
   "devDependencies": {
     "@configs/tsup": "workspace:^",
     "@types/lodash": "^4.14.202",
-    "@types/node": "^20.11.18",
+    "@types/node": "^20.11.20",
     "lodash": "^4.17.21",
     "ts-node": "^10.9.2",
     "tsup": "^8.0.2"

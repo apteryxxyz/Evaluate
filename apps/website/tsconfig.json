@@ -6,18 +6,15 @@
     "baseUrl": ".",
     "outDir": "dist",
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": ["src/*"],
+      "~/app/*": ["src/app/[locale]/*"]
     },
     "jsx": "preserve",
     "allowJs": true,
     "skipLibCheck": true,
     "noEmit": true,
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "plugins": [{ "name": "next" }],
     "lib": ["dom", "es2023"]
   }
 }

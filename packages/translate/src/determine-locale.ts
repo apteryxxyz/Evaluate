@@ -1,10 +1,11 @@
+import { match } from '@formatjs/intl-localematcher';
 import { Locale, locales } from '.';
 
 // =============== Pathname ===============
 
 export function determinePathnameLocale(pathname: string) {
   const pathLocale = pathname.split('/')[1];
-  if (pathLocale?.match(/\d{2}|\d{2}-\d{2}/)) return pathLocale;
+  if (pathLocale?.match(/^([a-z]{2}|[a-z]{2}-[A-Z]{2})$/)) return pathLocale;
   return undefined;
 }
 
@@ -22,8 +23,7 @@ export function determineInteractionLocale(interaction: InteractionLike) {
   return (
     interaction.locale ??
     interaction.user?.locale ??
-    interaction.member?.user?.locale ??
-    interaction.guild_locale
+    interaction.member?.user?.locale
   );
 }
 
@@ -38,11 +38,8 @@ interface NextRequestLike {
 export function determineNextRequestLocale(request: NextRequestLike) {
   const cookieValue = request.cookies.get('evaluate.locale')?.value;
   if (cookieValue && cookieValue in locales) return [cookieValue] as [Locale];
-
-  return request.headers
-    .get('accept-language')
-    ?.split(',')
-    .map((l) => l.split(';')[0]?.split('-')[0]);
+  return (request.headers.get('accept-language')?.split(',') ?? []) //
+    .map((l) => l.split(';')[0]!.trim());
 }
 
 // =============== Combined ===============
@@ -59,24 +56,30 @@ export function determineLocale(
   value: string | InteractionLike | NextRequestLike,
   returnDefaultIfNotFound = true,
 ) {
+  const acceptedLocales = [];
+
   if (typeof value === 'string') {
     const pathLocale = determinePathnameLocale(value);
-    if (pathLocale && pathLocale in locales) return pathLocale;
+    if (pathLocale) acceptedLocales.push(pathLocale);
   }
 
   if (typeof value === 'object' && 'nextUrl' in value) {
-    const nextRequestLocale = determineNextRequestLocale(value);
-    if (nextRequestLocale && nextRequestLocale.length > 0) {
-      const foundLanguage = nextRequestLocale.find((l) => l && l in locales);
-      if (foundLanguage) return foundLanguage as Locale;
-    }
+    const requestLocale = determineNextRequestLocale(value);
+    acceptedLocales.push(...requestLocale);
   }
 
   if (typeof value === 'object' && 'id' in value) {
     const interactionLocale = determineInteractionLocale(value);
-    if (interactionLocale && interactionLocale in locales)
-      return interactionLocale;
+    if (interactionLocale) acceptedLocales.push(interactionLocale);
   }
 
-  return returnDefaultIfNotFound ? locales[0] : undefined;
+  try {
+    const result = match(acceptedLocales, locales, 'none');
+    if (result === 'none' && returnDefaultIfNotFound) return locales[0];
+    if (result === 'none') return undefined;
+    return result as Locale;
+  } catch (e) {
+    console.log({ value, acceptedLocales, locales, e });
+    throw e;
+  }
 }

@@ -2,7 +2,7 @@ import { Skeleton } from '@evaluate/react/components/skeleton';
 import { SkeletonLanguageCard } from './_components/language-card';
 import { SkeletonSearchInput } from './_components/search-input';
 
-export default function LoadingPage() {
+export default function LanguagesSkeleton() {
   return (
     <>
       <div className="py-24 md:py-36 space-y-1">

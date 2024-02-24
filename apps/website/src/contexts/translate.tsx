@@ -1,63 +1,25 @@
-'use client';
+import { Locale, TranslateFunctions, getTranslate } from '@evaluate/translate';
+import { createContext, useContext, useMemo } from 'react';
 
-import {
-  Locale,
-  TranslateFunctions,
-  getTranslate,
-  locales,
-} from '@evaluate/translate';
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-
-type TranslateContextProps =
-  | (TranslateFunctions & {
-      locale: Locale;
-      setLocale(locale: Locale): void;
-    })
-  | undefined;
+type TranslateContextProps = TranslateFunctions & { locale: Locale };
 export const TranslateContext = //
   createContext<TranslateContextProps | null>(null);
 TranslateContext.displayName = 'TranslateContext';
-export const TranslateConsumer = TranslateContext.Consumer;
 
-export function TranslateProvider(p: React.PropsWithChildren) {
-  const [locale, setLocale] = useState<Locale>();
-  const translate = useMemo(() => locale && getTranslate(locale), [locale]);
-
-  useEffect(() => {
-    if (locale) {
-      localStorage.setItem('evaluate.locale', locale);
-      document.documentElement.lang = locale;
-    } else {
-      const item = localStorage.getItem('evaluate.locale');
-      if (item && item in locales) {
-        setLocale(item as Locale);
-      } else {
-        const languages = window.navigator.languages;
-        const locale = languages
-          .map((l) => l.split('-')[0]!)
-          .find((l) => locales.includes(l as Locale));
-        if (locale) setLocale(locale as Locale);
-        else setLocale('en');
-      }
-    }
-  }, [locale]);
-
-  const value = useMemo(
-    () => locale && Object.assign({}, translate, { locale, setLocale }),
-    [translate, locale],
-  );
+export function TranslateProvider(
+  p: React.PropsWithChildren<{ locale: Locale }>,
+) {
+  const translate = useMemo(() => getTranslate(p.locale), [p.locale]);
 
   return (
-    <TranslateContext.Provider value={value}>
+    <TranslateContext.Provider
+      value={Object.assign({}, translate, { locale: p.locale })}
+    >
       {p.children}
     </TranslateContext.Provider>
   );
 }
 
-/**
- * Grab the current translate functions from context.
- * @returns a translate functions object
- */
 export function useTranslate() {
   return useContext(TranslateContext)!;
 }

@@ -20,7 +20,7 @@ export function HeaderBar() {
   const { languages, setFilteredLanguages } = useLanguages();
 
   return (
-    <header className="container h-14 flex items-center gap-2">
+    <header className="container flex items-center gap-2 py-2">
       <Link
         href="/"
         className="inline-flex items-center gap-2"

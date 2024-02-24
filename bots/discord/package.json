@@ -29,16 +29,16 @@
     "@evaluate/languages": "workspace:^",
     "@evaluate/translate": "workspace:^",
     "@next/env": "^14.1.0",
-    "discord-api-types": "^0.37.69",
+    "discord-api-types": "^0.37.70",
     "discord-interactions": "^3.4.0",
     "lodash": "^4.17.21",
-    "posthog-node": "^3.6.2",
+    "posthog-node": "^3.6.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@configs/tsup": "workspace:^",
     "@types/lodash": "^4.14.202",
-    "@types/node": "^20.11.18",
+    "@types/node": "^20.11.20",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tsup": "^8.0.2"

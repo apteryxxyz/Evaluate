@@ -1,7 +1,8 @@
+import { locales } from '@evaluate/translate';
 import { Inter } from 'next/font/google';
+import { FooterBar } from '~/components/footer-bar';
+import { HeaderBar } from '~/components/header-bar';
 import { LayoutProps } from '~/types';
-import { FooterBar } from '../components/footer-bar';
-import { HeaderBar } from '../components/header-bar';
 import { generateBaseMetadata } from './metadata';
 import { HTMLProviders, MainProviders } from './providers';
 
@@ -12,7 +13,7 @@ import './layout.css';
 
 const PageView = dynamic(
   async () => {
-    const { PageView } = await import('../components/page-view');
+    const { PageView } = await import('~/components/page-view');
     return { default: PageView };
   },
   { ssr: false },
@@ -23,14 +24,22 @@ const inter = Inter({
   display: 'swap',
 });
 
-export function generateMetadata() {
-  return generateBaseMetadata('/');
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export function generateMetadata(p: LayoutProps) {
+  return generateBaseMetadata([p.params.locale, '/']);
 }
 
 export default function RootLayout(p: LayoutProps) {
   return (
     <HTMLProviders>
-      <html key="html" lang="en" className={`${inter.className} h-full`}>
+      <html
+        key="html"
+        lang={p.params.locale}
+        className={`${inter.className} h-full`}
+      >
         <head key="head">
           <meta name="evaluate-extension" content="disabled" />
           <meta name="darkreader-lock" />
@@ -81,8 +90,8 @@ export default function RootLayout(p: LayoutProps) {
           <PageView />
         </head>
 
-        <body key="body" className="flex h-full flex-col py-8 gap-8">
-          <MainProviders>
+        <body key="body" className="flex h-full flex-col gap-8">
+          <MainProviders locale={p.params.locale}>
             <HeaderBar />
 
             <main className="container flex flex-col flex-[1_0_auto] gap-6">

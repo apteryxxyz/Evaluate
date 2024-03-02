@@ -16,7 +16,11 @@ export const ExecuteCodeOptionsSchema = z.object({
       }),
     )
     .min(1)
-    .max(10),
+    .max(10)
+    .refine((files) => {
+      const names = files.map((file) => file.name);
+      return new Set(names).size === names.length;
+    }),
   input: z.string().max(2_000).optional(),
   args: z.string().max(2_000).optional(),
 });
@@ -24,16 +28,8 @@ export const ExecuteCodeOptionsSchema = z.object({
 export type ExecuteCodeResult = z.infer<typeof ExecuteCodeResultSchema>;
 export const ExecuteCodeResultSchema = z.object({
   success: z.boolean(),
-  run: z.object({
-    success: z.boolean(),
-    output: z.string(),
-  }),
-  compile: z
-    .object({
-      success: z.boolean(),
-      output: z.string(),
-    })
-    .optional(),
+  run: z.object({ success: z.boolean(), output: z.string() }),
+  compile: z.object({ success: z.boolean(), output: z.string() }).optional(),
 });
 
 // Piston

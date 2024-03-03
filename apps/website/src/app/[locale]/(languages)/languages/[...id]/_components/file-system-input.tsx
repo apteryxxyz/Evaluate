@@ -4,18 +4,21 @@ import type { ExecuteCodeOptions } from '@evaluate/execute';
 import type { Language } from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
 import { Card, CardHeader } from '@evaluate/react/components/card';
-import { HighlightedEditor } from '@evaluate/react/components/code-editor/highlighted-editor';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@evaluate/react/components/dialog';
 import {
   FormField,
   FormItem,
   FormLabel,
 } from '@evaluate/react/components/form';
 import { Input } from '@evaluate/react/components/input';
-import {
-  Popover,
-  PopoverAnchor,
-  PopoverContent,
-} from '@evaluate/react/components/popover';
+import { Label } from '@evaluate/react/components/label';
 import {
   Tabs,
   TabsContent,
@@ -23,12 +26,10 @@ import {
   TabsTrigger,
 } from '@evaluate/react/components/tabs';
 import _truncate from 'lodash/truncate';
-import { FilePlus2Icon, LockIcon, Trash2Icon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { FilePlus2Icon, Trash2Icon } from 'lucide-react';
+import { useState } from 'react';
 import { type Control, useFieldArray } from 'react-hook-form';
-import { useAnalytics } from '~/contexts/analytics';
 import { useTranslate } from '~/contexts/translate';
-import { EditorLoading } from './editor-loading';
 import { MonacoEditor } from './monaco-editor';
 
 export function FileSystemInput(p: {
@@ -36,22 +37,10 @@ export function FileSystemInput(p: {
   language: Language;
 }) {
   const t = useTranslate();
-  const analytics = useAnalytics();
-
-  const [editor, setEditor] = useState<'default' | 'monaco'>('default');
-  const [lockedOpen, setLockedOpen] = useState(false);
-  // useEffect(() => {
-  //   if (window.matchMedia('(max-width: 640px)').matches) {
-  //     setEditor('default');
-  //   } else {
-  //     analytics.onFeatureFlags(() => {
-  //       if (analytics.isFeatureEnabled('monaco-editor')) setEditor('monaco');
-  //       else setEditor('default');
-  //     });
-  //   }
-  // }, [analytics]);
 
   const [openedFile, setOpenedFile] = useState(0);
+  const [dialogOpened, setDialogOpened] = useState(false);
+
   const files = useFieldArray({ ...p, name: 'files' });
   const [fileNames, setFileNames] = //
     useState(files.fields.map((f) => Reflect.get(f, 'name')));
@@ -85,34 +74,72 @@ export function FileSystemInput(p: {
           ))}
         </TabsList>
 
-        <Button
-          type="button"
-          className="whitespace-nowrap"
-          disabled={files.fields.length >= 10}
-        >
-          <FilePlus2Icon size={16} />
-          <span className="sr-only">{t.files.add_file()}</span>
-        </Button>
+        <Dialog open={dialogOpened} onOpenChange={setDialogOpened}>
+          <DialogTrigger asChild>
+            <Button
+              type="button"
+              className="whitespace-nowrap"
+              disabled={files.fields.length >= 10}
+            >
+              <FilePlus2Icon size={16} />
+              <span className="sr-only">{t.files.add_file()}</span>
+            </Button>
+          </DialogTrigger>
 
-        {editor === 'monaco' && (
-          <div
-            className="absolute inset-0 z-40 flex cursor-not-allowed items-center justify-center bg-black/50"
-            onMouseOver={() => setLockedOpen(true)}
-            onMouseLeave={() => setLockedOpen(false)}
-            onFocus={() => setLockedOpen(true)}
-            onBlur={() => setLockedOpen(false)}
-          >
-            <Popover open={lockedOpen} onOpenChange={setLockedOpen}>
-              <PopoverAnchor>
-                <LockIcon />
-              </PopoverAnchor>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle data-dialog-title asChild>
+                <Label htmlFor="file-name">{t.files.name()}</Label>
+              </DialogTitle>
+            </DialogHeader>
 
-              <PopoverContent className="w-auto p-1 text-sm">
-                File explorer is not yet available in the Monaco Editor.
-              </PopoverContent>
-            </Popover>
-          </div>
-        )}
+            <Input
+              id="file-name"
+              placeholder={t.files.name.description()}
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              onChange={(e) => {
+                const label =
+                  document.querySelector<HTMLElement>('[for="file-name"]')!;
+                const button =
+                  document.querySelector<HTMLButtonElement>('#add-file')!;
+
+                if (!e.target.value || fileNames.includes(e.target.value)) {
+                  label.style.color = 'hsl(var(--destructive))';
+                  button.disabled = true;
+                } else {
+                  label.style.color = '';
+                  button.disabled = false;
+                }
+              }}
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') {
+                  const button = document.querySelector('#add-file')!;
+                  (button as HTMLElement).click();
+                }
+              }}
+            />
+
+            <DialogFooter>
+              <Button
+                id="add-file"
+                type="button"
+                onClick={() => {
+                  const input = document.querySelector('#file-name')!;
+                  const name = (input as HTMLInputElement).value;
+                  if (!name || fileNames.includes(name)) return;
+
+                  files.append({ name, content: '' });
+                  setFileNames((n) => [...n, name]);
+                  setDialogOpened(false);
+                }}
+              >
+                {t.files.add_file()}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {files.fields.map((file, i) => (
@@ -123,25 +150,7 @@ export function FileSystemInput(p: {
                 control={p.control}
                 name={`files.${i}.name`}
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel htmlFor={field.name}>{t.files.name()}</FormLabel>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      placeholder={t.files.name.description()}
-                      autoComplete="off"
-                      autoCorrect="off"
-                      autoCapitalize="off"
-                      onChange={(event) => {
-                        field.onChange(event);
-                        setFileNames((names) => {
-                          const newNames = [...names];
-                          newNames[i] = event.target.value;
-                          return newNames;
-                        });
-                      }}
-                    />
-                  </FormItem>
+                  <input {...field} type="hidden" id={field.name} />
                 )}
               />
 
@@ -150,35 +159,15 @@ export function FileSystemInput(p: {
                 name={`files.${i}.content`}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel
-                      htmlFor={field.name}
-                      onClick={() => setEditor('monaco')}
-                    >
+                    <FormLabel htmlFor={field.name}>
                       {t.files.content()}
                     </FormLabel>
 
-                    {!editor && <EditorLoading />}
-                    {editor === 'default' && (
-                      <HighlightedEditor
-                        {...field}
-                        style={{ height: '300px' }}
-                        language={p.language}
-                        code={field.value}
-                        placeholder={t.files.content.description()}
-                        onCodeChange={(c) =>
-                          field.onChange({ target: { value: c } })
-                        }
-                      />
-                    )}
-                    {editor === 'monaco' && (
-                      <MonacoEditor
-                        name={fileNames[i]!}
-                        code={field.value}
-                        onChange={(c) =>
-                          field.onChange({ target: { value: c } })
-                        }
-                      />
-                    )}
+                    <MonacoEditor
+                      name={fileNames[i]!}
+                      code={field.value}
+                      onChange={(c) => field.onChange({ target: { value: c } })}
+                    />
                   </FormItem>
                 )}
               />

@@ -3,7 +3,7 @@
 import { useDebouncedValue } from '@evaluate/react/hooks/debounced-value';
 import { Editor, useMonaco } from '@monaco-editor/react';
 import { useTheme } from 'next-themes';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 import { EditorLoading } from './editor-loading';
 
 export function MonacoEditor(p: {

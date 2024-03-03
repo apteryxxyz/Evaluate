@@ -6,15 +6,6 @@ import { Button } from '@evaluate/react/components/button';
 import { Card, CardHeader } from '@evaluate/react/components/card';
 import { HighlightedEditor } from '@evaluate/react/components/code-editor/highlighted-editor';
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTrigger,
-} from '@evaluate/react/components/dialog';
-import {
   FormField,
   FormItem,
   FormLabel,
@@ -24,7 +15,6 @@ import {
   Popover,
   PopoverAnchor,
   PopoverContent,
-  PopoverTrigger,
 } from '@evaluate/react/components/popover';
 import {
   Tabs,
@@ -32,12 +22,6 @@ import {
   TabsList,
   TabsTrigger,
 } from '@evaluate/react/components/tabs';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@evaluate/react/components/tooltip';
 import _truncate from 'lodash/truncate';
 import { FilePlus2Icon, LockIcon, Trash2Icon } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -54,7 +38,7 @@ export function FileSystemInput(p: {
   const t = useTranslate();
   const analytics = useAnalytics();
 
-  const [editor, setEditor] = useState<'default' | 'monaco'>();
+  const [editor, setEditor] = useState<'default' | 'monaco'>('default');
   const [lockedOpen, setLockedOpen] = useState(false);
   useEffect(() => {
     if (window.matchMedia('(max-width: 640px)').matches) {
@@ -124,7 +108,7 @@ export function FileSystemInput(p: {
               </PopoverAnchor>
 
               <PopoverContent className="w-auto p-1 text-sm">
-                File explorer is not yet available in Monaco Editor.
+                File explorer is not yet available in the Monaco Editor.
               </PopoverContent>
             </Popover>
           </div>
@@ -168,11 +152,7 @@ export function FileSystemInput(p: {
                   <FormItem>
                     <FormLabel
                       htmlFor={field.name}
-                      onClick={() =>
-                        setEditor((e) =>
-                          e === 'default' ? 'monaco' : 'default',
-                        )
-                      }
+                      onClick={() => setEditor('monaco')}
                     >
                       {t.files.content()}
                     </FormLabel>

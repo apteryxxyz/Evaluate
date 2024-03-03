@@ -40,16 +40,16 @@ export function FileSystemInput(p: {
 
   const [editor, setEditor] = useState<'default' | 'monaco'>('default');
   const [lockedOpen, setLockedOpen] = useState(false);
-  useEffect(() => {
-    if (window.matchMedia('(max-width: 640px)').matches) {
-      setEditor('default');
-    } else {
-      analytics.onFeatureFlags(() => {
-        if (analytics.isFeatureEnabled('monaco-editor')) setEditor('monaco');
-        else setEditor('default');
-      });
-    }
-  }, [analytics]);
+  // useEffect(() => {
+  //   if (window.matchMedia('(max-width: 640px)').matches) {
+  //     setEditor('default');
+  //   } else {
+  //     analytics.onFeatureFlags(() => {
+  //       if (analytics.isFeatureEnabled('monaco-editor')) setEditor('monaco');
+  //       else setEditor('default');
+  //     });
+  //   }
+  // }, [analytics]);
 
   const [openedFile, setOpenedFile] = useState(0);
   const files = useFieldArray({ ...p, name: 'files' });

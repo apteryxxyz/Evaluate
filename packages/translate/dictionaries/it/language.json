@@ -16,6 +16,7 @@
         "reset": "Cancella query di ricerca"
       }
     },
+    "change": "Cambia Lingua",
     "no_results": {
       "$": "Nessuna lingua trovata",
       "description": "Non ci sono linguaggi che corrispondono ai tuoi criteri di ricerca."

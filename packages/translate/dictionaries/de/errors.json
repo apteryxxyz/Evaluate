@@ -1,0 +1,12 @@
+{
+  "errors": {
+    "internal_error": {
+      "$": "Interner Fehler",
+      "description": "Ein interner Fehler ist aufgetreten, versuche es später erneut."
+    },
+    "not_found": {
+      "$": "Nicht gefunden",
+      "description": "Die angefragte Ressource konnte nicht gefunden werden."
+    }
+  }
+}

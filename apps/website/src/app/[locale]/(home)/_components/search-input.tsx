@@ -103,8 +103,8 @@ export function SearchInput() {
 
       {/* Now that search is triggered on every change, should we keep the search button? */}
       <Button
-        type="button"
-        className="md:w-32"
+        size="icon"
+        className="md:w-32 aspect-square md:aspect-auto"
         onClick={triggerSearch}
         disabled={isSearching}
       >

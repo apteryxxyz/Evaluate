@@ -6,7 +6,7 @@
     "format": "biome format . --write",
     "lint": "biome lint .",
     "check": "tsc --noEmit",
-    "build": "next build",
+    "build": "next build --no-lint",
     "start": "next start",
     "dev": "pnpm run \"/^dev:.*/\"",
     "dev:tunnel": "npx wait-on tcp:3000 && npx localtunnel --port 3000 --subdomain apteryx-testing-bot",
@@ -38,7 +38,7 @@
     "@types/gtag.js": "^0.0.18",
     "@types/lodash": "^4.14.202",
     "@types/prismjs": "^1.26.3",
-    "@types/react": "^18.2.55",
+    "@types/react": "^18.2.57",
     "autoprefixer": "^10.4.17",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7"

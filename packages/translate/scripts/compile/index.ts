@@ -23,6 +23,7 @@ async function main(_argc: number, _argv: string[]) {
   const locales: Record<string, string> = {};
   for (const localeKey of Array.from(new Set([baseLocaleKey, ...localeKeys]))) {
     const localeUnparsedTranslations = await readTranslations(localeKey);
+    if (!localeUnparsedTranslations.native_name) continue;
     locales[localeKey] = String(localeUnparsedTranslations.native_name);
 
     await writeFile(

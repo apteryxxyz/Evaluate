@@ -4,13 +4,21 @@ import type { ExecuteCodeOptions } from '@evaluate/execute';
 import type { Language } from '@evaluate/languages';
 import { Button } from '@evaluate/react/components/button';
 import { Card, CardHeader } from '@evaluate/react/components/card';
-import { HighlightedEditor } from '@evaluate/react/components/code-editor/highlighted-editor';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@evaluate/react/components/dialog';
 import {
   FormField,
   FormItem,
   FormLabel,
 } from '@evaluate/react/components/form';
 import { Input } from '@evaluate/react/components/input';
+import { Label } from '@evaluate/react/components/label';
 import {
   Tabs,
   TabsContent,
@@ -22,13 +30,17 @@ import { FilePlus2Icon, Trash2Icon } from 'lucide-react';
 import { useState } from 'react';
 import { type Control, useFieldArray } from 'react-hook-form';
 import { useTranslate } from '~/contexts/translate';
+import { MonacoEditor } from './monaco-editor';
 
 export function FileSystemInput(p: {
   control: Control<Omit<ExecuteCodeOptions, 'language'>, 'files'>;
   language: Language;
 }) {
   const t = useTranslate();
+
   const [openedFile, setOpenedFile] = useState(0);
+  const [dialogOpened, setDialogOpened] = useState(false);
+
   const files = useFieldArray({ ...p, name: 'files' });
   const [fileNames, setFileNames] = //
     useState(files.fields.map((f) => Reflect.get(f, 'name')));
@@ -39,7 +51,7 @@ export function FileSystemInput(p: {
       onValueChange={(i) => setOpenedFile(Number(i))}
       className="w-full"
     >
-      <div className="flex gap-2">
+      <div className="flex gap-2 relative">
         <TabsList className="w-full inline-flex flex-wrap h-auto">
           {files.fields.map((file, i) => (
             <TabsTrigger key={file.id} value={i.toString()}>
@@ -62,18 +74,72 @@ export function FileSystemInput(p: {
           ))}
         </TabsList>
 
-        <Button
-          type="button"
-          className="whitespace-nowrap"
-          onClick={() => {
-            files.append({ content: '' });
-            setOpenedFile(files.fields.length);
-          }}
-          disabled={files.fields.length >= 10}
-        >
-          <FilePlus2Icon size={16} />
-          <span className="sr-only">{t.files.add_file()}</span>
-        </Button>
+        <Dialog open={dialogOpened} onOpenChange={setDialogOpened}>
+          <DialogTrigger asChild>
+            <Button
+              type="button"
+              className="whitespace-nowrap"
+              disabled={files.fields.length >= 10}
+            >
+              <FilePlus2Icon size={16} />
+              <span className="sr-only">{t.files.add_file()}</span>
+            </Button>
+          </DialogTrigger>
+
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle data-dialog-title asChild>
+                <Label htmlFor="file-name">{t.files.name()}</Label>
+              </DialogTitle>
+            </DialogHeader>
+
+            <Input
+              id="file-name"
+              placeholder={t.files.name.description()}
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
+              onChange={(e) => {
+                const label =
+                  document.querySelector<HTMLElement>('[for="file-name"]')!;
+                const button =
+                  document.querySelector<HTMLButtonElement>('#add-file')!;
+
+                if (!e.target.value || fileNames.includes(e.target.value)) {
+                  label.style.color = 'hsl(var(--destructive))';
+                  button.disabled = true;
+                } else {
+                  label.style.color = '';
+                  button.disabled = false;
+                }
+              }}
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') {
+                  const button = document.querySelector('#add-file')!;
+                  (button as HTMLElement).click();
+                }
+              }}
+            />
+
+            <DialogFooter>
+              <Button
+                id="add-file"
+                type="button"
+                onClick={() => {
+                  const input = document.querySelector('#file-name')!;
+                  const name = (input as HTMLInputElement).value;
+                  if (!name || fileNames.includes(name)) return;
+
+                  files.append({ name, content: '' });
+                  setFileNames((n) => [...n, name]);
+                  setDialogOpened(false);
+                }}
+              >
+                {t.files.add_file()}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {files.fields.map((file, i) => (
@@ -84,25 +150,7 @@ export function FileSystemInput(p: {
                 control={p.control}
                 name={`files.${i}.name`}
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel htmlFor={field.name}>{t.files.name()}</FormLabel>
-                    <Input
-                      {...field}
-                      id={field.name}
-                      placeholder={t.files.name.description()}
-                      autoComplete="off"
-                      autoCorrect="off"
-                      autoCapitalize="off"
-                      onChange={(event) => {
-                        field.onChange(event);
-                        setFileNames((names) => {
-                          const newNames = [...names];
-                          newNames[i] = event.target.value;
-                          return newNames;
-                        });
-                      }}
-                    />
-                  </FormItem>
+                  <input {...field} type="hidden" id={field.name} />
                 )}
               />
 
@@ -114,14 +162,11 @@ export function FileSystemInput(p: {
                     <FormLabel htmlFor={field.name}>
                       {t.files.content()}
                     </FormLabel>
-                    <HighlightedEditor
-                      {...field}
-                      language={p.language}
+
+                    <MonacoEditor
+                      name={fileNames[i]!}
                       code={field.value}
-                      placeholder={t.files.content.description()}
-                      onCodeChange={(c) =>
-                        field.onChange({ target: { value: c } })
-                      }
+                      onChange={(c) => field.onChange({ target: { value: c } })}
                     />
                   </FormItem>
                 )}

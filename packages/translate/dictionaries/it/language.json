@@ -1,7 +1,7 @@
 {
   "language": {
-    "$": "Lingua",
-    "s": "Lingue",
+    "$": "Linguaggio",
+    "s": "Linguaggi",
     "version": {
       "$": "Versione {language_version}"
     },
@@ -12,27 +12,27 @@
       "search": {
         "$": "Cerca",
         "ing": "Cercando",
-        "placeholder": "Cerca lingue...",
+        "placeholder": "Cerca linguaggi...",
         "reset": "Cancella query di ricerca"
       }
     },
-    "change": "Cambia Lingua",
+    "change": "Cambia Linguaggio",
     "no_results": {
-      "$": "Nessuna lingua trovata",
+      "$": "Nessun linguaggio trovato",
       "description": "Non ci sono linguaggi che corrispondono ai tuoi criteri di ricerca."
     },
     "not_found": {
-      "$": "Lingua non trovata",
-      "description": "La lingua che stai cercando non esiste."
+      "$": "Linguaggio non trovato",
+      "description": "Il linguaggio che stai cercando non esiste."
     },
     "not_resolved": {
-      "$": "Lingua non trovata",
-      "description": "Non sono in grando di trovare la lingua che stai cercando, prova con un nome diverso."
+      "$": "Linguaggio non trovato",
+      "description": "Non sono in grando di trovare il linguaggio che stai cercando, prova con un nome diverso."
     },
     "not_detected": {
-      "$": "Lingua non rilevata",
-      "description": "Non sono in grado di rilevare la lingua del codice che hai fornito, vorresti sceglierla manualmente?",
-      "confirm": "Scegli Lingua",
+      "$": "Linguaggio non rilevato",
+      "description": "Non sono in grado di rilevare il linguaggio del codice che hai fornito, vorresti sceglierlo manualmente?",
+      "confirm": "Scegli Linguaggio",
       "cancel": "Annulla"
     }
   }

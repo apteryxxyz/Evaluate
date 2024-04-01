@@ -1,10 +1,10 @@
 {
   "evaluate": {
     "$": "Evaluate",
-    "description": "Esegui pezzi di codice in varie lingue, con input e argomenti da linea di comando facoltativi.",
+    "description": "Esegui pezzi di codice in vari linguaggi, con input e argomenti da linea di comando facoltativi.",
     "language": {
-      "$": "Lingua",
-      "description": "La lingua in cui è scritto il codice."
+      "$": "Linguaggio",
+      "description": "Il linguaggio in cui è scritto il codice."
     },
     "code": {
       "$": "Codice",

@@ -3,6 +3,7 @@
 import { TooltipProvider } from '@evaluate/react/components/tooltip';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { ServerThemeProvider } from 'next-themes';
 import { useState } from 'react';
 import { BreakpointIndicator } from './breakpoint-indicator';
@@ -50,6 +51,7 @@ export function BodyProviders(p: React.PropsWithChildren) {
         {p.children}
         <ReactQueryDevtools initialIsOpen={false} />
         <BreakpointIndicator />
+        <SpeedInsights />
         <PageView />
       </QueryClientProvider>
     </TooltipProvider>

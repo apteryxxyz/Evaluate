@@ -47,11 +47,11 @@ export interface ResolvedOption<TValue extends Value> extends Option<TValue> {
 
 /**
  * Get an option from a chat input interaction.
- * @param interaction the interaction to get the option from
- * @param name the name of the option
- * @param required whether the option is required
- * @returns the option, or `undefined` if the option does not exist
- * @throws if the option is required and does not exist
+ * @param interaction the interaction to get the option from.
+ * @param name the name of the option.
+ * @param required whether the option is required.
+ * @returns the option, or `undefined` if the option does not exist.
+ * @throws if the option is required and does not exist.
  */
 export function getOption<TValue extends Value>(
   data: ChatInputData,
@@ -61,11 +61,11 @@ export function getOption<TValue extends Value>(
 
 /**
  * Get an option from a chat input interaction.
- * @param interaction the interaction to get the option from
- * @param name the name of the option
- * @param required whether the option is required
- * @returns the option, or `undefined` if the option does not exist
- * @throws if the option is required and does not exist
+ * @param interaction the interaction to get the option from.
+ * @param name the name of the option.
+ * @param required whether the option is required.
+ * @returns the option, or `undefined` if the option does not exist.
+ * @throws if the option is required and does not exist.
  */
 export function getOption<TValue extends Value>(
   data: ChatInputData,
@@ -112,8 +112,8 @@ export function getOption<TValue extends Value>(
 
 /**
  * Get the focused option from a chat input interaction.
- * @param interaction the interaction to get the option from
- * @returns the focused option, or `undefined` if no option is focused
+ * @param interaction the interaction to get the option from.
+ * @returns the focused option, or `undefined` if no option is focused.
  */
 export function getFocused<TValue extends Exclude<Value, boolean>>({
   options,
@@ -127,8 +127,8 @@ export function getFocused<TValue extends Exclude<Value, boolean>>({
 
 /**
  * Get the user from an interaction.
- * @param interaction the interaction to get the user from
- * @returns the user if it exists, otherwise `undefined`
+ * @param interaction the interaction to get the user from.
+ * @returns the user if it exists, otherwise `undefined`.
  */
 export function getUser(interaction: {
   user?: APIUser;

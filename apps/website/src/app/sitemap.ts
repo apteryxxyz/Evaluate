@@ -1,9 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { fetchLanguages } from '@evaluate/languages';
-import { locales } from '@evaluate/translate';
+import { fetchRuntimes } from '@evaluate/engine/runtimes';
 import type { MetadataRoute } from 'next/types';
-import { absoluteUrl, addLocale } from '~/utilities/url-helpers';
+import { env } from '~/env';
 
 interface RoutesManifest {
   staticRoutes: { page: string }[];
@@ -17,18 +16,17 @@ async function loadStaticPaths(): Promise<MetadataRoute.Sitemap> {
     .catch(() => ({ staticRoutes: [], dynamicRoutes: [] }));
 
   return manifest.staticRoutes
-    .filter((r) => !r.page.includes('[') && !r.page.startsWith('/_'))
+    .filter((r) => !r.page.startsWith('/_'))
     .map((r) => ({
-      url: absoluteUrl(r.page as '/'),
+      url: `${env.NEXT_PUBLIC_WEBSITE_URL}${r.page}`,
       lastModified: new Date(),
     }));
 }
 
 async function loadDynamicPaths(): Promise<MetadataRoute.Sitemap> {
-  const languages = await fetchLanguages();
-
-  return languages.map((l) => ({
-    url: absoluteUrl(`/languages/${l.id}`),
+  const runtimes = await fetchRuntimes();
+  return runtimes.map((r) => ({
+    url: `${env.NEXT_PUBLIC_WEBSITE_URL}/playgrounds/${r.id}`,
     lastModified: new Date(),
   }));
 }
@@ -36,10 +34,5 @@ async function loadDynamicPaths(): Promise<MetadataRoute.Sitemap> {
 export default async function getSitemap() {
   const staticPaths = await loadStaticPaths();
   const dynamicPaths = await loadDynamicPaths();
-  const combinedPaths = [...staticPaths, ...dynamicPaths];
-
-  const localisedPaths = combinedPaths.flatMap((e) =>
-    locales.slice(1).map((l) => ({ ...e, url: addLocale(e.url, l) })),
-  );
-  return [...combinedPaths, ...localisedPaths];
+  return [...staticPaths, ...dynamicPaths];
 }

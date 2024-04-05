@@ -1,4 +1,4 @@
-import { APIEmbed } from 'discord-api-types/v10';
+import type { APIEmbed } from 'discord-api-types/v10';
 
 /**
  * Get the value of an embed field by name.

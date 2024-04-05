@@ -1,54 +1,55 @@
 import { Label } from '@evaluate/react/components/label';
 import { Switch } from '@evaluate/react/components/switch';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@evaluate/react/components/tooltip';
 import { useCallback, useEffect, useState } from 'react';
-import { TooltipWrapper } from '~components/tooltip-wrapper';
-import { AnalyticsProvider, analytics } from '~contexts/analytics';
 import { EnabledProvider, useEnabled } from '~contexts/enabled';
 import { ThemeProvider } from '~contexts/theme';
-import { TranslateProvider, useTranslate } from '~contexts/translate';
-import { getDomain, getMetaTagContent } from '~utilities/active-tab';
-import { HeaderBar } from './_components/header-bar';
+import analytics from '~services/analytics';
+import { getCurrentDomain } from '~utilities/active-tab';
+import { HeaderBar } from './_components/header-bar/header-bar';
 
-import '../styles/tailwind.css';
+import { wrapCapture } from '~utilities/wrap-capture';
+import '../style.css';
 
 export default function PopupWrapper() {
   return (
     <ThemeProvider getTargets={() => [document.documentElement]}>
       <div className="w-96 flex flex-col p-4 pt-0">
-        <AnalyticsProvider>
-          <TranslateProvider>
-            <HeaderBar />
+        <HeaderBar />
 
-            <EnabledProvider>
-              <main className="flex flex-col">
-                <Popup />
-              </main>
-            </EnabledProvider>
-          </TranslateProvider>
-        </AnalyticsProvider>
+        <main className="flex flex-col">
+          <EnabledProvider>
+            <Popup />
+          </EnabledProvider>
+        </main>
       </div>
     </ThemeProvider>
   );
 }
 
 function Popup() {
-  const t = useTranslate();
-
   useEffect(() => {
-    void analytics.capture('popup opened', { platform: 'browser extension' });
+    analytics?.capture('popup opened', { platform: 'browser extension' });
   }, []);
 
-  const { isEnabled, isEnabledFor, setEnabled, setEnabledFor } = useEnabled();
+  const {
+    isEnabled,
+    isRequestedDisabled,
+    setEnabled,
+    isEnabledFor,
+    setEnabledFor,
+  } = useEnabled();
   const [domain, setDomain] = useState<string>();
-  const [hasDisabledTag, setHasDisabledTag] = useState<boolean>();
-  useEffect(() => {
-    getDomain().then(setDomain);
-    getMetaTagContent().then((c) => setHasDisabledTag(c === 'disabled'));
-  }, []);
+  useEffect(() => void getCurrentDomain().then(setDomain), []);
 
   const setGloballyEnabled = useCallback(
     (checked: boolean) => {
-      analytics.capture('toggle globally enabled', {
+      analytics?.capture('toggle globally enabled', {
         'old value': !checked,
         'new value': checked,
         platform: 'browser extension',
@@ -57,10 +58,11 @@ function Popup() {
     },
     [setEnabled],
   );
+
   const setCurrentSiteEnabled = useCallback(
     (checked: boolean) => {
-      analytics.capture('toggle current site enabled', {
-        domain: domain,
+      analytics?.capture('toggle current site enabled', {
+        domain: domain!,
         'old value': !checked,
         'new value': checked,
         platform: 'browser extension',
@@ -74,49 +76,63 @@ function Popup() {
     <div className="flex flex-col gap-4 pt-4">
       <div className="flex">
         <div>
-          <Label htmlFor="enabled">
-            {t.toggle.browser_extension.globally()}
-          </Label>
+          <Label htmlFor="enabled">Is Globally Enabled</Label>
           <p className="text-xs text-muted-foreground">
-            {t.toggle.browser_extension.globally.description()}
+            Toggle this switch to enable/disable the extension globally.
           </p>
         </div>
 
         <Switch
           name="enabled"
           checked={isEnabled}
+          onClick={wrapCapture(() => {})}
           onCheckedChange={setGloballyEnabled}
           className="ml-auto my-auto"
-        />
+        >
+          <span className="sr-only">Toggle Globally Enabled</span>
+        </Switch>
       </div>
 
       <div className="flex">
         <div>
-          <Label htmlFor="current-enabled">
-            {t.toggle.browser_extension.current_site()}
-          </Label>
+          <Label htmlFor="current-enabled">Is Current Site Enabled</Label>
           <p className="text-xs text-muted-foreground">
-            {t.toggle.browser_extension.current_site.description()} (
-            <code className="inline">{domain}</code>).
+            Toggle this switch to enable/disable the extension on the current
+            website. (<code className="inline">{domain}</code>).
           </p>
         </div>
 
-        <TooltipWrapper
-          content={
-            hasDisabledTag &&
-            t.toggle.browser_extension.current_site.disabled_by_meta_tag()
-          }
-        >
+        <TooltipWrapper isRequestedDisabled={isRequestedDisabled}>
           <div className="ml-auto my-auto">
             <Switch
               name="current-enabled"
-              checked={isEnabledFor(domain!) && !hasDisabledTag}
-              disabled={!isEnabled || hasDisabledTag}
+              checked={isEnabledFor(domain!) && !isRequestedDisabled}
+              disabled={!isEnabled || isRequestedDisabled}
+              onClick={wrapCapture(() => {})}
               onCheckedChange={setCurrentSiteEnabled}
-            />
+            >
+              <span className="sr-only">Toggle Current Site Enabled</span>
+            </Switch>
           </div>
         </TooltipWrapper>
       </div>
     </div>
+  );
+}
+
+function TooltipWrapper(
+  p: React.PropsWithChildren<{ isRequestedDisabled: boolean }>,
+) {
+  if (!p.isRequestedDisabled) return <>{p.children}</>;
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>{p.children}</TooltipTrigger>
+        <TooltipContent>
+          This website instructs the Evaluate extension to not run on this page.
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

@@ -1,0 +1,416 @@
+{
+  "awk+gawk": [
+    {
+      "name": "Hello World",
+      "files": {
+        "script.awk": "BEGIN { print \"Hello, World!\" }"
+      },
+      "entry": "script.awk"
+    }
+  ],
+  "bash": [
+    {
+      "name": "Hello World",
+      "files": {
+        "script.sh": "echo 'Hello, World!'"
+      },
+      "entry": "script.sh"
+    }
+  ],
+  "basic+mono": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.bas": "PRINT \"Hello, World!\""
+      },
+      "entry": "main.bas"
+    }
+  ],
+  "basicdotnet+dotnet": [
+    {
+      "name": "Hello World",
+      "files": {
+        "Program.vb": "Module Program\n    Sub Main(args As String())\n        Console.WriteLine(\"Hello, World!\")\n    End Sub\nEnd Module"
+      },
+      "entry": "Program.vb"
+    }
+  ],
+  "befunge93": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.bf93": "\"!dlroW ,olleH\">:#,_@"
+      },
+      "entry": "main.bf93"
+    }
+  ],
+  "bqn": [],
+  "brachylog": [],
+  "brainfuck": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.bf": "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..++++.>>.<-.<.+++.------.--------.>>+.>++."
+      },
+      "entry": "main.bf"
+    }
+  ],
+  "c+gcc": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.c": "#include <stdio.h>\n\nint main() {\n  printf(\"Hello, World!\\n\");\n  return 0;\n}"
+      },
+      "entry": "main.c"
+    }
+  ],
+  "cjam": [],
+  "clojure": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.clj": "(println \"Hello, World!\")"
+      },
+      "entry": "main.clj"
+    }
+  ],
+  "cobol": [],
+  "coffeescript": [],
+  "cow": [],
+  "cplusplus+gcc": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.cpp": "#include <iostream>\n\nint main() {\n  std::cout << \"Hello, World!\\n\";\n  return 0;\n}"
+      },
+      "entry": "main.cpp"
+    }
+  ],
+  "crystal": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.cr": "puts \"Hello, World!\""
+      },
+      "entry": "main.cr"
+    }
+  ],
+  "csharp+mono": [
+    {
+      "name": "Hello World",
+      "files": {
+        "Program.cs": "using System;\n\npublic class Program {\n  public static void Main() {\n    Console.WriteLine(\"Hello, World!\");\n  }\n}"
+      },
+      "entry": "Program.cs"
+    }
+  ],
+  "csharpdotnet+dotnet": [
+    {
+      "name": "Hello World",
+      "files": {
+        "Program.cs": "using System;\n\npublic class Program {\n  public static void Main() {\n    Console.WriteLine(\"Hello, World!\");\n  }\n}"
+      },
+      "entry": "Program.cs"
+    }
+  ],
+  "d+gcc": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.d": "import std.stdio;\n\nvoid main()\n{\n    writeln(\"Hello, World!\");\n}"
+      },
+      "entry": "main.d"
+    }
+  ],
+  "dart": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.dart": "void main() {\n  print('Hello, World!');\n}"
+      },
+      "entry": "main.dart"
+    }
+  ],
+  "dash": [],
+  "dragon": [],
+  "elixir": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.exs": "IO.puts \"Hello, World!\""
+      },
+      "entry": "main.exs"
+    }
+  ],
+  "emacs": [],
+  "emojicode": [],
+  "erlang": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.erl": "-module(main).\n-export([start/0]).\n\nstart() ->\n    io:fwrite(\"Hello, World!\\n\")."
+      },
+      "entry": "main.erl"
+    }
+  ],
+  "file": [],
+  "forte": [],
+  "forth": [],
+  "fortran+gcc": [],
+  "freebasic": [],
+  "fsharpdotnet+dotnet": [],
+  "fsi+dotnet": [],
+  "go": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.go": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}"
+      },
+      "entry": "main.go"
+    }
+  ],
+  "golfscript": [],
+  "groovy": [],
+  "haskell": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.hs": "main :: IO ()\nmain = putStrLn \"Hello, World!\""
+      },
+      "entry": "main.hs"
+    }
+  ],
+  "husk": [],
+  "iverilog": [],
+  "japt": [],
+  "java": [
+    {
+      "name": "Hello World",
+      "files": {
+        "Main.java": "public class Main {\n  public static void main(String[] args) {\n    System.out.println(\"Hello, World!\");\n  }\n}"
+      },
+      "entry": "Main.java"
+    }
+  ],
+  "javascript+deno": [
+    {
+      "name": "Hello World",
+      "files": {
+        "index.js": "console.log('Hello, World!');"
+      },
+      "entry": "index.js"
+    }
+  ],
+  "javascript+node": [
+    {
+      "name": "Hello World",
+      "files": {
+        "index.js": "console.log('Hello, World!');"
+      },
+      "entry": "index.js"
+    }
+  ],
+  "jelly": [],
+  "julia": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.jl": "println(\"Hello, World!\")"
+      },
+      "entry": "main.jl"
+    }
+  ],
+  "kotlin": [
+    {
+      "name": "Hello World",
+      "files": {
+        "Main.kt": "fun main() {\n    println(\"Hello, World!\")\n}"
+      },
+      "entry": "Main.kt"
+    }
+  ],
+  "lisp": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.lisp": "(print \"Hello, World!\")"
+      },
+      "entry": "main.lisp"
+    }
+  ],
+  "llvm_ir": [],
+  "lolcode": [],
+  "lua": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.lua": "print('Hello, World!')"
+      },
+      "entry": "main.lua"
+    }
+  ],
+  "matl": [],
+  "nasm+nasm": [],
+  "nasm64+nasm": [],
+  "nim": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.nim": "echo \"Hello, World!\""
+      },
+      "entry": "main.nim"
+    }
+  ],
+  "ocaml": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.ml": "print_endline \"Hello, World!\""
+      },
+      "entry": "main.ml"
+    }
+  ],
+  "octave": [],
+  "osabie": [],
+  "paradoc": [],
+  "pascal": [],
+  "perl": [],
+  "php": [
+    {
+      "name": "Hello World",
+      "files": {
+        "index.php": "<?php echo '<p>Hello World</p>'; ?>"
+      },
+      "entry": "index.php"
+    }
+  ],
+  "ponylang": [],
+  "powershell+pwsh": [],
+  "prolog": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.pl": ":- initialization(main).\n\nmain :- write('Hello, World!'), nl."
+      },
+      "entry": "main.pl"
+    }
+  ],
+  "pure": [],
+  "pyth": [],
+  "python": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.py": "print('Hello, World!')"
+      },
+      "entry": "main.py"
+    }
+  ],
+  "python2": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.py": "print('Hello, World!')"
+      },
+      "entry": "main.py"
+    }
+  ],
+  "racket": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.rkt": "#lang racket\n\n(display \"Hello, World!\")"
+      },
+      "entry": "main.rkt"
+    }
+  ],
+  "raku": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.raku": "say 'Hello, World!';"
+      },
+      "entry": "main.raku"
+    }
+  ],
+  "retina": [],
+  "rockstar": [],
+  "rscript": [],
+  "ruby": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.rb": "puts 'Hello, World!'"
+      },
+      "entry": "main.rb"
+    }
+  ],
+  "rust": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.rs": "fn main() {\n  println!(\"Hello, World!\");\n}"
+      },
+      "entry": "main.rs"
+    }
+  ],
+  "samarium": [],
+  "scala": [
+    {
+      "name": "Hello World",
+      "files": {
+        "Main.scala": "object Main extends App {\n  println(\"Hello, World!\")\n}"
+      },
+      "entry": "Main.scala"
+    }
+  ],
+  "smalltalk": [],
+  "sqlite3": [],
+  "swift": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.swift": "print(\"Hello, World!\")"
+      },
+      "entry": "main.swift"
+    }
+  ],
+  "typescript+deno": [
+    {
+      "name": "Hello World",
+      "files": {
+        "index.ts": "console.log('Hello, World!');"
+      },
+      "entry": "index.ts"
+    }
+  ],
+  "typescript+node": [
+    {
+      "name": "Hello World",
+      "files": {
+        "index.ts": "console.log('Hello, World!');"
+      },
+      "entry": "index.ts"
+    }
+  ],
+  "vlang": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.v": "fn main() {\n    println('Hello, World!')\n}"
+      },
+      "entry": "main.v"
+    }
+  ],
+  "vyxal": [],
+  "yeethon": [],
+  "zig": [
+    {
+      "name": "Hello World",
+      "files": {
+        "main.zig": "const std = @import(\"std\");\n\npub fn main() void {\n    std.debug.print(\"Hello, World!\\n\", .{});\n}"
+      },
+      "entry": "main.zig"
+    }
+  ]
+}

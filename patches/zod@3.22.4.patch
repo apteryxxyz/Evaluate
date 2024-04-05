@@ -1,0 +1,722 @@
+diff --git a/README.md b/README.md
+index 490265fc86bc2e7466a9f1ed2c9e77d6c9ea2b46..0bc43bbeb3e309e22fd2cc1332bd0ad674fe2348 100644
+--- a/README.md
++++ b/README.md
+@@ -1,3 +1,5 @@
++APTERYX
++
+ <p align="center">
+   <img src="logo.svg" width="200px" align="center" alt="Zod logo" />
+   <h1 align="center">Zod</h1>
+diff --git a/lib/helpers/parseUtil.js b/lib/helpers/parseUtil.js
+index 3ad75fa68d19676deeebea91cbac270a63b79228..84408153e8a39bb83419f85f7e11ace0d230b6cc 100644
+--- a/lib/helpers/parseUtil.js
++++ b/lib/helpers/parseUtil.js
+@@ -7,6 +7,7 @@ exports.isAsync = exports.isValid = exports.isDirty = exports.isAborted = export
+ const errors_1 = require("../errors");
+ const en_1 = __importDefault(require("../locales/en"));
+ const makeIssue = (params) => {
++    var _a;
+     const { data, path, errorMaps, issueData } = params;
+     const fullPath = [...path, ...(issueData.path || [])];
+     const fullIssue = {
+@@ -24,7 +25,7 @@ const makeIssue = (params) => {
+     return {
+         ...issueData,
+         path: fullPath,
+-        message: issueData.message || errorMessage,
++        message: (_a = issueData.message) !== null && _a !== void 0 ? _a : errorMessage,
+     };
+ };
+ exports.makeIssue = makeIssue;
+diff --git a/lib/index.mjs b/lib/index.mjs
+index db664c8054552a6b0508bf1a0dfc2ffaefc9675e..26e3fe18ae4391f66fe7c885666fcbc213ec4e8f 100644
+--- a/lib/index.mjs
++++ b/lib/index.mjs
+@@ -398,6 +398,7 @@ function getErrorMap() {
+ }
+ 
+ const makeIssue = (params) => {
++    var _a;
+     const { data, path, errorMaps, issueData } = params;
+     const fullPath = [...path, ...(issueData.path || [])];
+     const fullIssue = {
+@@ -415,7 +416,7 @@ const makeIssue = (params) => {
+     return {
+         ...issueData,
+         path: fullPath,
+-        message: issueData.message || errorMessage,
++        message: (_a = issueData.message) !== null && _a !== void 0 ? _a : errorMessage,
+     };
+ };
+ const EMPTY_PATH = [];
+@@ -878,9 +879,8 @@ function isValidIP(ip, version) {
+ }
+ class ZodString extends ZodType {
+     _parse(input) {
+-        if (this._def.coerce) {
++        if (this._def.coerce)
+             input.data = String(input.data);
+-        }
+         const parsedType = this._getType(input);
+         if (parsedType !== ZodParsedType.string) {
+             const ctx = this._getOrReturnCtx(input);
+@@ -2281,6 +2281,61 @@ class ZodObject extends ZodType {
+     get shape() {
+         return this._def.shape();
+     }
++    /** *** **/
++    transform(transform) {
++        return new ZodObjectEffects({
++            ...processCreateParams(this._def),
++            schema: this,
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: { type: "transform", transform },
++        });
++    }
++    __refinement(refinement) {
++        return new ZodObjectEffects({
++            schema: this,
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: { type: "refinement", refinement },
++        });
++    }
++    refine(check, message) {
++        const getIssueProperties = (val) => {
++            if (typeof message === "string" || typeof message === "undefined") {
++                return { message };
++            }
++            else if (typeof message === "function") {
++                return message(val);
++            }
++            else {
++                return message;
++            }
++        };
++        return this.__refinement((val, ctx) => {
++            const result = check(val);
++            const setError = () => ctx.addIssue({
++                code: ZodIssueCode.custom,
++                ...getIssueProperties(val),
++            });
++            if (typeof Promise !== "undefined" && result instanceof Promise) {
++                return result.then((data) => {
++                    if (!data) {
++                        setError();
++                        return false;
++                    }
++                    else {
++                        return true;
++                    }
++                });
++            }
++            if (!result) {
++                setError();
++                return false;
++            }
++            else {
++                return true;
++            }
++        });
++    }
++    /** *** **/
+     strict(message) {
+         errorUtil.errToObj;
+         return new ZodObject({
+@@ -3332,11 +3387,11 @@ class ZodEnum extends ZodType {
+         }
+         return enumValues;
+     }
+-    extract(values) {
+-        return ZodEnum.create(values);
++    extract(values, newDef = this._def) {
++        return ZodEnum.create(values, newDef);
+     }
+-    exclude(values) {
+-        return ZodEnum.create(this.options.filter((opt) => !values.includes(opt)));
++    exclude(values, newDef = this._def) {
++        return ZodEnum.create(this.options.filter((opt) => !values.includes(opt)), newDef);
+     }
+ }
+ ZodEnum.create = createZodEnum;
+@@ -3546,6 +3601,95 @@ ZodEffects.createWithPreprocess = (preprocess, schema, params) => {
+         ...processCreateParams(params),
+     });
+ };
++//////////////////////////////////////////////
++//////////////////////////////////////////////
++//////////                          //////////
++//////////     ZodObjectEffects     //////////
++//////////                          //////////
++//////////////////////////////////////////////
++//////////////////////////////////////////////
++class ZodObjectEffects extends ZodEffects {
++    pick(mask) {
++        return new ZodObjectEffects({
++            schema: this._def.schema.pick(mask),
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: this._def.effect,
++        });
++    }
++    omit(mask) {
++        return new ZodObjectEffects({
++            schema: this._def.schema.omit(mask),
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: this._def.effect,
++        });
++    }
++    merge(merging) {
++        return new ZodObjectEffects({
++            schema: this._def.schema.merge(merging),
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: this._def.effect,
++        });
++    }
++    /** *** **/
++    transform(transform
++    // @ts-expect-error
++    ) {
++        return new ZodObjectEffects({
++            schema: this,
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: { type: "transform", transform },
++        });
++    }
++    __refinement(refinement
++    // @ts-expect-error
++    ) {
++        return new ZodObjectEffects({
++            schema: this,
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: { type: "refinement", refinement },
++        });
++    }
++    refine(check, message
++    // @ts-expect-error
++    ) {
++        const getIssueProperties = (val) => {
++            if (typeof message === "string" || typeof message === "undefined") {
++                return { message };
++            }
++            else if (typeof message === "function") {
++                return message(val);
++            }
++            else {
++                return message;
++            }
++        };
++        return this.__refinement((val, ctx) => {
++            const result = check(val);
++            const setError = () => ctx.addIssue({
++                code: ZodIssueCode.custom,
++                ...getIssueProperties(val),
++            });
++            if (typeof Promise !== "undefined" && result instanceof Promise) {
++                return result.then((data) => {
++                    if (!data) {
++                        setError();
++                        return false;
++                    }
++                    else {
++                        return true;
++                    }
++                });
++            }
++            if (!result) {
++                setError();
++                return false;
++            }
++            else {
++                return true;
++            }
++        });
++    }
++}
+ class ZodOptional extends ZodType {
+     _parse(input) {
+         const parsedType = this._getType(input);
+@@ -3954,6 +4098,7 @@ var z = /*#__PURE__*/Object.freeze({
+     ZodPromise: ZodPromise,
+     ZodEffects: ZodEffects,
+     ZodTransformer: ZodEffects,
++    ZodObjectEffects: ZodObjectEffects,
+     ZodOptional: ZodOptional,
+     ZodNullable: ZodNullable,
+     ZodDefault: ZodDefault,
+@@ -4014,4 +4159,4 @@ var z = /*#__PURE__*/Object.freeze({
+     ZodError: ZodError
+ });
+ 
+-export { BRAND, DIRTY, EMPTY_PATH, INVALID, NEVER, OK, ParseStatus, ZodType as Schema, ZodAny, ZodArray, ZodBigInt, ZodBoolean, ZodBranded, ZodCatch, ZodDate, ZodDefault, ZodDiscriminatedUnion, ZodEffects, ZodEnum, ZodError, ZodFirstPartyTypeKind, ZodFunction, ZodIntersection, ZodIssueCode, ZodLazy, ZodLiteral, ZodMap, ZodNaN, ZodNativeEnum, ZodNever, ZodNull, ZodNullable, ZodNumber, ZodObject, ZodOptional, ZodParsedType, ZodPipeline, ZodPromise, ZodReadonly, ZodRecord, ZodType as ZodSchema, ZodSet, ZodString, ZodSymbol, ZodEffects as ZodTransformer, ZodTuple, ZodType, ZodUndefined, ZodUnion, ZodUnknown, ZodVoid, addIssueToContext, anyType as any, arrayType as array, bigIntType as bigint, booleanType as boolean, coerce, custom, dateType as date, z as default, errorMap as defaultErrorMap, discriminatedUnionType as discriminatedUnion, effectsType as effect, enumType as enum, functionType as function, getErrorMap, getParsedType, instanceOfType as instanceof, intersectionType as intersection, isAborted, isAsync, isDirty, isValid, late, lazyType as lazy, literalType as literal, makeIssue, mapType as map, nanType as nan, nativeEnumType as nativeEnum, neverType as never, nullType as null, nullableType as nullable, numberType as number, objectType as object, objectUtil, oboolean, onumber, optionalType as optional, ostring, pipelineType as pipeline, preprocessType as preprocess, promiseType as promise, quotelessJson, recordType as record, setType as set, setErrorMap, strictObjectType as strictObject, stringType as string, symbolType as symbol, effectsType as transformer, tupleType as tuple, undefinedType as undefined, unionType as union, unknownType as unknown, util, voidType as void, z };
++export { BRAND, DIRTY, EMPTY_PATH, INVALID, NEVER, OK, ParseStatus, ZodType as Schema, ZodAny, ZodArray, ZodBigInt, ZodBoolean, ZodBranded, ZodCatch, ZodDate, ZodDefault, ZodDiscriminatedUnion, ZodEffects, ZodEnum, ZodError, ZodFirstPartyTypeKind, ZodFunction, ZodIntersection, ZodIssueCode, ZodLazy, ZodLiteral, ZodMap, ZodNaN, ZodNativeEnum, ZodNever, ZodNull, ZodNullable, ZodNumber, ZodObject, ZodObjectEffects, ZodOptional, ZodParsedType, ZodPipeline, ZodPromise, ZodReadonly, ZodRecord, ZodType as ZodSchema, ZodSet, ZodString, ZodSymbol, ZodEffects as ZodTransformer, ZodTuple, ZodType, ZodUndefined, ZodUnion, ZodUnknown, ZodVoid, addIssueToContext, anyType as any, arrayType as array, bigIntType as bigint, booleanType as boolean, coerce, custom, dateType as date, z as default, errorMap as defaultErrorMap, discriminatedUnionType as discriminatedUnion, effectsType as effect, enumType as enum, functionType as function, getErrorMap, getParsedType, instanceOfType as instanceof, intersectionType as intersection, isAborted, isAsync, isDirty, isValid, late, lazyType as lazy, literalType as literal, makeIssue, mapType as map, nanType as nan, nativeEnumType as nativeEnum, neverType as never, nullType as null, nullableType as nullable, numberType as number, objectType as object, objectUtil, oboolean, onumber, optionalType as optional, ostring, pipelineType as pipeline, preprocessType as preprocess, promiseType as promise, quotelessJson, recordType as record, setType as set, setErrorMap, strictObjectType as strictObject, stringType as string, symbolType as symbol, effectsType as transformer, tupleType as tuple, undefinedType as undefined, unionType as union, unknownType as unknown, util, voidType as void, z };
+diff --git a/lib/index.umd.js b/lib/index.umd.js
+index 36fc981d86f5e635f175ec0722b617ade1911deb..64c46303d46daf3731b1cada6ec5d32dd45fad08 100644
+--- a/lib/index.umd.js
++++ b/lib/index.umd.js
+@@ -404,6 +404,7 @@
+     }
+ 
+     const makeIssue = (params) => {
++        var _a;
+         const { data, path, errorMaps, issueData } = params;
+         const fullPath = [...path, ...(issueData.path || [])];
+         const fullIssue = {
+@@ -421,7 +422,7 @@
+         return {
+             ...issueData,
+             path: fullPath,
+-            message: issueData.message || errorMessage,
++            message: (_a = issueData.message) !== null && _a !== void 0 ? _a : errorMessage,
+         };
+     };
+     const EMPTY_PATH = [];
+@@ -884,9 +885,8 @@
+     }
+     class ZodString extends ZodType {
+         _parse(input) {
+-            if (this._def.coerce) {
++            if (this._def.coerce)
+                 input.data = String(input.data);
+-            }
+             const parsedType = this._getType(input);
+             if (parsedType !== ZodParsedType.string) {
+                 const ctx = this._getOrReturnCtx(input);
+@@ -2287,6 +2287,61 @@
+         get shape() {
+             return this._def.shape();
+         }
++        /** *** **/
++        transform(transform) {
++            return new ZodObjectEffects({
++                ...processCreateParams(this._def),
++                schema: this,
++                typeName: exports.ZodFirstPartyTypeKind.ZodEffects,
++                effect: { type: "transform", transform },
++            });
++        }
++        __refinement(refinement) {
++            return new ZodObjectEffects({
++                schema: this,
++                typeName: exports.ZodFirstPartyTypeKind.ZodEffects,
++                effect: { type: "refinement", refinement },
++            });
++        }
++        refine(check, message) {
++            const getIssueProperties = (val) => {
++                if (typeof message === "string" || typeof message === "undefined") {
++                    return { message };
++                }
++                else if (typeof message === "function") {
++                    return message(val);
++                }
++                else {
++                    return message;
++                }
++            };
++            return this.__refinement((val, ctx) => {
++                const result = check(val);
++                const setError = () => ctx.addIssue({
++                    code: ZodIssueCode.custom,
++                    ...getIssueProperties(val),
++                });
++                if (typeof Promise !== "undefined" && result instanceof Promise) {
++                    return result.then((data) => {
++                        if (!data) {
++                            setError();
++                            return false;
++                        }
++                        else {
++                            return true;
++                        }
++                    });
++                }
++                if (!result) {
++                    setError();
++                    return false;
++                }
++                else {
++                    return true;
++                }
++            });
++        }
++        /** *** **/
+         strict(message) {
+             errorUtil.errToObj;
+             return new ZodObject({
+@@ -3338,11 +3393,11 @@
+             }
+             return enumValues;
+         }
+-        extract(values) {
+-            return ZodEnum.create(values);
++        extract(values, newDef = this._def) {
++            return ZodEnum.create(values, newDef);
+         }
+-        exclude(values) {
+-            return ZodEnum.create(this.options.filter((opt) => !values.includes(opt)));
++        exclude(values, newDef = this._def) {
++            return ZodEnum.create(this.options.filter((opt) => !values.includes(opt)), newDef);
+         }
+     }
+     ZodEnum.create = createZodEnum;
+@@ -3552,6 +3607,95 @@
+             ...processCreateParams(params),
+         });
+     };
++    //////////////////////////////////////////////
++    //////////////////////////////////////////////
++    //////////                          //////////
++    //////////     ZodObjectEffects     //////////
++    //////////                          //////////
++    //////////////////////////////////////////////
++    //////////////////////////////////////////////
++    class ZodObjectEffects extends ZodEffects {
++        pick(mask) {
++            return new ZodObjectEffects({
++                schema: this._def.schema.pick(mask),
++                typeName: exports.ZodFirstPartyTypeKind.ZodEffects,
++                effect: this._def.effect,
++            });
++        }
++        omit(mask) {
++            return new ZodObjectEffects({
++                schema: this._def.schema.omit(mask),
++                typeName: exports.ZodFirstPartyTypeKind.ZodEffects,
++                effect: this._def.effect,
++            });
++        }
++        merge(merging) {
++            return new ZodObjectEffects({
++                schema: this._def.schema.merge(merging),
++                typeName: exports.ZodFirstPartyTypeKind.ZodEffects,
++                effect: this._def.effect,
++            });
++        }
++        /** *** **/
++        transform(transform
++        // @ts-expect-error
++        ) {
++            return new ZodObjectEffects({
++                schema: this,
++                typeName: exports.ZodFirstPartyTypeKind.ZodEffects,
++                effect: { type: "transform", transform },
++            });
++        }
++        __refinement(refinement
++        // @ts-expect-error
++        ) {
++            return new ZodObjectEffects({
++                schema: this,
++                typeName: exports.ZodFirstPartyTypeKind.ZodEffects,
++                effect: { type: "refinement", refinement },
++            });
++        }
++        refine(check, message
++        // @ts-expect-error
++        ) {
++            const getIssueProperties = (val) => {
++                if (typeof message === "string" || typeof message === "undefined") {
++                    return { message };
++                }
++                else if (typeof message === "function") {
++                    return message(val);
++                }
++                else {
++                    return message;
++                }
++            };
++            return this.__refinement((val, ctx) => {
++                const result = check(val);
++                const setError = () => ctx.addIssue({
++                    code: ZodIssueCode.custom,
++                    ...getIssueProperties(val),
++                });
++                if (typeof Promise !== "undefined" && result instanceof Promise) {
++                    return result.then((data) => {
++                        if (!data) {
++                            setError();
++                            return false;
++                        }
++                        else {
++                            return true;
++                        }
++                    });
++                }
++                if (!result) {
++                    setError();
++                    return false;
++                }
++                else {
++                    return true;
++                }
++            });
++        }
++    }
+     class ZodOptional extends ZodType {
+         _parse(input) {
+             const parsedType = this._getType(input);
+@@ -3960,6 +4104,7 @@
+         ZodPromise: ZodPromise,
+         ZodEffects: ZodEffects,
+         ZodTransformer: ZodEffects,
++        ZodObjectEffects: ZodObjectEffects,
+         ZodOptional: ZodOptional,
+         ZodNullable: ZodNullable,
+         ZodDefault: ZodDefault,
+@@ -4053,6 +4198,7 @@
+     exports.ZodNullable = ZodNullable;
+     exports.ZodNumber = ZodNumber;
+     exports.ZodObject = ZodObject;
++    exports.ZodObjectEffects = ZodObjectEffects;
+     exports.ZodOptional = ZodOptional;
+     exports.ZodParsedType = ZodParsedType;
+     exports.ZodPipeline = ZodPipeline;
+diff --git a/lib/types.d.ts b/lib/types.d.ts
+index 854670d465f2ed8b8aa74b2a785f76faf1984618..83e8c0b1ebc57aa7143946c68cd70229d85a2f63 100644
+--- a/lib/types.d.ts
++++ b/lib/types.d.ts
+@@ -495,6 +495,12 @@ export declare class ZodObject<T extends ZodRawShape, UnknownKeys extends Unknow
+     };
+     _parse(input: ParseInput): ParseReturnType<this["_output"]>;
+     get shape(): T;
++    /** *** **/
++    transform<NewOut>(transform: (arg: Output, ctx: RefinementCtx) => NewOut | Promise<NewOut>): ZodObjectEffects<this, NewOut>;
++    __refinement(refinement: RefinementEffect<Output>["refinement"]): ZodObjectEffects<this, Output, Input>;
++    refine<RefinedOutput extends Output>(check: (arg: Output) => arg is RefinedOutput, message?: string | CustomErrorParams | ((arg: Output) => CustomErrorParams)): ZodObjectEffects<this, RefinedOutput, Input>;
++    refine(check: (arg: Output) => unknown | Promise<unknown>, message?: string | CustomErrorParams | ((arg: Output) => CustomErrorParams)): ZodObjectEffects<this, Output, Input>;
++    /** *** **/
+     strict(message?: errorUtil.ErrMessage): ZodObject<T, "strict", Catchall>;
+     strip(): ZodObject<T, "strip", Catchall>;
+     passthrough(): ZodObject<T, "passthrough", Catchall>;
+@@ -735,8 +741,8 @@ export declare class ZodEnum<T extends [string, ...string[]]> extends ZodType<T[
+     get enum(): Values<T>;
+     get Values(): Values<T>;
+     get Enum(): Values<T>;
+-    extract<ToExtract extends readonly [T[number], ...T[number][]]>(values: ToExtract): ZodEnum<Writeable<ToExtract>>;
+-    exclude<ToExclude extends readonly [T[number], ...T[number][]]>(values: ToExclude): ZodEnum<typecast<Writeable<FilterEnum<T, ToExclude[number]>>, [string, ...string[]]>>;
++    extract<ToExtract extends readonly [T[number], ...T[number][]]>(values: ToExtract, newDef?: RawCreateParams): ZodEnum<Writeable<ToExtract>>;
++    exclude<ToExclude extends readonly [T[number], ...T[number][]]>(values: ToExclude, newDef?: RawCreateParams): ZodEnum<typecast<Writeable<FilterEnum<T, ToExclude[number]>>, [string, ...string[]]>>;
+     static create: typeof createZodEnum;
+ }
+ export interface ZodNativeEnumDef<T extends EnumLike = EnumLike> extends ZodTypeDef {
+@@ -789,6 +795,20 @@ export declare class ZodEffects<T extends ZodTypeAny, Output = output<T>, Input
+     static createWithPreprocess: <I extends ZodTypeAny>(preprocess: (arg: unknown, ctx: RefinementCtx) => unknown, schema: I, params?: RawCreateParams) => ZodEffects<I, I["_output"], unknown>;
+ }
+ export { ZodEffects as ZodTransformer };
++export declare class ZodObjectEffects<T extends AnyZodObject, Output = output<T>, Input = input<T>> extends ZodEffects<T, Output, Input> {
++    pick<Mask extends {
++        [k in keyof Output]?: true;
++    }>(mask: Mask): ZodObjectEffects<ZodObject<Pick<T["_input"], Extract<keyof T["_input"], keyof Mask>>>, Pick<Output, Extract<keyof Output, keyof Mask>>, Pick<Input, Extract<keyof Input, keyof Mask>>>;
++    omit<Mask extends {
++        [k in keyof Output]?: true;
++    }>(mask: Mask): ZodObjectEffects<ZodObject<Omit<T["_input"], Extract<keyof T["_input"], keyof Mask>>>, Omit<Output, Extract<keyof Output, keyof Mask>>, Omit<Input, Extract<keyof Input, keyof Mask>>>;
++    merge<Incoming extends AnyZodObject>(merging: Incoming): ZodObjectEffects<ZodObject<objectUtil.extendShape<T["shape"], Incoming["shape"]>, Incoming["_def"]["unknownKeys"], Incoming["_def"]["catchall"]>>;
++    /** *** **/
++    transform<NewOut>(transform: (arg: Output, ctx: RefinementCtx) => NewOut | Promise<NewOut>): ZodObjectEffects<this, NewOut>;
++    __refinement(refinement: RefinementEffect<Output>["refinement"]): ZodObjectEffects<this, Output, Input>;
++    refine<RefinedOutput extends Output>(check: (arg: Output) => arg is RefinedOutput, message?: string | CustomErrorParams | ((arg: Output) => CustomErrorParams)): ZodObjectEffects<this, RefinedOutput, Input>;
++    refine(check: (arg: Output) => unknown | Promise<unknown>, message?: string | CustomErrorParams | ((arg: Output) => CustomErrorParams)): ZodObjectEffects<this, Output, Input>;
++}
+ export interface ZodOptionalDef<T extends ZodTypeAny = ZodTypeAny> extends ZodTypeDef {
+     innerType: T;
+     typeName: ZodFirstPartyTypeKind.ZodOptional;
+diff --git a/lib/types.js b/lib/types.js
+index e4d7f47efd206dc68a3f8d0b757cc0d4eba96c51..720627f72c84b8593e353195ac4ff83a13b22152 100644
+--- a/lib/types.js
++++ b/lib/types.js
+@@ -1,7 +1,7 @@
+ "use strict";
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.date = exports.boolean = exports.bigint = exports.array = exports.any = exports.coerce = exports.ZodFirstPartyTypeKind = exports.late = exports.ZodSchema = exports.Schema = exports.custom = exports.ZodReadonly = exports.ZodPipeline = exports.ZodBranded = exports.BRAND = exports.ZodNaN = exports.ZodCatch = exports.ZodDefault = exports.ZodNullable = exports.ZodOptional = exports.ZodTransformer = exports.ZodEffects = exports.ZodPromise = exports.ZodNativeEnum = exports.ZodEnum = exports.ZodLiteral = exports.ZodLazy = exports.ZodFunction = exports.ZodSet = exports.ZodMap = exports.ZodRecord = exports.ZodTuple = exports.ZodIntersection = exports.ZodDiscriminatedUnion = exports.ZodUnion = exports.ZodObject = exports.ZodArray = exports.ZodVoid = exports.ZodNever = exports.ZodUnknown = exports.ZodAny = exports.ZodNull = exports.ZodUndefined = exports.ZodSymbol = exports.ZodDate = exports.ZodBoolean = exports.ZodBigInt = exports.ZodNumber = exports.ZodString = exports.ZodType = void 0;
+-exports.NEVER = exports.void = exports.unknown = exports.union = exports.undefined = exports.tuple = exports.transformer = exports.symbol = exports.string = exports.strictObject = exports.set = exports.record = exports.promise = exports.preprocess = exports.pipeline = exports.ostring = exports.optional = exports.onumber = exports.oboolean = exports.object = exports.number = exports.nullable = exports.null = exports.never = exports.nativeEnum = exports.nan = exports.map = exports.literal = exports.lazy = exports.intersection = exports.instanceof = exports.function = exports.enum = exports.effect = exports.discriminatedUnion = void 0;
++exports.boolean = exports.bigint = exports.array = exports.any = exports.coerce = exports.ZodFirstPartyTypeKind = exports.late = exports.ZodSchema = exports.Schema = exports.custom = exports.ZodReadonly = exports.ZodPipeline = exports.ZodBranded = exports.BRAND = exports.ZodNaN = exports.ZodCatch = exports.ZodDefault = exports.ZodNullable = exports.ZodOptional = exports.ZodObjectEffects = exports.ZodTransformer = exports.ZodEffects = exports.ZodPromise = exports.ZodNativeEnum = exports.ZodEnum = exports.ZodLiteral = exports.ZodLazy = exports.ZodFunction = exports.ZodSet = exports.ZodMap = exports.ZodRecord = exports.ZodTuple = exports.ZodIntersection = exports.ZodDiscriminatedUnion = exports.ZodUnion = exports.ZodObject = exports.ZodArray = exports.ZodVoid = exports.ZodNever = exports.ZodUnknown = exports.ZodAny = exports.ZodNull = exports.ZodUndefined = exports.ZodSymbol = exports.ZodDate = exports.ZodBoolean = exports.ZodBigInt = exports.ZodNumber = exports.ZodString = exports.ZodType = void 0;
++exports.NEVER = exports.void = exports.unknown = exports.union = exports.undefined = exports.tuple = exports.transformer = exports.symbol = exports.string = exports.strictObject = exports.set = exports.record = exports.promise = exports.preprocess = exports.pipeline = exports.ostring = exports.optional = exports.onumber = exports.oboolean = exports.object = exports.number = exports.nullable = exports.null = exports.never = exports.nativeEnum = exports.nan = exports.map = exports.literal = exports.lazy = exports.intersection = exports.instanceof = exports.function = exports.enum = exports.effect = exports.discriminatedUnion = exports.date = void 0;
+ const errors_1 = require("./errors");
+ const errorUtil_1 = require("./helpers/errorUtil");
+ const parseUtil_1 = require("./helpers/parseUtil");
+@@ -386,9 +386,8 @@ function isValidIP(ip, version) {
+ }
+ class ZodString extends ZodType {
+     _parse(input) {
+-        if (this._def.coerce) {
++        if (this._def.coerce)
+             input.data = String(input.data);
+-        }
+         const parsedType = this._getType(input);
+         if (parsedType !== util_1.ZodParsedType.string) {
+             const ctx = this._getOrReturnCtx(input);
+@@ -1803,6 +1802,61 @@ class ZodObject extends ZodType {
+     get shape() {
+         return this._def.shape();
+     }
++    /** *** **/
++    transform(transform) {
++        return new ZodObjectEffects({
++            ...processCreateParams(this._def),
++            schema: this,
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: { type: "transform", transform },
++        });
++    }
++    __refinement(refinement) {
++        return new ZodObjectEffects({
++            schema: this,
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: { type: "refinement", refinement },
++        });
++    }
++    refine(check, message) {
++        const getIssueProperties = (val) => {
++            if (typeof message === "string" || typeof message === "undefined") {
++                return { message };
++            }
++            else if (typeof message === "function") {
++                return message(val);
++            }
++            else {
++                return message;
++            }
++        };
++        return this.__refinement((val, ctx) => {
++            const result = check(val);
++            const setError = () => ctx.addIssue({
++                code: ZodError_1.ZodIssueCode.custom,
++                ...getIssueProperties(val),
++            });
++            if (typeof Promise !== "undefined" && result instanceof Promise) {
++                return result.then((data) => {
++                    if (!data) {
++                        setError();
++                        return false;
++                    }
++                    else {
++                        return true;
++                    }
++                });
++            }
++            if (!result) {
++                setError();
++                return false;
++            }
++            else {
++                return true;
++            }
++        });
++    }
++    /** *** **/
+     strict(message) {
+         errorUtil_1.errorUtil.errToObj;
+         return new ZodObject({
+@@ -2865,11 +2919,11 @@ class ZodEnum extends ZodType {
+         }
+         return enumValues;
+     }
+-    extract(values) {
+-        return ZodEnum.create(values);
++    extract(values, newDef = this._def) {
++        return ZodEnum.create(values, newDef);
+     }
+-    exclude(values) {
+-        return ZodEnum.create(this.options.filter((opt) => !values.includes(opt)));
++    exclude(values, newDef = this._def) {
++        return ZodEnum.create(this.options.filter((opt) => !values.includes(opt)), newDef);
+     }
+ }
+ exports.ZodEnum = ZodEnum;
+@@ -3084,6 +3138,96 @@ ZodEffects.createWithPreprocess = (preprocess, schema, params) => {
+         ...processCreateParams(params),
+     });
+ };
++//////////////////////////////////////////////
++//////////////////////////////////////////////
++//////////                          //////////
++//////////     ZodObjectEffects     //////////
++//////////                          //////////
++//////////////////////////////////////////////
++//////////////////////////////////////////////
++class ZodObjectEffects extends ZodEffects {
++    pick(mask) {
++        return new ZodObjectEffects({
++            schema: this._def.schema.pick(mask),
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: this._def.effect,
++        });
++    }
++    omit(mask) {
++        return new ZodObjectEffects({
++            schema: this._def.schema.omit(mask),
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: this._def.effect,
++        });
++    }
++    merge(merging) {
++        return new ZodObjectEffects({
++            schema: this._def.schema.merge(merging),
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: this._def.effect,
++        });
++    }
++    /** *** **/
++    transform(transform
++    // @ts-expect-error
++    ) {
++        return new ZodObjectEffects({
++            schema: this,
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: { type: "transform", transform },
++        });
++    }
++    __refinement(refinement
++    // @ts-expect-error
++    ) {
++        return new ZodObjectEffects({
++            schema: this,
++            typeName: ZodFirstPartyTypeKind.ZodEffects,
++            effect: { type: "refinement", refinement },
++        });
++    }
++    refine(check, message
++    // @ts-expect-error
++    ) {
++        const getIssueProperties = (val) => {
++            if (typeof message === "string" || typeof message === "undefined") {
++                return { message };
++            }
++            else if (typeof message === "function") {
++                return message(val);
++            }
++            else {
++                return message;
++            }
++        };
++        return this.__refinement((val, ctx) => {
++            const result = check(val);
++            const setError = () => ctx.addIssue({
++                code: ZodError_1.ZodIssueCode.custom,
++                ...getIssueProperties(val),
++            });
++            if (typeof Promise !== "undefined" && result instanceof Promise) {
++                return result.then((data) => {
++                    if (!data) {
++                        setError();
++                        return false;
++                    }
++                    else {
++                        return true;
++                    }
++                });
++            }
++            if (!result) {
++                setError();
++                return false;
++            }
++            else {
++                return true;
++            }
++        });
++    }
++}
++exports.ZodObjectEffects = ZodObjectEffects;
+ class ZodOptional extends ZodType {
+     _parse(input) {
+         const parsedType = this._getType(input);

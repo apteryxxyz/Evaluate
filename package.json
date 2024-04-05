@@ -1,10 +1,10 @@
 {
   "name": "evaluate",
-  "packageManager": "pnpm@8.12.0",
+  "packageManager": "pnpm@8.13.1",
   "workspaces": [
-    "configs/*",
     "apps/*",
     "bots/*",
+    "configs/*",
     "extensions/*",
     "packages/*"
   ],
@@ -14,14 +14,25 @@
     "check": "pnpm turbo --concurrency=50 check",
     "build": "pnpm turbo --concurrency=50 build",
     "build:packages": "pnpm turbo --concurrency=50 --filter=./packages/* build",
+    "build:apps": "pnpm turbo --concurrency=50 --filter=./apps/* --filter=./bots/* --filter=./extensions/* build",
+    "dev": "pnpm turbo --concurrency=50 dev",
+    "dev:packages": "pnpm turbo --concurrency=50 --filter=./packages/* dev",
+    "dev:apps": "pnpm turbo --concurrency=50 --filter=./apps/* --filter=./bots/* --filter=./extensions/* dev",
     "test": "pnpm check && pnpm turbo --concurrency=50 test",
     "pretty": "pnpm lint && pnpm format",
-    "dev": "pnpm turbo --concurrency=50 dev",
-    "graph": "npx nx@latest graph"
+    "graph": "pnpm dlx nx@latest graph"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.4.1",
-    "turbo": "^1.12.4",
-    "typescript": "^5.3.3"
+    "@biomejs/biome": "^1.6.3",
+    "resolve-tspaths": "^0.8.18",
+    "tsup": "^8.0.2",
+    "tsx": "^4.7.1",
+    "turbo": "^1.13.0",
+    "typescript": "5.4.0-beta"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "zod@3.22.4": "patches/zod@3.22.4.patch"
+    }
   }
 }

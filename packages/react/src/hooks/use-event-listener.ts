@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { type RefObject, useEffect, useRef } from 'react';
 import { useIsomorphicLayoutEffect } from './use-isomorphic-layout-effect';
 
 // MediaQueryList Event based useEventListener interface
@@ -60,7 +60,6 @@ export function useEventListener<
     savedHandler.current = handler;
   }, [handler]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: typeof handler is not a dependency
   useEffect(() => {
     // Define the listening target
     const targetElement: T | Window = element?.current ?? window;

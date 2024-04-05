@@ -1,6 +1,5 @@
-import { determineInteractionLocale } from '@evaluate/translate';
 import {
-  APIInteraction,
+  type APIInteraction,
   InteractionResponseType,
   InteractionType,
 } from 'discord-api-types/v10';
@@ -8,15 +7,25 @@ import { verifyKey } from 'discord-interactions';
 import { isButton } from './builders/button';
 import { isAutocomplete, isChatInputCommand } from './builders/chat-input';
 import { isModal } from './builders/modal';
-import { analytics } from './core';
+import { env } from './env';
 import {
   buttonComponents,
   chatInputCommands,
   modalComponents,
 } from './interactions';
+import analytics from './services/analytics';
 import { getUser } from './utilities/interaction-helpers';
 
 export default async function handler(request: Request) {
+  if (request.method !== 'POST') return new Response(null, { status: 405 });
+  if (
+    !env.DISCORD_TOKEN ||
+    !env.DISCORD_PUBLIC_KEY ||
+    !env.DISCORD_CLIENT_ID ||
+    !env.DISCORD_CLIENT_SECRET
+  )
+    return new Response(null, { status: 404 });
+
   const body = await request.json().catch(() => null);
   const buffer = Buffer.from(JSON.stringify(body));
   if (buffer.length === 0) return new Response(null, { status: 400 });
@@ -25,10 +34,7 @@ export default async function handler(request: Request) {
   const timestamp = request.headers.get('X-Signature-Timestamp');
   if (!signature || !timestamp) return new Response(null, { status: 400 });
 
-  const key = process.env.DISCORD_PUBLIC_KEY;
-  if (!key) return new Response(null, { status: 500 });
-
-  if (!verifyKey(buffer, signature, timestamp, key))
+  if (!verifyKey(buffer, signature, timestamp, env.DISCORD_PUBLIC_KEY))
     return new Response(null, { status: 401 });
 
   console.info('Received interaction');
@@ -40,7 +46,7 @@ export default async function handler(request: Request) {
       return Response.json({ type: InteractionResponseType.Pong });
     }
 
-    void analytics?.capture({
+    analytics?.capture({
       distinctId: getUser(interaction)?.id!,
       event: 'interaction received',
       properties: {
@@ -51,7 +57,6 @@ export default async function handler(request: Request) {
         $set: {
           platform: 'discord',
           username: getUser(interaction)?.username,
-          'preferred locale': determineInteractionLocale(interaction),
         },
       },
     });

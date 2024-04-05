@@ -1,13 +1,13 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
   "files": {
     "ignore": [
-      "dist/",
-      "build/",
-      ".next/",
-      ".plasmo",
-      "node_modules/",
-      "src/generated/"
+      "node_modules/*",
+      "dist/*",
+      ".next/*",
+      ".plasmo/*",
+      "build/*",
+      "generated/*"
     ]
   },
   "formatter": {
@@ -22,10 +22,12 @@
       "style": {
         "noNonNullAssertion": "off",
         "noUselessElse": "off",
-        "noParameterAssign": "off"
+        "noParameterAssign": "off",
+        "noCommaOperator": "off"
       },
       "suspicious": {
-        "noAssignInExpressions": "off"
+        "noAssignInExpressions": "off",
+        "noArrayIndexKey": "off"
       }
     }
   },

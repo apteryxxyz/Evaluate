@@ -1,22 +1,25 @@
+import { validateEnv } from '@evaluate/env';
 import { z } from 'zod';
 
-export const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production']).default('development'),
+export const env = validateEnv({
+  prefix: 'PLASMO_PUBLIC_',
+  client: {
+    PLASMO_PUBLIC_WEBSITE_URL: z
+      .string()
+      .url()
+      .refine((v) => !v.endsWith('/'), 'should not end with a slash'),
+    PLASMO_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
+  },
 
-  WEBSITE_URL: z.string().url(),
-  PLASMO_PUBLIC_WEBSITE_URL: z.string().url(),
+  variablesStrict: {
+    PLASMO_PUBLIC_WEBSITE_URL: process.env.PLASMO_PUBLIC_WEBSITE_URL,
+    PLASMO_PUBLIC_POSTHOG_KEY: process.env.PLASMO_PUBLIC_POSTHOG_KEY,
+  },
 
-  POSTHOG_KEY: z.string().optional(),
-  PLASMO_PUBLIC_POSTHOG_KEY: z.string().optional(),
+  onValid(env) {
+    if (!env.PLASMO_PUBLIC_POSTHOG_KEY)
+      console.warn(
+        'Missing Posthog environment variable, analytics will be disabled.',
+      );
+  },
 });
-
-export type Env = z.infer<typeof envSchema>;
-export const env = envSchema.parse(process.env);
-
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv extends Env {
-      [key: Uppercase<string>]: string | undefined;
-    }
-  }
-}

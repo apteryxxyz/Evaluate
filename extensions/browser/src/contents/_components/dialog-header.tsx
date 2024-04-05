@@ -1,5 +1,5 @@
 import { DialogHeader as UIDialogHeader } from '@evaluate/react/components/dialog';
-import { absoluteUrl } from '~utilities/url-helpers';
+import { env } from '~env';
 
 export function DialogHeader() {
   return (
@@ -8,10 +8,10 @@ export function DialogHeader() {
         className="inline-flex items-center gap-2 mr-auto"
         target="_blank"
         rel="noreferrer noopener"
-        href={absoluteUrl()}
+        href={env.PLASMO_PUBLIC_WEBSITE_URL}
       >
         <img
-          src={absoluteUrl('/icon.png')}
+          src={`${env.PLASMO_PUBLIC_WEBSITE_URL}/images/icon.png`}
           alt="Evaluate logo"
           width={36}
           height={36}

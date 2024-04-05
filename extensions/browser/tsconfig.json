@@ -6,11 +6,8 @@
     "baseUrl": ".",
     "outDir": "dist",
     "paths": { "~*": ["src/*"] },
+    "moduleResolution": "Bundler",
     "jsx": "preserve",
-    "allowJs": true,
-    "skipLibCheck": true,
-    "noEmit": true,
-    "incremental": true,
     "lib": ["DOM", "ES2023"]
   }
 }

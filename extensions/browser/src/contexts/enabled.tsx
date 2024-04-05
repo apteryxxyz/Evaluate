@@ -8,55 +8,65 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { getMetaTagContent } from '~utilities/active-tab';
+import { getCurrentMetaTagContent } from '../utilities/active-tab';
 
-type EnabledContextProps = {
+interface EnabledState {
   isEnabled: boolean;
+  isRequestedDisabled: boolean;
   setEnabled(enabled: boolean): void;
   isEnabledFor(domain: string): boolean;
   setEnabledFor(domain: string, enabled: boolean): void;
-};
-export const EnabledContext = //
-  createContext<EnabledContextProps>(null!);
-EnabledContext.displayName = 'EnabledContext';
+}
+
+export const EnabledContext = createContext<EnabledState>(null!);
+
 export const EnabledConsumer = EnabledContext.Consumer;
 
 export function EnabledProvider(p: React.PropsWithChildren) {
-  const [isEnabled, setEnabled] = useStorage<boolean>('enabled');
+  const [isEnabled, setEnabled] = useStorage<boolean>('enabled', true);
   const [disabledFor, setDisabledFor] = useStorage<string[]>('disabledFor', []);
 
-  const [hasDisabledTag, setHasDisabledTag] = useState<boolean>();
+  const [isRequestedDisabled, setRequestedDisabled] = useState(false);
   useEffect(() => {
-    getMetaTagContent().then((c) => setHasDisabledTag(c === 'disabled'));
+    getCurrentMetaTagContent() //
+      .then((c) => setRequestedDisabled(c === 'disabled'));
   }, []);
+
+  //
 
   const isEnabledFor = useCallback(
     (domain: string) =>
-      !hasDisabledTag && isEnabled && !disabledFor.includes(domain),
-    [hasDisabledTag, isEnabled, disabledFor],
+      isEnabled && !isRequestedDisabled && !disabledFor.includes(domain),
+    [isEnabled, isRequestedDisabled, disabledFor],
   );
 
   const setEnabledFor = useCallback(
-    (domain: string, enabled: boolean) =>
-      setDisabledFor((d) => {
-        if (!enabled) return [...(d ?? []), domain];
-        return (d ?? []).filter((d) => d !== domain);
-      }),
+    (domain: string, enabled: boolean) => {
+      setDisabledFor((prev) => {
+        if (!enabled) return [...(prev ?? []), domain];
+        return prev?.filter((d) => d !== domain) ?? [];
+      });
+    },
     [setDisabledFor],
   );
 
+  //
+
   return (
     <EnabledContext.Provider
-      value={{ isEnabled, setEnabled, isEnabledFor, setEnabledFor }}
-      {...p}
-    />
+      value={{
+        isEnabled,
+        isRequestedDisabled,
+        setEnabled,
+        isEnabledFor,
+        setEnabledFor,
+      }}
+    >
+      {p.children}
+    </EnabledContext.Provider>
   );
 }
 
-/**
- * Grab the current enabled state from context.
- * @returns a boolean indicating whether the extension is enabled
- */
 export function useEnabled() {
   return useContext(EnabledContext);
 }

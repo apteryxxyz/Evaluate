@@ -4,10 +4,21 @@ import * as dotenv from 'dotenv';
 import { expand as dotenvExpand } from 'dotenv-expand';
 
 /**
- * Load and return the environment variables from the environment files.
- * @returns the environment variables
+ * Load the environment variables from the environment files into the process.
+ * @returns process.{@link process.env env}
  */
 export function loadEnv() {
+  const variables = readEnv();
+  for (const [key, value] of Object.entries(variables))
+    process.env[key] ??= value;
+  return process.env;
+}
+
+/**
+ * Read the environment variables from the environment files.
+ * @returns the environment variables
+ */
+export function readEnv() {
   const variables: Record<string, string> = {};
   const root = process.env.ORIGINAL_DIR ?? '.';
 
@@ -18,7 +29,7 @@ export function loadEnv() {
     const contents = fs.readFileSync(location, 'utf8');
     const parsed = extractVariablesFromContents(contents);
     for (const [key, value] of Object.entries(parsed ?? {}))
-      if (value !== undefined) variables[key] = value;
+      if (value !== undefined) process.env[key] = value;
   }
 
   return variables;

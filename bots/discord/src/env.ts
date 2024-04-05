@@ -1,4 +1,4 @@
-import { loadEnv } from '@evaluate/env/loader';
+import '@evaluate/env/loader/config';
 import { validateEnv } from '@evaluate/env/validator';
 import { z } from 'zod';
 
@@ -14,7 +14,15 @@ export const env = validateEnv({
     DISCORD_CLIENT_SECRET: z.string().min(1).optional(),
     POSTHOG_KEY: z.string().min(1).optional(),
   },
-  variables: loadEnv(),
+
+  variablesStrict: {
+    WEBSITE_URL: process.env.WEBSITE_URL,
+    DISCORD_TOKEN: process.env.DISCORD_TOKEN,
+    DISCORD_PUBLIC_KEY: process.env.DISCORD_PUBLIC_KEY,
+    DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
+    DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+    POSTHOG_KEY: process.env.POSTHOG_KEY,
+  },
 
   onValid(env) {
     if (

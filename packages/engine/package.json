@@ -39,14 +39,14 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "pako": "^2.1.0",
     "fuse.js": "^7.0.0",
     "lexure": "npm:@apteryxxyz/lexure@^0.17.0",
+    "pako": "^2.1.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@configs/tsup": "workspace:^",
-    "@types/node": "^20.11.30",
+    "@types/node": "^20.12.5",
     "@types/pako": "^2.0.3"
   }
 }

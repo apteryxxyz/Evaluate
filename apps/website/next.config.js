@@ -37,10 +37,6 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'cdn.evaluate.run',
-      },
-      {
-        protocol: 'https',
         hostname: 'raw.githubusercontent.com',
         pathname: '/PKief/vscode-material-icon-theme/main/icons/**',
       },

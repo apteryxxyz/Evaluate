@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@evaluate/react/components/card';
+import { CodeIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
 import { ImageWithFallback } from '~/components/image-fallback';
@@ -33,8 +34,7 @@ export function PlaygroundCard(p: {
             height={24}
             alt={`${p.runtime.name} icon`}
             crossOrigin="anonymous"
-            // biome-ignore lint/complexity/noUselessFragments: Show nothing as fallback
-            fallback={<></>}
+            fallback={<CodeIcon />}
             onLoad={() => setColour(getDominantColour(imageRef.current!))}
           />
 

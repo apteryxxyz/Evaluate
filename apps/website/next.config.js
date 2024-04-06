@@ -26,7 +26,7 @@ const nextConfig = {
 
   rewrites: async () => [
     {
-      source: '/api/v0/ingest/:path*',
+      source: '/api/v1/ingest/:path*',
       destination: 'https://app.posthog.com/:path*',
     },
   ],

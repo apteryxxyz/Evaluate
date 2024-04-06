@@ -17,7 +17,7 @@ if (typeof window !== 'undefined' && env.PLASMO_PUBLIC_POSTHOG_KEY) {
     if (id) registerId(id);
 
     posthog.init(env.PLASMO_PUBLIC_POSTHOG_KEY!, {
-      api_host: `${env.PLASMO_PUBLIC_WEBSITE_URL}/api/v0/ingest`,
+      api_host: `${env.PLASMO_PUBLIC_WEBSITE_URL}/api/v1/ingest`,
       ui_host: 'https://app.posthog.com/',
       capture_pageview: false,
       capture_pageleave: false,

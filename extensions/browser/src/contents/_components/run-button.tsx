@@ -58,7 +58,7 @@ export function RunButton(p: {
     <>
       <Button
         size="icon"
-        className={cn('aspect-square rounded-full m-2 w-7 h-7')}
+        className={cn('m-2 aspect-square h-7 w-7 rounded-full')}
         onClick={wrapCapture(onClick)}
         disabled={isFetching}
       >

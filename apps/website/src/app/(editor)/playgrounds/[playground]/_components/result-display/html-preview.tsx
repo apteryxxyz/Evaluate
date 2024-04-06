@@ -23,7 +23,7 @@ export default function HtmlPreview(p: { html?: string }) {
           src={`data:text/html;charset=utf-8,${encodeURIComponent(
             sanitisedHtml,
           )}`}
-          className="w-full h-full"
+          className="h-full w-full"
           style={{ border: 'none' }}
           sandbox="allow-scripts"
         />
@@ -31,7 +31,7 @@ export default function HtmlPreview(p: { html?: string }) {
 
       {!sanitisedHtml && (
         <div className="flex h-full items-center justify-center">
-          <span className="text-foreground/50 text-center text-balance text-sm max-w-64">
+          <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
             Nothing to render here.
           </span>
         </div>

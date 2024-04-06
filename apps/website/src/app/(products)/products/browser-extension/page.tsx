@@ -4,12 +4,12 @@ import { ImageCarousel } from './_components/image-carousel';
 
 export default function BrowserExtensionPlatformPage() {
   return (
-    <div className="gap-6 py-6 container grid grid-cols-1 lg:grid-cols-2 pt-[20vh]">
-      <div className="flex flex-col items-center justify-center text-center gap-6">
-        <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
+    <div className="container grid grid-cols-1 gap-6 py-6 pt-[20vh] lg:grid-cols-2">
+      <div className="flex flex-col items-center justify-center gap-6 text-center">
+        <h1 className="font-bold text-3xl tracking-tight md:text-5xl">
           The <span className="text-primary">Evaluate</span> Browser Extension
         </h1>
-        <p className="mx-auto text-sm md:text-base text-balance max-w-5xl">
+        <p className="mx-auto max-w-5xl text-balance text-sm md:text-base">
           When you stumble upon code snippets while browsing the web, wouldn't
           it be great to execute them instantly? Look no further—the Evaluate
           extension is your solution, with its over 70 supported languages and
@@ -19,7 +19,7 @@ export default function BrowserExtensionPlatformPage() {
         <div className="flex items-center justify-center gap-2">
           <Button
             variant="secondary"
-            className="flex items-center rounded-full gap-2"
+            className="flex items-center gap-2 rounded-full"
             asChild
           >
             <Link
@@ -28,7 +28,7 @@ export default function BrowserExtensionPlatformPage() {
             >
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/1024px-Google_Chrome_icon_%28February_2022%29.svg.png"
-                className="w-6 aspect-square"
+                className="aspect-square w-6"
                 alt="Chrome Logo"
               />
               <span>
@@ -40,7 +40,7 @@ export default function BrowserExtensionPlatformPage() {
           <Button
             size="icon"
             variant="secondary"
-            className="flex items-center rounded-full gap-3"
+            className="flex items-center gap-3 rounded-full"
             asChild
           >
             <Link
@@ -49,7 +49,7 @@ export default function BrowserExtensionPlatformPage() {
             >
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Microsoft_Edge_logo_%282019%29.png"
-                className="w-6 aspect-square"
+                className="aspect-square w-6"
                 alt="Edge Logo"
               />
               <span className="sr-only">Evaluate for Edge</span>
@@ -59,7 +59,7 @@ export default function BrowserExtensionPlatformPage() {
           <Button
             size="icon"
             variant="secondary"
-            className="flex items-center rounded-full gap-3"
+            className="flex items-center gap-3 rounded-full"
             asChild
           >
             <Link
@@ -68,7 +68,7 @@ export default function BrowserExtensionPlatformPage() {
             >
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/180px-Opera_2015_icon.svg.png"
-                className="w-6 aspect-square"
+                className="aspect-square w-6"
                 alt="Opera Logo"
               />
               <span className="sr-only">Evaluate for Opera</span>
@@ -78,7 +78,7 @@ export default function BrowserExtensionPlatformPage() {
           <Button
             size="icon"
             variant="secondary"
-            className="flex items-center rounded-full gap-3"
+            className="flex items-center gap-3 rounded-full"
             asChild
           >
             <Link
@@ -87,7 +87,7 @@ export default function BrowserExtensionPlatformPage() {
             >
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Brave_lion_icon.svg"
-                className="w-6 aspect-square"
+                className="aspect-square w-6"
                 alt="Brave Logo"
               />
               <span className="sr-only">Evaluate for Brave</span>

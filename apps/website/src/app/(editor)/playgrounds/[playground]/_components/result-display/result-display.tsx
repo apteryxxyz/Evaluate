@@ -49,8 +49,8 @@ export function ResultDisplay(p: { runtime: Runtime }) {
           )}
 
           {!doesRunHaveDisplayableOutput && (
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-              <span className="text-foreground/50 text-center text-balance text-sm max-w-64">
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+              <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
                 {hasRunTimedOut ? (
                   <>
                     Your code took too long to run and was killed. Try
@@ -93,8 +93,8 @@ export function ResultDisplay(p: { runtime: Runtime }) {
               )}
 
               {hasCompileTimedOut && (
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <span className="text-foreground/50 text-center text-balance text-sm max-w-64">
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                  <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
                     Your code took too long to compile and was killed. Try
                     optimising it to compile faster.
                   </span>

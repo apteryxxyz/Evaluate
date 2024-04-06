@@ -3,7 +3,7 @@ import { ThemeSwitcher } from './theme-switcher';
 
 export function HeaderBar() {
   return (
-    <header className="h-14 w-full flex items-center">
+    <header className='flex h-14 w-full items-center'>
       <a
         target="_blank"
         rel="noreferrer noopener"
@@ -16,7 +16,7 @@ export function HeaderBar() {
           width={36}
           height={36}
         />
-        <span className="font-bold text-xl text-primary">Evaluate</span>
+        <span className='font-bold text-primary text-xl'>Evaluate</span>
       </a>
 
       <div className="ml-auto">

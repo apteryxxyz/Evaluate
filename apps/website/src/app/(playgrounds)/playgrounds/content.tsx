@@ -57,12 +57,12 @@ export default function PlaygroundsPageContent(p: {
   }, [hash]);
 
   return (
-    <div className="flex flex-col gap-6 py-6 container">
-      <div className="text-center py-24 space-y-6">
-        <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-primary">
+    <div className="container flex flex-col gap-6 py-6">
+      <div className="space-y-6 py-24 text-center">
+        <h1 className="font-bold text-3xl text-primary tracking-tight md:text-5xl">
           Playgrounds
         </h1>
-        <p className="text-sm md:text-base text-balance">
+        <p className="text-balance text-sm md:text-base">
           Explore and run code in different programming languages and runtimes.
           <br />
           <span className="opacity-70">
@@ -73,11 +73,11 @@ export default function PlaygroundsPageContent(p: {
 
       <div className="space-y-3">
         <div className="flex gap-3">
-          <div className="flex w-full relative">
-            <SearchIcon className="size-4 opacity-50 absolute left-2 top-[27%]" />
+          <div className="relative flex w-full">
+            <SearchIcon className="absolute top-[27%] left-2 size-4 opacity-50" />
 
             <Input
-              className="absolute inset-0 w-full h-full pl-7"
+              className="absolute inset-0 h-full w-full pl-7"
               placeholder="Search runtime playgrounds..."
               value={search ?? ''}
               onChange={(e) => setSearch(e.target.value)}
@@ -86,7 +86,7 @@ export default function PlaygroundsPageContent(p: {
             {search && (
               <XIcon
                 role="button"
-                className="size-4 opacity-50 absolute right-2 top-[27%] cursor-pointer"
+                className="absolute top-[27%] right-2 size-4 cursor-pointer opacity-50"
                 onClick={() => setSearch('')}
               >
                 <span className="sr-only">Clear Search</span>
@@ -109,7 +109,7 @@ export default function PlaygroundsPageContent(p: {
           </Select>
         </div>
 
-        <div className="grid gap-3 grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
+        <div className="grid grid-cols-1 gap-3 2xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xl:grid-cols-6 xs:grid-cols-2">
           {sortedRuntimes.map((runtime) => (
             <PlaygroundCard
               key={runtime.id}

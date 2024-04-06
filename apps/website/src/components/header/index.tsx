@@ -44,7 +44,7 @@ export function Header() {
             height={32}
             className="inline"
           />
-          <span className="font-bold text-xl text-primary">Evaluate</span>
+          <span className="font-bold text-primary text-xl">Evaluate</span>
         </Link>
 
         <div>
@@ -60,7 +60,7 @@ export function Header() {
           >
             <Link href="/products/browser-extension">
               Browser Extension
-              <span className="absolute top-0 left-[5.8rem] text-xs text-primary">
+              <span className="absolute top-0 left-[5.8rem] text-primary text-xs">
                 new
               </span>
             </Link>
@@ -83,7 +83,7 @@ function DesktopNavigationWrapper(p: React.PropsWithChildren) {
   return (
     <nav
       className={cn(
-        'h-full w-full flex items-center',
+        'flex h-full w-full items-center',
         'first-of-type:[&>div]:pl-3',
         'last-of-type:[&>div]:ml-auto',
       )}
@@ -100,7 +100,7 @@ function MobileNavigationWrapper(
   }>,
 ) {
   return (
-    <div className="w-full h-full flex items-center">
+    <div className="flex h-full w-full items-center">
       {Children.toArray(p.children)[0]}
 
       <Sheet open={p.open} onOpenChange={p.setOpen}>
@@ -108,7 +108,7 @@ function MobileNavigationWrapper(
           <Button
             size="icon"
             variant="secondary"
-            className="aspect-square ml-auto"
+            className="ml-auto aspect-square"
           >
             <MenuIcon className="size-4" />
             <span className="sr-only">Toggle Mobile Navigation</span>
@@ -117,19 +117,19 @@ function MobileNavigationWrapper(
 
         <SheetContent
           side="right"
-          className="bg-transparent border-l-0"
+          className="border-l-0 bg-transparent"
           onClick={() => p.setOpen(false)}
         >
           <div
             onClick={(e) => e.stopPropagation()}
             onKeyUp={(e) => e.stopPropagation()}
-            className="rounded-xl border-2 bg-card h-full p-3"
+            className="h-full rounded-xl border-2 bg-card p-3"
           >
             <nav
               className={cn(
-                'h-full flex flex-col gap-3',
+                'flex h-full flex-col gap-3',
                 'first-of-type:[&>div]:flex first-of-type:[&>div]:flex-col [&>*]:first-of-type:[&>div]:justify-start',
-                'last-of-type:[&>div]:mt-auto last-of-type:[&>div]:border last-of-type:[&>div]:rounded-xl',
+                'last-of-type:[&>div]:mt-auto last-of-type:[&>div]:rounded-xl last-of-type:[&>div]:border',
               )}
             >
               {p.children}

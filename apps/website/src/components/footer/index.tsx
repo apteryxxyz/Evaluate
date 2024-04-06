@@ -5,21 +5,21 @@ export function Footer(p: { className?: string }) {
   return (
     <footer
       className={cn(
-        'flex flex-col items-center justify-center pb-8 text-sm text-foreground/50',
+        'flex flex-col items-center justify-center pb-8 text-foreground/50 text-sm',
         p.className,
       )}
     >
       <p>
         <Link
           href="/policies/privacy-policy"
-          className="hover:text-foreground/60 duration-200"
+          className="duration-200 hover:text-foreground/60"
         >
           Privacy Policy
         </Link>
         <span className="mx-2">•</span>
         <Link
           href="/policies/terms-of-service"
-          className="hover:text-foreground/60 duration-200"
+          className="duration-200 hover:text-foreground/60"
         >
           Terms of Service
         </Link>

@@ -28,6 +28,15 @@
       "suspicious": {
         "noAssignInExpressions": "off",
         "noArrayIndexKey": "off"
+      },
+      "nursery": {
+        "recommended": true,
+        "useSortedClasses": {
+          "options": {
+            "attributes": ["className"],
+            "functions": ["cn"]
+          }
+        }
       }
     }
   },

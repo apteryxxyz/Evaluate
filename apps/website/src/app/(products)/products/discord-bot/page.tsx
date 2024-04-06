@@ -3,12 +3,12 @@ import Link from 'next/link';
 
 export default function BrowserExtensionPlatformContent() {
   return (
-    <div className="flex flex-col gap-6 py-6 container">
-      <div className="text-center pt-[20vh] space-y-6">
-        <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
+    <div className="container flex flex-col gap-6 py-6">
+      <div className="space-y-6 pt-[20vh] text-center">
+        <h1 className="font-bold text-3xl tracking-tight md:text-5xl">
           The <span className="text-primary">Evaluate</span> Discord Bot
         </h1>
-        <p className="mx-auto text-sm md:text-base text-balance max-w-5xl">
+        <p className="mx-auto max-w-5xl text-balance text-sm md:text-base">
           Run code snippets directly in your Discord server with the Evaluate
           bot! Evaluate supports over 70 languages and is perfect for quickly
           testing code and sharing results with your friends.
@@ -18,7 +18,7 @@ export default function BrowserExtensionPlatformContent() {
       <div className="flex items-center justify-center gap-2">
         <Button
           variant="secondary"
-          className="flex items-center rounded-full gap-2"
+          className="flex items-center gap-2 rounded-full"
           asChild
         >
           <Link href="https://go.evaluate.run/discord-bot" target="_blank">

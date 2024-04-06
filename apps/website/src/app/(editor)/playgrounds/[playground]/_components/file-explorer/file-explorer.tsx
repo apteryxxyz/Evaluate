@@ -23,13 +23,13 @@ export function FileExplorer() {
 
   return (
     <section className="relative h-full w-full">
-      <div className="flex items-center gap-2 h-10 border-b px-4 py-2">
-        <span className="mr-auto text-sm font-medium">Explorer</span>
+      <div className="flex h-10 items-center gap-2 border-b px-4 py-2">
+        <span className="mr-auto font-medium text-sm">Explorer</span>
 
         <Button
           size="icon"
           variant="ghost"
-          className="rounded-full w-auto h-auto"
+          className="h-auto w-auto rounded-full"
           onClick={() => explorer.findSelectedFolder().createChild('file')}
           title="New File"
         >
@@ -40,7 +40,7 @@ export function FileExplorer() {
         <Button
           size="icon"
           variant="ghost"
-          className="rounded-full w-auto h-auto"
+          className="h-auto w-auto rounded-full"
           onClick={() => explorer.findSelectedFolder().createChild('folder')}
           title="New Folder"
         >
@@ -52,7 +52,7 @@ export function FileExplorer() {
       <ContextMenu>
         <ContextMenuTrigger asChild>
           <Scrollable
-            className="h-full w-full relative py-1"
+            className="relative h-full w-full py-1"
             onClick={(e) => {
               if (
                 e.target instanceof Element &&
@@ -62,7 +62,7 @@ export function FileExplorer() {
             }}
             onKeyDown={(e) => e.key === 'Esc' && explorer.setSelected(true)}
           >
-            <div className="border-b mb-1">
+            <div className="mb-1 border-b">
               <FileExplorerFileItem file={explorer.args} isMeta />
               <FileExplorerFileItem file={explorer.input} isMeta />
             </div>
@@ -73,7 +73,7 @@ export function FileExplorer() {
 
             {explorer.children.length === 0 && (
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-foreground/50 text-center text-balance text-sm max-w-64">
+                <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
                   This is the file explorer, create a new file to get started.
                 </span>
               </div>

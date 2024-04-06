@@ -25,8 +25,8 @@ export function PlaygroundCard(p: {
       style={{ '--colour': `rgb(${colour?.r}, ${colour?.g}, ${colour?.b})` }}
       className="relative duration-300 hover:border-[var(--colour)]"
     >
-      <CardHeader className="justify-center h-full">
-        <div className="flex gap-2 items-center justify-start">
+      <CardHeader className="h-full justify-center">
+        <div className="flex items-center justify-start gap-2">
           <ImageWithFallback
             ref={imageRef}
             src={p.runtime.icon && makeIconUrl(p.runtime.icon)}

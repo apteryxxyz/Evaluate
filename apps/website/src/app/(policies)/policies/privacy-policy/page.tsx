@@ -8,18 +8,18 @@ export default function PrivacyPolicyPage() {
       <div className="space-y-1">
         <time
           dateTime={updatedAt.toISOString()}
-          className="block text-sm text-muted-foreground"
+          className="block text-muted-foreground text-sm"
         >
           Updated on {formatDate(updatedAt, 'full')}
         </time>
 
-        <h1 className="text-4xl font-bold leading-tight lg:text-5xl">
+        <h1 className="font-bold text-4xl leading-tight lg:text-5xl">
           Privacy Policy
         </h1>
       </div>
 
       <div>
-        <h2 className="mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
           Introduction
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
@@ -30,7 +30,7 @@ export default function PrivacyPolicyPage() {
           document.
         </p>
 
-        <h2 className="mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
           Data Collection and Usage
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
@@ -49,7 +49,7 @@ export default function PrivacyPolicyPage() {
           provide a better user experience for our visitors.
         </p>
 
-        <h2 className="mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
           Policy Acceptance
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
@@ -59,7 +59,7 @@ export default function PrivacyPolicyPage() {
           the privacy policy.
         </p>
 
-        <h2 className="mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
           Policy Changes
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">

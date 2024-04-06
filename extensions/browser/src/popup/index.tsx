@@ -19,7 +19,7 @@ import '../style.css';
 export default function PopupWrapper() {
   return (
     <ThemeProvider getTargets={() => [document.documentElement]}>
-      <div className="w-96 flex flex-col p-4 pt-0">
+      <div className='flex w-96 flex-col p-4 pt-0'>
         <HeaderBar />
 
         <main className="flex flex-col">
@@ -77,7 +77,7 @@ function Popup() {
       <div className="flex">
         <div>
           <Label htmlFor="enabled">Is Globally Enabled</Label>
-          <p className="text-xs text-muted-foreground">
+          <p className='text-muted-foreground text-xs'>
             Toggle this switch to enable/disable the extension globally.
           </p>
         </div>
@@ -87,7 +87,7 @@ function Popup() {
           checked={isEnabled}
           onClick={wrapCapture(() => {})}
           onCheckedChange={setGloballyEnabled}
-          className="ml-auto my-auto"
+          className='my-auto ml-auto'
         >
           <span className="sr-only">Toggle Globally Enabled</span>
         </Switch>
@@ -96,14 +96,14 @@ function Popup() {
       <div className="flex">
         <div>
           <Label htmlFor="current-enabled">Is Current Site Enabled</Label>
-          <p className="text-xs text-muted-foreground">
+          <p className='text-muted-foreground text-xs'>
             Toggle this switch to enable/disable the extension on the current
             website. (<code className="inline">{domain}</code>).
           </p>
         </div>
 
         <TooltipWrapper isRequestedDisabled={isRequestedDisabled}>
-          <div className="ml-auto my-auto">
+          <div className='my-auto ml-auto'>
             <Switch
               name="current-enabled"
               checked={isEnabledFor(domain!) && !isRequestedDisabled}

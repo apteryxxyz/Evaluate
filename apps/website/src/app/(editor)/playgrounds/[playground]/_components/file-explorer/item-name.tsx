@@ -66,7 +66,7 @@ export function FileExplorerItemName(p: {
         {p.isRenaming ? (
           <Input
             ref={inputRef}
-            className="h-auto w-full border-0 p-0 text-sm focus:z-40 rounded-none"
+            className="h-auto w-full rounded-none border-0 p-0 text-sm focus:z-40"
             defaultValue={p.item.name}
             onChange={onChange}
             onKeyUp={onKeyUp}
@@ -78,7 +78,7 @@ export function FileExplorerItemName(p: {
       </PopoverAnchor>
 
       <PopoverContent
-        className="w-auto bg-destructive/50 p-1 text-sm text-destructive-foreground"
+        className="w-auto bg-destructive/50 p-1 text-destructive-foreground text-sm"
         data-ignore-blur
       >
         <span>{errorMessage}</span>

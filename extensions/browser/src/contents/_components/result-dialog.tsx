@@ -75,7 +75,7 @@ export function ResultDialog(p: {
             </div>
 
             {!!realResult?.code && (
-              <p className="text-[0.8rem] font-medium text-destructive">
+              <p className='font-medium text-[0.8rem] text-destructive'>
                 {resultKey === 'compile'
                   ? 'Compilation failed.'
                   : 'Execution failed.'}

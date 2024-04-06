@@ -27,7 +27,7 @@ export default function RootLayout(p: LayoutProps) {
 
         <body
           key="body"
-          className={`${inter.className} flex flex-col min-h-screen overflow-y-scroll`}
+          className={`${inter.className}flex min-h-screen flex-col overflow-y-scroll`}
         >
           <BodyProviders>
             <Header />

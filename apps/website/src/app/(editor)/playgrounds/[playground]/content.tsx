@@ -23,7 +23,7 @@ export default function EditorContent(p: { runtime: Runtime }) {
   return (
     <div
       style={{ '--bottom-spacing': isDesktop ? '6px' : '12px' }}
-      className="h-[calc(-3.5rem_+_100vh_-_var(--bottom-spacing))] m-1.5 mt-0"
+      className="m-1.5 mt-0 h-[calc(-3.5rem_+_100vh_-_var(--bottom-spacing))]"
     >
       <ExplorerProvider runtime={p.runtime}>
         <ResultProvider>
@@ -53,7 +53,7 @@ function DesktopExplorerWrapper(p: React.PropsWithChildren) {
         minSize={10}
         defaultSize={15}
         collapsible={false}
-        className="rounded-xl border-2 m-1.5 bg-card"
+        className="m-1.5 rounded-xl border-2 bg-card"
       >
         <FileExplorer />
       </ResizablePanel>
@@ -63,7 +63,7 @@ function DesktopExplorerWrapper(p: React.PropsWithChildren) {
       <ResizablePanel
         defaultSize={85}
         minSize={10}
-        className="rounded-xl border-2 m-1.5 bg-card"
+        className="m-1.5 rounded-xl border-2 bg-card"
       >
         {p.children}
       </ResizablePanel>
@@ -83,20 +83,20 @@ function MobileExplorerWrapper(p: React.PropsWithChildren) {
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent
           side="left"
-          className="bg-transparent border-r-0"
+          className="border-r-0 bg-transparent"
           onClick={() => setOpen(false)}
         >
           <div
             onClick={(e) => e.stopPropagation()}
             onKeyUp={(e) => e.stopPropagation()}
-            className="rounded-xl border-2 bg-card h-full"
+            className="h-full rounded-xl border-2 bg-card"
           >
             <FileExplorer />
           </div>
         </SheetContent>
       </Sheet>
 
-      <div className="rounded-xl border-2 m-1.5 bg-card h-full">
+      <div className="m-1.5 h-full rounded-xl border-2 bg-card">
         {p.children}
       </div>
     </>

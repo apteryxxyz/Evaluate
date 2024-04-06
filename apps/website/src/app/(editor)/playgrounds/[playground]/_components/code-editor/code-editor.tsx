@@ -24,7 +24,7 @@ export function CodeEditor(p: { runtime: Runtime }) {
 
   return (
     <section className="h-full">
-      <div className="h-10 border-b flex items-center w-full px-0.5">
+      <div className="flex h-10 w-full items-center border-b px-0.5">
         <Button
           size="icon"
           variant="secondary"
@@ -73,7 +73,7 @@ export function CodeEditor(p: { runtime: Runtime }) {
               className="grayscale"
             />
 
-            <span className="text-foreground/50 text-center text-balance text-sm max-w-64">
+            <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
               Get started by using the file explorer to create a file.
             </span>
           </div>

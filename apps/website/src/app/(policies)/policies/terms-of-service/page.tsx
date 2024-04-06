@@ -8,18 +8,18 @@ export default function TermsOfServicePage() {
       <div className="space-y-1">
         <time
           dateTime={updatedAt.toISOString()}
-          className="block text-sm text-muted-foreground"
+          className="block text-muted-foreground text-sm"
         >
           Updated on {formatDate(updatedAt, 'full')}
         </time>
 
-        <h1 className="text-4xl font-bold leading-tight lg:text-5xl">
+        <h1 className="font-bold text-4xl leading-tight lg:text-5xl">
           Terms of Service
         </h1>
       </div>
 
       <div>
-        <h2 className="mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
           Introduction
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
@@ -29,7 +29,7 @@ export default function TermsOfServicePage() {
           you do not agree to these terms, you may not use our service.
         </p>
 
-        <h2 className="mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
           Use of our Services
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
@@ -72,7 +72,7 @@ export default function TermsOfServicePage() {
           services if you violate these terms of use.
         </p>
 
-        <h2 className="mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
           Intellectual Property
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
@@ -82,7 +82,7 @@ export default function TermsOfServicePage() {
           without express written permission.
         </p>
 
-        <h2 className="mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
           Limitation of Liability
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
@@ -93,7 +93,7 @@ export default function TermsOfServicePage() {
           with the use or inability to use our services.
         </p>
 
-        <h2 className="mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
           Terms Acceptance
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
@@ -102,7 +102,7 @@ export default function TermsOfServicePage() {
           services.
         </p>
 
-        <h2 className="mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
           Terms Changes
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">

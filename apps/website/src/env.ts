@@ -1,18 +1,23 @@
 import { validateEnv } from '@evaluate/env/validator';
 import { z } from 'zod';
 
+if (!process.env.WEBSITE_URL && process.env.VERCEL === '1')
+  process.env.WEBSITE_URL = `https://${process.env.VERCEL_URL}`;
+
 export const env = validateEnv({
-  prefix: 'NEXT_PUBLIC_',
-  client: {
-    NEXT_PUBLIC_WEBSITE_URL: z
+  server: {
+    WEBSITE_URL: z
       .string()
       .url()
       .refine((v) => !v.endsWith('/'), 'should not end with a slash'),
+  },
+  prefix: 'NEXT_PUBLIC_',
+  client: {
     NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
   },
 
   variablesStrict: {
-    NEXT_PUBLIC_WEBSITE_URL: process.env.NEXT_PUBLIC_WEBSITE_URL,
+    WEBSITE_URL: process.env.WEBSITE_URL,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
   },
 

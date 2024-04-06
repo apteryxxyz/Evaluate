@@ -8,9 +8,7 @@ import { expand as dotenvExpand } from 'dotenv-expand';
  * @returns process.{@link process.env env}
  */
 export function loadEnv() {
-  const variables = readEnv();
-  for (const [key, value] of Object.entries(variables))
-    process.env[key] ??= value;
+  insertVariables(readEnv());
   return process.env;
 }
 
@@ -29,10 +27,19 @@ export function readEnv() {
     const contents = fs.readFileSync(location, 'utf8');
     const parsed = extractVariablesFromContents(contents);
     for (const [key, value] of Object.entries(parsed ?? {}))
-      if (value !== undefined) process.env[key] = value;
+      if (value !== undefined) variables[key] = value;
   }
 
-  return variables;
+  return expandVariables(variables);
+}
+
+/**
+ * Insert the variables into the process environment.
+ * @param variables the variables to insert
+ */
+export function insertVariables(variables: Record<string, string>) {
+  for (const [key, value] of Object.entries(variables))
+    process.env[key] ??= value;
 }
 
 /**
@@ -50,7 +57,9 @@ function getListOfEnvFiles() {
  * @returns the extracted variables
  */
 function extractVariablesFromContents(content: string) {
-  const parsed = dotenv.parse(content);
-  const expanded = dotenvExpand({ parsed, processEnv: {} });
-  return expanded.parsed as Record<string, string>;
+  return dotenv.parse(content);
+}
+
+function expandVariables(parsed: Record<string, string>) {
+  return dotenvExpand({ parsed, processEnv: parsed }).parsed ?? {};
 }

@@ -16,10 +16,6 @@
     "./validator": {
       "import": "./dist/validator.js",
       "types": "./dist/validator.d.ts"
-    },
-    "./loader/config": {
-      "import": "./dist/loader.js",
-      "types": "./dist/loader.d.ts"
     }
   },
   "scripts": {

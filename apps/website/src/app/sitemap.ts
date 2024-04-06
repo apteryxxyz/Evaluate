@@ -18,7 +18,7 @@ async function loadStaticPaths(): Promise<MetadataRoute.Sitemap> {
   return manifest.staticRoutes
     .filter((r) => !r.page.startsWith('/_'))
     .map((r) => ({
-      url: `${env.NEXT_PUBLIC_WEBSITE_URL}${r.page}`,
+      url: `${env.WEBSITE_URL}${r.page}`,
       lastModified: new Date(),
     }));
 }
@@ -26,7 +26,7 @@ async function loadStaticPaths(): Promise<MetadataRoute.Sitemap> {
 async function loadDynamicPaths(): Promise<MetadataRoute.Sitemap> {
   const runtimes = await fetchRuntimes();
   return runtimes.map((r) => ({
-    url: `${env.NEXT_PUBLIC_WEBSITE_URL}/playgrounds/${r.id}`,
+    url: `${env.WEBSITE_URL}/playgrounds/${r.id}`,
     lastModified: new Date(),
   }));
 }

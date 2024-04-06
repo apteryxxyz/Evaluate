@@ -10,7 +10,7 @@ export default function Robots(): MetadataRoute.Robots {
         disallow: ['/api', '/_next', '/static'],
       },
     ],
-    host: new URL(env.NEXT_PUBLIC_WEBSITE_URL).host,
-    sitemap: `${env.NEXT_PUBLIC_WEBSITE_URL}/sitemap.xml`,
+    host: new URL(env.WEBSITE_URL).host,
+    sitemap: `${env.WEBSITE_URL}/sitemap.xml`,
   };
 }

@@ -8,7 +8,7 @@ export function generateBaseMetadata(
 ) {
   const metadata = _.merge(
     {
-      metadataBase: new URL(env.NEXT_PUBLIC_WEBSITE_URL),
+      metadataBase: new URL(env.WEBSITE_URL),
       title: 'Evaluate',
       description:
         'Explore a diverse range of programming languages playgrounds and tools with our comprehensive online platform. Evaluate is the ultimate code evaluation tool, quickly evaluate code snippets in any programming language, with optional input and command-line arguments. Try it now!',

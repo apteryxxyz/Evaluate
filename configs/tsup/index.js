@@ -12,7 +12,7 @@ export function defineConfig(options) {
       format: ['esm'],
       target: 'es2022',
       //
-      clean: true,
+      clean: false,
       splitting: true,
       bundle: true,
       treeshake: true,

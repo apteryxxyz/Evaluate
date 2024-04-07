@@ -1,5 +1,4 @@
-import { TranslateFunctions } from '@evaluate/translate';
-import { APIEmbed } from 'discord-api-types/v10';
+import type { APIEmbed } from 'discord-api-types/v10';
 import { extractBoldText, extractCodeBlocks } from './discord-formatting';
 import { getEmbedField } from './embed-helpers';
 
@@ -10,21 +9,21 @@ import { getEmbedField } from './embed-helpers';
  * @returns the options
  * @throws if the embed does not contain the required fields
  */
-export function getEvaluateOptions(t: TranslateFunctions, embed: APIEmbed) {
-  const language = extractBoldText(embed.description ?? '')[0];
+export function getEvaluateOptions(embed: APIEmbed) {
+  const runtime = extractBoldText(embed.description ?? '')[0];
   const code = extractCodeBlocks(embed.description ?? '')[0]?.code;
 
-  if (!language || !code)
-    throw new Error('Could not find language or code in embed description');
+  if (!runtime || !code)
+    throw new Error('Could not find runtime or code in embed description');
 
-  const inputField = getEmbedField(embed, t.evaluate.input());
+  const inputField = getEmbedField(embed, 'STD Input');
   const input = extractCodeBlocks(inputField?.value ?? '')[0]?.code;
 
-  const argsField = getEmbedField(embed, t.evaluate.args());
+  const argsField = getEmbedField(embed, 'CLI Arguments');
   const args = extractCodeBlocks(argsField?.value ?? '')[0]?.code;
 
-  const outputField = getEmbedField(embed, t.evaluate.output());
+  const outputField = getEmbedField(embed, 'Output');
   const output = extractCodeBlocks(outputField?.value ?? '')[0]?.code;
 
-  return { language, code, input, args, output };
+  return { runtime: runtime, code, input, args, output };
 }

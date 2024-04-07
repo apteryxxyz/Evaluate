@@ -1,6 +1,6 @@
 import {
-  APIInteraction,
-  APIModalSubmitInteraction,
+  type APIInteraction,
+  type APIModalSubmitInteraction,
   InteractionType,
 } from 'discord-api-types/v10';
 

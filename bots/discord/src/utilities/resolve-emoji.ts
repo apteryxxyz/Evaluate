@@ -18,14 +18,14 @@ type ExtractId<T extends string> = T extends `${infer I}:a` ? I : T;
 type IsAnimated<T extends string> = T extends `${string}:a` ? true : false;
 
 /**
- * Resolve a string to an emoji
+ * Resolve a string to an emoji.
  * @param name the name of the emoji
  * @returns the emoji
  */
 export function resolveEmoji<TName extends string>(name: TName): `:${TName}:`;
 
 /**
- * Resolve a string to a custom emoji
+ * Resolve a string to a custom emoji.
  * @param name the name of the emoji
  * @param returnApi whether to return the api representation of the emoji
  * @returns the emoji
@@ -40,7 +40,7 @@ export function resolveEmoji<
 ): `<${IsAnimated<TValue> extends true ? 'a' : ''}:${TName}:${TId}>`;
 
 /**
- * Resolve a string to a custom emoji
+ * Resolve a string to a custom emoji.
  * @param name the name of the emoji
  * @param returnApi whether to return the api representation of the emoji
  * @returns the emoji
@@ -55,7 +55,7 @@ export function resolveEmoji<
 ): { id: TId; name: TName; animated: IsAnimated<TValue> };
 
 /**
- * Resolve a string to a unicode emoji
+ * Resolve a string to a unicode emoji.
  * @param name the name of the emoji
  * @param returnApi whether to return the api representation of the emoji
  * @returns the emoji
@@ -66,7 +66,7 @@ export function resolveEmoji<
 >(name: TName, returnApi?: false): TValue;
 
 /**
- * Resolve a string to a unicode emoji
+ * Resolve a string to a unicode emoji.
  * @param name the name of the emoji
  * @param returnApi whether to return the api representation of the emoji
  * @returns the emoji

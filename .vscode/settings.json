@@ -9,7 +9,8 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/{dist,.next,.plasmo,.turbo,.nx}": true
   },
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#2fc186",
@@ -22,45 +23,21 @@
   },
   "cSpell.language": "en-GB",
   "cSpell.words": [
-    "analyzer",
     "apteryx",
-    "autocapture",
-    "biomejs",
-    "carbonara",
-    "clsx",
-    "cooldown",
-    "CSUI",
-    "darkreader",
     "dialog",
-    "formatjs",
-    "geist",
-    "gtag",
+    "disableable",
     "hookform",
-    "japi",
-    "Lexer",
-    "lexure",
     "lucide",
-    "messageformat",
-    "pageleave",
-    "pageview",
     "pako",
-    "plasmo",
-    "plasmohq",
+    "PLASMO",
     "popover",
-    "posthog",
-    "prismjs",
+    "POSTHOG",
+    "ratelimit",
     "runtimes",
-    "shadcn",
-    "sonner",
-    "tailwindcss",
-    "tspaths",
-    "tsup"
+    "tanstack",
+    "upstash"
   ],
-  "tailwindCSS.classAttributes": [
-    "class",
-    "className",
-    "preClassName",
-    "textareaClassName"
-  ],
-  "tailwindCSS.experimental.configFile": "./packages/react/tailwind.config.cjs"
+  "tailwindCSS.classAttributes": ["class", "className"],
+  "tailwindCSS.experimental.configFile": "./packages/react/tailwind.config.cjs",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,8 +1,8 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import type { SlashCommandBuilder } from '@discordjs/builders';
 import {
-  APIApplicationCommandAutocompleteInteraction,
-  APIChatInputApplicationCommandInteraction,
-  APIInteraction,
+  type APIApplicationCommandAutocompleteInteraction,
+  type APIChatInputApplicationCommandInteraction,
+  type APIInteraction,
   ApplicationCommandType,
   InteractionType,
 } from 'discord-api-types/v10';

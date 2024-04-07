@@ -1,62 +1,50 @@
-import { determineLocale, getTranslate } from '@evaluate/translate';
 import { createChatInputCommand } from '~/builders/chat-input';
 import { api } from '~/core';
 import { getOption } from '~/utilities/interaction-helpers';
-import { applyLocalisations } from '~/utilities/localisation-helpers';
 import { createEvaluateModal } from './_/builders';
 import { handleEvaluating } from './_/handlers';
 
 export default createChatInputCommand(
   (builder) =>
-    applyLocalisations(builder, ['evaluate', 'evaluate.description'])
-      .addStringOption((option) =>
-        applyLocalisations(option, [
-          'evaluate.language',
-          'evaluate.language.description',
-        ])
-          .setMinLength(1)
-          .setMaxLength(100),
+    builder
+      .setName('evaluate')
+      .setDescription(
+        'Evaluate any piece of code in any runtime with optional input and command line arguments.',
       )
       .addStringOption((option) =>
-        applyLocalisations(option, [
-          'evaluate.code',
-          'evaluate.code.description',
-        ])
-          .setMinLength(1)
-          .setMaxLength(4000),
+        option
+          .setName('runtime')
+          .setDescription('The runtime in which the code is written.'),
       )
       .addStringOption((option) =>
-        applyLocalisations(option, [
-          'evaluate.input',
-          'evaluate.input.description',
-        ])
-          .setMinLength(1)
-          .setMaxLength(4000),
+        option.setName('code').setDescription('The source code to evaluate.'),
       )
       .addStringOption((option) =>
-        applyLocalisations(option, [
-          'evaluate.args',
-          'evaluate.args.description',
-        ])
-          .setMinLength(1)
-          .setMaxLength(500),
+        option
+          .setName('input')
+          .setDescription('The STDIN input to provide to the program.')
+          .setRequired(false),
+      )
+      .addStringOption((option) =>
+        option
+          .setName('arguments')
+          .setDescription(
+            'Additional command line arguments to pass to the program.',
+          )
+          .setRequired(false),
       ),
 
   async (interaction) => {
-    const language = getOption<string>(interaction.data, 'language')?.value;
+    const runtime = getOption<string>(interaction.data, 'runtime')?.value;
     const code = getOption<string>(interaction.data, 'code')?.value;
     const input = getOption<string>(interaction.data, 'input')?.value;
     const args = getOption<string>(interaction.data, 'arguments')?.value;
+    const data = { runtime, code, input, args };
 
-    const t = getTranslate(determineLocale(interaction));
-
-    if (language && code) {
-      const options = { language, code, input, args };
-      return handleEvaluating('new', t, interaction, options, {});
+    if (runtime && code) {
+      return handleEvaluating('new', interaction, data as never);
     } else {
-      const options = { language, code, input, args };
-      const modal = createEvaluateModal(t, options) //
-        .setCustomId('evaluate,new');
+      const modal = createEvaluateModal(data).setCustomId('evaluate,new');
       return api.interactions.createModal(
         interaction.id,
         interaction.token,

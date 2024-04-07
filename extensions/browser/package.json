@@ -1,52 +1,58 @@
 {
   "name": "@evaluate/browser-extension",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
+  "manifest": {
+    "name": "Evaluate - Execute Any Code, Anywhere, Anytime",
+    "short_name": "Evaluate",
+    "description": "Execute any code snippet on any website with Evaluate.",
+    "version": "0.0.3",
+    "author": "Apteryx Software",
+    "homepage_url": "https://evaluate.run",
+    "manifest_version": 3,
+    "permissions": ["activeTab", "scripting"]
+  },
   "scripts": {
+    "lint": "biome lint . --apply",
     "format": "biome format . --write",
-    "lint": "biome lint .",
     "check": "tsc --noEmit",
     "dev": "plasmo dev",
+    "build:styles": "cp ../../packages/react/style.css ./src/style.css",
     "build": "pnpm build:chrome & pnpm build:firefox && pnpm build:edge & pnpm build:opera & pnpm build:brave",
     "build:chrome": "plasmo build --target=chrome-mv3 --zip",
     "build:firefox": "plasmo build --target=firefox-mv3 --zip",
     "build:edge": "plasmo build --target=edge-mv3 --zip",
     "build:opera": "plasmo build --target=opera-mv3 --zip",
-    "build:brave": "plasmo build --target=brave-mv3 --zip"
+    "build:brave": "plasmo build --target=brave-mv3 --zip",
+    "package": "plasmo package"
   },
   "dependencies": {
-    "@evaluate/compress": "workspace:^",
-    "@evaluate/execute": "workspace:^",
-    "@evaluate/languages": "workspace:^",
+    "@evaluate/engine": "workspace:^",
+    "@evaluate/env": "workspace:^",
     "@evaluate/react": "workspace:^",
-    "@evaluate/translate": "workspace:^",
-    "@plasmohq/storage": "1.9.0",
-    "framer-motion": "^10.18.0",
+    "@plasmohq/storage": "^1.9.3",
+    "@radix-ui/react-toast": "^1.1.5",
+    "@ts-rest/core": "^3.41.1",
+    "class-variance-authority": "^0.7.0",
+    "framer-motion": "^11.0.25",
+    "fuse.js": "^7.0.0",
     "lodash": "^4.17.21",
-    "lucide-react": "^0.294.0",
+    "lucide-react": "^0.338.0",
     "posthog-js": "npm:@apteryxxyz/posthog-js@^1.105.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "zod": "^3.22.4"
+    "sonner": "^1.4.41",
+    "zod": "^3.22.4",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.254",
-    "@types/lodash": "^4.14.202",
-    "@types/node": "^20.11.20",
-    "@types/react": "^18.2.57",
-    "autoprefixer": "^10.4.17",
-    "plasmo": "^0.84.2",
-    "postcss": "^8.4.35",
-    "tailwindcss": "^3.4.1"
-  },
-  "manifest": {
-    "name": "Evaluate - Execute Any Code, Anywhere, Anytime",
-    "short_name": "Evaluate",
-    "description": "Code in any language, anytime, anywhere with Evaluate.",
-    "version": "0.0.2",
-    "author": "Apteryx Software",
-    "homepage_url": "https://evaluate.run",
-    "manifest_version": 3,
-    "permissions": ["activeTab", "scripting"]
+    "@types/chrome": "^0.0.263",
+    "@types/lodash": "^4.17.0",
+    "@types/node": "^20.12.5",
+    "@types/react": "^18.2.74",
+    "autoprefixer": "^10.4.19",
+    "plasmo": "^0.85.2",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3"
   }
 }

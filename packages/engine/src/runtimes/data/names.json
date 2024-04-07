@@ -1,0 +1,571 @@
+{
+  "awk+gawk": {
+    "name": "GNU AWK (GNU AWK)",
+    "aliases": ["gawk", "awk"],
+    "popularity": 0,
+    "tags": []
+  },
+  "bash": {
+    "name": "Bash",
+    "aliases": ["sh", "bash"],
+    "popularity": 32.37,
+    "tags": ["scripting"]
+  },
+  "basic+mono": {
+    "name": "BASIC (Mono)",
+    "aliases": ["vb", "mono vb", "mono basic", "visual basic", "basic", "qb"],
+    "popularity": 0,
+    "tags": []
+  },
+  "basicdotnet+dotnet": {
+    "name": "BASIC.NET (.NET)",
+    "aliases": [
+      "basic",
+      "visual-basic",
+      "visual-basic.net",
+      "vb",
+      "vb.net",
+      "vb-dotnet",
+      "dotnet-vb",
+      "basic-dotnet",
+      "dotnet-basic",
+      "basic.net",
+      "qb.net"
+    ],
+    "popularity": 4.07,
+    "tags": []
+  },
+  "befunge93": {
+    "name": "Befunge 93",
+    "aliases": ["b93", "befunge 93", "befunge93"],
+    "popularity": 0,
+    "tags": []
+  },
+  "bqn": {
+    "name": "BQN",
+    "aliases": ["bqn"],
+    "popularity": 0,
+    "tags": []
+  },
+  "brachylog": {
+    "name": "Brachylog",
+    "aliases": ["brachylog"],
+    "popularity": 0,
+    "tags": []
+  },
+  "brainfuck": {
+    "name": "Brainfuck",
+    "aliases": ["bf", "brainfuck"],
+    "popularity": 0,
+    "tags": []
+  },
+  "c+gcc": {
+    "name": "C (GCC)",
+    "aliases": ["gcc", "c"],
+    "popularity": 19.34,
+    "tags": []
+  },
+  "cjam": {
+    "name": "CJam",
+    "aliases": ["cjam"],
+    "popularity": 0,
+    "tags": []
+  },
+  "clojure": {
+    "name": "Clojure",
+    "aliases": ["clojure", "clj"],
+    "popularity": 1.26,
+    "tags": ["functional"]
+  },
+  "cobol": {
+    "name": "COBOL",
+    "aliases": ["cob", "cobol"],
+    "popularity": 0.66,
+    "tags": []
+  },
+  "coffeescript": {
+    "name": "CoffeeScript",
+    "aliases": ["coffeescript", "coffee"],
+    "popularity": 0,
+    "tags": ["scripting"]
+  },
+  "cow": {
+    "name": "COW",
+    "aliases": ["cow"],
+    "popularity": 0,
+    "tags": []
+  },
+  "cplusplus+gcc": {
+    "name": "C++ (GCC)",
+    "aliases": ["cpp", "g++", "c++", "cxx"],
+    "popularity": 22.42,
+    "tags": []
+  },
+  "crystal": {
+    "name": "Crystal",
+    "aliases": ["crystal", "cr"],
+    "popularity": 0.44,
+    "tags": []
+  },
+  "csharp+mono": {
+    "name": "C# (Mono)",
+    "aliases": [
+      "mono",
+      "mono-csharp",
+      "mono-c#",
+      "mono-cs",
+      "c#",
+      "cs",
+      "csharp"
+    ],
+    "popularity": 27.62,
+    "tags": []
+  },
+  "csharpdotnet+dotnet": {
+    "name": "C#.NET (.NET)",
+    "aliases": [
+      "csharp",
+      "c#",
+      "cs",
+      "c#.net",
+      "cs.net",
+      "c#-dotnet",
+      "cs-dotnet",
+      "csharp-dotnet",
+      "dotnet-c#",
+      "dotnet-cs",
+      "dotnet-csharp",
+      "csharp.net"
+    ],
+    "popularity": 0,
+    "tags": []
+  },
+  "d+gcc": {
+    "name": "D (GCC)",
+    "aliases": ["gdc", "d"],
+    "popularity": 0,
+    "tags": ["scripting"]
+  },
+  "dart": {
+    "name": "Dart",
+    "aliases": ["dart"],
+    "popularity": 6.02,
+    "tags": []
+  },
+  "dash": {
+    "name": "Dash",
+    "aliases": ["dash"],
+    "popularity": 0,
+    "tags": []
+  },
+  "dragon": {
+    "name": "Dragon",
+    "aliases": ["dragon"],
+    "popularity": 0,
+    "tags": []
+  },
+  "elixir": {
+    "name": "Elixir",
+    "aliases": ["elixir", "exs"],
+    "popularity": 2.32,
+    "tags": ["functional"]
+  },
+  "emacs": {
+    "name": "Emacs",
+    "aliases": ["emacs", "el", "elisp"],
+    "popularity": 0,
+    "tags": []
+  },
+  "emojicode": {
+    "name": "Emojicode",
+    "aliases": ["emojic", "emojicode"],
+    "popularity": 0,
+    "tags": []
+  },
+  "erlang": {
+    "name": "Erlang",
+    "aliases": ["erlang", "erl", "escript"],
+    "popularity": 0.99,
+    "tags": ["functional"]
+  },
+  "file": {
+    "name": "File",
+    "aliases": ["executable", "elf", "binary", "file"],
+    "popularity": 0,
+    "tags": []
+  },
+  "forte": {
+    "name": "Forte",
+    "aliases": ["forter", "forte"],
+    "popularity": 0,
+    "tags": []
+  },
+  "forth": {
+    "name": "Forth",
+    "aliases": ["gforth", "forth"],
+    "popularity": 0,
+    "tags": []
+  },
+  "fortran+gcc": {
+    "name": "Fortran (GCC)",
+    "aliases": ["fortran", "f90"],
+    "popularity": 0,
+    "tags": []
+  },
+  "freebasic": {
+    "name": "FreeBASIC",
+    "aliases": ["bas", "fbc", "basic", "qbasic", "quickbasic", "freebasic"],
+    "popularity": 0,
+    "tags": []
+  },
+  "fsharpdotnet+dotnet": {
+    "name": "F#.NET (.NET)",
+    "aliases": [
+      "fsharp",
+      "fs",
+      "f#",
+      "fs.net",
+      "f#.net",
+      "fsharp-dotnet",
+      "fs-dotnet",
+      "f#-dotnet",
+      "dotnet-fsharp",
+      "dotnet-fs",
+      "fsharp.net"
+    ],
+    "popularity": 0.97,
+    "tags": ["functional"]
+  },
+  "fsi+dotnet": {
+    "name": "FSI (.NET)",
+    "aliases": [
+      "fsx",
+      "fsharp-interactive",
+      "f#-interactive",
+      "dotnet-fsi",
+      "fsi-dotnet",
+      "fsi.net",
+      "fsi"
+    ],
+    "popularity": 0,
+    "tags": []
+  },
+  "go": {
+    "name": "Go",
+    "aliases": ["go", "golang"],
+    "popularity": 13.24,
+    "tags": ["scripting"]
+  },
+  "golfscript": {
+    "name": "GolfScript",
+    "aliases": ["golfscript"],
+    "popularity": 0,
+    "tags": []
+  },
+  "groovy": {
+    "name": "Groovy",
+    "aliases": ["groovy", "gvy"],
+    "popularity": 3.4,
+    "tags": ["scripting"]
+  },
+  "haskell": {
+    "name": "Haskell",
+    "aliases": ["haskell", "hs"],
+    "popularity": 2.09,
+    "tags": ["functional"]
+  },
+  "husk": {
+    "name": "Husk",
+    "aliases": ["husk"],
+    "popularity": 0,
+    "tags": []
+  },
+  "iverilog": {
+    "name": "Verilog",
+    "aliases": ["verilog", "vvp", "iverilog"],
+    "popularity": 0,
+    "tags": []
+  },
+  "japt": {
+    "name": "Japt",
+    "aliases": ["japt"],
+    "popularity": 0,
+    "tags": []
+  },
+  "java": {
+    "name": "Java",
+    "aliases": ["java"],
+    "popularity": 30.55,
+    "tags": []
+  },
+  "javascript+node": {
+    "name": "JavaScript (Node)",
+    "aliases": ["js", "node", "javascript"],
+    "popularity": 63.61,
+    "tags": ["scripting"]
+  },
+  "javascript+deno": {
+    "name": "JavaScript (Deno)",
+    "aliases": ["js", "deno", "javascript"],
+    "popularity": 0,
+    "tags": ["scripting"]
+  },
+  "jelly": {
+    "name": "Jelly",
+    "aliases": ["jelly"],
+    "popularity": 0,
+    "tags": []
+  },
+  "julia": {
+    "name": "Julia",
+    "aliases": ["jl", "julia"],
+    "popularity": 1.15,
+    "tags": []
+  },
+  "kotlin": {
+    "name": "Kotlin",
+    "aliases": ["kt", "kotlin"],
+    "popularity": 9.06,
+    "tags": []
+  },
+  "lisp": {
+    "name": "Lisp",
+    "aliases": ["lisp", "cl", "sbcl", "commonlisp"],
+    "popularity": 1.53,
+    "tags": ["functional"]
+  },
+  "llvm_ir": {
+    "name": "LLVM IR",
+    "aliases": ["llvm", "llvm-ir", "ll", "llvm ir", "llvm_ir"],
+    "popularity": 0,
+    "tags": []
+  },
+  "lolcode": {
+    "name": "LOLCODE",
+    "aliases": ["lol", "lci", "lolcode"],
+    "popularity": 0,
+    "tags": []
+  },
+  "lua": {
+    "name": "Lua",
+    "aliases": ["lua"],
+    "popularity": 6.09,
+    "tags": ["scripting"]
+  },
+  "matl": {
+    "name": "MATLAB",
+    "aliases": ["matlab", "matl"],
+    "popularity": 3.81,
+    "tags": []
+  },
+  "nasm+nasm": {
+    "name": "NASM (NASM)",
+    "aliases": ["asm", "nasm32", "nasm"],
+    "popularity": 0,
+    "tags": []
+  },
+  "nasm64+nasm": {
+    "name": "NASM64 (NASM)",
+    "aliases": ["asm64", "nasm64"],
+    "popularity": 0,
+    "tags": []
+  },
+  "nim": {
+    "name": "Nim",
+    "aliases": ["nim"],
+    "popularity": 0.38,
+    "tags": []
+  },
+  "ocaml": {
+    "name": "OCaml",
+    "aliases": ["ocaml", "ml"],
+    "popularity": 0.7,
+    "tags": ["functional"]
+  },
+  "octave": {
+    "name": "GNU Octave",
+    "aliases": ["matlab", "m", "gnu octave", "octave"],
+    "popularity": 0,
+    "tags": []
+  },
+  "osabie": {
+    "name": "05AB1E",
+    "aliases": ["osabie", "05AB1E", "usable", "05ab1e"],
+    "popularity": 0,
+    "tags": []
+  },
+  "paradoc": {
+    "name": "Paradoc",
+    "aliases": ["paradoc"],
+    "popularity": 0,
+    "tags": []
+  },
+  "pascal": {
+    "name": "Pascal",
+    "aliases": ["freepascal", "pp", "pas", "pascal"],
+    "popularity": 0,
+    "tags": []
+  },
+  "perl": {
+    "name": "Perl",
+    "aliases": ["pl", "perl"],
+    "popularity": 2.46,
+    "tags": ["scripting"]
+  },
+  "php": {
+    "name": "PHP",
+    "aliases": ["php"],
+    "popularity": 18.59,
+    "tags": ["scripting"]
+  },
+  "ponylang": {
+    "name": "Pony",
+    "aliases": ["pony", "ponyc", "ponylang"],
+    "popularity": 0,
+    "tags": []
+  },
+  "powershell+pwsh": {
+    "name": "PowerShell (PowerShell)",
+    "aliases": ["ps", "pwsh", "ps1", "powershell"],
+    "popularity": 13.59,
+    "tags": ["scripting"]
+  },
+  "prolog": {
+    "name": "Prolog",
+    "aliases": ["prolog", "plg"],
+    "popularity": 0.89,
+    "tags": []
+  },
+  "pure": {
+    "name": "Pure",
+    "aliases": ["pure"],
+    "popularity": 0,
+    "tags": []
+  },
+  "pyth": {
+    "name": "Pyth",
+    "aliases": ["pyth"],
+    "popularity": 0,
+    "tags": []
+  },
+  "python": {
+    "name": "Python",
+    "aliases": ["py", "py3", "python3", "python3.10", "python"],
+    "popularity": 49.28,
+    "tags": ["scripting"]
+  },
+  "python2": {
+    "name": "Python2",
+    "aliases": ["py2", "python2"],
+    "popularity": 0,
+    "tags": ["scripting"]
+  },
+  "racket": {
+    "name": "Racket",
+    "aliases": ["rkt", "racket"],
+    "popularity": 0,
+    "tags": ["functional"]
+  },
+  "raku": {
+    "name": "Raku",
+    "aliases": ["raku", "rakudo", "perl6", "p6", "pl6"],
+    "popularity": 0.18,
+    "tags": []
+  },
+  "retina": {
+    "name": "Retina",
+    "aliases": ["ret", "retina"],
+    "popularity": 0,
+    "tags": []
+  },
+  "rockstar": {
+    "name": "Rockstar",
+    "aliases": ["rock", "rocky", "rockstar"],
+    "popularity": 0,
+    "tags": []
+  },
+  "rscript": {
+    "name": "R",
+    "aliases": ["r", "rscript"],
+    "popularity": 4.23,
+    "tags": []
+  },
+  "ruby": {
+    "name": "Ruby",
+    "aliases": ["ruby3", "rb", "ruby"],
+    "popularity": 6.23,
+    "tags": ["scripting"]
+  },
+  "rust": {
+    "name": "Rust",
+    "aliases": ["rs", "rust"],
+    "popularity": 13.05,
+    "tags": []
+  },
+  "samarium": {
+    "name": "Samarium",
+    "aliases": ["sm", "samarium"],
+    "popularity": 0,
+    "tags": []
+  },
+  "scala": {
+    "name": "Scala",
+    "aliases": ["sc", "scala", "scal"],
+    "popularity": 2.77,
+    "tags": ["functional"]
+  },
+  "smalltalk": {
+    "name": "Smalltalk",
+    "aliases": ["st", "smalltalk", "squeak"],
+    "popularity": 0,
+    "tags": []
+  },
+  "sqlite3": {
+    "name": "SQLite3",
+    "aliases": ["sqlite", "sql", "sqlite3"],
+    "popularity": 0,
+    "tags": []
+  },
+  "swift": {
+    "name": "Swift",
+    "aliases": ["swift"],
+    "popularity": 4.65,
+    "tags": []
+  },
+  "typescript+deno": {
+    "name": "TypeScript (Deno)",
+    "aliases": ["ts", "deno", "typescript"],
+    "popularity": 0,
+    "tags": []
+  },
+  "typescript+node": {
+    "name": "TypeScript (Node)",
+    "aliases": ["ts", "node", "typescript"],
+    "popularity": 38.87,
+    "tags": []
+  },
+  "vlang": {
+    "name": "V",
+    "aliases": ["v", "vlang"],
+    "popularity": 0,
+    "tags": []
+  },
+  "vyxal": {
+    "name": "Vyxal",
+    "aliases": ["vyxal"],
+    "popularity": 0,
+    "tags": []
+  },
+  "yeethon": {
+    "name": "Yeethon",
+    "aliases": ["yeethon3", "yeethon", "yee"],
+    "popularity": 0,
+    "tags": []
+  },
+  "zig": {
+    "name": "Zig",
+    "aliases": ["zig"],
+    "popularity": 0.83,
+    "tags": []
+  }
+}

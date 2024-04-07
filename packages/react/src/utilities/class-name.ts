@@ -9,3 +9,9 @@ import { twMerge } from 'tailwind-merge';
 export function cn(...className: ClassValue[]) {
   return twMerge(clsx(className));
 }
+
+declare module 'react' {
+  interface CSSProperties {
+    [key: `--${string}`]: string | number;
+  }
+}

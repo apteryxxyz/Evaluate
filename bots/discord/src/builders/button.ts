@@ -1,6 +1,6 @@
 import {
-  APIInteraction,
-  APIMessageComponentButtonInteraction,
+  type APIInteraction,
+  type APIMessageComponentButtonInteraction,
   ComponentType,
   InteractionType,
 } from 'discord-api-types/v10';

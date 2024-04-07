@@ -1,4 +1,3 @@
-import { useElementBounds } from '@evaluate/react/hooks/element-bounds';
 import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { motion } from 'framer-motion';
 import type {
@@ -8,13 +7,11 @@ import type {
   PlasmoGetStyle,
 } from 'plasmo';
 import { useCallback, useRef, useState } from 'react';
-import { AnalyticsProvider } from '~contexts/analytics';
 import { EnabledConsumer, EnabledProvider } from '~contexts/enabled';
 import { ThemeProvider } from '~contexts/theme';
-import { TranslateProvider } from '~contexts/translate';
+import { useElementBounds } from '~hooks/use-element-bounds';
 import { RunButton } from './_components/run-button';
-// @ts-ignore
-import tailwind from 'data-text:../styles/tailwind.css';
+import { RuntimesProvider } from './_contexts/runtimes';
 
 export const config: PlasmoCSConfig = {
   matches: ['<all_urls>'],
@@ -23,56 +20,54 @@ export const config: PlasmoCSConfig = {
 export const getOverlayAnchorList: PlasmoGetOverlayAnchorList = () =>
   document.querySelectorAll('pre');
 
+// @ts-ignore
+import styles from 'data-text:~style.css';
+import { Toaster } from './_components/toast/toaster';
 export const getStyle: PlasmoGetStyle = () => {
   const link = document.createElement('link');
+  link.rel = 'stylesheet';
   link.href =
     'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
-  link.rel = 'stylesheet';
   document.head.appendChild(link);
 
   const style = document.createElement('style');
-  style.textContent = tailwind.replaceAll(':root', ':host');
+  style.textContent = styles.replaceAll(':root', ':host');
   return style;
 };
 
 export default function ContentWrapper(p: PlasmoCSUIProps) {
   return (
-    <AnalyticsProvider>
-      <TranslateProvider>
-        <EnabledProvider>
-          <EnabledConsumer>
-            {({ isEnabledFor }) => {
-              const domain = window.location.hostname;
-              if (!isEnabledFor(domain)) return null;
+    <EnabledProvider>
+      <EnabledConsumer>
+        {({ isEnabledFor }) => {
+          const domain = window.location.hostname;
+          if (!isEnabledFor(domain)) return null;
 
-              return (
-                <ThemeProvider
-                  getTargets={() =>
-                    Array.from(document.querySelectorAll('plasmo-csui')) //
-                      .flatMap(
-                        (s) =>
-                          s.shadowRoot?.getElementById(
-                            'plasmo-shadow-container',
-                          ) ?? null,
-                      )
-                  }
-                >
-                  <Content {...p} />
-                </ThemeProvider>
-              );
-            }}
-          </EnabledConsumer>
-        </EnabledProvider>
-      </TranslateProvider>
-    </AnalyticsProvider>
+          return (
+            <ThemeProvider
+              getTargets={() =>
+                Array.from(document.querySelectorAll('plasmo-csui')) //
+                  .flatMap(
+                    (s) =>
+                      s.shadowRoot?.getElementById('plasmo-shadow-container') ??
+                      null,
+                  )
+              }
+            >
+              <Content {...p} />
+            </ThemeProvider>
+          );
+        }}
+      </EnabledConsumer>
+    </EnabledProvider>
   );
 }
 
-export function Content(p: PlasmoCSUIProps) {
+function Content(p: PlasmoCSUIProps) {
   const anchorRef = useRef<HTMLPreElement>(null);
+  Reflect.set(anchorRef, 'current', p.anchor?.element);
   const overlayRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
-  Reflect.set(anchorRef, 'current', p.anchor!.element);
 
   const anchorBounds = useElementBounds(anchorRef, 'ref', ['resize', 'scroll']);
   const overlayBounds = useElementBounds(overlayRef, 'state', ['resize']);
@@ -106,7 +101,9 @@ export function Content(p: PlasmoCSUIProps) {
         animate={isHovered ? 'visible' : 'hidden'}
         variants={{ visible: { opacity: 1 }, hidden: { opacity: 0 } }}
       >
-        <RunButton preElement={anchorRef.current!} dialogRef={dialogRef} />
+        <RuntimesProvider>
+          <RunButton preElement={anchorRef.current!} dialogRef={dialogRef} />
+        </RuntimesProvider>
       </motion.div>
 
       <div
@@ -114,6 +111,8 @@ export function Content(p: PlasmoCSUIProps) {
         style={{ fontFamily: 'Inter', maxHeight: '95dvh' }}
         className="text-black dark:text-white"
       />
+
+      <Toaster />
     </>
   );
 }

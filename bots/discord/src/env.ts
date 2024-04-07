@@ -1,24 +1,38 @@
+import { readEnv } from '@evaluate/env/loader';
+import { validateEnv } from '@evaluate/env/validator';
 import { z } from 'zod';
 
-const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'production']).default('development'),
+if (process.env.ORIGINAL_ARGV?.includes('--production'))
+  Reflect.set(process.env, 'NODE_ENV', 'production');
 
-  WEBSITE_URL: z.string().url(),
-  POSTHOG_KEY: z.string().min(1).optional(),
+export const env = validateEnv({
+  server: {
+    WEBSITE_URL: z
+      .string()
+      .url()
+      .refine((v) => !v.endsWith('/'), 'should not end with a slash'),
+    DISCORD_TOKEN: z.string().min(1).optional(),
+    DISCORD_PUBLIC_KEY: z.string().min(1).optional(),
+    DISCORD_CLIENT_ID: z.string().min(1).optional(),
+    DISCORD_CLIENT_SECRET: z.string().min(1).optional(),
+    POSTHOG_KEY: z.string().min(1).optional(),
+  },
 
-  DISCORD_TOKEN: z.string().min(1),
-  DISCORD_PUBLIC_KEY: z.string().min(1),
-  DISCORD_CLIENT_ID: z.string().min(1),
-  DISCORD_CLIENT_SECRET: z.string().min(1),
+  variables: { ...readEnv(), ...process.env },
+
+  onValid(env) {
+    if (
+      !env.DISCORD_TOKEN ||
+      !env.DISCORD_PUBLIC_KEY ||
+      !env.DISCORD_CLIENT_ID ||
+      !env.DISCORD_CLIENT_SECRET
+    )
+      console.warn(
+        'Missing Discord bot environment variables, it will be disabled.',
+      );
+    if (!env.POSTHOG_KEY)
+      console.warn(
+        'Missing Posthog environment variable, analytics will be disabled.',
+      );
+  },
 });
-
-export type Env = z.infer<typeof envSchema>;
-export const env = envSchema.parse(process.env);
-
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv extends Env {
-      [key: Uppercase<string>]: string | undefined;
-    }
-  }
-}

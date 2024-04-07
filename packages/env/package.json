@@ -1,0 +1,37 @@
+{
+  "name": "@evaluate/env",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/validator.js",
+  "module": "./dist/validator.js",
+  "exports": {
+    ".": {
+      "import": "./dist/validator.js",
+      "types": "./dist/validator.d.ts"
+    },
+    "./loader": {
+      "import": "./dist/loader.js",
+      "types": "./dist/loader.d.ts"
+    },
+    "./validator": {
+      "import": "./dist/validator.js",
+      "types": "./dist/validator.d.ts"
+    }
+  },
+  "scripts": {
+    "lint": "biome lint . --apply",
+    "format": "biome format . --write",
+    "check": "tsc --noEmit",
+    "build": "tsup",
+    "dev": "pnpm build --watch"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "dotenv-expand": "^11.0.6",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@configs/tsup": "workspace:^",
+    "@types/node": "^20.12.5"
+  }
+}

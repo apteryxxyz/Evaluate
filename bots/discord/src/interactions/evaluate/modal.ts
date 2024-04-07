@@ -1,4 +1,3 @@
-import { determineLocale, getTranslate } from '@evaluate/translate';
 import { createModalComponent } from '~/builders/modal';
 import { getField } from '~/utilities/interaction-helpers';
 import { handleEvaluating } from './_/handlers';
@@ -8,11 +7,9 @@ export default createModalComponent(
 
   async (interaction) => {
     const [, action] = interaction.data.custom_id.split(',');
-    const t = getTranslate(determineLocale(interaction));
-
     if (action === 'new' || action === 'edit')
-      return handleEvaluating(action, t, interaction, {
-        language: getField(interaction, 'language', true)?.value,
+      return handleEvaluating(action, interaction, {
+        runtime: getField(interaction, 'runtime', true)?.value,
         code: getField(interaction, 'code', true)?.value,
         input: getField(interaction, 'input')?.value,
         args: getField(interaction, 'args')?.value,

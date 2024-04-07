@@ -11,6 +11,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 import { Toaster } from '@evaluate/react/components/toast';
 import '@evaluate/react/style.css';
+import { cn } from '@evaluate/react/utilities/class-name';
 import { Footer } from '~/components/footer';
 import './layout.css';
 
@@ -27,7 +28,10 @@ export default function RootLayout(p: LayoutProps) {
 
         <body
           key="body"
-          className={`${inter.className}flex min-h-screen flex-col overflow-y-scroll`}
+          className={cn(
+            inter.className,
+            'flex min-h-screen flex-col overflow-y-scroll',
+          )}
         >
           <BodyProviders>
             <Header />

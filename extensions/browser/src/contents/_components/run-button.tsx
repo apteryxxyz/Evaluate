@@ -48,6 +48,8 @@ export function RunButton(p: {
     setIsFetching(false);
 
     analytics?.capture('code executed', {
+      $set: { platform: 'browser extension' },
+      platform: 'browser extension',
       'runtime id': runtime.id,
       'was successful':
         result.run.code === 0 && (!result.compile || result.compile.code === 0),

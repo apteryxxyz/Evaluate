@@ -34,7 +34,7 @@ export default createChatInputCommand(
           .setRequired(false),
       ),
 
-  async (interaction) => {
+  (interaction) => {
     const runtime = getOption<string>(interaction.data, 'runtime')?.value;
     const code = getOption<string>(interaction.data, 'code')?.value;
     const input = getOption<string>(interaction.data, 'input')?.value;

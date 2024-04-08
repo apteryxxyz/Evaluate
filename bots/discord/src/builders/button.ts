@@ -8,7 +8,9 @@ import {
 export interface ButtonComponent {
   type: ComponentType.Button;
   check(interaction: APIMessageComponentButtonInteraction): boolean;
-  handler(interaction: APIMessageComponentButtonInteraction): Promise<unknown>;
+  handler(
+    interaction: APIMessageComponentButtonInteraction,
+  ): Promise<unknown> | unknown;
 }
 
 /**

@@ -7,7 +7,7 @@ import {
 export interface ModalComponent {
   type: InteractionType.ModalSubmit;
   check(interaction: APIModalSubmitInteraction): boolean;
-  handler(interaction: APIModalSubmitInteraction): Promise<unknown>;
+  handler(interaction: APIModalSubmitInteraction): Promise<unknown> | unknown;
 }
 
 /**

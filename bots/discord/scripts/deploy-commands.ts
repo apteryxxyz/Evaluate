@@ -12,7 +12,12 @@ async function main(_argc: number, _argv: string[]) {
 
   console.info('Deploying commands...');
   const commands = Object.values(chatInputCommands) //
-    .map((c) => c.builder(new SlashCommandBuilder()).toJSON());
+    .map((c) => ({
+      ...c.builder(new SlashCommandBuilder()).toJSON(),
+      integration_types: [0, 1],
+      contexts: [0, 1, 2],
+    }));
+
   await api.applicationCommands //
     .bulkOverwriteGlobalCommands(env.DISCORD_CLIENT_ID, commands);
   console.info('Done!');

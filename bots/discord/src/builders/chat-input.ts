@@ -14,10 +14,10 @@ export interface ChatInputCommand {
   ): Partial<SlashCommandBuilder> & Pick<SlashCommandBuilder, 'toJSON'>;
   autocomplete?(
     interaction: APIApplicationCommandAutocompleteInteraction,
-  ): Promise<unknown>;
+  ): Promise<unknown> | unknown;
   handler(
     interaction: APIChatInputApplicationCommandInteraction,
-  ): Promise<unknown>;
+  ): Promise<unknown> | unknown;
 }
 
 /**

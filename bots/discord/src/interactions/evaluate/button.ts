@@ -7,7 +7,7 @@ import { createEvaluateModal } from './_/builders';
 export default createButtonComponent(
   (i) => i.data.custom_id.startsWith('evaluate,'),
 
-  async (interaction) => {
+  (interaction) => {
     if (
       getUser(interaction)?.id !== interaction.message?.interaction?.user.id
     ) {
@@ -30,5 +30,7 @@ export default createButtonComponent(
         modal.toJSON(),
       );
     }
+
+    throw new Error(`Unknown action: ${action}`);
   },
 );

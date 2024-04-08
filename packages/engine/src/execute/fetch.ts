@@ -31,7 +31,7 @@ export async function executeCode(options: ExecuteOptions) {
         version,
         files: Object.entries(options.files)
           .map(([name, content]) => ({ name, content }))
-          .toSorted((a, b) => {
+          .sort((a, b) => {
             if (options.entry === a.name) return -1;
             if (options.entry === b.name) return 1;
             return 0;

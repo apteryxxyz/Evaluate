@@ -42,7 +42,7 @@ export default function PlaygroundsPageContent(p: {
   type SortBy = 'popularity' | 'name';
   const [sortBy, setSortBy] = useQueryParameter<SortBy>('sort', 'popularity');
   const sortedRuntimes = useMemo(() => {
-    return queriedRuntimes.toSorted((a, b) => {
+    return queriedRuntimes.sort((a, b) => {
       if (sortBy === 'name') return a.name.localeCompare(b.name);
       return b.popularity - a.popularity;
     });

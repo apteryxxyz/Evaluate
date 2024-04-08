@@ -49,7 +49,7 @@ export function PlaygroundCard(p: {
         href={`/playgrounds/${p.runtime.id}${p.hash ? `#${p.hash}` : ''}`}
         prefetch={false}
       >
-        <span className="sr-only">Open {p.runtime.name} Playground</span>
+        <span className="sr-only">{`Open ${p.runtime.name} Playground`}</span>
       </Link>
     </Card>
   );

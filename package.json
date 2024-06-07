@@ -1,6 +1,6 @@
 {
   "name": "evaluate",
-  "packageManager": "pnpm@8.13.1",
+  "packageManager": "pnpm@9.1.2",
   "workspaces": ["apps/*", "bots/*", "configs/*", "extensions/*", "packages/*"],
   "scripts": {
     "lint": "pnpm turbo --concurrency=50 lint",
@@ -17,12 +17,12 @@
     "graph": "pnpm dlx nx@latest graph"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.5.3-nightly.4fa841c",
-    "resolve-tspaths": "^0.8.18",
-    "tsup": "^8.0.2",
-    "tsx": "^4.7.2",
-    "turbo": "^1.13.2",
-    "typescript": "5.4.0-beta"
+    "@biomejs/biome": "^1.8.0",
+    "resolve-tspaths": "^0.8.19",
+    "tsup": "^8.1.0",
+    "tsx": "^4.13.2",
+    "turbo": "^1.13.4",
+    "typescript": "^5.4.5"
   },
   "pnpm": {
     "patchedDependencies": {

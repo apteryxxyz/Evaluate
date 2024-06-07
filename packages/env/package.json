@@ -28,10 +28,10 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "dotenv-expand": "^11.0.6",
-    "zod": "^3.22.4"
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@configs/tsup": "workspace:^",
-    "@types/node": "^20.12.5"
+    "@types/node": "^20.14.2"
   }
 }

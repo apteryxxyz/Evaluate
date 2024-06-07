@@ -32,16 +32,16 @@ export function FileExplorerFileItem(p: { file: File; isMeta?: boolean }) {
         }}
         data-ignore-blur
       >
-        <div className="mr-1 flex items-center justify-center">
+        <div className="mr-1 flex size-4 items-center justify-center">
           {p.isMeta ? (
-            <ScanIcon className="size-4" />
-          ) : !icon ? (
-            <FileIcon className="size-4" />
+            <ScanIcon size={16} strokeWidth={1.5} />
+          ) : !icon || isRenaming ? (
+            <FileIcon size={16} strokeWidth={1.5} />
           ) : (
             <img
               src={makeIconUrl(icon)}
               alt={p.file.extension}
-              className="size-4"
+              className="size-4 max-w-none"
             />
           )}
         </div>

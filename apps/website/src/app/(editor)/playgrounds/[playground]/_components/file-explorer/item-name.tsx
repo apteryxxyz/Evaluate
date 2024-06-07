@@ -6,6 +6,7 @@ import {
   PopoverAnchor,
   PopoverContent,
 } from '@evaluate/react/components/popover';
+import { cn } from '@evaluate/react/utilities/class-name';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { File, Folder } from '../../_contexts/explorer/file-system';
 
@@ -63,18 +64,17 @@ export function FileExplorerItemName(p: {
   return (
     <Popover open={Boolean(errorMessage)}>
       <PopoverAnchor asChild>
-        {p.isRenaming ? (
-          <Input
-            ref={inputRef}
-            className="h-auto w-full rounded-none border-0 p-0 text-sm focus:z-40"
-            defaultValue={p.item.name}
-            onChange={onChange}
-            onKeyUp={onKeyUp}
-            onBlur={onBlur}
-          />
-        ) : (
-          <span>{p.item.name}</span>
-        )}
+        <Input
+          ref={inputRef}
+          className={cn(
+            'h-auto w-full rounded-none border-0 p-0 text-sm focus:z-40',
+            !p.isRenaming && 'pointer-events-none',
+          )}
+          defaultValue={p.item.name}
+          onChange={onChange}
+          onKeyUp={onKeyUp}
+          onBlur={onBlur}
+        />
       </PopoverAnchor>
 
       <PopoverContent

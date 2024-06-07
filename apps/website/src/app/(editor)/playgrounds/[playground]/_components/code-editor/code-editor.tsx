@@ -12,6 +12,7 @@ import {
 } from '../../_contexts/explorer/explorer';
 import { useMonaco } from '../../_hooks/use-monaco';
 import { ExecuteBar } from './execute-bar';
+import { OpenedFilesBar } from './opened-files-bar';
 
 export function CodeEditor(p: { runtime: Runtime }) {
   const explorer = useExplorer();
@@ -37,7 +38,10 @@ export function CodeEditor(p: { runtime: Runtime }) {
           <span className="sr-only">Open File Explorer</span>
         </Button>
 
-        <ExecuteBar runtime={p.runtime} className="ml-auto" />
+        <OpenedFilesBar />
+
+        {/* TODO: Add somewhere else, likely the next location for terminal */}
+        {/* <ExecuteBar runtime={p.runtime} className="ml-auto" /> */}
       </div>
 
       <div className="relative h-full w-full">

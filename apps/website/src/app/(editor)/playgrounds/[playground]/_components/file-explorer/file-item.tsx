@@ -1,6 +1,5 @@
 'use client';
 
-import { getIconFromExtension } from '@evaluate/engine/runtimes';
 import { Button } from '@evaluate/react/components/button';
 import {
   ContextMenu,
@@ -8,17 +7,13 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from '@evaluate/react/components/context-menu';
-import { FileIcon, ScanIcon } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { File } from '../../_contexts/explorer/file-system';
+import { FileIcon } from './file-icon';
 import { FileExplorerItemName } from './item-name';
 
 export function FileExplorerFileItem(p: { file: File; isMeta?: boolean }) {
   const [isRenaming, setIsRenaming] = useState(!p.file.name);
-  const icon = useMemo(
-    () => getIconFromExtension(`.${p.file.extension}`),
-    [p.file],
-  );
 
   return (
     <FileExplorerFileItemWrapper {...p} setIsRenaming={setIsRenaming}>
@@ -32,19 +27,11 @@ export function FileExplorerFileItem(p: { file: File; isMeta?: boolean }) {
         }}
         data-ignore-blur
       >
-        <div className="mr-1 flex size-4 items-center justify-center">
-          {p.isMeta ? (
-            <ScanIcon size={16} strokeWidth={1.5} />
-          ) : !icon || isRenaming ? (
-            <FileIcon size={16} strokeWidth={1.5} />
-          ) : (
-            <img
-              src={makeIconUrl(icon)}
-              alt={p.file.extension}
-              className="size-4 max-w-none"
-            />
-          )}
-        </div>
+        <FileIcon
+          fileName={p.file.name ?? ''}
+          isRenaming={isRenaming}
+          isMeta={p.isMeta}
+        />
         <FileExplorerItemName
           item={p.file}
           isRenaming={isRenaming}
@@ -53,10 +40,6 @@ export function FileExplorerFileItem(p: { file: File; isMeta?: boolean }) {
       </Button>
     </FileExplorerFileItemWrapper>
   );
-}
-
-function makeIconUrl(icon: string) {
-  return `https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/940f2ea7a6fcdc0221ab9a8fc9454cc585de11f0/icons/${icon}.svg`;
 }
 
 function FileExplorerFileItemWrapper(

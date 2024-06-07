@@ -31,6 +31,8 @@
       },
       "nursery": {
         "recommended": true,
+        "useFocusableInteractive": "off",
+        "useSemanticElements": "off",
         "useSortedClasses": {
           "options": {
             "attributes": ["className"],

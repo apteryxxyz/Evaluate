@@ -59,7 +59,7 @@ export async function handleEvaluating(
   } else if (output.length > 1000) {
     output = `Output was too large to display, [click here to view the full output](${
       env.WEBSITE_URL
-    }/playgrounds/${runtime.id}#${compress(executeOptions)})`;
+    }/playgrounds/${runtime.id}#${compress(executeOptions)}).`;
   } else {
     output = codeBlock(output, 1000);
   }

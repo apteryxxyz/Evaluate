@@ -45,11 +45,6 @@ export class WithChildren {
     child.setSelected(true, false);
 
     this.children.push(child);
-    this.children.sort((a, b) => {
-      if (a.type === 'folder' && b.type === 'file') return -1;
-      if (a.type === 'file' && b.type === 'folder') return 1;
-      return (a.name ?? '').localeCompare(b.name ?? '');
-    });
 
     if (emit && hasMixin(this, WithRoot))
       this.findRoot().emitter.emit('change');
@@ -64,6 +59,14 @@ export class WithChildren {
     if (emit && hasMixin(this, WithRoot))
       this.findRoot().emitter.emit('change');
     return true;
+  }
+
+  public sortChildren() {
+    return this.children.sort((a, b) => {
+      if (a.type === 'folder' && b.type === 'file') return -1;
+      if (a.type === 'file' && b.type === 'folder') return 1;
+      return (a.name ?? '').localeCompare(b.name ?? '');
+    });
   }
 }
 
@@ -99,6 +102,7 @@ export class WithName {
 
     if (!this.name && hasMixin(this, WithOpened)) this.setOpened(true);
     Reflect.set(this, 'name', name);
+    if (hasMixin(this, WithChildren)) this.sortChildren();
     if (emit && hasMixin(this, WithRoot))
       this.findRoot().emitter.emit('change');
   }

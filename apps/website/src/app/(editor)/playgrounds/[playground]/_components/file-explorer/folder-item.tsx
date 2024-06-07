@@ -101,7 +101,7 @@ export function FileExplorerFolderItem(p: { folder: Folder }) {
         </AccordionTrigger>
 
         <AccordionContent className="flex flex-col pb-0">
-          {p.folder.children.map((child) => (
+          {p.folder.sortChildren().map((child) => (
             <FileExplorerItemWrapper key={child.path} item={child} />
           ))}
         </AccordionContent>

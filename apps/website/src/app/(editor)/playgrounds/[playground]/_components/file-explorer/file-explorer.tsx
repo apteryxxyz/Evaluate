@@ -67,7 +67,7 @@ export function FileExplorer() {
               <FileExplorerFileItem file={explorer.input} isMeta />
             </div>
 
-            {explorer.children.map((child) => (
+            {explorer.sortChildren().map((child) => (
               <FileExplorerItemWrapper key={child.path} item={child} />
             ))}
 

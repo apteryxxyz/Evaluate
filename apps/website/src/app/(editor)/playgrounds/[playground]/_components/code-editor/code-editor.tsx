@@ -1,6 +1,5 @@
 'use client';
 
-import type { Runtime } from '@evaluate/engine/runtimes';
 import { Button } from '@evaluate/react/components/button';
 import { Editor } from '@monaco-editor/react';
 import { FilesIcon } from 'lucide-react';
@@ -11,10 +10,9 @@ import {
   useWatchExplorer,
 } from '../../_contexts/explorer/explorer';
 import { useMonaco } from '../../_hooks/use-monaco';
-import { ExecuteBar } from './execute-bar';
 import { OpenedFilesBar } from './opened-files-bar';
 
-export function CodeEditor(p: { runtime: Runtime }) {
+export function CodeEditor() {
   const explorer = useExplorer();
   useWatchExplorer(explorer);
   const monaco = useMonaco();

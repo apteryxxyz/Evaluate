@@ -30,7 +30,7 @@ export default function EditorContent(p: { runtime: Runtime }) {
           <Explorer>
             <ResizablePanelGroup direction="vertical">
               <ResizablePanel minSize={15} defaultSize={65}>
-                <CodeEditor runtime={p.runtime} />
+                <CodeEditor />
               </ResizablePanel>
 
               <ResizableHandle />

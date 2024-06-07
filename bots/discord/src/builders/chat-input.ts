@@ -1,4 +1,7 @@
-import type { SlashCommandBuilder } from '@discordjs/builders';
+import type {
+  SlashCommandBuilder,
+  SlashCommandOptionsOnlyBuilder,
+} from '@discordjs/builders';
 import {
   type APIApplicationCommandAutocompleteInteraction,
   type APIChatInputApplicationCommandInteraction,
@@ -11,7 +14,7 @@ export interface ChatInputCommand {
   type: ApplicationCommandType.ChatInput;
   builder(
     builder: SlashCommandBuilder,
-  ): Partial<SlashCommandBuilder> & Pick<SlashCommandBuilder, 'toJSON'>;
+  ): SlashCommandBuilder | SlashCommandOptionsOnlyBuilder;
   autocomplete?(
     interaction: APIApplicationCommandAutocompleteInteraction,
   ): Promise<unknown> | unknown;

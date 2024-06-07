@@ -32,7 +32,7 @@ export function ChooseDialog(p: {
         <DialogHeader />
 
         <div className="space-y-2">
-          <h1 className='font-bold text-lg'>Runtime could not be detected</h1>
+          <h1 className="font-bold text-lg">Runtime could not be detected</h1>
           <p className="text-sm">
             Was unable to detect the runtime of the code you provided, would you
             like to pick manually?

@@ -45,11 +45,6 @@ export class WithChildren {
     child.setSelected(true, false);
 
     this.children.push(child);
-    this.children.sort((a, b) => {
-      if (a.type === 'folder' && b.type === 'file') return -1;
-      if (a.type === 'file' && b.type === 'folder') return 1;
-      return (a.name ?? '').localeCompare(b.name ?? '');
-    });
 
     if (emit && hasMixin(this, WithRoot))
       this.findRoot().emitter.emit('change');
@@ -64,6 +59,14 @@ export class WithChildren {
     if (emit && hasMixin(this, WithRoot))
       this.findRoot().emitter.emit('change');
     return true;
+  }
+
+  public sortChildren() {
+    return this.children.sort((a, b) => {
+      if (a.type === 'folder' && b.type === 'file') return -1;
+      if (a.type === 'file' && b.type === 'folder') return 1;
+      return (a.name ?? '').localeCompare(b.name ?? '');
+    });
   }
 }
 
@@ -99,6 +102,7 @@ export class WithName {
 
     if (!this.name && hasMixin(this, WithOpened)) this.setOpened(true);
     Reflect.set(this, 'name', name);
+    if (hasMixin(this, WithChildren)) this.sortChildren();
     if (emit && hasMixin(this, WithRoot))
       this.findRoot().emitter.emit('change');
   }
@@ -185,6 +189,18 @@ export class WithOpened {
     }
 
     Reflect.set(this, 'isOpened', isOpened);
+    if (hasMixin(this, WithTabOpened)) this.setTabOpened(isOpened, emit);
+    if (emit && hasMixin(this, WithRoot))
+      this.findRoot().emitter.emit('change');
+  }
+}
+
+export class WithTabOpened {
+  public readonly isTabOpened = false;
+
+  public setTabOpened(isTabOpened: boolean, emit = true) {
+    if (this.isTabOpened === isTabOpened) return;
+    Reflect.set(this, 'isTabOpened', isTabOpened);
     if (emit && hasMixin(this, WithRoot))
       this.findRoot().emitter.emit('change');
   }
@@ -249,6 +265,11 @@ export class Root extends Mixin(
     if (this.args.isOpened) return this.args;
     return this.descendants //
       .find((c): c is File => c.type === 'file' && c.isOpened);
+  }
+
+  public findTabOpenedFiles() {
+    return this.descendants //
+      .filter((c): c is File => c.type === 'file' && c.isTabOpened);
   }
 
   public findEntryFile() {
@@ -363,6 +384,7 @@ export class File extends Mixin(
   WithContent,
   WithSelected,
   WithOpened,
+  WithTabOpened,
 ) {
   public readonly type = 'file';
   public get path() {

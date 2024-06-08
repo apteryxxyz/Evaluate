@@ -12,6 +12,7 @@ import {
 } from '../../_contexts/explorer/explorer';
 import { useMonaco } from '../../_hooks/use-monaco';
 import { ExecuteBar } from './execute-bar';
+import { OpenedFilesBar } from './opened-files-bar';
 
 export function CodeEditor(p: { runtime: Runtime }) {
   const explorer = useExplorer();
@@ -24,20 +25,26 @@ export function CodeEditor(p: { runtime: Runtime }) {
 
   return (
     <section className="h-full">
-      <div className="flex h-10 w-full items-center border-b px-0.5">
-        <Button
-          size="icon"
-          variant="secondary"
-          className="aspect-square lg:hidden"
-          onClick={() =>
-            window.dispatchEvent(new CustomEvent('file-explorer-open-change'))
-          }
-        >
-          <FilesIcon className="size-4" />
-          <span className="sr-only">Open File Explorer</span>
-        </Button>
+      <div className="flex h-20 w-full flex-col-reverse border-b px-0.5 pt-0.5 md:h-10 md:flex-row">
+        <div className="flex h-10">
+          <Button
+            size="icon"
+            variant="secondary"
+            className="aspect-square lg:hidden"
+            onClick={() =>
+              window.dispatchEvent(new CustomEvent('file-explorer-open-change'))
+            }
+          >
+            <FilesIcon className="size-4" />
+            <span className="sr-only">Open File Explorer</span>
+          </Button>
 
-        <ExecuteBar runtime={p.runtime} className="ml-auto" />
+          <OpenedFilesBar />
+        </div>
+
+        <div className="flex h-10 md:ml-auto">
+          <ExecuteBar runtime={p.runtime} />
+        </div>
       </div>
 
       <div className="relative h-full w-full">

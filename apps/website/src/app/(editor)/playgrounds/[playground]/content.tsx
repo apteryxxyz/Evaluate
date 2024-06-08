@@ -9,7 +9,7 @@ import {
 import { Sheet, SheetContent } from '@evaluate/react/components/sheet';
 import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { useMediaQuery } from '@evaluate/react/hooks/media-query';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { CodeEditor } from './_components/code-editor/code-editor';
 import { FileExplorer } from './_components/file-explorer/file-explorer';
 import { ResultDisplay } from './_components/result-display/result-display';
@@ -28,13 +28,13 @@ export default function EditorContent(p: { runtime: Runtime }) {
       <ExplorerProvider runtime={p.runtime}>
         <ResultProvider>
           <Explorer>
+            <FileExplorer />
+
             <ResizablePanelGroup direction="vertical">
               <ResizablePanel minSize={15} defaultSize={65}>
                 <CodeEditor runtime={p.runtime} />
               </ResizablePanel>
-
               <ResizableHandle />
-
               <ResizablePanel minSize={15} defaultSize={35}>
                 <ResultDisplay runtime={p.runtime} />
               </ResizablePanel>
@@ -55,7 +55,7 @@ function DesktopExplorerWrapper(p: React.PropsWithChildren) {
         collapsible={false}
         className="m-1.5 rounded-xl border-2 bg-card"
       >
-        <FileExplorer />
+        {React.Children.toArray(p.children)[0]}
       </ResizablePanel>
 
       <ResizableHandle className="bg-transparent" />
@@ -65,7 +65,7 @@ function DesktopExplorerWrapper(p: React.PropsWithChildren) {
         minSize={10}
         className="m-1.5 rounded-xl border-2 bg-card"
       >
-        {p.children}
+        {React.Children.toArray(p.children)[1]}
       </ResizablePanel>
     </ResizablePanelGroup>
   );
@@ -73,10 +73,7 @@ function DesktopExplorerWrapper(p: React.PropsWithChildren) {
 
 function MobileExplorerWrapper(p: React.PropsWithChildren) {
   const [open, setOpen] = useState(false);
-  useEventListener(
-    'file-explorer-open-change' as never, //
-    () => setOpen((o) => !o),
-  );
+  useEventListener('file-explorer-open-change' as never, setOpen);
 
   return (
     <>
@@ -91,13 +88,13 @@ function MobileExplorerWrapper(p: React.PropsWithChildren) {
             onKeyUp={(e) => e.stopPropagation()}
             className="h-full rounded-xl border-2 bg-card"
           >
-            <FileExplorer />
+            {React.Children.toArray(p.children)[0]}
           </div>
         </SheetContent>
       </Sheet>
 
       <div className="m-1.5 h-full rounded-xl border-2 bg-card">
-        {p.children}
+        {React.Children.toArray(p.children)[1]}
       </div>
     </>
   );

@@ -12,7 +12,6 @@ import {
   SelectValue,
 } from '@evaluate/react/components/select';
 import { toast } from '@evaluate/react/components/toast';
-import { cn } from '@evaluate/react/utilities/class-name';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import _ from 'lodash';
@@ -20,7 +19,6 @@ import { Loader2Icon, PlayIcon } from 'lucide-react';
 import { useCallback, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import analytics from '~/services/analytics';
-// import client, { handleError } from '~/services/client';
 import { combineIssueMessages } from '~/utilities/zod-issues';
 import {
   useExplorer,
@@ -29,7 +27,7 @@ import {
 import type { File } from '../../_contexts/explorer/file-system';
 import { useResult } from '../../_contexts/result';
 
-export function ExecuteBar(p: { className?: string; runtime: Runtime }) {
+export function ExecuteBar(p: { runtime: Runtime }) {
   const explorer = useExplorer();
   useWatchExplorer(explorer);
   const files = explorer.descendants //
@@ -92,7 +90,7 @@ export function ExecuteBar(p: { className?: string; runtime: Runtime }) {
   return (
     <Form {...form}>
       <form
-        className={cn('flex w-full justify-end', p.className)}
+        className="flex w-full"
         onSubmit={form.handleSubmit(onValid, onInvalid)}
       >
         <Select
@@ -102,7 +100,7 @@ export function ExecuteBar(p: { className?: string; runtime: Runtime }) {
         >
           <SelectTrigger
             ref={entryFileSelectRef}
-            className="w-full md:w-[205px]"
+            className="w-full min-w-[200px]"
           >
             <SelectValue placeholder="Select an entry file..." />
           </SelectTrigger>
@@ -119,18 +117,14 @@ export function ExecuteBar(p: { className?: string; runtime: Runtime }) {
           </SelectContent>
         </Select>
 
-        <Button
-          type="submit"
-          size="icon"
-          className="aspect-square"
-          disabled={isPending}
-        >
-          {isPending ? (
-            <Loader2Icon className="size-4 animate-spin" />
-          ) : (
-            <PlayIcon className="size-4" />
-          )}
+        <Button type="submit" disabled={isPending}>
           <span className="sr-only">Execute Code</span>
+          <span>{p.runtime.name}</span>
+          {isPending ? (
+            <Loader2Icon className="ml-1 size-4 animate-spin" />
+          ) : (
+            <PlayIcon className="ml-1 size-4" />
+          )}
         </Button>
       </form>
     </Form>

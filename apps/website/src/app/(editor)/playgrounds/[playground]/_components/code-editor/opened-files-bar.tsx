@@ -15,7 +15,7 @@ export function OpenedFilesBar() {
 
   return (
     <Scrollable>
-      <div className="w-full whitespace-nowrap">
+      <div className="flex w-full whitespace-nowrap">
         {openedFiles.map((file, index) => (
           <Button
             key={file.path}
@@ -32,6 +32,8 @@ export function OpenedFilesBar() {
             <FileIcon fileName={file.name ?? ''} />
             <span>{file.name}</span>
             <Button
+              role="button"
+              asChild
               variant={null}
               size="icon"
               className="w-auto pl-2 text-white/20 group-hover:text-white/50 hover:text-white"
@@ -49,7 +51,9 @@ export function OpenedFilesBar() {
                 }
               }}
             >
-              <XIcon className="size-4" />
+              <span>
+                <XIcon className="size-4" />
+              </span>
             </Button>
           </Button>
         ))}

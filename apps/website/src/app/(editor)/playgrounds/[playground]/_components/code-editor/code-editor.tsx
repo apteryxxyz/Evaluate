@@ -1,5 +1,6 @@
 'use client';
 
+import type { Runtime } from '@evaluate/engine/runtimes';
 import { Button } from '@evaluate/react/components/button';
 import { Editor } from '@monaco-editor/react';
 import { FilesIcon } from 'lucide-react';
@@ -10,9 +11,10 @@ import {
   useWatchExplorer,
 } from '../../_contexts/explorer/explorer';
 import { useMonaco } from '../../_hooks/use-monaco';
+import { ExecuteBar } from './execute-bar';
 import { OpenedFilesBar } from './opened-files-bar';
 
-export function CodeEditor() {
+export function CodeEditor(p: { runtime: Runtime }) {
   const explorer = useExplorer();
   useWatchExplorer(explorer);
   const monaco = useMonaco();
@@ -23,23 +25,26 @@ export function CodeEditor() {
 
   return (
     <section className="h-full">
-      <div className="flex h-10 w-full items-center border-b px-0.5">
-        <Button
-          size="icon"
-          variant="secondary"
-          className="aspect-square lg:hidden"
-          onClick={() =>
-            window.dispatchEvent(new CustomEvent('file-explorer-open-change'))
-          }
-        >
-          <FilesIcon className="size-4" />
-          <span className="sr-only">Open File Explorer</span>
-        </Button>
+      <div className="flex h-20 w-full flex-col-reverse border-b px-0.5 pt-0.5 md:h-10 md:flex-row">
+        <div className="flex h-10">
+          <Button
+            size="icon"
+            variant="secondary"
+            className="aspect-square lg:hidden"
+            onClick={() =>
+              window.dispatchEvent(new CustomEvent('file-explorer-open-change'))
+            }
+          >
+            <FilesIcon className="size-4" />
+            <span className="sr-only">Open File Explorer</span>
+          </Button>
 
-        <OpenedFilesBar />
+          <OpenedFilesBar />
+        </div>
 
-        {/* TODO: Add somewhere else, likely the next location for terminal */}
-        {/* <ExecuteBar runtime={p.runtime} className="ml-auto" /> */}
+        <div className="flex h-10 md:ml-auto">
+          <ExecuteBar runtime={p.runtime} />
+        </div>
       </div>
 
       <div className="relative h-full w-full">

@@ -80,40 +80,44 @@ export function ResultDisplay(p: { runtime: Runtime }) {
         </ResizablePanel>
 
         {/* Compile */}
-        {hasCompile && (
-          <>
-            <ResizableHandle />
-            <ResizablePanel defaultSize={100 / panelCount} className="relative">
-              {doesCompileHaveDisplayableOutput && (
-                <>
-                  <div className="border-b pl-1 text-sm">
-                    <span>Compile Output</span>
-                  </div>
-                  <Editor
-                    onMount={() => monaco?.editor.syncTheme()}
-                    theme={monaco?.editor.theme}
-                    value={result.compile?.output}
-                    options={{
-                      minimap: { enabled: false },
-                      readOnly: true,
-                      domReadOnly: true,
-                      contextmenu: false,
-                    }}
-                  />
-                </>
-              )}
+        {hasCompile &&
+          (doesCompileHaveDisplayableOutput || hasCompileTimedOut) && (
+            <>
+              <ResizableHandle />
+              <ResizablePanel
+                defaultSize={100 / panelCount}
+                className="relative"
+              >
+                {doesCompileHaveDisplayableOutput && (
+                  <>
+                    <div className="border-b pl-1 text-sm">
+                      <span>Compile Output</span>
+                    </div>
+                    <Editor
+                      onMount={() => monaco?.editor.syncTheme()}
+                      theme={monaco?.editor.theme}
+                      value={result.compile?.output}
+                      options={{
+                        minimap: { enabled: false },
+                        readOnly: true,
+                        domReadOnly: true,
+                        contextmenu: false,
+                      }}
+                    />
+                  </>
+                )}
 
-              {hasCompileTimedOut && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                  <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
-                    Your code took too long to compile and was killed. Try
-                    optimising it to compile faster.
-                  </span>
-                </div>
-              )}
-            </ResizablePanel>
-          </>
-        )}
+                {hasCompileTimedOut && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                    <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
+                      Your code took too long to compile and was killed. Try
+                      optimising it to compile faster.
+                    </span>
+                  </div>
+                )}
+              </ResizablePanel>
+            </>
+          )}
 
         {/* Preview */}
         {hasPreview && hasRun && (

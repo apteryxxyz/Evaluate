@@ -1,9 +1,6 @@
 import { validateEnv } from '@evaluate/env/validator';
 import { z } from 'zod';
 
-if (!process.env.WEBSITE_URL && process.env.VERCEL === '1')
-  process.env.WEBSITE_URL = `https://${process.env.VERCEL_URL}`;
-
 export const env = validateEnv({
   server: {
     WEBSITE_URL: z
@@ -17,7 +14,7 @@ export const env = validateEnv({
   },
 
   variablesStrict: {
-    WEBSITE_URL: process.env.WEBSITE_URL,
+    WEBSITE_URL: process.env.WEBSITE_URL || `https://${process.env.VERCEL_URL}`,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
   },
 

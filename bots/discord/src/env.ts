@@ -20,7 +20,7 @@ export const env = validateEnv({
   },
 
   variables: {
-    WEBSITE_URL: process.env.WEBSITE_URL || (process.env.VERCEL === '1' ? `https://${process.env.VERCEL_URL}` : ''),
+    WEBSITE_URL: process.env.WEBSITE_URL || `https://${process.env.VERCEL_URL}`,
     DISCORD_TOKEN: process.env.DISCORD_TOKEN,
     DISCORD_PUBLIC_KEY: process.env.DISCORD_PUBLIC_KEY,
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,

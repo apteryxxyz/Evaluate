@@ -14,7 +14,7 @@ export const env = validateEnv({
   },
 
   variablesStrict: {
-    WEBSITE_URL: process.env.WEBSITE_URL || (process.env.VERCEL === '1' ? `https://${process.env.VERCEL_URL}` : ''),
+    WEBSITE_URL: process.env.WEBSITE_URL || `https://${process.env.VERCEL_URL}`,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
   },
 

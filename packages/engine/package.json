@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@configs/tsup": "workspace:^",
-    "@types/node": "^20.14.2",
+    "@types/node": "^20.14.6",
     "@types/pako": "^2.0.3"
   }
 }

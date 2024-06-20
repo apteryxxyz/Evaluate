@@ -4,7 +4,11 @@ import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import * as React from 'react';
 import { cn } from '~/utilities/class-name';
 
-const TooltipProvider = TooltipPrimitive.Provider;
+// TooltipProviderProps is not exported by react-tooltip
+type TooltipProviderProps = //
+  React.ComponentProps<typeof TooltipPrimitive.Provider>;
+const TooltipProvider: React.FC<TooltipProviderProps> =
+  TooltipPrimitive.Provider;
 
 const Tooltip = TooltipPrimitive.Root;
 

@@ -33,6 +33,7 @@
     "popover",
     "POSTHOG",
     "ratelimit",
+    "Resolvables",
     "runtimes",
     "tanstack",
     "upstash"

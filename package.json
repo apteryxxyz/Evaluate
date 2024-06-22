@@ -1,13 +1,7 @@
 {
   "name": "evaluate",
   "packageManager": "pnpm@9.3.0",
-  "workspaces": [
-    "apps/*",
-    "bots/*",
-    "configs/*",
-    "extensions/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "bots/*", "configs/*", "extensions/*", "packages/*"],
   "scripts": {
     "lint": "pnpm turbo --concurrency=50 lint",
     "format": "pnpm turbo --concurrency=50 format",
@@ -15,6 +9,7 @@
     "build": "pnpm turbo --concurrency=50 build",
     "build:packages": "pnpm turbo --concurrency=50 --filter=./packages/* build",
     "build:apps": "pnpm turbo --concurrency=50 --filter=./apps/* --filter=./bots/* --filter=./extensions/* build",
+    "start": "pnpm turbo --concurrency=50 start",
     "dev": "pnpm turbo --concurrency=50 dev",
     "dev:packages": "pnpm turbo --concurrency=50 --filter=./packages/* dev",
     "dev:apps": "pnpm turbo --concurrency=50 --filter=./apps/* --filter=./bots/* --filter=./extensions/* dev",

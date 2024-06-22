@@ -18,7 +18,9 @@ export function PageView() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: URL changes whenever search params change, but we don't care about that
   useEffect(() => {
-    analytics?.capture('$pageview', { $current_url: url });
+    analytics?.capture('$pageview', {
+      $current_url: url,
+    });
   }, [pathname]);
 
   return null;

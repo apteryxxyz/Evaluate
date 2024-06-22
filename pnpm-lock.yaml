@@ -52,9 +52,6 @@ importers:
       '@monaco-editor/react':
         specifier: ^4.6.0
         version: 4.6.0(monaco-editor@0.47.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@t3-oss/env-nextjs':
-        specifier: ^0.9.2
-        version: 0.9.2(typescript@5.4.5)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
       '@tanstack/react-query':
         specifier: ^5.45.1
         version: 5.45.1(react@18.3.1)
@@ -88,21 +85,15 @@ importers:
       next-themes:
         specifier: npm:@wits/next-themes@^0.2.16
         version: '@wits/next-themes@0.2.16(next@14.2.4(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)'
-      nextjs-cors:
-        specifier: ^2.2.0
-        version: 2.2.0(next@14.2.4(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6))
       posthog-js:
-        specifier: npm:@apteryxxyz/posthog-js@1.105.9
-        version: '@apteryxxyz/posthog-js@1.105.9'
+        specifier: npm:@apteryxxyz/posthog-js@^1.139.3
+        version: '@apteryxxyz/posthog-js@1.139.3'
       react:
         specifier: ^18.3.1
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      react-geiger:
-        specifier: ^1.2.0
-        version: 1.2.0(react@18.3.1)
       react-hook-form:
         specifier: ^7.52.0
         version: 7.52.0(react@18.3.1)
@@ -115,9 +106,6 @@ importers:
       zod:
         specifier: 3.22.4
         version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
-      zod-validation-error:
-        specifier: ^3.3.0
-        version: 3.3.0(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
     devDependencies:
       '@babel/plugin-transform-private-methods':
         specifier: ^7.24.7
@@ -216,52 +204,28 @@ importers:
       '@plasmohq/storage':
         specifier: ^1.11.0
         version: 1.11.0(react@18.3.1)
-      '@radix-ui/react-toast':
-        specifier: ^1.2.0
-        version: 1.2.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@ts-rest/core':
-        specifier: ^3.45.2
-        version: 3.45.2(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
-      class-variance-authority:
-        specifier: ^0.7.0
-        version: 0.7.0
       framer-motion:
         specifier: ^11.2.11
         version: 11.2.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      fuse.js:
-        specifier: ^7.0.0
-        version: 7.0.0
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       lucide-react:
         specifier: ^0.338.0
         version: 0.338.0(react@18.3.1)
       posthog-js:
-        specifier: npm:@apteryxxyz/posthog-js@1.105.9
-        version: '@apteryxxyz/posthog-js@1.105.9'
+        specifier: npm:@apteryxxyz/posthog-js@^1.139.3
+        version: '@apteryxxyz/posthog-js@1.139.3'
       react:
         specifier: ^18.3.1
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      sonner:
-        specifier: ^1.5.0
-        version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       zod:
         specifier: 3.22.4
         version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
-      zustand:
-        specifier: ^4.5.2
-        version: 4.5.2(@types/react@18.3.3)(react@18.3.1)
     devDependencies:
       '@types/chrome':
         specifier: ^0.0.263
         version: 0.0.263
-      '@types/lodash':
-        specifier: ^4.17.5
-        version: 4.17.5
       '@types/node':
         specifier: ^20.14.6
         version: 20.14.6
@@ -357,6 +321,9 @@ importers:
       '@radix-ui/react-switch':
         specifier: ^1.1.0
         version: 1.1.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-tabs':
+        specifier: ^1.1.0
+        version: 1.1.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-toast':
         specifier: ^1.2.0
         version: 1.2.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -433,8 +400,8 @@ packages:
     resolution: {integrity: sha512-vmoD4qqv2A59BRrMP/9zqEq3Dr45+BICmqrLOg1EOGGHlDZFcDx7kYAtxhkquKcsPOy+QMDnkzC5szqg67+Ikw==}
     engines: {node: '>=12.0.0'}
 
-  '@apteryxxyz/posthog-js@1.105.9':
-    resolution: {integrity: sha512-Rm1nI7dnhUz5e3Qd3PK7856DTKLQDOU5MLwVxBIWI/bINe5XpW+SpsTEyX6nKYp6otte9uHwqPLwGh1jbO78cA==}
+  '@apteryxxyz/posthog-js@1.139.3':
+    resolution: {integrity: sha512-0bcrwNqC91lKDMoTwLHaiu+E9v6BAlj8x4wNKg76ZJDHVvhGm4Rfa9cIgbu8KQIU+S2TS4AQtOIraAgPkT8FuA==}
 
   '@babel/code-frame@7.24.7':
     resolution: {integrity: sha512-BcYH1CVJBO9tvyIZ2jVeXgSIMvGZ2FDRvDdOIVQyuklNKSsx+eppDEBq/g47Ayw+RqNFE+URvOShmf+f/qwAlA==}
@@ -2288,6 +2255,19 @@ packages:
       '@types/react-dom':
         optional: true
 
+  '@radix-ui/react-tabs@1.1.0':
+    resolution: {integrity: sha512-bZgOKB/LtZIij75FSuPzyEti/XBhJH52ExgtdVqjCIh+Nx/FW+LhnbXtbCzIi34ccyMsyOja8T0thCzoHFXNKA==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+
   '@radix-ui/react-toast@1.2.0':
     resolution: {integrity: sha512-G2YHVe8nUWnq3y9F/BalxJRB+8fL/y5yxw57MyMDrLH7Lez3YTK9518XbtmvZC/ceV33UjtXtmLeiKe0Ej+Y9Q==}
     peerDependencies:
@@ -2746,15 +2726,6 @@ packages:
       typescript:
         optional: true
 
-  '@t3-oss/env-nextjs@0.9.2':
-    resolution: {integrity: sha512-dklHrgKLESStNVB67Jdbu6osxDYA+xNKaPBRerlnkEvzbCccSKMvZENx6EZebJuR4snqB3/yRykNMn/bdIAyiQ==}
-    peerDependencies:
-      typescript: '>=5.0.0'
-      zod: ^3.0.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
   '@tanstack/query-core@5.45.0':
     resolution: {integrity: sha512-RVfIZQmFUTdjhSAAblvueimfngYyfN6HlwaJUPK71PKd7yi43Vs1S/rdimmZedPWX/WGppcq/U1HOj7O7FwYxw==}
 
@@ -2775,14 +2746,6 @@ packages:
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
-
-  '@ts-rest/core@3.45.2':
-    resolution: {integrity: sha512-Eiv+Sa23MbsAd1Gx9vNJ+IFCDyLZNdJ+UuGMKbFvb+/NmgcBR1VL1UIVtEkd5DJxpYMMd8SLvW91RgB2TS8iPw==}
-    peerDependencies:
-      zod: ^3.22.3
-    peerDependenciesMeta:
-      zod:
-        optional: true
 
   '@types/chrome@0.0.263':
     resolution: {integrity: sha512-As0vzv99ov3M6ZR7R6VzhMWFZXkPMrFrCEXXVrMN576Cm70fTkj7Df2CF+qEo170JepX50pd11cX6O4DSAtl2Q==}
@@ -3308,10 +3271,6 @@ packages:
   copy-anything@2.0.6:
     resolution: {integrity: sha512-1j20GZTsvKNkc4BY3NpMOM8tt///wY3FpIzozTOFO2ffuZcV61nojHXVKIy3WM+7ADCy5FVhdZYHYDdgTU0yJw==}
 
-  cors@2.8.5:
-    resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
-    engines: {node: '>= 0.10'}
-
   cosmiconfig@7.1.0:
     resolution: {integrity: sha512-AdmX6xUzdNASswsFtmwSt7Vj8po9IuqXm0UXz7QKPuEUmPB4XyjGfaAr2PSuELMwkRMVH1EpIkX5bTZGRB3eCA==}
     engines: {node: '>=10'}
@@ -3482,6 +3441,9 @@ packages:
 
   electron-to-chromium@1.4.806:
     resolution: {integrity: sha512-nkoEX2QIB8kwCOtvtgwhXWy2IHVcOLQZu9Qo36uaGB835mdX/h8uLRlosL6QIhLVUnAiicXRW00PwaPZC74Nrg==}
+
+  electron-to-chromium@1.4.807:
+    resolution: {integrity: sha512-kSmJl2ZwhNf/bcIuCH/imtNOKlpkLDn2jqT5FJ+/0CXjhnFaOa9cOe9gHKKy71eM49izwuQjZhKk+lWQ1JxB7A==}
 
   embla-carousel-autoplay@8.1.5:
     resolution: {integrity: sha512-9pHIezRqiO9yism7wRFwmM1j/W9c9hBNX4hq3F4aTPbK84M0M57ryG8QUwhbsTGJbDoBBVTm//YEd0T6i/5YgA==}
@@ -4362,11 +4324,6 @@ packages:
       sass:
         optional: true
 
-  nextjs-cors@2.2.0:
-    resolution: {integrity: sha512-FZu/A+L59J4POJNqwXYyCPDvsLDeu5HjSBvytzS6lsrJeDz5cmnH45zV+VoNic0hjaeER9xGaiIjZIWzEHnxQg==}
-    peerDependencies:
-      next: ^8.1.1-canary.54 || ^9.0.0 || ^10.0.0-0 || ^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0
-
   node-abi@3.65.0:
     resolution: {integrity: sha512-ThjYBfoDNr08AWx6hGaRbfPwxKV9kVzAzOzlLKbk2CuqXE2xnCh+cbAGnwM3t8Lq4v9rUB7VfondlkBckcJrVA==}
     engines: {node: '>=10'}
@@ -4656,11 +4613,6 @@ packages:
 
   react-error-overlay@6.0.9:
     resolution: {integrity: sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==}
-
-  react-geiger@1.2.0:
-    resolution: {integrity: sha512-8DYxEWIE66Rb+8A9rVd+Z7a1lQtGxFoRObOz+UC+elvskNQqp5y5PdpS9u/4XOiG903ZuPVMReTJ3bJdLfaLnA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
   react-hook-form@7.52.0:
     resolution: {integrity: sha512-mJX506Xc6mirzLsmXUJyqlAI3Kj9Ph2RhplYhUVffeOQSnubK2uVqBFOBJmvKikvbFV91pxVXmDiR+QMF19x6A==}
@@ -5277,21 +5229,12 @@ packages:
       '@types/react':
         optional: true
 
-  use-sync-external-store@1.2.0:
-    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
   utility-types@3.11.0:
     resolution: {integrity: sha512-6Z7Ma2aVEWisaL6TvBCy7P8rm2LQoPv6dJ7ecIaIixHcwfbJ0x7mWdbcwlIM5IGQxPZSFYeqRCqlOOeKoJYMkw==}
     engines: {node: '>= 4'}
-
-  vary@1.1.2:
-    resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
-    engines: {node: '>= 0.8'}
 
   vaul@0.9.1:
     resolution: {integrity: sha512-fAhd7i4RNMinx+WEm6pF3nOl78DFkAazcN04ElLPFF9BMCNGbY/kou8UMhIcicm0rJCNePJP0Yyza60gGOD0Jw==}
@@ -5403,29 +5346,8 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
 
-  zod-validation-error@3.3.0:
-    resolution: {integrity: sha512-Syib9oumw1NTqEv4LT0e6U83Td9aVRk9iTXPUQr1otyV1PuXQKOvOwhMNqZIq5hluzHP2pMgnOmHEo7kPdI2mw==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      zod: ^3.18.0
-
   zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
-
-  zustand@4.5.2:
-    resolution: {integrity: sha512-2cN1tPkDVkwCy5ickKrI7vijSjPksFRfqS6237NzT0vqSsztTNnQdHw9mmN7uBdk3gceVXU0a+21jFzFzAc9+g==}
-    engines: {node: '>=12.7.0'}
-    peerDependencies:
-      '@types/react': '>=16.8'
-      immer: '>=9.0.6'
-      react: '>=16.8'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      immer:
-        optional: true
-      react:
-        optional: true
 
 snapshots:
 
@@ -5438,7 +5360,7 @@ snapshots:
 
   '@apteryxxyz/lexure@0.17.0': {}
 
-  '@apteryxxyz/posthog-js@1.105.9':
+  '@apteryxxyz/posthog-js@1.139.3':
     dependencies:
       fflate: 0.4.8
       preact: 10.22.0
@@ -7614,6 +7536,21 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.3
 
+  '@radix-ui/react-tabs@1.1.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@radix-ui/primitive': 1.1.0
+      '@radix-ui/react-context': 1.1.0(@types/react@18.3.3)(react@18.3.1)
+      '@radix-ui/react-direction': 1.1.0(@types/react@18.3.3)(react@18.3.1)
+      '@radix-ui/react-id': 1.1.0(@types/react@18.3.3)(react@18.3.1)
+      '@radix-ui/react-presence': 1.1.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-primitive': 2.0.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-roving-focus': 1.1.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-use-controllable-state': 1.1.0(@types/react@18.3.3)(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    optionalDependencies:
+      '@types/react': 18.3.3
+
   '@radix-ui/react-toast@1.2.0(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@radix-ui/primitive': 1.1.0
@@ -7983,13 +7920,6 @@ snapshots:
     optionalDependencies:
       typescript: 5.4.5
 
-  '@t3-oss/env-nextjs@0.9.2(typescript@5.4.5)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))':
-    dependencies:
-      '@t3-oss/env-core': 0.9.2(typescript@5.4.5)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
-      zod: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
-    optionalDependencies:
-      typescript: 5.4.5
-
   '@tanstack/query-core@5.45.0': {}
 
   '@tanstack/query-devtools@5.37.1': {}
@@ -8006,10 +7936,6 @@ snapshots:
       react: 18.3.1
 
   '@trysound/sax@0.2.0': {}
-
-  '@ts-rest/core@3.45.2(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))':
-    optionalDependencies:
-      zod: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
 
   '@types/chrome@0.0.263':
     dependencies:
@@ -8394,7 +8320,7 @@ snapshots:
   browserslist@4.22.1:
     dependencies:
       caniuse-lite: 1.0.30001636
-      electron-to-chromium: 1.4.806
+      electron-to-chromium: 1.4.807
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.22.1)
 
@@ -8581,11 +8507,6 @@ snapshots:
     dependencies:
       is-what: 3.14.1
 
-  cors@2.8.5:
-    dependencies:
-      object-assign: 4.1.1
-      vary: 1.1.2
-
   cosmiconfig@7.1.0:
     dependencies:
       '@types/parse-json': 4.0.2
@@ -8732,6 +8653,8 @@ snapshots:
   eastasianwidth@0.2.0: {}
 
   electron-to-chromium@1.4.806: {}
+
+  electron-to-chromium@1.4.807: {}
 
   embla-carousel-autoplay@8.1.5(embla-carousel@8.1.5):
     dependencies:
@@ -9569,11 +9492,6 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  nextjs-cors@2.2.0(next@14.2.4(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6)):
-    dependencies:
-      cors: 2.8.5
-      next: 14.2.4(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6)
-
   node-abi@3.65.0:
     dependencies:
       semver: 7.5.4
@@ -9928,10 +9846,6 @@ snapshots:
       scheduler: 0.23.2
 
   react-error-overlay@6.0.9: {}
-
-  react-geiger@1.2.0(react@18.3.1):
-    dependencies:
-      react: 18.3.1
 
   react-hook-form@7.52.0(react@18.3.1):
     dependencies:
@@ -10607,15 +10521,9 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.3
 
-  use-sync-external-store@1.2.0(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-
   util-deprecate@1.0.2: {}
 
   utility-types@3.11.0: {}
-
-  vary@1.1.2: {}
 
   vaul@0.9.1(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
@@ -10745,15 +10653,4 @@ snapshots:
 
   yocto-queue@1.0.0: {}
 
-  zod-validation-error@3.3.0(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)):
-    dependencies:
-      zod: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
-
   zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq): {}
-
-  zustand@4.5.2(@types/react@18.3.3)(react@18.3.1):
-    dependencies:
-      use-sync-external-store: 1.2.0(react@18.3.1)
-    optionalDependencies:
-      '@types/react': 18.3.3
-      react: 18.3.1

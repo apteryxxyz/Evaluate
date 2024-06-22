@@ -26,6 +26,7 @@
     "./components/sheet": "./dist/components/sheet.js",
     "./components/spotlight": "./dist/components/spotlight.js",
     "./components/switch": "./dist/components/switch.js",
+    "./components/tabs": "./dist/components/tabs.js",
     "./components/textarea": "./dist/components/textarea.js",
     "./components/toast": "./dist/components/toast.js",
     "./components/tooltip": "./dist/components/tooltip.js",
@@ -39,7 +40,7 @@
   },
   "scripts": {
     "format": "biome format . --write",
-    "lint": "biome lint . --apply",
+    "lint": "biome lint . --write",
     "check": "tsc --noEmit",
     "build": "tsup",
     "dev": "pnpm build --watch"
@@ -55,6 +56,7 @@
     "@radix-ui/react-select": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.0",
     "@radix-ui/react-tooltip": "^1.1.0",
     "class-variance-authority": "^0.7.0",

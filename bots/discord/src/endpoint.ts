@@ -17,7 +17,6 @@ import analytics from './services/analytics';
 import { getUser } from './utilities/interaction-helpers';
 
 export default async function handler(request: Request) {
-  if (request.method !== 'POST') return new Response(null, { status: 405 });
   if (
     !env.DISCORD_TOKEN ||
     !env.DISCORD_PUBLIC_KEY ||
@@ -25,6 +24,7 @@ export default async function handler(request: Request) {
     !env.DISCORD_CLIENT_SECRET
   )
     return new Response(null, { status: 404 });
+  if (request.method !== 'POST') return new Response(null, { status: 405 });
 
   const body = await request.json().catch(() => null);
   const buffer = Buffer.from(JSON.stringify(body));
@@ -55,7 +55,7 @@ export default async function handler(request: Request) {
         'guild id': interaction.guild_id,
 
         $set: {
-          platform: 'discord',
+          platform: 'discord bot',
           username: getUser(interaction)?.username,
         },
       },

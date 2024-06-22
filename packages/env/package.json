@@ -19,7 +19,7 @@
     }
   },
   "scripts": {
-    "lint": "biome lint . --apply",
+    "lint": "biome lint . --write",
     "format": "biome format . --write",
     "check": "tsc --noEmit",
     "build": "tsup",

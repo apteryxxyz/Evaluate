@@ -19,7 +19,7 @@ const Runtimes = new Map<string, PartialRuntime>();
  * @returns the runtimes
  */
 export async function fetchRuntimes() {
-  if (Runtimes.size >= 1) return Array.from(Runtimes.values());
+  if (Runtimes.size) return Array.from(Runtimes.values());
 
   const pistonRuntimes = await fetch('https://emkc.org/api/v2/piston/runtimes')
     .then((response) => response.json())
@@ -50,15 +50,19 @@ export async function fetchRuntimes() {
 
 /**
  * Searches the runtimes by a query.
- * @param query the query to search by
+ * @param queries the query to search by
  * @returns the runtimes that match the query
  */
-export async function searchRuntimes(query: string) {
-  if (query.length === 0) return [];
+export async function searchRuntimes(...queries: string[]) {
+  if (queries.length === 0) return [];
+
   const runtimes = await fetchRuntimes();
   const keys = ['name', 'aliases', 'tags'];
   const fuse = new Fuse(runtimes, { keys, threshold: 0.3 });
-  return fuse.search(query).map((r) => r.item);
+
+  return queries
+    .flatMap((q) => fuse.search(q).map((r) => r.item))
+    .filter((r, i, a) => a.indexOf(r) === i);
 }
 
 /**

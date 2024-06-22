@@ -6,34 +6,18 @@
   "types": "dist/index.d.ts",
   "typings": "src/index.ts",
   "exports": {
-    "./compress": {
-      "import": "./dist/compress/index.js",
-      "types": "./dist/compress/index.d.ts"
+    "./*": {
+      "import": "./dist/*/index.js",
+      "types": "./dist/*/index.d.ts"
     },
-    "./execute": {
-      "import": "./dist/execute/index.js",
-      "types": "./dist/execute/index.d.ts"
-    },
-    "./runtimes": {
-      "import": "./dist/runtimes/index.js",
-      "types": "./dist/runtimes/index.d.ts"
-    },
-    "./dist/compress": {
-      "import": "./dist/compress/index.js",
-      "types": "./dist/compress/index.d.ts"
-    },
-    "./dist/execute": {
-      "import": "./dist/execute/index.js",
-      "types": "./dist/execute/index.d.ts"
-    },
-    "./dist/runtimes": {
-      "import": "./dist/runtimes/index.js",
-      "types": "./dist/runtimes/index.d.ts"
+    "./dist/*": {
+      "import": "./dist/*/index.js",
+      "types": "./dist/*/index.d.ts"
     }
   },
   "scripts": {
     "format": "biome format . --write",
-    "lint": "biome lint . --apply",
+    "lint": "biome lint . --write",
     "check": "tsc --noEmit",
     "build": "pnpm tsup",
     "dev": "pnpm build --watch"

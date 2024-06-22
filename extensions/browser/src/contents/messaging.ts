@@ -8,10 +8,10 @@ chrome.runtime.onMessage.addListener(async (message) => {
   if (message.subject === 'parseSelection') {
     const selection = window.getSelection();
     const element = selection?.anchorNode?.parentElement;
-    if (!selection || !element) return;
-
-    const code = selection.toString();
-    const runtimeResolvables = extractRuntimeResolvables(element);
+    const code = selection ? selection.toString() : '';
+    const runtimeResolvables = element
+      ? extractRuntimeResolvables(element)
+      : [];
 
     return sendMessage({
       from: 'messaging',

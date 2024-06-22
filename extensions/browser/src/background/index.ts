@@ -3,6 +3,7 @@ import {
   type PartialRuntime,
   searchRuntimes,
 } from '@evaluate/engine/dist/runtimes';
+import { env } from '~env';
 import analytics from '~services/analytics';
 import { getDistinctId, setDistinctId } from '~utilities/analytics-helpers';
 import { getCurrentTab, sendMessage } from '~utilities/chrome-helpers';
@@ -24,6 +25,17 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     id: 'evaluate-runCodeSelection',
     title: 'Execute Code',
     contexts: ['selection'],
+  });
+});
+
+chrome.action.onClicked.addListener(async () => {
+  analytics?.capture('browser action clicked', {
+    $current_url: '',
+    platform: 'browser extension',
+  });
+
+  chrome.tabs.create({
+    url: env.PLASMO_PUBLIC_WEBSITE_URL,
   });
 });
 

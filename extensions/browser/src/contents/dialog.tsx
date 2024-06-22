@@ -38,13 +38,9 @@ export default function Dialog() {
     let toastId: string | number;
 
     chrome.runtime.onMessage.addListener((message) => {
-      if (message.to !== 'dialog') return;
-
-      //
-
       if (message.subject === 'executionStarted') {
         const runtimes = message.runtimes as PartialRuntime[];
-        toastId = toast.loading(
+        return (toastId = toast.loading(
           'Executing code, this may take a few seconds...',
           {
             description:
@@ -52,7 +48,7 @@ export default function Dialog() {
                 ? `Running in ${runtimes.length} runtimes for the best results.`
                 : `Running in ${runtimes[0]!.name}.`,
           },
-        );
+        ));
       }
 
       //
@@ -62,7 +58,7 @@ export default function Dialog() {
         const code = message.code as string;
         const results = //
           message.results as (ExecuteResult & { runtime: PartialRuntime })[];
-        setChildren(
+        return setChildren(
           <ResultsCard code={code} results={results} onClose={onClose} />,
         );
       }
@@ -76,7 +72,7 @@ export default function Dialog() {
           entry: 'file.code',
         });
         const url = `${env.PLASMO_PUBLIC_WEBSITE_URL}/playgrounds#${state}`;
-        toast.error('Could not determine language', {
+        return toast.error('Could not determine language', {
           description:
             'Evaluate was unable to determine the language of the selected text.',
           action: {

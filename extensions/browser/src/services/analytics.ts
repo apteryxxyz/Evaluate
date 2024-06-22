@@ -26,8 +26,6 @@ if (env.PLASMO_PUBLIC_POSTHOG_KEY) {
       loaded() {
         if (!id)
           void chrome.runtime.sendMessage({
-            from: 'analytics',
-            to: 'background',
             subject: 'setDistinctId',
             distinctId: (id = posthog.get_distinct_id()),
           });

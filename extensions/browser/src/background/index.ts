@@ -22,7 +22,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
   }
 
   chrome.contextMenus.create({
-    id: 'evaluate-runCodeSelection',
+    id: 'runCodeSelection',
     title: 'Execute Code',
     contexts: ['selection'],
   });
@@ -40,7 +40,7 @@ chrome.action.onClicked.addListener(async () => {
 });
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-  if (info.menuItemId === 'evaluate-runCodeSelection' && tab?.id) {
+  if (info.menuItemId === 'runCodeSelection' && tab?.id) {
     analytics?.capture('context menu item clicked', {
       $current_url: await getCurrentTab().then((t) => t?.url),
       platform: 'browser extension',
@@ -50,19 +50,12 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     // to extract the runtime resolvables, so we send a message to the
     // messaging content script to get the runtime resolvables
     chrome.tabs.sendMessage(tab.id, {
-      from: 'background',
-      to: 'messaging',
       subject: 'parseSelection',
     });
   }
 });
 
 chrome.runtime.onMessage.addListener(async (message, _, sendResponse) => {
-  // Relay the non background intended message back to the current tab
-  if (message.to !== 'background') return sendMessage(message);
-
-  //
-
   if (message.subject === 'prepareCode') {
     const code = message.code as string;
     const runtimeResolvables = message.runtimeResolvables as string[];
@@ -72,15 +65,11 @@ chrome.runtime.onMessage.addListener(async (message, _, sendResponse) => {
 
     if (runtimes.length) {
       message = {
-        from: 'background',
-        to: 'background',
         subject: 'runCode',
         ...{ code, runtimes },
       };
     } else {
-      sendMessage({
-        from: 'background',
-        to: 'dialog',
+      return sendMessage({
         subject: 'unknownRuntime',
         ...{ code },
       });
@@ -94,8 +83,6 @@ chrome.runtime.onMessage.addListener(async (message, _, sendResponse) => {
     const runtimes = message.runtimes as PartialRuntime[];
 
     sendMessage({
-      from: 'background',
-      to: 'dialog',
       subject: 'executionStarted',
       ...{ runtimes },
     });
@@ -124,9 +111,7 @@ chrome.runtime.onMessage.addListener(async (message, _, sendResponse) => {
     }
 
     const results = await Promise.all(promises);
-    sendMessage({
-      from: 'background',
-      to: 'dialog',
+    return sendMessage({
       subject: 'showResults',
       ...{ code, results },
     });
@@ -135,8 +120,11 @@ chrome.runtime.onMessage.addListener(async (message, _, sendResponse) => {
   //
 
   if (message.subject === 'getDistinctId') {
-    sendResponse(await getDistinctId());
+    return sendResponse(await getDistinctId());
   } else if (message.subject === 'setDistinctId') {
-    setDistinctId(message.distinctId);
+    return setDistinctId(message.distinctId);
   }
+
+  // Relay the non background intended message back to the current tab
+  return sendMessage(message);
 });

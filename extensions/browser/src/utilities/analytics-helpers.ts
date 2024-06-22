@@ -21,8 +21,6 @@ export async function getDistinctId() {
     return storage.get<string | undefined>('distinct_id');
   } else {
     return chrome.runtime.sendMessage({
-      from: 'analytics',
-      to: 'background',
       subject: 'getDistinctId',
     });
   }
@@ -34,8 +32,6 @@ export async function setDistinctId(id: string) {
     await storage.set('distinct_id', id);
   } else {
     return chrome.runtime.sendMessage({
-      from: 'analytics',
-      to: 'background',
       subject: 'setDistinctId',
       ...{ distinctId: id },
     });

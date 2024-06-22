@@ -11,8 +11,6 @@ export function getCurrentTab() {
 }
 
 export async function sendMessage(message: {
-  from: string;
-  to: string;
   subject: string;
   [key: string]: unknown;
 }) {

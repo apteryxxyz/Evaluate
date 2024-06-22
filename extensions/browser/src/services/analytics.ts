@@ -1,34 +1,37 @@
-import { Storage } from '@plasmohq/storage';
 import posthog from 'posthog-js';
 import { env } from '~env';
+import { getDistinctId } from '~utilities/analytics-helpers';
 
-if (typeof window !== 'undefined' && env.PLASMO_PUBLIC_POSTHOG_KEY) {
-  const storage = new Storage();
-
+if (env.PLASMO_PUBLIC_POSTHOG_KEY) {
   function registerId(id: string) {
-    posthog.register({
+    posthog.persistence?.register({
       distinct_id: id,
-      platform: 'browser extensions',
       $set: { platform: 'browser extension' },
+      platform: 'browser extension',
     });
   }
 
-  void storage.get<string | undefined>('distinct_id').then((id) => {
-    if (id) registerId(id);
-
+  getDistinctId().then((id) => {
     posthog.init(env.PLASMO_PUBLIC_POSTHOG_KEY!, {
       api_host: `${env.PLASMO_PUBLIC_WEBSITE_URL}/api/v1/ingest`,
-      ui_host: 'https://app.posthog.com/',
+      ui_host: 'https://us.posthog.com/',
+      person_profiles: 'identified_only',
+      respect_dnt: false,
       capture_pageview: false,
       capture_pageleave: false,
       autocapture: false,
       disable_compression: true,
+      advanced_disable_decide: true,
       disable_session_recording: true,
       loaded() {
-        if (!id) {
-          void storage.set('distinct_id', posthog.get_distinct_id());
-          registerId(posthog.get_distinct_id());
-        }
+        if (!id)
+          void chrome.runtime.sendMessage({
+            from: 'analytics',
+            to: 'background',
+            subject: 'setDistinctId',
+            distinctId: (id = posthog.get_distinct_id()),
+          });
+        registerId(id);
       },
     });
   });

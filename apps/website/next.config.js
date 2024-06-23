@@ -1,3 +1,4 @@
+import { fetchRuntimes } from '@evaluate/engine/runtimes';
 import withBundleAnalyser from '@next/bundle-analyzer';
 
 /** @type {import('next').NextConfig} */
@@ -22,6 +23,13 @@ const nextConfig = {
       destination: '/playgrounds',
       permanent: false,
     },
+    {
+      source: `/:slug(${(await fetchRuntimes())
+        .map((r) => r.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+        .join('|')})`,
+      destination: '/playgrounds/:slug',
+      permanent: false,
+    }
   ],
 
   rewrites: async () => [

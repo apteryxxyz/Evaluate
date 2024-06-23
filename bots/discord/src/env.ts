@@ -4,6 +4,7 @@ import { z } from 'zod';
 
 if (process.env.ORIGINAL_ARGV?.includes('--production'))
   Reflect.set(process.env, 'NODE_ENV', 'production');
+Object.assign(process.env, readEnv());
 
 export const env = validateEnv({
   server: {
@@ -18,7 +19,14 @@ export const env = validateEnv({
     POSTHOG_KEY: z.string().min(1).optional(),
   },
 
-  variables: { ...readEnv(), ...process.env },
+  variables: {
+    WEBSITE_URL: process.env.WEBSITE_URL || `https://${process.env.VERCEL_URL}`,
+    DISCORD_TOKEN: process.env.DISCORD_TOKEN,
+    DISCORD_PUBLIC_KEY: process.env.DISCORD_PUBLIC_KEY,
+    DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
+    DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+    POSTHOG_KEY: process.env.POSTHOG_KEY,
+  },
 
   onValid(env) {
     if (

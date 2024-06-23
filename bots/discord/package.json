@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "lint": "biome lint . --apply",
+    "lint": "biome lint . --write",
     "format": "biome format . --write",
     "check": "tsc --noEmit",
     "build": "tsup",
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@configs/tsup": "workspace:^",
-    "@next/env": "^14.2.3",
-    "@types/node": "^20.14.2"
+    "@next/env": "^14.2.4",
+    "@types/node": "^20.14.6"
   }
 }

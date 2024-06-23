@@ -1,14 +1,11 @@
 import posthog from 'posthog-js';
 import { env } from '~env';
-import { getDistinctId } from '~utilities/analytics-helpers';
+import { getDistinctId, setDistinctId } from '~utilities/analytics-helpers';
 
 if (env.PLASMO_PUBLIC_POSTHOG_KEY) {
   function registerId(id: string) {
-    posthog.persistence?.register({
-      distinct_id: id,
-      $set: { platform: 'browser extension' },
-      platform: 'browser extension',
-    });
+    posthog.identify(id, { platform: 'browser extension' });
+    posthog.register({ platform: 'browser extension' });
   }
 
   getDistinctId().then((id) => {
@@ -25,11 +22,10 @@ if (env.PLASMO_PUBLIC_POSTHOG_KEY) {
       advanced_disable_decide: true,
       disable_session_recording: true,
       loaded() {
-        if (!id)
-          void chrome.runtime.sendMessage({
-            subject: 'setDistinctId',
-            distinctId: (id = posthog.get_distinct_id()),
-          });
+        if (!id) {
+          id = posthog.get_distinct_id();
+          setDistinctId(id);
+        }
         registerId(id);
       },
     });

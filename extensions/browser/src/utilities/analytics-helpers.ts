@@ -1,4 +1,3 @@
-import { Storage } from '@plasmohq/storage';
 import analytics from '~services/analytics';
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -17,8 +16,9 @@ export function wrapCapture<T extends (...args: any[]) => any>(cb: T) {
 
 export async function getDistinctId() {
   if (typeof window === 'undefined') {
-    const storage = new Storage();
-    return storage.get<string | undefined>('distinct_id');
+    return chrome.storage.sync
+      .get('distinctId') //
+      .then((res) => res.distinctId);
   } else {
     return chrome.runtime.sendMessage({
       subject: 'getDistinctId',
@@ -28,8 +28,7 @@ export async function getDistinctId() {
 
 export async function setDistinctId(id: string) {
   if (typeof window === 'undefined') {
-    const storage = new Storage();
-    await storage.set('distinct_id', id);
+    return chrome.storage.sync.set({ distinctId: id });
   } else {
     return chrome.runtime.sendMessage({
       subject: 'setDistinctId',

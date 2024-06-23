@@ -1,4 +1,3 @@
-import { sendMessage } from '~utilities/chrome-helpers';
 import { extractRuntimeResolvables } from '~utilities/runtime-identifier';
 
 chrome.runtime.onMessage.addListener(async (message) => {
@@ -10,7 +9,7 @@ chrome.runtime.onMessage.addListener(async (message) => {
       ? extractRuntimeResolvables(element)
       : [];
 
-    return sendMessage({
+    chrome.runtime.sendMessage({
       subject: 'prepareCode',
       ...{ code, runtimeResolvables },
     });

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type { PlasmoCSConfig, PlasmoGetStyle } from 'plasmo';
 import { useCallback, useEffect, useState } from 'react';
 import { env } from '~env';
+import { wrapCapture } from '~utilities/analytics-helpers';
 import { ResultsCard } from './_components/results-dialog';
 
 export const config: PlasmoCSConfig = {
@@ -77,7 +78,7 @@ export default function Dialog() {
             'Evaluate was unable to determine the language of the selected text.',
           action: {
             label: 'Open in Evaluate',
-            onClick: () => window.open(url, '_blank'),
+            onClick: wrapCapture(() => window.open(url, '_blank')),
           },
         });
       }

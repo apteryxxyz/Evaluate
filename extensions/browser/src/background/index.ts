@@ -6,7 +6,6 @@ import {
 import { env } from '~env';
 import analytics from '~services/analytics';
 import { getDistinctId, setDistinctId } from '~utilities/analytics-helpers';
-import { getCurrentTab, sendMessage } from '~utilities/chrome-helpers';
 
 chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
@@ -42,7 +41,7 @@ chrome.action.onClicked.addListener(async () => {
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (info.menuItemId === 'runCodeSelection' && tab?.id) {
     analytics?.capture('context menu item clicked', {
-      $current_url: await getCurrentTab().then((t) => t?.url),
+      $current_url: tab?.url || '',
       platform: 'browser extension',
     });
 
@@ -55,7 +54,14 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   }
 });
 
-chrome.runtime.onMessage.addListener(async (message, _, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+  if (typeof sender.tab?.id !== 'number') return;
+
+  if (message.relay === true) {
+    chrome.tabs.sendMessage(sender.tab.id, message);
+    return;
+  }
+
   if (message.subject === 'prepareCode') {
     const code = message.code as string;
     const runtimeResolvables = message.runtimeResolvables as string[];
@@ -69,7 +75,7 @@ chrome.runtime.onMessage.addListener(async (message, _, sendResponse) => {
         ...{ code, runtimes },
       };
     } else {
-      return sendMessage({
+      chrome.tabs.sendMessage(sender.tab.id, {
         subject: 'unknownRuntime',
         ...{ code },
       });
@@ -82,7 +88,7 @@ chrome.runtime.onMessage.addListener(async (message, _, sendResponse) => {
     const code = message.code as string;
     const runtimes = message.runtimes as PartialRuntime[];
 
-    sendMessage({
+    chrome.tabs.sendMessage(sender.tab.id, {
       subject: 'executionStarted',
       ...{ runtimes },
     });
@@ -96,7 +102,7 @@ chrome.runtime.onMessage.addListener(async (message, _, sendResponse) => {
           entry: 'file.code',
         }).then(async (r) => {
           analytics?.capture('code executed', {
-            $current_url: await getCurrentTab().then((t) => t?.url),
+            $current_url: sender.tab?.url || '',
             platform: 'browser extension',
             'runtime id': runtime.id,
             'was successful':
@@ -111,7 +117,7 @@ chrome.runtime.onMessage.addListener(async (message, _, sendResponse) => {
     }
 
     const results = await Promise.all(promises);
-    return sendMessage({
+    chrome.tabs.sendMessage(sender.tab.id, {
       subject: 'showResults',
       ...{ code, results },
     });
@@ -124,7 +130,4 @@ chrome.runtime.onMessage.addListener(async (message, _, sendResponse) => {
   } else if (message.subject === 'setDistinctId') {
     return setDistinctId(message.distinctId);
   }
-
-  // Relay the non background intended message back to the current tab
-  return sendMessage(message);
 });

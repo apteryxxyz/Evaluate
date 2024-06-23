@@ -12,7 +12,6 @@ if (env.PLASMO_PUBLIC_POSTHOG_KEY) {
     posthog.init(env.PLASMO_PUBLIC_POSTHOG_KEY!, {
       api_host: `${env.PLASMO_PUBLIC_WEBSITE_URL}/api/v1/ingest`,
       ui_host: 'https://us.posthog.com/',
-      person_profiles: 'identified_only',
       persistence: 'localStorage',
       respect_dnt: false,
       capture_pageview: false,

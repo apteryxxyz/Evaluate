@@ -10,7 +10,7 @@
     "author": "Apteryx Software",
     "homepage_url": "https://evaluate.run",
     "manifest_version": 3,
-    "permissions": ["contextMenus", "activeTab"]
+    "permissions": ["contextMenus"]
   },
   "scripts": {
     "lint": "biome lint . --write",

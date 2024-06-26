@@ -5,7 +5,8 @@ import {
 } from '@evaluate/engine/dist/runtimes';
 import { env } from '~env';
 import analytics from '~services/analytics';
-import { getDistinctId, setDistinctId } from '~utilities/analytics-helpers';
+
+chrome.action.setTitle({ title: 'Evaluate' });
 
 chrome.runtime.onInstalled.addListener(async (details) => {
   if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
@@ -54,7 +55,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   }
 });
 
-chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (message, sender) => {
   if (typeof sender.tab?.id !== 'number') return;
 
   if (message.relay === true) {
@@ -121,13 +122,5 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
       subject: 'showResults',
       ...{ code, results },
     });
-  }
-
-  //
-
-  if (message.subject === 'getDistinctId') {
-    return sendResponse(await getDistinctId());
-  } else if (message.subject === 'setDistinctId') {
-    return setDistinctId(message.distinctId);
   }
 });

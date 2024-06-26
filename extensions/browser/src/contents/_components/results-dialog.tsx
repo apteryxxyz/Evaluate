@@ -15,7 +15,7 @@ import { cn } from '@evaluate/react/utilities/class-name';
 import { ExternalLinkIcon, XIcon } from 'lucide-react';
 import { useMemo } from 'react';
 import { env } from '~env';
-import { wrapCapture } from '~utilities/analytics-helpers';
+import { wrapCapture } from '~services/analytics';
 
 export function ResultsCard(p: {
   code: string;

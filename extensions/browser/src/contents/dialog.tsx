@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import type { PlasmoCSConfig, PlasmoGetStyle } from 'plasmo';
 import { useCallback, useEffect, useState } from 'react';
 import { env } from '~env';
-import { wrapCapture } from '~utilities/analytics-helpers';
 import { ResultsCard } from './_components/results-dialog';
 
 export const config: PlasmoCSConfig = {
@@ -17,6 +16,7 @@ export const config: PlasmoCSConfig = {
 import sonnerCss from 'data-text:~styles/sonner.css';
 // @ts-ignore
 import themeCss from 'data-text:~styles/theme.css';
+import { wrapCapture } from '~services/analytics';
 export const getStyle: PlasmoGetStyle = () => {
   const link = document.createElement('link');
   link.rel = 'stylesheet';

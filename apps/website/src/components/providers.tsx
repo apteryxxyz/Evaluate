@@ -5,9 +5,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { ServerThemeProvider } from 'next-themes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BreakpointIndicator } from './breakpoint-indicator';
-import { PageView } from './page-view';
+import { injectPageTracking } from '~/services/analytics';
 
 export function HtmlProviders(p: React.PropsWithChildren) {
   return (
@@ -45,6 +45,10 @@ export function BodyProviders(p: React.PropsWithChildren) {
       }),
   );
 
+  useEffect(() => {
+    injectPageTracking();
+  }, []);
+
   return (
     <TooltipProvider>
       <QueryClientProvider client={queryClient}>
@@ -52,7 +56,7 @@ export function BodyProviders(p: React.PropsWithChildren) {
         <ReactQueryDevtools initialIsOpen={false} />
         <BreakpointIndicator />
         <SpeedInsights />
-        <PageView />
+        {/* <PageView /> */}
       </QueryClientProvider>
     </TooltipProvider>
   );

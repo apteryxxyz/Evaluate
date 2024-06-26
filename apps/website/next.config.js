@@ -29,7 +29,7 @@ const nextConfig = {
         .join('|')})`,
       destination: '/playgrounds/:slug',
       permanent: false,
-    }
+    },
   ],
 
   rewrites: async () => [

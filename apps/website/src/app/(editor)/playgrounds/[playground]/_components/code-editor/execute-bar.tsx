@@ -118,8 +118,9 @@ export function ExecuteBar(p: { runtime: Runtime }) {
         </Select>
 
         <Button type="submit" disabled={isPending}>
-          <span className="sr-only">Execute Code</span>
+          <span className="sr-only">Execute</span>
           <span>{p.runtime.name}</span>
+          <span className="sr-only">Code</span>
           {isPending ? (
             <Loader2Icon className="ml-1 size-4 animate-spin" />
           ) : (

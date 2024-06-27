@@ -1,3 +1,5 @@
+'use client';
+
 import type { Runtime } from '@evaluate/engine/runtimes';
 import {
   ResizableHandle,

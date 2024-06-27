@@ -1,3 +1,5 @@
+'use client';
+
 import { ExecuteOptions, executeCode } from '@evaluate/engine/execute';
 import type { Runtime } from '@evaluate/engine/runtimes';
 import { Button } from '@evaluate/react/components/button';

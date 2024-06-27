@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@evaluate/react/components/button';
 import { ScrollBar, Scrollable } from '@evaluate/react/components/scrollable';
 import { cn } from '@evaluate/react/utilities/class-name';

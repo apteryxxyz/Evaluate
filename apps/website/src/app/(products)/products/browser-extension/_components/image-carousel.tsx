@@ -22,7 +22,7 @@ export function ImageCarousel() {
           <CarouselItem className="flex items-center justify-center">
             <Image
               alt="Evaluate Browser Extension Screenshot 1"
-              src="/images/browser-extension-screenshot-1.png"
+              src="/images/browser-extension-screenshot-1.png?v=2"
               className="rounded-xl border"
               width={640}
               height={400}
@@ -31,16 +31,7 @@ export function ImageCarousel() {
           <CarouselItem className="flex items-center justify-center">
             <Image
               alt="Evaluate Browser Extension Screenshot 2"
-              src="/images/browser-extension-screenshot-2.png"
-              className="rounded-xl border"
-              width={640}
-              height={400}
-            />
-          </CarouselItem>
-          <CarouselItem className="flex items-center justify-center">
-            <Image
-              alt="Evaluate Browser Extension Screenshot 3"
-              src="/images/browser-extension-screenshot-3.png"
+              src="/images/browser-extension-screenshot-2.png?v=2"
               className="rounded-xl border"
               width={640}
               height={400}

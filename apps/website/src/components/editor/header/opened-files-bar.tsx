@@ -1,14 +1,9 @@
-'use client';
-
 import { Button } from '@evaluate/react/components/button';
 import { ScrollBar, ScrollArea } from '@evaluate/react/components/scroll-area';
 import { cn } from '@evaluate/react/utilities/class-name';
 import { XIcon } from 'lucide-react';
-import {
-  useExplorer,
-  useWatchExplorer,
-} from '../../_contexts/explorer/explorer';
-import { FileIcon } from '../file-explorer/file-icon';
+import { FileIcon } from '../explorer/file-icon';
+import { useExplorer, useWatchExplorer } from '../explorer/use';
 
 export function OpenedFilesBar() {
   const explorer = useExplorer();

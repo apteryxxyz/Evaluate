@@ -1,7 +1,7 @@
 'use client';
 
 import { ExecuteOptions, executeCode } from '@evaluate/engine/execute';
-import type { Runtime } from '@evaluate/engine/runtimes';
+import type { PartialRuntime } from '@evaluate/engine/runtimes';
 import { Button } from '@evaluate/react/components/button';
 import { Form } from '@evaluate/react/components/form';
 import {
@@ -22,14 +22,11 @@ import { useCallback, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import analytics from '~/services/analytics';
 import { combineIssueMessages } from '~/utilities/zod-issues';
-import {
-  useExplorer,
-  useWatchExplorer,
-} from '../../_contexts/explorer/explorer';
-import type { File } from '../../_contexts/explorer/file-system';
-import { useResult } from '../../_contexts/result';
+import { useExplorer, useWatchExplorer } from '../explorer/use';
+import { useTerminal } from '../terminal/use';
+import type { File } from '../explorer/file-system';
 
-export function ExecuteBar(p: { runtime: Runtime }) {
+export function ExecuteBar(p: { runtime: PartialRuntime }) {
   const explorer = useExplorer();
   useWatchExplorer(explorer);
   const files = explorer.descendants //
@@ -49,7 +46,7 @@ export function ExecuteBar(p: { runtime: Runtime }) {
     },
   });
 
-  const [, setResult] = useResult();
+  const { setResult } = useTerminal();
   const { mutate, isPending } = useMutation({
     mutationKey: ['execute'],
     mutationFn: (data: ExecuteOptions) => {

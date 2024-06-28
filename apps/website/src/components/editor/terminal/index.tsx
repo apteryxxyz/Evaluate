@@ -1,6 +1,4 @@
-'use client';
-
-import type { Runtime } from '@evaluate/engine/runtimes';
+import type { PartialRuntime } from '@evaluate/engine/runtimes';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -8,13 +6,13 @@ import {
 } from '@evaluate/react/components/resizable';
 import { Editor } from '@monaco-editor/react';
 import { PlayIcon } from 'lucide-react';
-import { useResult } from '../../_contexts/result';
-import { useMonaco } from '../../_hooks/use-monaco';
-import HtmlPreview from './html-preview';
+import { useMonaco } from '../use-monaco';
+import { HtmlPreview } from './html-preview';
+import { useTerminal } from './use';
 
-export function ResultDisplay(p: { runtime: Runtime }) {
+export function Terminal(p: { runtime: PartialRuntime }) {
   const monaco = useMonaco();
-  const [result] = useResult();
+  const { result } = useTerminal();
 
   const hasRun = result && 'run' in result;
   const hasRunTimedOut = hasRun && result.run?.signal === 'SIGKILL';
@@ -29,22 +27,23 @@ export function ResultDisplay(p: { runtime: Runtime }) {
     hasCompile && result?.compile?.output?.trim() !== '';
 
   const hasPreview = p.runtime.id === 'php';
-  const panelCount = 1 + (hasCompile ? 1 : 0) + (hasPreview && true ? 1 : 0);
+  const panelCount = 1 + (hasCompile ? 1 : 0) + (hasPreview ? 1 : 0);
 
   // TODO: On mobile the editor and preview are too thin, in future use some sort of tabbed interface
+  // Need to improve editor on mobile first tho
+
   return (
-    <section className="h-full">
+    <section>
       <ResizablePanelGroup direction="horizontal">
         {/* Run */}
         <ResizablePanel defaultSize={100 / panelCount} className="relative">
           {doesRunHaveDisplayableOutput && (
             <>
-              <div className="border-b pl-1 text-sm">
+              <div className="border-b p-2 text-foreground/70 text-sm">
                 <span>Run Output</span>
               </div>
               <Editor
-                onMount={() => monaco?.editor.syncTheme()}
-                theme={monaco?.editor.theme}
+                {...monaco}
                 value={result.run.output}
                 options={{
                   minimap: { enabled: false },
@@ -92,12 +91,11 @@ export function ResultDisplay(p: { runtime: Runtime }) {
               >
                 {doesCompileHaveDisplayableOutput && (
                   <>
-                    <div className="border-b pl-1 text-sm">
+                    <div className="border-b p-2 text-foreground/70 text-sm">
                       <span>Compile Output</span>
                     </div>
                     <Editor
-                      onMount={() => monaco?.editor.syncTheme()}
-                      theme={monaco?.editor.theme}
+                      {...monaco}
                       value={result.compile?.output}
                       options={{
                         minimap: { enabled: false },
@@ -122,17 +120,17 @@ export function ResultDisplay(p: { runtime: Runtime }) {
           )}
 
         {/* Preview */}
-        {hasPreview && hasRun && (
+        {hasPreview && (
           <>
             <ResizableHandle />
             <ResizablePanel
               className="flex flex-col"
               defaultSize={100 / panelCount}
             >
-              <div className="border-b pl-1 text-sm">
+              <div className="border-b p-2 text-foreground/70 text-sm">
                 <span>Preview</span>
               </div>
-              <HtmlPreview html={result?.run?.output} />
+              <HtmlPreview>{result?.run?.output}</HtmlPreview>
             </ResizablePanel>
           </>
         )}

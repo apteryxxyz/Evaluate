@@ -1,27 +1,24 @@
-'use client';
-
-import type { Runtime } from '@evaluate/engine/runtimes';
+import type { PartialRuntime } from '@evaluate/engine/runtimes';
 import { Button } from '@evaluate/react/components/button';
-import { Editor } from '@monaco-editor/react';
+import MonacoEditor from '@monaco-editor/react';
 import { FilesIcon } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
-import {
-  useExplorer,
-  useWatchExplorer,
-} from '../../_contexts/explorer/explorer';
-import { useMonaco } from '../../_hooks/use-monaco';
-import { ExecuteBar } from './execute-bar';
-import { OpenedFilesBar } from './opened-files-bar';
+import { useEffect } from 'react';
+import { useExplorer, useWatchExplorer } from './explorer/use';
+import { ExecuteBar } from './header/execute-bar';
+import { OpenedFilesBar } from './header/opened-files-bar';
+import { useMonaco } from './use-monaco';
 
-export function CodeEditor(p: { runtime: Runtime }) {
+export function Editor(p: { runtime: PartialRuntime }) {
   const explorer = useExplorer();
   useWatchExplorer(explorer);
-  const monaco = useMonaco();
-
-  const editorRef = useRef<HTMLTextAreaElement>(null);
   const openedFile = explorer.findOpenedFile();
-  useEffect(() => editorRef.current?.focus(void openedFile), [openedFile]);
+
+  const monaco = useMonaco();
+  useEffect(() => {
+    void openedFile;
+    monaco.editor?.focus();
+  }, [monaco.editor, openedFile]);
 
   return (
     <section className="h-full">
@@ -49,12 +46,8 @@ export function CodeEditor(p: { runtime: Runtime }) {
 
       <div className="relative h-full w-full">
         {openedFile && (
-          <Editor
-            onMount={(e) => {
-              Reflect.set(editorRef, 'current', e);
-              monaco?.editor.syncTheme();
-            }}
-            theme={monaco?.editor.theme}
+          <MonacoEditor
+            {...monaco}
             path={openedFile.path}
             defaultValue={openedFile.content}
             onChange={(content) => {

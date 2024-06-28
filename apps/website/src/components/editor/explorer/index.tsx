@@ -10,14 +10,11 @@ import {
 } from '@evaluate/react/components/context-menu';
 import { ScrollArea } from '@evaluate/react/components/scroll-area';
 import { FilePlusIcon, FolderPlusIcon } from 'lucide-react';
-import {
-  useExplorer,
-  useWatchExplorer,
-} from '../../_contexts/explorer/explorer';
 import { FileExplorerFileItem } from './file-item';
 import { FileExplorerItemWrapper } from './item-wrapper';
+import { useExplorer, useWatchExplorer } from './use';
 
-export function FileExplorer() {
+export function Explorer() {
   const explorer = useExplorer();
   useWatchExplorer(explorer);
 

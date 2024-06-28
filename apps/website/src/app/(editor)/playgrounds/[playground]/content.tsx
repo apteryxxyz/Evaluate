@@ -10,15 +10,17 @@ import { Sheet, SheetContent } from '@evaluate/react/components/sheet';
 import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { useMediaQuery } from '@evaluate/react/hooks/media-query';
 import React, { useState } from 'react';
-import { CodeEditor } from './_components/code-editor/code-editor';
-import { FileExplorer } from './_components/file-explorer/file-explorer';
-import { ResultDisplay } from './_components/result-display/result-display';
-import { ExplorerProvider } from './_contexts/explorer/explorer';
-import { ResultProvider } from './_contexts/result';
+import { Explorer } from '~/components/editor/explorer';
+import { Editor } from '~/components/editor';
+import { Terminal } from '~/components/editor/terminal';
+import { ExplorerProvider } from '~/components/editor/explorer/use';
+import { TerminalProvider } from '~/components/editor/terminal/use';
 
 export default function EditorContent(p: { runtime: Runtime }) {
   const isDesktop = useMediaQuery('lg');
-  const Explorer = isDesktop ? DesktopExplorerWrapper : MobileExplorerWrapper;
+  const ExplorerWrapper = isDesktop
+    ? DesktopExplorerWrapper
+    : MobileExplorerWrapper;
 
   return (
     <div
@@ -26,21 +28,22 @@ export default function EditorContent(p: { runtime: Runtime }) {
       className="m-1.5 mt-0 h-[calc(-3.5rem_+_100vh_-_var(--bottom-spacing))]"
     >
       <ExplorerProvider runtime={p.runtime}>
-        <ResultProvider>
-          <Explorer>
-            <FileExplorer />
+        <TerminalProvider>
+          <ExplorerWrapper>
+            <Explorer />
 
             <ResizablePanelGroup direction="vertical">
               <ResizablePanel minSize={15} defaultSize={65}>
-                <CodeEditor runtime={p.runtime} />
+                <Editor runtime={p.runtime} />
               </ResizablePanel>
+
               <ResizableHandle />
               <ResizablePanel minSize={15} defaultSize={35}>
-                <ResultDisplay runtime={p.runtime} />
+                <Terminal runtime={p.runtime} />
               </ResizablePanel>
             </ResizablePanelGroup>
-          </Explorer>
-        </ResultProvider>
+          </ExplorerWrapper>
+        </TerminalProvider>
       </ExplorerProvider>
     </div>
   );

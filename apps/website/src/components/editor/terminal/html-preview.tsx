@@ -8,7 +8,7 @@ export function HtmlPreview(p: React.PropsWithChildren) {
 
   useEffect(() => {
     if (!p.children) return;
-    const html = String(Children.only(p.children) ?? '');
+    const html = Children.map(p.children, String)?.join('') ?? '';
     setSanitisedHtml(DOMPurify.sanitize(html, { WHOLE_DOCUMENT: true }));
   });
 
@@ -27,7 +27,7 @@ export function HtmlPreview(p: React.PropsWithChildren) {
       )}
 
       {!sanitisedHtml && (
-        <div className="flex h-full items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/40">
           <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
             Nothing to render here.
           </span>

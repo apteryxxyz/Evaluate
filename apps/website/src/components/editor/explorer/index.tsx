@@ -20,26 +20,26 @@ export function Explorer() {
 
   return (
     <section className="relative h-full w-full">
-      <div className="flex h-10 items-center gap-2 border-b px-4 py-2">
+      <div className="flex h-10 items-center gap-1 border-b px-3 py-1">
         <span className="mr-auto font-medium text-sm">Explorer</span>
 
         <Button
+          title="New File"
           size="icon"
           variant="ghost"
-          className="h-auto w-auto rounded-full"
+          className="size-auto rounded-full"
           onClick={() => explorer.findSelectedFolder().createChild('file')}
-          title="New File"
         >
           <FilePlusIcon className="size-4" />
           <span className="sr-only">New File</span>
         </Button>
 
         <Button
+          title="New Folder"
           size="icon"
           variant="ghost"
-          className="h-auto w-auto rounded-full"
+          className="size-auto rounded-full"
           onClick={() => explorer.findSelectedFolder().createChild('folder')}
-          title="New Folder"
         >
           <FolderPlusIcon className="size-4" />
           <span className="sr-only">New Folder</span>
@@ -71,7 +71,7 @@ export function Explorer() {
             {explorer.children.length === 0 && (
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
-                  This is the file explorer, create a new file to get started.
+                  This is the file explorer. Create a new file to get started.
                 </span>
               </div>
             )}

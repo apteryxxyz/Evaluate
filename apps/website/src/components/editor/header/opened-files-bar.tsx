@@ -1,6 +1,6 @@
+'use client';
+
 import { Button } from '@evaluate/react/components/button';
-import { ScrollBar, ScrollArea } from '@evaluate/react/components/scroll-area';
-import { cn } from '@evaluate/react/utilities/class-name';
 import { XIcon } from 'lucide-react';
 import { FileIcon } from '../explorer/file-icon';
 import { useExplorer, useWatchExplorer } from '../explorer/use';
@@ -11,51 +11,47 @@ export function OpenedFilesBar() {
   const openedFiles = explorer.findTabOpenedFiles();
 
   return (
-    <ScrollArea>
-      <div className="flex w-full whitespace-nowrap">
-        {openedFiles.map((file, index) => (
+    <>
+      {openedFiles.map((file, index, files) => (
+        <Button
+          key={file.path}
+          variant="secondary"
+          className="group bg-card px-2 text-foreground/70 data-[state=active]:bg-muted data-[state=active]:text-foreground hover:text-foreground"
+          data-state={file.isOpened ? 'active' : ''}
+          onClick={() => {
+            file.setOpened(true);
+            file.setSelected(true);
+          }}
+        >
+          <FileIcon fileName={file.name ?? ''} />
+          <span>&nbsp;{file.name}</span>
+
           <Button
-            key={file.path}
-            className={cn(
-              'group px-2',
-              file.isOpened ? 'bg-secondary' : 'bg-card',
-            )}
+            role="button"
+            size="icon"
             variant={null}
-            onClick={() => {
-              file.setOpened(true);
-              file.setSelected(true);
+            className="w-auto pl-2 text-white/20 group-hover:text-white/50 hover:text-white"
+            asChild
+            onClick={(ev) => {
+              ev.stopPropagation();
+
+              file.setOpened(false);
+              file.setSelected(false);
+              file.setTabOpened(false);
+
+              const toOpen = files[index + 1] ?? files[index - 1];
+              if (toOpen) {
+                toOpen.setOpened(true);
+                toOpen.setSelected(true);
+              }
             }}
           >
-            <FileIcon fileName={file.name ?? ''} />
-            <span>{file.name}</span>
-            <Button
-              role="button"
-              asChild
-              variant={null}
-              size="icon"
-              className="w-auto pl-2 text-white/20 group-hover:text-white/50 hover:text-white"
-              onClick={(e) => {
-                e.stopPropagation();
-
-                file.setOpened(false);
-                file.setSelected(false);
-                file.setTabOpened(false);
-
-                const toOpen = openedFiles[index + 1] ?? openedFiles[index - 1];
-                if (toOpen) {
-                  toOpen.setOpened(true);
-                  toOpen.setSelected(true);
-                }
-              }}
-            >
-              <span>
-                <XIcon className="size-4" />
-              </span>
-            </Button>
+            <span>
+              <XIcon className="size-4" />
+            </span>
           </Button>
-        ))}
-      </div>
-      <ScrollBar orientation="horizontal" />
-    </ScrollArea>
+        </Button>
+      ))}
+    </>
   );
 }

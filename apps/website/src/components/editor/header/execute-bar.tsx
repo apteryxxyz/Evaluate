@@ -14,24 +14,26 @@ import {
   SelectValue,
 } from '@evaluate/react/components/select';
 import { toast } from '@evaluate/react/components/toast';
+import { useMediaQuery } from '@evaluate/react/hooks/media-query';
+import { cn } from '@evaluate/react/utilities/class-name';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import _ from 'lodash';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
 import { useCallback, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import analytics from '~/services/analytics';
 import { combineIssueMessages } from '~/utilities/zod-issues';
+import type { File } from '../explorer/file-system';
 import { useExplorer, useWatchExplorer } from '../explorer/use';
 import { useTerminal } from '../terminal/use';
-import type { File } from '../explorer/file-system';
 
 export function ExecuteBar(p: { runtime: PartialRuntime }) {
   const explorer = useExplorer();
   useWatchExplorer(explorer);
+  const { setResult } = useTerminal();
+
   const files = explorer.descendants //
     .filter((f): f is File => f.type === 'file');
-
   const entryFile = explorer.findEntryFile();
   const entryFileSelectRef = useRef<HTMLButtonElement>(null);
 
@@ -46,12 +48,9 @@ export function ExecuteBar(p: { runtime: PartialRuntime }) {
     },
   });
 
-  const { setResult } = useTerminal();
   const { mutate, isPending } = useMutation({
     mutationKey: ['execute'],
-    mutationFn: (data: ExecuteOptions) => {
-      return executeCode(data);
-    },
+    mutationFn: executeCode,
   });
 
   type Valid = Parameters<typeof form.handleSubmit>[0];
@@ -66,10 +65,11 @@ export function ExecuteBar(p: { runtime: PartialRuntime }) {
               result.run.code === 0 &&
               (!result.compile || result.compile.code === 0),
           });
+          window.dispatchEvent(new CustomEvent('mobile-terminal-open-change'));
         },
       });
     },
-    [p.runtime.id, mutate, setResult],
+    [mutate, p.runtime.id, setResult],
   );
 
   type Invalid = Exclude<Parameters<typeof form.handleSubmit>[1], undefined>;
@@ -89,7 +89,7 @@ export function ExecuteBar(p: { runtime: PartialRuntime }) {
   return (
     <Form {...form}>
       <form
-        className="flex w-full"
+        className="flex w-full gap-1"
         onSubmit={form.handleSubmit(onValid, onInvalid)}
       >
         <Select
@@ -99,7 +99,7 @@ export function ExecuteBar(p: { runtime: PartialRuntime }) {
         >
           <SelectTrigger
             ref={entryFileSelectRef}
-            className="w-full min-w-[200px]"
+            className="w-full lg:w-[200px]"
           >
             <SelectValue placeholder="Select an entry file..." />
           </SelectTrigger>
@@ -116,9 +116,13 @@ export function ExecuteBar(p: { runtime: PartialRuntime }) {
           </SelectContent>
         </Select>
 
-        <Button type="submit" disabled={isPending}>
+        <Button
+          type="submit"
+          disabled={isPending}
+          className={cn(!useMediaQuery('xs') && 'aspect-square p-0')}
+        >
           <span className="sr-only">Execute</span>
-          <span>{p.runtime.name}</span>
+          <span className="hidden xs:block">{p.runtime.name}</span>
           <span className="sr-only">Code</span>
           {isPending ? (
             <Loader2Icon className="ml-1 size-4 animate-spin" />

@@ -1,7 +1,10 @@
+'use client';
+
 import type { PartialRuntime } from '@evaluate/engine/runtimes';
 import { Button } from '@evaluate/react/components/button';
+import { ScrollArea, ScrollBar } from '@evaluate/react/components/scroll-area';
 import MonacoEditor from '@monaco-editor/react';
-import { FilesIcon } from 'lucide-react';
+import { FilesIcon, TerminalIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useExplorer, useWatchExplorer } from './explorer/use';
@@ -22,25 +25,40 @@ export function Editor(p: { runtime: PartialRuntime }) {
 
   return (
     <section className="h-full">
-      <div className="flex h-20 w-full flex-col-reverse border-b px-0.5 pt-0.5 md:h-10 md:flex-row">
-        <div className="flex h-10">
+      <div className="flex flex-col items-center gap-1 border-b px-0.5 lg:h-10 lg:flex-row">
+        <div className="flex w-full gap-1 lg:overflow-hidden">
+          <ScrollArea className="flex w-full whitespace-nowrap">
+            <OpenedFilesBar />
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+
           <Button
-            size="icon"
             variant="secondary"
-            className="aspect-square lg:hidden"
+            className="ml-auto aspect-square p-0 lg:hidden"
             onClick={() =>
-              window.dispatchEvent(new CustomEvent('file-explorer-open-change'))
+              window.dispatchEvent(
+                new CustomEvent('mobile-explorer-open-change'),
+              )
             }
           >
             <FilesIcon className="size-4" />
-            <span className="sr-only">Open File Explorer</span>
           </Button>
-
-          <OpenedFilesBar />
         </div>
 
-        <div className="flex h-10 md:ml-auto">
+        <div className="flex w-full gap-1 lg:w-auto">
           <ExecuteBar runtime={p.runtime} />
+
+          <Button
+            variant="secondary"
+            className="ml-auto aspect-square p-0 lg:hidden"
+            onClick={() =>
+              window.dispatchEvent(
+                new CustomEvent('mobile-terminal-open-change'),
+              )
+            }
+          >
+            <TerminalIcon className="size-4" />
+          </Button>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
-import type monaco from 'monaco-editor';
 import type { BeforeMount, OnMount } from '@monaco-editor/react';
+import type monaco from 'monaco-editor';
 import { useTheme } from 'next-themes';
 import { useCallback, useEffect, useRef } from 'react';
 import themes from './themes.json' with { type: 'json' };
@@ -13,7 +13,11 @@ export function useMonaco() {
   const syncTheme = useCallback(() => {
     monacoRef.current?.editor.setTheme(theme);
   }, [theme]);
-  useEffect(() => syncTheme(), [syncTheme]);
+  useEffect(() => {
+    syncTheme();
+    const i = setInterval(syncTheme, 1000);
+    return () => clearInterval(i);
+  }, [syncTheme]);
 
   const beforeMount = useCallback<BeforeMount>((monaco) => {
     Reflect.set(monacoRef, 'current', monaco);

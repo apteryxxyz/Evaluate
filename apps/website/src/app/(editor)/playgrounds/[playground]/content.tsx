@@ -10,10 +10,10 @@ import { Sheet, SheetContent } from '@evaluate/react/components/sheet';
 import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { useMediaQuery } from '@evaluate/react/hooks/media-query';
 import React, { useState } from 'react';
-import { Explorer } from '~/components/editor/explorer';
 import { Editor } from '~/components/editor';
-import { Terminal } from '~/components/editor/terminal';
+import { Explorer } from '~/components/editor/explorer';
 import { ExplorerProvider } from '~/components/editor/explorer/use';
+import { Terminal } from '~/components/editor/terminal';
 import { TerminalProvider } from '~/components/editor/terminal/use';
 
 export default function EditorContent(p: { runtime: Runtime }) {
@@ -31,17 +31,8 @@ export default function EditorContent(p: { runtime: Runtime }) {
         <TerminalProvider>
           <ExplorerWrapper>
             <Explorer />
-
-            <ResizablePanelGroup direction="vertical">
-              <ResizablePanel minSize={15} defaultSize={65}>
-                <Editor runtime={p.runtime} />
-              </ResizablePanel>
-
-              <ResizableHandle />
-              <ResizablePanel minSize={15} defaultSize={35}>
-                <Terminal runtime={p.runtime} />
-              </ResizablePanel>
-            </ResizablePanelGroup>
+            <Editor runtime={p.runtime} />
+            <Terminal runtime={p.runtime} />
           </ExplorerWrapper>
         </TerminalProvider>
       </ExplorerProvider>
@@ -50,55 +41,87 @@ export default function EditorContent(p: { runtime: Runtime }) {
 }
 
 function DesktopExplorerWrapper(p: React.PropsWithChildren) {
+  const [explorer, editor, terminal] = React.Children.toArray(p.children);
+
   return (
     <ResizablePanelGroup direction="horizontal">
       <ResizablePanel
-        minSize={10}
         defaultSize={15}
+        minSize={10}
         collapsible={false}
         className="m-1.5 rounded-xl border-2 bg-card"
       >
-        {React.Children.toArray(p.children)[0]}
+        {explorer}
       </ResizablePanel>
 
       <ResizableHandle className="bg-transparent" />
 
       <ResizablePanel
-        defaultSize={85}
-        minSize={10}
+        defaultSize={55}
+        minSize={35}
+        collapsible={false}
         className="m-1.5 rounded-xl border-2 bg-card"
       >
-        {React.Children.toArray(p.children)[1]}
+        {editor}
+      </ResizablePanel>
+
+      <ResizableHandle className="bg-transparent" />
+
+      <ResizablePanel
+        defaultSize={30}
+        minSize={10}
+        collapsible={false}
+        className="m-1.5 rounded-xl border-2 bg-card"
+      >
+        {terminal}
       </ResizablePanel>
     </ResizablePanelGroup>
   );
 }
 
 function MobileExplorerWrapper(p: React.PropsWithChildren) {
-  const [open, setOpen] = useState(false);
-  useEventListener('file-explorer-open-change' as never, setOpen);
+  const [explorer, editor, terminal] = React.Children.toArray(p.children);
+
+  const [explorerOpen, setExplorerOpen] = useState(false);
+  useEventListener('mobile-explorer-open-change' as never, setExplorerOpen);
+  const [terminalOpen, setTerminalOpen] = useState(false);
+  useEventListener('mobile-terminal-open-change' as never, setTerminalOpen);
 
   return (
     <>
-      <Sheet open={open} onOpenChange={setOpen}>
+      <Sheet open={explorerOpen} onOpenChange={setExplorerOpen}>
         <SheetContent
-          side="left"
-          className="border-r-0 bg-transparent"
-          onClick={() => setOpen(false)}
+          side="right"
+          className="border-l-0 bg-transparent"
+          onClick={() => setExplorerOpen(false)}
         >
           <div
             onClick={(e) => e.stopPropagation()}
             onKeyUp={(e) => e.stopPropagation()}
             className="h-full rounded-xl border-2 bg-card"
           >
-            {React.Children.toArray(p.children)[0]}
+            {explorer}
           </div>
         </SheetContent>
       </Sheet>
 
-      <div className="m-1.5 h-full rounded-xl border-2 bg-card">
-        {React.Children.toArray(p.children)[1]}
-      </div>
+      <div className="m-1.5 h-full rounded-xl border-2 bg-card">{editor}</div>
+
+      <Sheet open={terminalOpen} onOpenChange={setTerminalOpen}>
+        <SheetContent
+          side="right"
+          className="border-l-0 bg-transparent"
+          onClick={() => setExplorerOpen(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            onKeyUp={(e) => e.stopPropagation()}
+            className="h-full rounded-xl border-2 bg-card"
+          >
+            {terminal}
+          </div>
+        </SheetContent>
+      </Sheet>
     </>
   );
 }

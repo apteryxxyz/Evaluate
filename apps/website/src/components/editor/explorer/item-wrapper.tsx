@@ -1,4 +1,4 @@
-import type { File, Folder } from '../../_contexts/explorer/file-system';
+import type { File, Folder } from './file-system';
 import { FileExplorerFileItem } from './file-item';
 import { FileExplorerFolderItem } from './folder-item';
 

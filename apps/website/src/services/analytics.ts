@@ -24,14 +24,25 @@ export function injectPageTracking() {
   let isNavigating = false;
   let lastLocation = { ...window.location };
 
+  function withoutHash(url: string | URL) {
+    return typeof url === 'string' ? url.split('#')[0] : url.href.split('#')[0];
+  }
+
   window.addEventListener('popstate', () => {
-    if (!isNavigating && lastLocation.href !== location.href) {
+    if (
+      !isNavigating &&
+      withoutHash(lastLocation.href) !== withoutHash(location.href)
+    ) {
       posthog.capture('$pageleave', {
-        $current_url: lastLocation.href,
+        $current_url: withoutHash(lastLocation.href),
         $host: lastLocation.host,
         $pathname: lastLocation.pathname,
       });
-      posthog.capture('$pageview');
+      posthog.capture('$pageview', {
+        $current_url: withoutHash(location.href),
+        $host: location.host,
+        $pathname: location.pathname,
+      });
     }
 
     lastLocation = { ...window.location };
@@ -44,19 +55,27 @@ export function injectPageTracking() {
     type P = Parameters<F>;
 
     return function (this: T, state: P[0], _: P[1], url: P[2]) {
-      const isTracked = !isNavigating && url && url !== location.href;
+      const isTracked =
+        !isNavigating && url && withoutHash(url) !== withoutHash(location.href);
       if (isTracked) {
         isNavigating = true;
-        posthog.capture('$pageleave');
+        posthog.capture('$pageleave', {
+          $current_url: withoutHash(location.href),
+          $host: location.host,
+          $pathname: location.pathname,
+        });
       }
       fn.apply(this, [state, _, url]);
-      if (isTracked) {
+      if (isTracked)
         setTimeout(() => {
-          posthog.capture('$pageview');
+          posthog.capture('$pageview', {
+            $current_url: withoutHash(location.href),
+            $host: location.host,
+            $pathname: location.pathname,
+          });
           lastLocation = { ...window.location };
           isNavigating = false;
         }, 50);
-      }
     };
   }
 

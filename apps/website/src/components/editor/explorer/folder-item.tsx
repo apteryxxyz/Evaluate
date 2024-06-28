@@ -16,7 +16,7 @@ import {
 } from '@evaluate/react/components/context-menu';
 import { FolderIcon, FolderOpenIcon } from 'lucide-react';
 import { useState } from 'react';
-import type { Folder } from '../../_contexts/explorer/file-system';
+import type { Folder } from './file-system';
 import { FileExplorerItemName } from './item-name';
 import { FileExplorerItemWrapper } from './item-wrapper';
 

@@ -25,18 +25,15 @@
   "cSpell.words": [
     "apteryx",
     "dialog",
-    "disableable",
     "hookform",
     "lucide",
     "pako",
-    "PLASMO",
+    "plasmo",
     "popover",
-    "POSTHOG",
-    "ratelimit",
-    "Resolvables",
+    "posthog",
+    "resolvables",
     "runtimes",
-    "tanstack",
-    "upstash"
+    "tanstack"
   ],
   "tailwindCSS.classAttributes": ["class", "className"],
   "tailwindCSS.experimental.configFile": "./packages/react/tailwind.config.cjs",

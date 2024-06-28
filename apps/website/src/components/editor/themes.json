@@ -1,0 +1,42 @@
+{
+  "dark": {
+    "inherit": true,
+    "base": "vs-dark",
+    "rules": [
+      {
+        "token": "",
+        "background": "1c1917"
+      }
+    ],
+    "colors": {
+      "editor.background": "#1c1917",
+      "editorSuggestWidget.background": "#1c1917",
+      "editorHoverWidget.background": "#1c1917",
+      "menu.background": "#1c1917",
+      "menu.selectionBackground": "#242629",
+      "input.background": "#1c1917",
+      "quickInput.background": "#1c1917",
+      "quickInputList.focusBackground": "#242629"
+    }
+  },
+  "light": {
+    "inherit": true,
+    "base": "vs",
+    "rules": [
+      {
+        "token": "",
+        "background": "ffffff"
+      }
+    ],
+    "colors": {
+      "editor.background": "#ffffff",
+      "editorSuggestWidget.background": "#f3f3f3",
+      "editorHoverWidget.background": "#f3f3f3",
+      "menu.background": "#f3f3f3",
+      "menu.selectionBackground": "#f0f0f0",
+      "input.background": "#ffffff",
+      "quickInput.background": "#f3f3f3",
+      "quickInputList.focusBackground": "#f0f0f0"
+    }
+  }
+}

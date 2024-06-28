@@ -1,25 +1,20 @@
 'use client';
 
 import DOMPurify from 'dompurify';
-import { useEffect, useState } from 'react';
+import { Children, useEffect, useState } from 'react';
 
-export default function HtmlPreview(p: { html?: string }) {
+export function HtmlPreview(p: React.PropsWithChildren) {
   const [sanitisedHtml, setSanitisedHtml] = useState<string>();
-  const [shouldRender] = useState(true);
 
   useEffect(() => {
-    if (p.html)
-      setSanitisedHtml(
-        DOMPurify.sanitize(p.html ?? '', {
-          WHOLE_DOCUMENT: true,
-        }),
-      );
-    // setShouldRender(false);
-  }, [p.html]);
+    if (!p.children) return;
+    const html = Children.map(p.children, String)?.join('') ?? '';
+    setSanitisedHtml(DOMPurify.sanitize(html, { WHOLE_DOCUMENT: true }));
+  });
 
   return (
     <>
-      {sanitisedHtml && shouldRender && (
+      {sanitisedHtml && (
         <iframe
           title="HTML Preview"
           src={`data:text/html;charset=utf-8,${encodeURIComponent(
@@ -32,7 +27,7 @@ export default function HtmlPreview(p: { html?: string }) {
       )}
 
       {!sanitisedHtml && (
-        <div className="flex h-full items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/40">
           <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
             Nothing to render here.
           </span>

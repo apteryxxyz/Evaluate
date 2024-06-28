@@ -8,8 +8,8 @@ import {
   ContextMenuTrigger,
 } from '@evaluate/react/components/context-menu';
 import { useState } from 'react';
-import type { File } from '../../_contexts/explorer/file-system';
 import { FileIcon } from './file-icon';
+import type { File } from './file-system';
 import { FileExplorerItemName } from './item-name';
 
 export function FileExplorerFileItem(p: { file: File; isMeta?: boolean }) {

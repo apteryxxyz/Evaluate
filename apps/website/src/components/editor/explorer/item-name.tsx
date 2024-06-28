@@ -8,7 +8,7 @@ import {
 } from '@evaluate/react/components/popover';
 import { cn } from '@evaluate/react/utilities/class-name';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { File, Folder } from '../../_contexts/explorer/file-system';
+import type { File, Folder } from './file-system';
 
 const InvalidNameRegex = /(^\s|\s$|^\.\.|\.$|[\\/:\*\?"<>\|])/;
 

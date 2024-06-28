@@ -62,7 +62,7 @@ export class WithChildren {
   }
 
   public sortChildren() {
-    return this.children.sort((a, b) => {
+    return [...this.children].sort((a, b) => {
       if (a.type === 'folder' && b.type === 'file') return -1;
       if (a.type === 'file' && b.type === 'folder') return 1;
       return (a.name ?? '').localeCompare(b.name ?? '');

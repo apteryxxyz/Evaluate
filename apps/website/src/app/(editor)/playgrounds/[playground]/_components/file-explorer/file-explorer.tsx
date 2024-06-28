@@ -8,7 +8,7 @@ import {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from '@evaluate/react/components/context-menu';
-import { Scrollable } from '@evaluate/react/components/scrollable';
+import { ScrollArea } from '@evaluate/react/components/scroll-area';
 import { FilePlusIcon, FolderPlusIcon } from 'lucide-react';
 import {
   useExplorer,
@@ -51,7 +51,7 @@ export function FileExplorer() {
 
       <ContextMenu>
         <ContextMenuTrigger asChild>
-          <Scrollable
+          <ScrollArea
             className="relative h-full w-full py-1"
             onClick={(e) => {
               if (
@@ -78,7 +78,7 @@ export function FileExplorer() {
                 </span>
               </div>
             )}
-          </Scrollable>
+          </ScrollArea>
         </ContextMenuTrigger>
 
         <ContextMenuContent className="p-1">

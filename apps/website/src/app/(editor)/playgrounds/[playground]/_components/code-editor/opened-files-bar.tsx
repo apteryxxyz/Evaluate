@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@evaluate/react/components/button';
-import { ScrollBar, Scrollable } from '@evaluate/react/components/scrollable';
+import { ScrollBar, ScrollArea } from '@evaluate/react/components/scroll-area';
 import { cn } from '@evaluate/react/utilities/class-name';
 import { XIcon } from 'lucide-react';
 import {
@@ -16,7 +16,7 @@ export function OpenedFilesBar() {
   const openedFiles = explorer.findTabOpenedFiles();
 
   return (
-    <Scrollable>
+    <ScrollArea>
       <div className="flex w-full whitespace-nowrap">
         {openedFiles.map((file, index) => (
           <Button
@@ -61,6 +61,6 @@ export function OpenedFilesBar() {
         ))}
       </div>
       <ScrollBar orientation="horizontal" />
-    </Scrollable>
+    </ScrollArea>
   );
 }

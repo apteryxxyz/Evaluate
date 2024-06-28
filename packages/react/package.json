@@ -21,7 +21,7 @@
     "./components/label": "./dist/components/label.js",
     "./components/popover": "./dist/components/popover.js",
     "./components/resizable": "./dist/components/resizable.js",
-    "./components/scrollable": "./dist/components/scrollable.js",
+    "./components/scroll-area": "./dist/components/scroll-area.js",
     "./components/select": "./dist/components/select.js",
     "./components/sheet": "./dist/components/sheet.js",
     "./components/spotlight": "./dist/components/spotlight.js",

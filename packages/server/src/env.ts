@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 Object.assign(process.env, readEnv());
 
-console.info('Environment', process.env.VERCEL_ENV);
+console.info('packages/server/env.ts');
 console.info('ProcessEnv', process.env);
 
 export const env = validateEnv({

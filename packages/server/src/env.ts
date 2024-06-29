@@ -4,9 +4,6 @@ import { z } from 'zod';
 
 Object.assign(process.env, readEnv());
 
-console.info('packages/server/env.ts');
-console.info('ProcessEnv', process.env);
-
 export const env = validateEnv({
   server: {
     // Environment variables aren't being loaded on Vercel so make them all optional

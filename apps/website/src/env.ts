@@ -1,9 +1,6 @@
 import { validateEnv } from '@evaluate/env/validator';
 import { z } from 'zod';
 
-console.info('apps/website/env.ts');
-console.info('ProcessEnv', process.env);
-
 export const env = validateEnv({
   server: {
     WEBSITE_URL: z

@@ -54,7 +54,7 @@ export default async function handler(request: Request) {
         'interaction type': InteractionType[interaction.type],
         'guild id': interaction.guild_id,
 
-        $set: {
+        $set_once: {
           platform: 'discord bot',
           username: getUser(interaction)?.username,
         },

@@ -6,12 +6,13 @@ if (typeof window !== 'undefined' && env.NEXT_PUBLIC_POSTHOG_KEY) {
     api_host: `${window.location.origin}/api/v1/ingest`,
     ui_host: 'https://us.posthog.com/',
     persistence: 'localStorage',
-    enable_heatmaps: true,
+    enable_heatmaps: process.env.NODE_ENV === 'production',
+    disable_compression: process.env.NODE_ENV === 'development',
   });
 
   posthog.register({
     platform: 'website',
-    $set: { platform: 'website' },
+    $set_once: { platform: 'website' },
   });
 }
 

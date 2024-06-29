@@ -5,7 +5,7 @@ if (env.PLASMO_PUBLIC_POSTHOG_KEY) {
   function registerId(id: string) {
     posthog.register({
       distinct_id: id,
-      $set: { platform: 'browser extension' },
+      $set_once: { platform: 'browser extension' },
       platform: 'browser extension',
     });
   }

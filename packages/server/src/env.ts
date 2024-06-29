@@ -9,8 +9,9 @@ console.info('ProcessEnv', process.env);
 
 export const env = validateEnv({
   server: {
-    CLOUDFLARE_ACCOUNT_ID: z.string().min(1),
-    CLOUDFLARE_API_TOKEN: z.string().min(1),
+    // Environment variables aren't being loaded on Vercel so make them all optional
+    CLOUDFLARE_ACCOUNT_ID: z.string().min(1).optional(),
+    CLOUDFLARE_API_TOKEN: z.string().min(1).optional(),
     UPSTASH_REDIS_REST_URL: z.string().min(1).optional(),
     UPSTASH_REDIS_REST_TOKEN: z.string().min(1).optional(),
   },
@@ -23,6 +24,11 @@ export const env = validateEnv({
   },
 
   onValid(env) {
+    if (!env.CLOUDFLARE_ACCOUNT_ID || !env.CLOUDFLARE_API_TOKEN)
+      console.warn(
+        'Missing Cloudflare environment variable, AI features will be disabled.',
+      );
+
     if (
       (!env.UPSTASH_REDIS_REST_TOKEN || !env.UPSTASH_REDIS_REST_URL) &&
       process.env.NODE_ENV !== 'development'

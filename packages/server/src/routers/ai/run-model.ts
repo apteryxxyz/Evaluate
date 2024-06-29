@@ -11,6 +11,11 @@ export async function runModel(
   model: `@cf/meta/${string}`,
   messages: { role: 'system' | 'user'; content: string }[],
 ) {
+  if (!env.CLOUDFLARE_ACCOUNT_ID || !env.CLOUDFLARE_API_TOKEN)
+    throw new Error(
+      'Missing Cloudflare environment variable, AI features are disabled',
+    );
+
   const path = `/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/ai/run/${model}`;
   const url = new URL(path, 'https://api.cloudflare.com');
 

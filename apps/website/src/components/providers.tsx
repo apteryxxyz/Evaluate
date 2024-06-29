@@ -1,13 +1,6 @@
 'use client';
 
-import { TooltipProvider } from '@evaluate/react/components/tooltip';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import { ServerThemeProvider } from 'next-themes';
-import { useEffect, useState } from 'react';
-import { BreakpointIndicator } from './breakpoint-indicator';
-import { injectPageTracking } from '~/services/analytics';
 
 export function HtmlProviders(p: React.PropsWithChildren) {
   return (
@@ -24,40 +17,35 @@ export function HtmlProviders(p: React.PropsWithChildren) {
   );
 }
 
-const MAX_RETRIES = 3;
-const HTTP_STATUS_TO_NOT_RETRY = [400, 401, 403, 404];
+import { Toaster } from '@evaluate/react/components/toast';
+import { TooltipProvider } from '@evaluate/react/components/tooltip';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { useEffect, useState } from 'react';
+import { injectPageTracking } from '~/services/analytics';
+import { getQueryConfig, getTRPCConfig, trpc } from '~/services/trpc';
+import { BreakpointIndicator } from './breakpoint-indicator';
 
 export function BodyProviders(p: React.PropsWithChildren) {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry(failureCount, error) {
-              return (
-                failureCount <= MAX_RETRIES &&
-                // @ts-expect-error
-                !HTTP_STATUS_TO_NOT_RETRY.includes(error.status)
-              );
-            },
-          },
-        },
-      }),
-  );
+  const [queryClient] = useState(() => new QueryClient(getQueryConfig()));
+  const [trpcClient] = useState(() => trpc.createClient(getTRPCConfig()));
 
   useEffect(() => {
     injectPageTracking();
   }, []);
 
   return (
-    <TooltipProvider>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        {p.children}
-        <ReactQueryDevtools initialIsOpen={false} />
-        <BreakpointIndicator />
-        <SpeedInsights />
-        {/* <PageView /> */}
+        <TooltipProvider>
+          {p.children}
+          <ReactQueryDevtools initialIsOpen={false} />
+          <BreakpointIndicator />
+          <SpeedInsights />
+          <Toaster />
+        </TooltipProvider>
       </QueryClientProvider>
-    </TooltipProvider>
+    </trpc.Provider>
   );
 }

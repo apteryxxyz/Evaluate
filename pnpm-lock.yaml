@@ -46,6 +46,9 @@ importers:
       '@evaluate/react':
         specifier: workspace:^
         version: link:../../packages/react
+      '@evaluate/server':
+        specifier: workspace:^
+        version: link:../../packages/server
       '@evaluate/types':
         specifier: workspace:^
         version: link:../../packages/types
@@ -61,6 +64,15 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: ^5.45.1
         version: 5.45.1(@tanstack/react-query@5.45.1(react@18.3.1))(react@18.3.1)
+      '@trpc/client':
+        specifier: 11.0.0-rc.433
+        version: 11.0.0-rc.433(@trpc/server@11.0.0-rc.433)
+      '@trpc/react-query':
+        specifier: 11.0.0-rc.433
+        version: 11.0.0-rc.433(@tanstack/react-query@5.45.1(react@18.3.1))(@trpc/client@11.0.0-rc.433(@trpc/server@11.0.0-rc.433))(@trpc/server@11.0.0-rc.433)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@trpc/server':
+        specifier: 11.0.0-rc.433
+        version: 11.0.0-rc.433
       '@vercel/speed-insights':
         specifier: ^1.0.12
         version: 1.0.12(next@14.2.4(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6))(react@18.3.1)(svelte@4.0.1)(vue@3.3.4)
@@ -106,6 +118,9 @@ importers:
       sharp:
         specifier: ^0.33.4
         version: 0.33.4
+      superjson:
+        specifier: ^2.2.1
+        version: 2.2.1
       ts-mixer:
         specifier: ^6.0.4
         version: 6.0.4
@@ -10377,6 +10392,10 @@ snapshots:
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
 
+  superjson@2.2.1:
+    dependencies:
+      copy-anything: 3.0.5
+
   supports-color@5.5.0:
     dependencies:
       has-flag: 3.0.0
@@ -10829,5 +10848,9 @@ snapshots:
   yaml@2.4.5: {}
 
   yocto-queue@1.0.0: {}
+
+  zod-validation-error@3.3.0(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)):
+    dependencies:
+      zod: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
 
   zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq): {}

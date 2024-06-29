@@ -1,8 +1,8 @@
 'use client';
 
-import type { PartialRuntime } from '@evaluate/engine/runtimes';
 import { Button } from '@evaluate/react/components/button';
 import { ScrollArea, ScrollBar } from '@evaluate/react/components/scroll-area';
+import type { PartialRuntime } from '@evaluate/types';
 import MonacoEditor from '@monaco-editor/react';
 import { FilesIcon, TerminalIcon } from 'lucide-react';
 import Image from 'next/image';

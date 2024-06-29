@@ -3,7 +3,7 @@ import {
   compress,
   decompress,
 } from '@evaluate/engine/compress';
-import type { ExecuteOptions } from '@evaluate/engine/execute';
+import type { ExecuteOptions } from '@evaluate/types';
 import { EventEmitter } from 'eventemitter3';
 import { Mixin, hasMixin } from 'ts-mixer';
 

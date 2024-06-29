@@ -23,6 +23,7 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
+    "@evaluate/types": "workspace:^",
     "fuse.js": "^7.0.0",
     "lexure": "npm:@apteryxxyz/lexure@^0.17.0",
     "pako": "^2.1.0",

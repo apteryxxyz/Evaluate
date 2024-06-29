@@ -46,6 +46,9 @@ importers:
       '@evaluate/react':
         specifier: workspace:^
         version: link:../../packages/react
+      '@evaluate/types':
+        specifier: workspace:^
+        version: link:../../packages/types
       '@hookform/resolvers':
         specifier: ^3.6.0
         version: 3.6.0(react-hook-form@7.52.0(react@18.3.1))
@@ -158,6 +161,9 @@ importers:
       '@evaluate/env':
         specifier: workspace:^
         version: link:../../packages/env
+      '@evaluate/types':
+        specifier: workspace:^
+        version: link:../../packages/types
       '@t3-oss/env-core':
         specifier: ^0.9.2
         version: 0.9.2(typescript@5.4.5)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
@@ -204,6 +210,9 @@ importers:
       '@evaluate/react':
         specifier: workspace:^
         version: link:../../packages/react
+      '@evaluate/types':
+        specifier: workspace:^
+        version: link:../../packages/types
       framer-motion:
         specifier: ^11.2.11
         version: 11.2.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -247,6 +256,9 @@ importers:
 
   packages/engine:
     dependencies:
+      '@evaluate/types':
+        specifier: workspace:^
+        version: link:../types
       fuse.js:
         specifier: ^7.0.0
         version: 7.0.0
@@ -385,6 +397,19 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.4)
+
+  packages/types:
+    dependencies:
+      zod:
+        specifier: 3.22.4
+        version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
+      zod-validation-error:
+        specifier: ^3.3.0
+        version: 3.3.0(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
+    devDependencies:
+      '@configs/tsup':
+        specifier: workspace:^
+        version: link:../../configs/tsup
 
 packages:
 

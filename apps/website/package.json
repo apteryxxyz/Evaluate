@@ -17,6 +17,7 @@
     "@evaluate/engine": "workspace:^",
     "@evaluate/env": "workspace:^",
     "@evaluate/react": "workspace:^",
+    "@evaluate/types": "workspace:^",
     "@hookform/resolvers": "^3.6.0",
     "@monaco-editor/react": "^4.6.0",
     "@tanstack/react-query": "^5.45.1",

@@ -1,12 +1,12 @@
-import { getRuntime } from '~/runtimes';
-import { extractIdentifier } from '~/runtimes/identifier';
-import { parseArguments } from './arguments';
 import {
   ExecuteOptions,
   ExecuteResult,
   PistonExecuteOptions,
   PistonExecuteResult,
-} from './schemas';
+} from '@evaluate/types';
+import { getRuntime } from '~/runtimes';
+import { extractIdentifier } from '~/runtimes/identifier';
+import { parseArguments } from './arguments';
 
 /**
  * Execute code using the Piston API.

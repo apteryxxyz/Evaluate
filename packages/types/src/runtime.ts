@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ExecuteOptions } from '~/execute/schemas';
+import { ExecuteOptions } from './execute';
 
 export type PartialRuntime = z.infer<typeof PartialRuntime>;
 export const PartialRuntime = z.object({
@@ -21,9 +21,6 @@ export const Runtime = PartialRuntime.merge(
   }),
 );
 
-/**
- * Structure that is returned from the Piston API when fetching runtimes.
- */
 export type PistonRuntime = z.infer<typeof PistonRuntime>;
 export const PistonRuntime = z.object({
   language: z.string(),

@@ -1,0 +1,28 @@
+{
+  "name": "@evaluate/types",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typings": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "format": "biome format . --write",
+    "lint": "biome lint . --write",
+    "check": "tsc --noEmit",
+    "build": "pnpm tsup",
+    "dev": "pnpm build --watch"
+  },
+  "dependencies": {
+    "zod": "3.22.4",
+    "zod-validation-error": "^3.3.0"
+  },
+  "devDependencies": {
+    "@configs/tsup": "workspace:^"
+  }
+}

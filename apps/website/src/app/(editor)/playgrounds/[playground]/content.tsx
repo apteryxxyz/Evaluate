@@ -1,6 +1,5 @@
 'use client';
 
-import type { Runtime } from '@evaluate/engine/runtimes';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -9,6 +8,7 @@ import {
 import { Sheet, SheetContent } from '@evaluate/react/components/sheet';
 import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { useMediaQuery } from '@evaluate/react/hooks/media-query';
+import type { Runtime } from '@evaluate/types';
 import React, { useState } from 'react';
 import { Editor } from '~/components/editor';
 import { Explorer } from '~/components/editor/explorer';

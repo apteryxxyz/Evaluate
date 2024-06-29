@@ -64,9 +64,6 @@ export const PistonExecuteOptions = z.object({
   run_timeout: z.number().optional(),
 });
 
-/**
- * Structure that is returned from the Piston API when executing code.
- */
 export type PistonExecuteResult = z.infer<typeof PistonExecuteResult>;
 export const PistonExecuteResult = z.object({
   language: z.string(),

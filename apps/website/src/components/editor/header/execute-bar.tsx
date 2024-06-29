@@ -1,7 +1,6 @@
 'use client';
 
-import { ExecuteOptions, executeCode } from '@evaluate/engine/execute';
-import type { PartialRuntime } from '@evaluate/engine/runtimes';
+import { executeCode } from '@evaluate/engine/execute';
 import { Button } from '@evaluate/react/components/button';
 import { Form } from '@evaluate/react/components/form';
 import {
@@ -16,6 +15,7 @@ import {
 import { toast } from '@evaluate/react/components/toast';
 import { useMediaQuery } from '@evaluate/react/hooks/media-query';
 import { cn } from '@evaluate/react/utilities/class-name';
+import { ExecuteOptions, type PartialRuntime } from '@evaluate/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon, PlayIcon } from 'lucide-react';

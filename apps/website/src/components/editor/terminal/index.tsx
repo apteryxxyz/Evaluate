@@ -1,6 +1,5 @@
 'use client';
 
-import type { PartialRuntime } from '@evaluate/engine/runtimes';
 import { Button } from '@evaluate/react/components/button';
 import { ScrollArea, ScrollBar } from '@evaluate/react/components/scroll-area';
 import {
@@ -9,6 +8,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@evaluate/react/components/tabs';
+import type { PartialRuntime } from '@evaluate/types';
 import { Editor as MonacoEditor } from '@monaco-editor/react';
 import {
   CodeIcon,

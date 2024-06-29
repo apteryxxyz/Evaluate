@@ -1,6 +1,4 @@
 import { compress } from '@evaluate/engine/dist/compress';
-import type { ExecuteResult } from '@evaluate/engine/dist/execute';
-import type { PartialRuntime } from '@evaluate/engine/dist/runtimes';
 import { Button } from '@evaluate/react/components/button';
 import { Card, CardContent, CardHeader } from '@evaluate/react/components/card';
 import { Label } from '@evaluate/react/components/label';
@@ -12,6 +10,7 @@ import {
 } from '@evaluate/react/components/tabs';
 import { Textarea } from '@evaluate/react/components/textarea';
 import { cn } from '@evaluate/react/utilities/class-name';
+import type { ExecuteResult, PartialRuntime } from '@evaluate/types';
 import { ExternalLinkIcon, XIcon } from 'lucide-react';
 import { useMemo } from 'react';
 import { env } from '~env';

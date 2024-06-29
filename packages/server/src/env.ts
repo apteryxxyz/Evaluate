@@ -4,6 +4,9 @@ import { z } from 'zod';
 
 Object.assign(process.env, readEnv());
 
+console.info('Environment', process.env.VERCEL_ENV);
+console.info('ProcessEnv', process.env);
+
 export const env = validateEnv({
   server: {
     CLOUDFLARE_ACCOUNT_ID: z.string().min(1),

@@ -16,12 +16,11 @@ import {
   PackageCheckIcon,
   PlayIcon,
 } from 'lucide-react';
-import { useMonaco } from '../use-monaco';
+import { useEditor } from '../use';
 import { HtmlPreview } from './html-preview';
 import { useTerminal } from './use';
 
 export function Terminal(p: { runtime: PartialRuntime }) {
-  const monaco = useMonaco();
   const { result } = useTerminal();
 
   const hasRun = result && 'run' in result;
@@ -45,18 +44,36 @@ export function Terminal(p: { runtime: PartialRuntime }) {
           <TabsList className="h-10 w-full space-x-1 rounded-none border-b bg-transparent px-0.5">
             {(
               [
-                [CodeIcon, 'run', 'Run'],
-                [PackageCheckIcon, 'compile', 'Compile'],
-                [FullscreenIcon, 'preview', 'Preview'],
+                [
+                  CodeIcon, //
+                  'run',
+                  'Run',
+                  doesRunHaveDisplayableOutput,
+                ],
+                [
+                  PackageCheckIcon,
+                  'compile',
+                  'Compile',
+                  doesCompileHaveDisplayableOutput,
+                ],
+                [
+                  FullscreenIcon,
+                  'preview',
+                  'Preview',
+                  hasPreview && doesRunHaveDisplayableOutput,
+                ],
               ] as const
-            ).map(([Icon, value, label]) => (
+            ).map(([Icon, value, label, indicator]) => (
               <TabsTrigger key={label} value={value} asChild>
                 <Button
                   variant="secondary"
-                  className="bg-card text-foreground/70 data-[state=active]:bg-muted data-[state=active]:text-foreground hover:text-foreground"
+                  className="relative bg-card text-foreground/70 data-[state=active]:bg-muted data-[state=active]:text-foreground hover:text-foreground"
                 >
                   <Icon className="size-4" />
                   <span>&nbsp;{label}</span>
+                  {indicator && (
+                    <span className="-mt-1 -mr-1 absolute top-2 right-2 size-1.5 rounded-full bg-primary/50" />
+                  )}
                 </Button>
               </TabsTrigger>
             ))}
@@ -66,16 +83,7 @@ export function Terminal(p: { runtime: PartialRuntime }) {
 
         <TabsContent value="run" className="relative mt-0 h-full">
           {doesRunHaveDisplayableOutput && (
-            <MonacoEditor
-              {...monaco}
-              value={result.run.output}
-              options={{
-                minimap: { enabled: false },
-                readOnly: true,
-                domReadOnly: true,
-                contextmenu: false,
-              }}
-            />
+            <ReadOnlyEditor value={result.run.output} />
           )}
 
           {!doesRunHaveDisplayableOutput && (
@@ -105,16 +113,7 @@ export function Terminal(p: { runtime: PartialRuntime }) {
 
         <TabsContent value="compile" className="relative mt-0 h-full">
           {doesCompileHaveDisplayableOutput && (
-            <MonacoEditor
-              {...monaco}
-              value={result.compile?.output}
-              options={{
-                minimap: { enabled: false },
-                readOnly: true,
-                domReadOnly: true,
-                contextmenu: false,
-              }}
-            />
+            <ReadOnlyEditor value={result.compile?.output ?? ''} />
           )}
 
           {!doesCompileHaveDisplayableOutput && (
@@ -150,5 +149,25 @@ export function Terminal(p: { runtime: PartialRuntime }) {
         </TabsContent>
       </Tabs>
     </section>
+  );
+}
+
+function ReadOnlyEditor(p: { value: string }) {
+  const [, { theme, beforeMount, onMount }] = useEditor();
+
+  return (
+    <MonacoEditor
+      theme={theme}
+      beforeMount={beforeMount}
+      onMount={onMount}
+      value={p.value}
+      options={{
+        minimap: { enabled: false },
+        readOnly: true,
+        domReadOnly: true,
+        contextmenu: false,
+        wordWrap: 'on',
+      }}
+    />
   );
 }

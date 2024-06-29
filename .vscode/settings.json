@@ -31,9 +31,13 @@
     "plasmo",
     "popover",
     "posthog",
+    "ratelimit",
+    "ratelimiter",
     "resolvables",
     "runtimes",
-    "tanstack"
+    "tanstack",
+    "trpc",
+    "upstash"
   ],
   "tailwindCSS.classAttributes": ["class", "className"],
   "tailwindCSS.experimental.configFile": "./packages/react/tailwind.config.cjs",

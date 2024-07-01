@@ -1,27 +1,26 @@
 'use client';
 
-import type { PartialRuntime } from '@evaluate/engine/runtimes';
 import { Button } from '@evaluate/react/components/button';
 import { ScrollArea, ScrollBar } from '@evaluate/react/components/scroll-area';
+import type { PartialRuntime } from '@evaluate/types';
 import MonacoEditor from '@monaco-editor/react';
 import { FilesIcon, TerminalIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useExplorer, useWatchExplorer } from './explorer/use';
+import { Generate } from './generate';
 import { ExecuteBar } from './header/execute-bar';
 import { OpenedFilesBar } from './header/opened-files-bar';
-import { useMonaco } from './use-monaco';
+import { useEditor } from './use';
 
 export function Editor(p: { runtime: PartialRuntime }) {
+  const [editor, { theme, beforeMount, onMount }] = useEditor();
+
   const explorer = useExplorer();
   useWatchExplorer(explorer);
   const openedFile = explorer.findOpenedFile();
-
-  const monaco = useMonaco();
-  useEffect(() => {
-    void openedFile;
-    monaco.editor?.focus();
-  }, [monaco.editor, openedFile]);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => editor?.focus(), [editor, openedFile]);
 
   return (
     <section className="h-full">
@@ -36,9 +35,7 @@ export function Editor(p: { runtime: PartialRuntime }) {
             variant="secondary"
             className="ml-auto aspect-square p-0 lg:hidden"
             onClick={() =>
-              window.dispatchEvent(
-                new CustomEvent('mobile-explorer-open-change'),
-              )
+              dispatchEvent(new CustomEvent('mobile-explorer-open-change'))
             }
           >
             <FilesIcon className="size-4" />
@@ -52,9 +49,7 @@ export function Editor(p: { runtime: PartialRuntime }) {
             variant="secondary"
             className="ml-auto aspect-square p-0 lg:hidden"
             onClick={() =>
-              window.dispatchEvent(
-                new CustomEvent('mobile-terminal-open-change'),
-              )
+              dispatchEvent(new CustomEvent('mobile-terminal-open-change'))
             }
           >
             <TerminalIcon className="size-4" />
@@ -64,21 +59,27 @@ export function Editor(p: { runtime: PartialRuntime }) {
 
       <div className="relative h-full w-full">
         {openedFile && (
-          <MonacoEditor
-            {...monaco}
-            path={openedFile.path}
-            defaultValue={openedFile.content}
-            onChange={(content) => {
-              if (openedFile.content === content) return;
-              openedFile.setContent(content ?? '');
-            }}
-            options={{
-              ariaRequired: true,
-              minimap: { enabled: false },
-              wordWrap: 'on',
-            }}
-            className="pt-1"
-          />
+          <>
+            <Generate runtime={p.runtime} editor={editor} />
+
+            <MonacoEditor
+              theme={theme}
+              beforeMount={beforeMount}
+              onMount={onMount}
+              path={openedFile.path}
+              defaultValue={openedFile.content}
+              onChange={(content) => {
+                if (openedFile.content === content) return;
+                openedFile.setContent(content ?? '');
+              }}
+              options={{
+                ariaRequired: true,
+                minimap: { enabled: false },
+                wordWrap: 'on',
+              }}
+              className="pt-1"
+            />
+          </>
         )}
 
         {!openedFile && (

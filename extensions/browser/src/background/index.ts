@@ -1,8 +1,6 @@
 import { executeCode } from '@evaluate/engine/dist/execute';
-import {
-  type PartialRuntime,
-  searchRuntimes,
-} from '@evaluate/engine/dist/runtimes';
+import { searchRuntimes } from '@evaluate/engine/dist/runtimes';
+import type { PartialRuntime } from '@evaluate/types';
 import { env } from '~env';
 import analytics from '~services/analytics';
 

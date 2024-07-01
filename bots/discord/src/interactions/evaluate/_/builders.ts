@@ -6,8 +6,7 @@ import {
   TextInputBuilder,
 } from '@discordjs/builders';
 import { compress } from '@evaluate/engine/compress';
-import type { ExecuteResult } from '@evaluate/engine/execute';
-import type { PartialRuntime } from '@evaluate/engine/runtimes';
+import type { ExecuteResult, PartialRuntime } from '@evaluate/types';
 import { ButtonStyle, TextInputStyle } from 'discord-api-types/v10';
 import { env } from '~/env';
 import { codeBlock } from '~/utilities/discord-formatting';

@@ -1,12 +1,12 @@
 'use client';
 
-import type { PartialRuntime } from '@evaluate/engine/runtimes';
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from '@evaluate/react/components/card';
+import type { PartialRuntime } from '@evaluate/types';
 import { CodeIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRef, useState } from 'react';

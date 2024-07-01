@@ -1,6 +1,5 @@
 'use client';
 
-import type { Runtime } from '@evaluate/engine/runtimes';
 import {
   ResizableHandle,
   ResizablePanel,
@@ -9,6 +8,7 @@ import {
 import { Sheet, SheetContent } from '@evaluate/react/components/sheet';
 import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { useMediaQuery } from '@evaluate/react/hooks/media-query';
+import type { Runtime } from '@evaluate/types';
 import React, { useState } from 'react';
 import { Editor } from '~/components/editor';
 import { Explorer } from '~/components/editor/explorer';
@@ -18,9 +18,7 @@ import { TerminalProvider } from '~/components/editor/terminal/use';
 
 export default function EditorContent(p: { runtime: Runtime }) {
   const isDesktop = useMediaQuery('lg');
-  const ExplorerWrapper = isDesktop
-    ? DesktopExplorerWrapper
-    : MobileExplorerWrapper;
+  const Wrapper = isDesktop ? DesktopWrapper : MobileWrapper;
 
   return (
     <div
@@ -29,18 +27,18 @@ export default function EditorContent(p: { runtime: Runtime }) {
     >
       <ExplorerProvider runtime={p.runtime}>
         <TerminalProvider>
-          <ExplorerWrapper>
+          <Wrapper>
             <Explorer />
             <Editor runtime={p.runtime} />
             <Terminal runtime={p.runtime} />
-          </ExplorerWrapper>
+          </Wrapper>
         </TerminalProvider>
       </ExplorerProvider>
     </div>
   );
 }
 
-function DesktopExplorerWrapper(p: React.PropsWithChildren) {
+function DesktopWrapper(p: React.PropsWithChildren) {
   const [explorer, editor, terminal] = React.Children.toArray(p.children);
 
   return (
@@ -79,7 +77,7 @@ function DesktopExplorerWrapper(p: React.PropsWithChildren) {
   );
 }
 
-function MobileExplorerWrapper(p: React.PropsWithChildren) {
+function MobileWrapper(p: React.PropsWithChildren) {
   const [explorer, editor, terminal] = React.Children.toArray(p.children);
 
   const [explorerOpen, setExplorerOpen] = useState(false);

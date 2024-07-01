@@ -10,7 +10,11 @@ import {
   isRuntimeIdentifier,
 } from './getters';
 import { makeIdentifier } from './identifier';
-import { type PartialRuntime, PistonRuntime, type Runtime } from './schemas';
+import {
+  type PartialRuntime,
+  PistonRuntime,
+  type Runtime,
+} from '@evaluate/types';
 
 const Runtimes = new Map<string, PartialRuntime>();
 

@@ -1,7 +1,7 @@
 'use client';
 
-import type { Runtime } from '@evaluate/engine/runtimes';
 import { useForceUpdate } from '@evaluate/react/hooks/force-update';
+import type { Runtime } from '@evaluate/types';
 import _ from 'lodash';
 import { createContext, useContext, useEffect, useMemo } from 'react';
 import { useHashFragment } from '~/hooks/use-hash-fragment';

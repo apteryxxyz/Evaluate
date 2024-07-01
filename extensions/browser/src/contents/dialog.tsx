@@ -1,7 +1,6 @@
 import { compress } from '@evaluate/engine/dist/compress';
-import type { ExecuteResult } from '@evaluate/engine/dist/execute';
-import type { PartialRuntime } from '@evaluate/engine/dist/runtimes';
 import { Toaster, toast } from '@evaluate/react/components/toast';
+import type { ExecuteResult, PartialRuntime } from '@evaluate/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { PlasmoCSConfig, PlasmoGetStyle } from 'plasmo';
 import { useCallback, useEffect, useState } from 'react';

@@ -1,6 +1,6 @@
 'use client';
 
-import type { PartialRuntime } from '@evaluate/engine/runtimes';
+import type { PartialRuntime } from '@evaluate/types';
 import { Input } from '@evaluate/react/components/input';
 import {
   Select,

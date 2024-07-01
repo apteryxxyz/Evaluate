@@ -26,6 +26,7 @@
     "@evaluate/engine": "workspace:^",
     "@evaluate/env": "workspace:^",
     "@evaluate/react": "workspace:^",
+    "@evaluate/types": "workspace:^",
     "framer-motion": "^11.2.11",
     "lucide-react": "^0.338.0",
     "posthog-js": "npm:@apteryxxyz/posthog-js@^1.139.3",

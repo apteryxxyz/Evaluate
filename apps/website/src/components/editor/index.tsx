@@ -43,7 +43,7 @@ export function Editor(p: { runtime: PartialRuntime }) {
         </div>
 
         <div className="flex w-full gap-1 lg:w-auto">
-          <ExecuteBar runtime={p.runtime} />
+          <ExecuteBar editor={editor} runtime={p.runtime} />
 
           <Button
             variant="secondary"

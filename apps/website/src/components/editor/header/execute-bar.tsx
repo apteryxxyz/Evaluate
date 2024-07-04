@@ -24,15 +24,16 @@ import { ExecuteOptions, type PartialRuntime } from '@evaluate/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHotkeys } from 'react-hotkeys-hook';
 import analytics from '~/services/analytics';
 import type { File } from '../explorer/file-system';
 import { useExplorer, useWatchExplorer } from '../explorer/use';
 import { useTerminal } from '../terminal/use';
 
-export function ExecuteBar(p: { runtime: PartialRuntime }) {
+type Editor = import('monaco-editor').editor.IStandaloneCodeEditor;
+
+export function ExecuteBar(p: { editor?: Editor; runtime: PartialRuntime }) {
   const { setResult } = useTerminal();
   const explorer = useExplorer();
   useWatchExplorer(explorer);
@@ -91,7 +92,16 @@ export function ExecuteBar(p: { runtime: PartialRuntime }) {
     },
   });
 
-  useHotkeys('mod+enter', () => handleSubmit(), [handleSubmit]);
+  useEffect(() => {
+    const out = p.editor?.addAction({
+      id: 'execute',
+      label: 'Execute Code',
+      contextMenuGroupId: '1_modification',
+      keybindings: [2048 | 3],
+      run: () => handleSubmit(),
+    });
+    return () => out?.dispose();
+  }, [p.editor, handleSubmit]);
 
   return (
     <Form {...form}>
@@ -122,7 +132,7 @@ export function ExecuteBar(p: { runtime: PartialRuntime }) {
         </Select>
 
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <Button
               type="submit"
               disabled={isPending}

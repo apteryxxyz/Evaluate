@@ -13,6 +13,11 @@ import {
   SelectValue,
 } from '@evaluate/react/components/select';
 import { toast } from '@evaluate/react/components/toast';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@evaluate/react/components/tooltip';
 import { useMediaQuery } from '@evaluate/react/hooks/media-query';
 import { cn } from '@evaluate/react/utilities/class-name';
 import { ExecuteOptions, type PartialRuntime } from '@evaluate/types';
@@ -21,6 +26,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import { useHotkeys } from 'react-hotkeys-hook';
 import analytics from '~/services/analytics';
 import type { File } from '../explorer/file-system';
 import { useExplorer, useWatchExplorer } from '../explorer/use';
@@ -54,8 +60,6 @@ export function ExecuteBar(p: { runtime: PartialRuntime }) {
           mutate(data);
         },
         function onInvalid(errors) {
-          console.log({ errors, map });
-
           for (const error of Object.values(errors)) {
             if (typeof error.message === 'object')
               onInvalid({ '': error.message } as never);
@@ -87,6 +91,8 @@ export function ExecuteBar(p: { runtime: PartialRuntime }) {
     },
   });
 
+  useHotkeys('mod+enter', () => handleSubmit(), [handleSubmit]);
+
   return (
     <Form {...form}>
       <form
@@ -115,20 +121,30 @@ export function ExecuteBar(p: { runtime: PartialRuntime }) {
           </SelectContent>
         </Select>
 
-        <Button
-          type="submit"
-          disabled={isPending}
-          className={cn(!useMediaQuery('xs') && 'aspect-square p-0')}
-        >
-          {isPending ? (
-            <Loader2Icon className="size-4 animate-spin" />
-          ) : (
-            <PlayIcon className="size-4" />
-          )}
-          <span className="sr-only">Execute</span>
-          <span className="hidden xs:block">&nbsp;{p.runtime.name}</span>
-          <span className="sr-only">Code</span>
-        </Button>
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              type="submit"
+              disabled={isPending}
+              className={cn(!useMediaQuery('xs') && 'aspect-square p-0')}
+            >
+              {isPending ? (
+                <Loader2Icon className="size-4 animate-spin" />
+              ) : (
+                <PlayIcon className="size-4" />
+              )}
+              <span className="sr-only">Execute</span>
+              <span className="hidden xs:block">&nbsp;{p.runtime.name}</span>
+              <span className="sr-only">Code</span>
+            </Button>
+          </TooltipTrigger>
+
+          <TooltipContent side="bottom">
+            <span>
+              <kbd>Ctrl</kbd> + <kbd>Enter</kbd>
+            </span>
+          </TooltipContent>
+        </Tooltip>
       </form>
     </Form>
   );

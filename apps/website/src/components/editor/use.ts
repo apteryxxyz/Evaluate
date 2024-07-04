@@ -22,6 +22,10 @@ export function useEditor() {
       keybinding: 2048 | 37,
       command: 'null',
     });
+    monaco.editor.addKeybindingRule({
+      keybinding: 2048 | 3,
+      command: 'null',
+    });
   }, []);
 
   const onMount = useCallback<OnMount>(

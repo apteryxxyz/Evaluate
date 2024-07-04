@@ -9,6 +9,8 @@ import {
   ContextMenuTrigger,
 } from '@evaluate/react/components/context-menu';
 import { ScrollArea } from '@evaluate/react/components/scroll-area';
+import FileSaver from 'file-saver';
+import JSZip from 'jszip';
 import { FilePlusIcon, FolderPlusIcon } from 'lucide-react';
 import { useCallback } from 'react';
 import { FileExplorerFileItem } from './file-item';
@@ -40,6 +42,18 @@ export function Explorer() {
     },
     [explorer],
   );
+
+  const onDownloadClick = useCallback(() => {
+    const zip = new JSZip();
+
+    for (const child of explorer.descendants)
+      if (child.type === 'folder') zip.folder(child.path);
+      else zip.file(child.path, child.content ?? '');
+
+    zip
+      .generateAsync({ type: 'blob' })
+      .then((b) => FileSaver.saveAs(b, 'evaluate.zip'));
+  }, [explorer]);
 
   return (
     <section className="relative h-full w-full">
@@ -99,6 +113,8 @@ export function Explorer() {
           {[
             { label: 'New File', onClick: onNewFileClick },
             { label: 'New Folder', onClick: onNewFolderClick },
+            null,
+            { label: 'Download Folder', onClick: onDownloadClick },
           ].map((p, i) =>
             p ? (
               <ContextMenuItem key={p.label} asChild>

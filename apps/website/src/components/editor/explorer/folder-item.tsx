@@ -14,6 +14,8 @@ import {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from '@evaluate/react/components/context-menu';
+import FileSaver from 'file-saver';
+import JSZip from 'jszip';
 import { FolderIcon, FolderOpenIcon } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import type { Folder } from './file-system';
@@ -42,6 +44,18 @@ export function FileExplorerFolderItem(p: { folder: Folder }) {
 
   const onDeleteClick = useCallback(() => {
     p.folder.deleteSelf();
+  }, [p.folder]);
+
+  const onDownloadClick = useCallback(() => {
+    const zip = new JSZip();
+
+    for (const child of p.folder.descendants)
+      if (child.type === 'folder') zip.folder(child.path);
+      else zip.file(child.path, child.content ?? '');
+
+    zip
+      .generateAsync({ type: 'blob' })
+      .then((b) => FileSaver.saveAs(b, `${p.folder.name}.zip`));
   }, [p.folder]);
 
   return (
@@ -87,14 +101,14 @@ export function FileExplorerFolderItem(p: { folder: Folder }) {
               {[
                 { label: 'New File', onClick: onNewFileClick },
                 { label: 'New Folder', onClick: onNewFolderClick },
-                '---' as const,
+                null,
                 { label: 'Rename Folder', onClick: onRenameClick },
                 { label: 'Delete Folder', onClick: onDeleteClick },
+                null,
+                { label: 'Download Folder', onClick: onDownloadClick },
               ].map((p, i) =>
-                p === '---' ? (
-                  <ContextMenuSeparator key={i} />
-                ) : (
-                  <ContextMenuItem key={i} asChild>
+                p ? (
+                  <ContextMenuItem key={p.label} asChild>
                     <Button
                       variant="ghost"
                       className="h-auto w-full cursor-pointer justify-start p-1 px-6 font-normal focus-visible:ring-0"
@@ -103,6 +117,8 @@ export function FileExplorerFolderItem(p: { folder: Folder }) {
                       {p.label}
                     </Button>
                   </ContextMenuItem>
+                ) : (
+                  <ContextMenuSeparator key={i} />
                 ),
               )}
             </ContextMenuContent>

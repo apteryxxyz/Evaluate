@@ -5,8 +5,10 @@ import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuSeparator,
   ContextMenuTrigger,
 } from '@evaluate/react/components/context-menu';
+import FileSaver from 'file-saver';
 import { useCallback, useState } from 'react';
 import { FileIcon } from './file-icon';
 import type { File } from './file-system';
@@ -61,6 +63,11 @@ function FileExplorerFileItemWrapper(
     p.file.deleteSelf();
   }, [p.file]);
 
+  const onDownloadClick = useCallback(() => {
+    const blob = new Blob([p.file.content]);
+    FileSaver.saveAs(blob, p.file.name);
+  }, [p.file]);
+
   return (
     <ContextMenu>
       <ContextMenuTrigger asChild>{p.children}</ContextMenuTrigger>
@@ -69,17 +76,23 @@ function FileExplorerFileItemWrapper(
         {[
           { label: 'Rename File', onClick: onRenameClick },
           { label: 'Delete File', onClick: onDeleteClick },
-        ].map((p) => (
-          <ContextMenuItem key={p.label} asChild>
-            <Button
-              variant="ghost"
-              className="h-auto w-full cursor-pointer justify-start p-1 px-6 font-normal focus-visible:ring-0"
-              onClick={p.onClick}
-            >
-              {p.label}
-            </Button>
-          </ContextMenuItem>
-        ))}
+          null,
+          { label: 'Download File', onClick: onDownloadClick },
+        ].map((p, i) =>
+          p ? (
+            <ContextMenuItem key={p.label} asChild>
+              <Button
+                variant="ghost"
+                className="h-auto w-full cursor-pointer justify-start p-1 px-6 font-normal focus-visible:ring-0"
+                onClick={p.onClick}
+              >
+                {p.label}
+              </Button>
+            </ContextMenuItem>
+          ) : (
+            <ContextMenuSeparator key={i} />
+          ),
+        )}
       </ContextMenuContent>
     </ContextMenu>
   );

@@ -15,13 +15,14 @@ import {
   FullscreenIcon,
   PackageCheckIcon,
   PlayIcon,
+  Trash2Icon,
 } from 'lucide-react';
 import { useEditor } from '../use';
 import { HtmlPreview } from './html-preview';
 import { useTerminal } from './use';
 
 export function Terminal(p: { runtime: PartialRuntime }) {
-  const { result } = useTerminal();
+  const { result, setResult } = useTerminal();
 
   const hasRun = result && 'run' in result;
   const hasRunTimedOut = hasRun && result.run?.signal === 'SIGKILL';
@@ -77,6 +78,17 @@ export function Terminal(p: { runtime: PartialRuntime }) {
                 </Button>
               </TabsTrigger>
             ))}
+
+            <Button
+              variant="secondary"
+              size="icon"
+              onClick={() => setResult(undefined)}
+              className="ml-auto bg-card text-foreground/70 hover:text-foreground"
+              disabled={!result}
+            >
+              <Trash2Icon className="size-4" />
+              <span className="sr-only">Clear</span>
+            </Button>
           </TabsList>
           <ScrollBar orientation="horizontal" />
         </ScrollArea>

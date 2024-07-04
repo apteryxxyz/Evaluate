@@ -17,7 +17,7 @@ import {
 import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 import { FolderIcon, FolderOpenIcon } from 'lucide-react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Folder } from './file-system';
 import { FileExplorerItemName } from './item-name';
 import { FileExplorerItemWrapper } from './item-wrapper';
@@ -44,6 +44,29 @@ export function FileExplorerFolderItem(p: { folder: Folder }) {
 
   const onDeleteClick = useCallback(() => {
     p.folder.deleteSelf();
+  }, [p.folder]);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const onUploadClick = useCallback(() => {
+    inputRef.current?.click();
+  }, []);
+  useEffect(() => {
+    const onUpload = () => {
+      if (!inputRef.current?.files) return;
+      for (const file of Array.from(inputRef.current.files)) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          p.folder
+            .createChild('file', file.name)
+            .setContent(reader.result as string);
+        };
+        reader.readAsText(file);
+      }
+      inputRef.current.value = '';
+    };
+
+    inputRef.current?.addEventListener('change', onUpload);
+    return () => inputRef.current?.removeEventListener('change', onUpload);
   }, [p.folder]);
 
   const onDownloadClick = useCallback(() => {
@@ -78,6 +101,13 @@ export function FileExplorerFolderItem(p: { folder: Folder }) {
                 data-ignore-blur
               >
                 <div className="mr-1 flex items-center justify-center">
+                  <input
+                    ref={inputRef}
+                    type="file"
+                    className="hidden"
+                    multiple
+                  />
+
                   <FolderIcon
                     size={16}
                     strokeWidth={1.5}
@@ -105,6 +135,7 @@ export function FileExplorerFolderItem(p: { folder: Folder }) {
                 { label: 'Rename Folder', onClick: onRenameClick },
                 { label: 'Delete Folder', onClick: onDeleteClick },
                 null,
+                { label: 'Upload File', onClick: onUploadClick },
                 { label: 'Download Folder', onClick: onDownloadClick },
               ].map((p, i) =>
                 p ? (

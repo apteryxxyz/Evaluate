@@ -12,7 +12,7 @@ import { ScrollArea } from '@evaluate/react/components/scroll-area';
 import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 import { FilePlusIcon, FolderPlusIcon } from 'lucide-react';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { FileExplorerFileItem } from './file-item';
 import { FileExplorerItemWrapper } from './item-wrapper';
 import { useExplorer, useWatchExplorer } from './use';
@@ -43,6 +43,29 @@ export function Explorer() {
     [explorer],
   );
 
+  const inputRef = useRef<HTMLInputElement>(null);
+  const onUploadClick = useCallback(() => {
+    inputRef.current?.click();
+  }, []);
+  useEffect(() => {
+    const onUpload = () => {
+      if (!inputRef.current?.files) return;
+      for (const file of Array.from(inputRef.current.files)) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          explorer
+            .createChild('file', file.name)
+            .setContent(reader.result as string);
+        };
+        reader.readAsText(file);
+      }
+      inputRef.current.value = '';
+    };
+
+    inputRef.current?.addEventListener('change', onUpload);
+    return () => inputRef.current?.removeEventListener('change', onUpload);
+  }, [explorer]);
+
   const onDownloadClick = useCallback(() => {
     const zip = new JSZip();
 
@@ -59,6 +82,8 @@ export function Explorer() {
     <section className="relative h-full w-full">
       <div className="flex h-10 items-center gap-1 border-b px-3 py-1">
         <span className="mr-auto font-medium text-sm">Explorer</span>
+
+        <input ref={inputRef} type="file" className="hidden" multiple />
 
         <Button
           title="New File"
@@ -114,6 +139,7 @@ export function Explorer() {
             { label: 'New File', onClick: onNewFileClick },
             { label: 'New Folder', onClick: onNewFolderClick },
             null,
+            { label: 'Upload File', onClick: onUploadClick },
             { label: 'Download Folder', onClick: onDownloadClick },
           ].map((p, i) =>
             p ? (

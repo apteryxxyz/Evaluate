@@ -15,7 +15,7 @@ import {
   ContextMenuTrigger,
 } from '@evaluate/react/components/context-menu';
 import { FolderIcon, FolderOpenIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import type { Folder } from './file-system';
 import { FileExplorerItemName } from './item-name';
 import { FileExplorerItemWrapper } from './item-wrapper';
@@ -23,15 +23,33 @@ import { FileExplorerItemWrapper } from './item-wrapper';
 export function FileExplorerFolderItem(p: { folder: Folder }) {
   const [isRenaming, setIsRenaming] = useState(!p.folder.name);
 
+  const onClick = useCallback(() => {
+    p.folder.setOpened(!p.folder.isOpened);
+    p.folder.setSelected(true);
+  }, [p.folder]);
+
+  const onNewFileClick = useCallback(() => {
+    p.folder.createChild('file');
+  }, [p.folder]);
+
+  const onNewFolderClick = useCallback(() => {
+    p.folder.createChild('folder');
+  }, [p.folder]);
+
+  const onRenameClick = useCallback(() => {
+    setIsRenaming(true);
+  }, []);
+
+  const onDeleteClick = useCallback(() => {
+    p.folder.deleteSelf();
+  }, [p.folder]);
+
   return (
     <Accordion
       type="single"
       collapsible
       value={p.folder.isOpened ? 'open' : ''}
-      onValueChange={(value) => {
-        p.folder.setOpened(value !== '');
-        p.folder.setSelected(true);
-      }}
+      onValueChange={onClick}
     >
       <AccordionItem value="open" className="border-b-0">
         <AccordionTrigger className="h-auto w-full p-0 hover:no-underline">
@@ -67,20 +85,11 @@ export function FileExplorerFolderItem(p: { folder: Folder }) {
 
             <ContextMenuContent className="p-1">
               {[
-                {
-                  label: 'New File',
-                  onClick: () => p.folder.createChild('file'),
-                },
-                {
-                  label: 'New Folder',
-                  onClick: () => p.folder.createChild('folder'),
-                },
+                { label: 'New File', onClick: onNewFileClick },
+                { label: 'New Folder', onClick: onNewFolderClick },
                 '---' as const,
-                { label: 'Rename Folder', onClick: () => setIsRenaming(true) },
-                {
-                  label: 'Delete Folder',
-                  onClick: () => p.folder.deleteSelf(),
-                },
+                { label: 'Rename Folder', onClick: onRenameClick },
+                { label: 'Delete Folder', onClick: onDeleteClick },
               ].map((p, i) =>
                 p === '---' ? (
                   <ContextMenuSeparator key={i} />

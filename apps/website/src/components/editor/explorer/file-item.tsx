@@ -7,7 +7,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from '@evaluate/react/components/context-menu';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FileIcon } from './file-icon';
 import type { File } from './file-system';
 import { FileExplorerItemName } from './item-name';
@@ -15,16 +15,18 @@ import { FileExplorerItemName } from './item-name';
 export function FileExplorerFileItem(p: { file: File; isMeta?: boolean }) {
   const [isRenaming, setIsRenaming] = useState(!p.file.name);
 
+  const onClick = useCallback(() => {
+    p.file.setSelected(true);
+    p.file.setOpened(true);
+  }, [p.file]);
+
   return (
     <FileExplorerFileItemWrapper {...p} setIsRenaming={setIsRenaming}>
       <Button
         variant={p.file.isSelected ? 'secondary' : 'ghost'}
         className="h-auto w-full justify-start rounded-none p-0"
         style={{ paddingLeft: `${12 + (p.file.countParents() - 1) * 6}px` }}
-        onClick={() => {
-          p.file.setSelected(true);
-          p.file.setOpened(true);
-        }}
+        onClick={onClick}
         data-ignore-blur
       >
         <FileIcon
@@ -51,14 +53,22 @@ function FileExplorerFileItemWrapper(
 ) {
   if (p.isMeta) return p.children;
 
+  const onRenameClick = useCallback(() => {
+    p.setIsRenaming(true);
+  }, [p.setIsRenaming]);
+
+  const onDeleteClick = useCallback(() => {
+    p.file.deleteSelf();
+  }, [p.file]);
+
   return (
     <ContextMenu>
       <ContextMenuTrigger asChild>{p.children}</ContextMenuTrigger>
 
       <ContextMenuContent>
         {[
-          { label: 'Rename File', onClick: () => p.setIsRenaming(true) },
-          { label: 'Delete File', onClick: () => p.file.deleteSelf() },
+          { label: 'Rename File', onClick: onRenameClick },
+          { label: 'Delete File', onClick: onDeleteClick },
         ].map((p) => (
           <ContextMenuItem key={p.label} asChild>
             <Button

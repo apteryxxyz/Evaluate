@@ -10,6 +10,7 @@ import {
 } from '@evaluate/react/components/context-menu';
 import { ScrollArea } from '@evaluate/react/components/scroll-area';
 import { FilePlusIcon, FolderPlusIcon } from 'lucide-react';
+import { useCallback } from 'react';
 import { FileExplorerFileItem } from './file-item';
 import { FileExplorerItemWrapper } from './item-wrapper';
 import { useExplorer, useWatchExplorer } from './use';
@@ -17,6 +18,28 @@ import { useExplorer, useWatchExplorer } from './use';
 export function Explorer() {
   const explorer = useExplorer();
   useWatchExplorer(explorer);
+
+  const onNewFileClick = useCallback(() => {
+    explorer.findSelectedFolder().createChild('file');
+  }, [explorer]);
+
+  const onNewFolderClick = useCallback(() => {
+    explorer.findSelectedFolder().createChild('folder');
+  }, [explorer]);
+
+  const onClick = useCallback(
+    (ev: React.MouseEvent | React.KeyboardEvent) => {
+      if ('key' in ev) {
+        if (ev.key === 'Esc') explorer.setSelected(true);
+      } else if (
+        (ev.target as Element).getAttribute(
+          'data-radix-scroll-area-viewport',
+        ) === ''
+      )
+        explorer.setSelected(true);
+    },
+    [explorer],
+  );
 
   return (
     <section className="relative h-full w-full">
@@ -28,7 +51,7 @@ export function Explorer() {
           size="icon"
           variant="ghost"
           className="size-auto rounded-full"
-          onClick={() => explorer.findSelectedFolder().createChild('file')}
+          onClick={onNewFileClick}
         >
           <FilePlusIcon className="size-4" />
           <span className="sr-only">New File</span>
@@ -39,7 +62,7 @@ export function Explorer() {
           size="icon"
           variant="ghost"
           className="size-auto rounded-full"
-          onClick={() => explorer.findSelectedFolder().createChild('folder')}
+          onClick={onNewFolderClick}
         >
           <FolderPlusIcon className="size-4" />
           <span className="sr-only">New Folder</span>
@@ -50,14 +73,8 @@ export function Explorer() {
         <ContextMenuTrigger asChild>
           <ScrollArea
             className="relative h-full w-full py-1"
-            onClick={(e) => {
-              if (
-                e.target instanceof Element &&
-                e.target.getAttribute('data-radix-scroll-area-viewport') === ''
-              )
-                explorer.setSelected(true);
-            }}
-            onKeyDown={(e) => e.key === 'Esc' && explorer.setSelected(true)}
+            onClick={onClick}
+            onKeyDown={onClick}
           >
             <div className="mb-1 border-b">
               <FileExplorerFileItem file={explorer.args} isMeta />
@@ -80,15 +97,8 @@ export function Explorer() {
 
         <ContextMenuContent className="p-1">
           {[
-            {
-              label: 'New File',
-              onClick: () => explorer.findSelectedFolder().createChild('file'),
-            },
-            {
-              label: 'New Folder',
-              onClick: () =>
-                explorer.findSelectedFolder().createChild('folder'),
-            },
+            { label: 'New File', onClick: onNewFileClick },
+            { label: 'New Folder', onClick: onNewFolderClick },
           ].map((p, i) =>
             p ? (
               <ContextMenuItem key={p.label} asChild>

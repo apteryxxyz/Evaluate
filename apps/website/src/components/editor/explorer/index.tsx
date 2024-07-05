@@ -24,9 +24,15 @@ export function Explorer() {
   const onNewFileClick = useCallback(() => {
     explorer.findSelectedFolder().createChild('file');
   }, [explorer]);
+  const onNewFileContextClick = useCallback(() => {
+    explorer.createChild('file');
+  }, [explorer]);
 
   const onNewFolderClick = useCallback(() => {
     explorer.findSelectedFolder().createChild('folder');
+  }, [explorer]);
+  const onNewFolderContextClick = useCallback(() => {
+    explorer.createChild('folder');
   }, [explorer]);
 
   const onClick = useCallback(
@@ -136,8 +142,8 @@ export function Explorer() {
 
         <ContextMenuContent className="p-1">
           {[
-            { label: 'New File', onClick: onNewFileClick },
-            { label: 'New Folder', onClick: onNewFolderClick },
+            { label: 'New File', onClick: onNewFileContextClick },
+            { label: 'New Folder', onClick: onNewFolderContextClick },
             null,
             { label: 'Upload File', onClick: onUploadClick },
             { label: 'Download Folder', onClick: onDownloadClick },

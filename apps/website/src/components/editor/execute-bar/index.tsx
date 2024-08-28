@@ -141,7 +141,7 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
           className={cn(!useMediaQuery('xs') && 'aspect-square p-0')}
           disabled={isPending}
         >
-          {isPending ? ( // TODO: Implement loading state
+          {isPending ? (
             <Loader2Icon className="size-4 animate-spin" />
           ) : (
             <PlayIcon className="size-4" />

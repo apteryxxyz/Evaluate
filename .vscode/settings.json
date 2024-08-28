@@ -24,6 +24,8 @@
   "cSpell.language": "en-GB",
   "cSpell.words": [
     "apteryx",
+    "codemirror",
+    "deleteable",
     "dialog",
     "hookform",
     "lucide",
@@ -33,10 +35,12 @@
     "posthog",
     "ratelimit",
     "ratelimiter",
+    "renameable",
     "resolvables",
     "runtimes",
     "tanstack",
     "trpc",
+    "uploadable",
     "upstash"
   ],
   "tailwindCSS.classAttributes": ["class", "className"],

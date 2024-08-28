@@ -10,11 +10,11 @@ export const ImageWithFallback = forwardRef<
     fallback: string | React.ReactElement;
   }
 >((p, ref) => {
-  const [hasErrored, setHasErrored] = useState(!p.src);
-  if (hasErrored && typeof p.fallback === 'string')
+  const [errored, setErrored] = useState(!p.src);
+  if (errored && typeof p.fallback === 'string')
     return <Image ref={ref} {...p} src={p.fallback} />;
-  if (hasErrored && isValidElement(p.fallback)) return p.fallback;
+  if (errored && isValidElement(p.fallback)) return p.fallback;
   return (
-    <Image ref={ref} {...p} src={p.src!} onError={() => setHasErrored(true)} />
+    <Image ref={ref} {...p} src={p.src!} onError={() => setErrored(true)} />
   );
 });

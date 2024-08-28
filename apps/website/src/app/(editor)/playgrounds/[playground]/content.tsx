@@ -11,10 +11,10 @@ import { useMediaQuery } from '@evaluate/react/hooks/media-query';
 import type { Runtime } from '@evaluate/types';
 import React, { useState } from 'react';
 import { Editor } from '~/components/editor';
-import { Explorer } from '~/components/editor/explorer';
-import { ExplorerProvider } from '~/components/editor/explorer/use';
-import { Terminal } from '~/components/editor/terminal';
-import { TerminalProvider } from '~/components/editor/terminal/use';
+import { Explorer } from '~/components/explorer';
+import { ExplorerProvider } from '~/components/explorer/use';
+import { Terminal } from '~/components/terminal';
+import { TerminalProvider } from '~/components/terminal/use';
 
 export default function EditorContent(p: { runtime: Runtime }) {
   const isDesktop = useMediaQuery('lg');

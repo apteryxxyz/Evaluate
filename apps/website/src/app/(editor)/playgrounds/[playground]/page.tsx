@@ -7,7 +7,6 @@ import EditorContent from './content';
 export async function generateStaticParams() {
   const runtimes = await fetchRuntimes();
   return runtimes
-
     .reduce<string[]>((ids, runtime) => {
       for (const version of runtime.versions)
         ids.push(`${runtime.id}@${version}`);

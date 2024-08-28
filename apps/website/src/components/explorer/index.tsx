@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@evaluate/react/components/button';
 import { ScrollArea } from '@evaluate/react/components/scroll-area';
 import { Separator } from '@evaluate/react/components/separator';

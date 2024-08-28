@@ -1,5 +1,4 @@
 import * as MIT from 'material-icon-theme';
-import { cache } from 'react';
 import VSI from 'vscode-icons-js/data/static/languages-vscode.json';
 
 // ============ //
@@ -16,7 +15,7 @@ const MANIFEST = (() => {
   return manifest;
 })();
 
-export const getIconForFile = cache((name: string, theme?: string): string => {
+export function getIconForFile(name: string, theme?: string): string {
   const icons = (theme === 'light' ? MANIFEST.light : MANIFEST) || MANIFEST;
   const { fileNames, fileExtensions } = icons;
   const [ext1, ext2] = name.split('.').reverse();
@@ -28,20 +27,18 @@ export const getIconForFile = cache((name: string, theme?: string): string => {
     (theme === 'light' && getIconForFile(name, 'dark')) ||
     'file'
   );
-});
+}
 
-export const getIconForFolder = cache(
-  (name: string, theme?: string): string => {
-    const icons = (theme === 'light' ? MANIFEST.light : MANIFEST) || MANIFEST;
-    const { folderNames } = icons;
+export function getIconForFolder(name: string, theme?: string): string {
+  const icons = (theme === 'light' ? MANIFEST.light : MANIFEST) || MANIFEST;
+  const { folderNames } = icons;
 
-    return (
-      folderNames?.[name] ||
-      (theme === 'light' && getIconForFolder(name, 'dark')) ||
-      'folder'
-    );
-  },
-);
+  return (
+    folderNames?.[name] ||
+    (theme === 'light' && getIconForFolder(name, 'dark')) ||
+    'folder'
+  );
+}
 
 export function makeIconUrl(icon: string) {
   return `https://pkief.vscode-unpkg.net/PKief/material-icon-theme/5.8.0/extension/icons/${icon}.svg` as const;
@@ -178,8 +175,8 @@ const LANGUAGE_PATTERNS = {
   r: /\.(r)$/,
 };
 
-export const detectLanguage = cache((fileName = '') => {
+export function detectLanguage(fileName = '') {
   const language = Object.entries(LANGUAGE_PATTERNS) //
     .find(([, r]) => r.test(fileName));
   return (language ? language[0] : 'textile') as keyof typeof LANGUAGE_PATTERNS;
-});
+}

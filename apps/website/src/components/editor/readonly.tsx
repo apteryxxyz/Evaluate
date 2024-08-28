@@ -1,3 +1,5 @@
+'use client';
+
 import ReactCodeMirror from '@uiw/react-codemirror';
 import { useTheme } from 'next-themes';
 import { useMemo } from 'react';

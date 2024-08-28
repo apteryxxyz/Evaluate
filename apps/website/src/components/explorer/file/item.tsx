@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@evaluate/react/components/button';
 import type { File } from 'virtual-file-explorer-backend';
 import { ContextMenuWrapper } from '~/components/context-menu-wrapper';

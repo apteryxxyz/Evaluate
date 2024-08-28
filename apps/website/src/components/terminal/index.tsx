@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@evaluate/react/components/button';
 import { ScrollArea, ScrollBar } from '@evaluate/react/components/scroll-area';
 import {

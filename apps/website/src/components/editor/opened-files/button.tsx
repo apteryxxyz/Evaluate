@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@evaluate/react/components/button';
 import { XIcon } from 'lucide-react';
 import { useCallback, useMemo } from 'react';

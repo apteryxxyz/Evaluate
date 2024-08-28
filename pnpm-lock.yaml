@@ -40,9 +40,6 @@ importers:
       '@codemirror/view':
         specifier: ^6.30.0
         version: 6.30.0
-      '@evaluate/discord-bot':
-        specifier: workspace:^
-        version: link:../../bots/discord
       '@evaluate/engine':
         specifier: workspace:^
         version: link:../../packages/engine
@@ -88,6 +85,9 @@ importers:
       '@vercel/speed-insights':
         specifier: ^1.0.12
         version: 1.0.12(next@14.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6))(react@18.3.1)(svelte@4.0.1)(vue@3.3.4)
+      discord-bot:
+        specifier: workspace:^
+        version: link:../../bots/discord
       dompurify:
         specifier: ^3.1.5
         version: 3.1.5

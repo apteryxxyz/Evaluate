@@ -1,5 +1,5 @@
 {
-  "name": "@evaluate/browser-extension",
+  "name": "browser-extension",
   "version": "0.1.1",
   "type": "module",
   "manifest": {

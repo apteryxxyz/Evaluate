@@ -1,5 +1,5 @@
 {
-  "name": "@evaluate/website",
+  "name": "website",
   "version": "2.0.0",
   "type": "module",
   "scripts": {
@@ -15,7 +15,6 @@
   "dependencies": {
     "@codemirror/commands": "^6.6.0",
     "@codemirror/view": "^6.30.0",
-    "@evaluate/discord-bot": "workspace:^",
     "@evaluate/engine": "workspace:^",
     "@evaluate/env": "workspace:^",
     "@evaluate/react": "workspace:^",
@@ -31,6 +30,7 @@
     "@uiw/codemirror-theme-vscode": "^4.23.0",
     "@uiw/react-codemirror": "^4.23.0",
     "@vercel/speed-insights": "^1.0.12",
+    "discord-bot": "workspace:^",
     "dompurify": "^3.1.5",
     "embla-carousel-autoplay": "^8.1.5",
     "file-saver": "^2.0.5",

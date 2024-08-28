@@ -1,1 +1,1 @@
-export { default as POST } from '@evaluate/discord-bot';
+export { default as POST } from 'discord-bot';

@@ -47,7 +47,6 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.6.0",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-context-menu": "^2.2.0",
     "@radix-ui/react-dialog": "^1.1.0",
@@ -59,14 +58,11 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
-    "@radix-ui/react-toast": "^1.2.0",
     "@radix-ui/react-tooltip": "^1.1.0",
-    "@radix-ui/react-use-layout-effect": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^0.2.1",
     "embla-carousel-react": "^8.1.5",
-    "framer-motion": "^11.2.11",
     "lucide-react": "^0.338.0",
     "next-themes": "^0.2.1",
     "react": "^18.3.1",
@@ -74,8 +70,7 @@
     "react-resizable-panels": "^2.0.19",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.3.0",
-    "vaul": "^0.9.1",
-    "zod": "3.22.4"
+    "vaul": "^0.9.1"
   },
   "devDependencies": {
     "@configs/tsup": "workspace:^",

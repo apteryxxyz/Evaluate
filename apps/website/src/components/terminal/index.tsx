@@ -72,7 +72,7 @@ export function Terminal({ runtime }: Terminal.Props) {
                 <TabsTrigger key={label} value={value} asChild>
                   <Button
                     variant="secondary"
-                    className="relative bg-card text-foreground/70 data-[state=active]:bg-muted data-[state=active]:text-foreground hover:text-foreground"
+                    className="relative bg-card text-foreground/70 hover:text-foreground data-[state=active]:bg-muted data-[state=active]:text-foreground"
                   >
                     <Icon className="size-4" />
                     <span>&nbsp;{label}</span>

@@ -147,7 +147,7 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
             <PlayIcon className="size-4" />
           )}
           <span className="sr-only">Execute</span>
-          <span className="hidden xs:block">&nbsp;{runtime.name}</span>
+          <span className="xs:block hidden">&nbsp;{runtime.name}</span>
           <span className="sr-only">Code</span>
         </Button>
       </form>

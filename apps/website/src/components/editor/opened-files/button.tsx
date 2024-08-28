@@ -42,7 +42,7 @@ export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
       <Button
         key={file.path}
         variant="secondary"
-        className="group bg-card px-2 text-foreground/70 data-[state=active]:bg-muted data-[state=active]:text-foreground hover:text-foreground"
+        className="group bg-card px-2 text-foreground/70 hover:text-foreground data-[state=active]:bg-muted data-[state=active]:text-foreground"
         data-state={file.focused ? 'active' : ''}
         onClick={handleClick}
       >
@@ -53,7 +53,7 @@ export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
           role="button"
           size="icon"
           variant={null}
-          className="w-auto pl-2 text-white/20 group-hover:text-white/50 hover:text-white"
+          className="w-auto pl-2 text-white/20 hover:text-white group-hover:text-white/50"
           onClick={handleCloseClick}
           asChild
         >

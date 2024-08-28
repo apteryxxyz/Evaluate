@@ -1,33 +1,25 @@
-'use client';
-
 import { Button } from '@evaluate/react/components/button';
 import { ScrollArea, ScrollBar } from '@evaluate/react/components/scroll-area';
+import { cn } from '@evaluate/react/utilities/class-name';
 import type { PartialRuntime } from '@evaluate/types';
-import MonacoEditor from '@monaco-editor/react';
 import { FilesIcon, TerminalIcon } from 'lucide-react';
-import Image from 'next/image';
-import { useEffect } from 'react';
-import { useExplorer, useWatchExplorer } from './explorer/use';
-import { Generate } from './generate';
-import { ExecuteBar } from './header/execute-bar';
-import { OpenedFilesBar } from './header/opened-files-bar';
-import { useEditor } from './use';
+import { useEffect, useRef } from 'react';
+import { ContextMenuWrapper } from '../context-menu-wrapper';
+import { ExecuteBar } from './execute-bar';
+import { useEditor } from './hooks';
+import { OpenedFiles } from './opened-files';
 
-export function Editor(p: { runtime: PartialRuntime }) {
-  const [editor, { theme, beforeMount, onMount }] = useEditor();
-
-  const explorer = useExplorer();
-  useWatchExplorer(explorer);
-  const openedFile = explorer.findOpenedFile();
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => editor?.focus(), [editor, openedFile]);
+export function Editor({ runtime }: { runtime: PartialRuntime }) {
+  const editorRef = useRef<HTMLDivElement>(null);
+  const { file, handlers, setContainer } = useEditor();
+  useEffect(() => setContainer(editorRef.current!), [setContainer]);
 
   return (
     <section className="h-full">
       <div className="flex flex-col items-center gap-1 border-b px-0.5 lg:h-10 lg:flex-row">
         <div className="flex w-full gap-1 lg:overflow-hidden">
           <ScrollArea className="flex w-full whitespace-nowrap">
-            <OpenedFilesBar />
+            <OpenedFiles />
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
 
@@ -38,12 +30,12 @@ export function Editor(p: { runtime: PartialRuntime }) {
               dispatchEvent(new CustomEvent('mobile-explorer-open-change'))
             }
           >
-            <FilesIcon className="size-4" />
+            <FilesIcon size={16} strokeWidth={2} />
           </Button>
         </div>
 
         <div className="flex w-full gap-1 lg:w-auto">
-          <ExecuteBar editor={editor} runtime={p.runtime} />
+          <ExecuteBar runtime={runtime} />
 
           <Button
             variant="secondary"
@@ -58,45 +50,24 @@ export function Editor(p: { runtime: PartialRuntime }) {
       </div>
 
       <div className="relative h-full w-full">
-        {openedFile && (
-          <>
-            <Generate runtime={p.runtime} editor={editor} />
-
-            <MonacoEditor
-              theme={theme}
-              beforeMount={beforeMount}
-              onMount={onMount}
-              path={openedFile.path}
-              defaultValue={openedFile.content}
-              onChange={(content) => {
-                if (openedFile.content === content) return;
-                openedFile.setContent(content ?? '');
-              }}
-              options={{
-                ariaRequired: true,
-                minimap: { enabled: false },
-                wordWrap: 'on',
-              }}
-              className="pt-1"
-            />
-          </>
-        )}
-
-        {!openedFile && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <Image
-              src="/images/icon.png"
-              alt=""
-              width={64}
-              height={64}
-              className="grayscale"
-            />
-
-            <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
-              Get started by using the file explorer to create a file.
-            </span>
-          </div>
-        )}
+        <ContextMenuWrapper
+          items={[
+            {
+              label: 'Execute Code',
+              shortcut: 'Ctrl+Enter',
+              action: handlers.execute,
+            },
+            null,
+            { label: 'Copy', action: handlers.copy },
+            { label: 'Paste', action: handlers.paste },
+            { label: 'Cut', action: handlers.cut },
+          ]}
+        >
+          <div
+            className={cn('h-full [&>*]:h-full', !file && 'hidden')}
+            ref={editorRef}
+          />
+        </ContextMenuWrapper>
       </div>
     </section>
   );

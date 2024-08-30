@@ -5,13 +5,8 @@ export const UnicodeEmojis = {
 } as const;
 
 export const CustomEmojis = {
-  pencil: '1137874868327682109',
-  camera: '1137874864800268320',
-  play: '1137874859855204412',
-  bin: '1137874856256479325',
-  comment: '1139362285912064111',
-  link: '1205156612839309332',
-  globe: '1205168470640296036',
+  pencil: '1278931843986620428',
+  globe: '1278931860805779517',
 } as const;
 
 type ExtractId<T extends string> = T extends `${infer I}:a` ? I : T;

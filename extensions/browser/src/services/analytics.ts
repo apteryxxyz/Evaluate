@@ -11,8 +11,6 @@ if (env.PLASMO_PUBLIC_POSTHOG_KEY) {
   }
 
   chrome.storage.local.get(['distinctId']).then(({ distinctId }) => {
-    console.log('distinctId =', distinctId);
-
     posthog.init(env.PLASMO_PUBLIC_POSTHOG_KEY!, {
       api_host: `${env.PLASMO_PUBLIC_WEBSITE_URL}/api/v1/ingest`,
       ui_host: 'https://us.posthog.com/',

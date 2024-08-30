@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": ["src/**/*", ".next/types/**/*.ts", "../../.vscode/_.ts"],
+  "include": ["src/**/*", ".next/types/**/*.ts"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "baseUrl": ".",

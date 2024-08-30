@@ -109,7 +109,7 @@ export default function PlaygroundsPageContent(p: {
           </Select>
         </div>
 
-        <div className="grid grid-cols-1 gap-3 2xl:grid-cols-7 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xl:grid-cols-6 xs:grid-cols-2">
+        <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
           {sortedRuntimes.map((runtime) => (
             <PlaygroundCard
               key={runtime.id}

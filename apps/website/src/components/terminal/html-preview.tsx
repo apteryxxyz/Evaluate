@@ -3,14 +3,21 @@
 import DOMPurify from 'dompurify';
 import { Children, useEffect, useState } from 'react';
 
-export function HtmlPreview(p: React.PropsWithChildren) {
+export function HtmlPreview({ children }: React.PropsWithChildren) {
   const [sanitisedHtml, setSanitisedHtml] = useState<string>();
 
   useEffect(() => {
-    if (!p.children) return;
-    const html = Children.map(p.children, String)?.join('') ?? '';
-    setSanitisedHtml(DOMPurify.sanitize(html, { WHOLE_DOCUMENT: true }));
-  });
+    if (!children) return;
+
+    try {
+      const html = Children.map(children, String)?.join('') ?? '';
+      const sanitized = DOMPurify.sanitize(html, { WHOLE_DOCUMENT: true });
+      setSanitisedHtml(sanitized);
+    } catch (error) {
+      console.error('Error sanitizing HTML:', error);
+      setSanitisedHtml('');
+    }
+  }, [children]);
 
   return (
     <>

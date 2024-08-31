@@ -39,7 +39,7 @@ export function generateBaseMetadata(
       description: metadata.description,
       locale: 'en',
       siteName: metadata.title,
-      url: `${metadata.metadataBase}${pathname}`,
+      url: new URL(pathname, metadata.metadataBase),
     },
     twitter: {
       card: 'summary',

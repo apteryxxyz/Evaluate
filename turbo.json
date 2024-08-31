@@ -41,5 +41,5 @@
       "persistent": true
     }
   },
-  "globalEnv": ["WEBSITE_URL", "DISCORD_TOKEN"]
+  "globalEnv": ["WEBSITE_URL"]
 }

@@ -44,8 +44,3 @@ export const env = validateEnv({
       );
   },
 });
-
-console.log('validated discord bot variables', {
-  env: env,
-  'process.env': process.env,
-});

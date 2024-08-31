@@ -1,7 +1,11 @@
 import posthog from 'posthog-js';
 import { env } from '~/env';
 
-if (typeof window !== 'undefined' && env.NEXT_PUBLIC_POSTHOG_KEY) {
+if (
+  typeof window !== 'undefined' &&
+  !window.location.origin.endsWith('.vercel.app') &&
+  env.NEXT_PUBLIC_POSTHOG_KEY
+) {
   posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
     api_host: `${window.location.origin}/api/v1/ingest`,
     ui_host: 'https://us.posthog.com/',

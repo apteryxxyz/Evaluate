@@ -23,14 +23,15 @@ export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
       e.stopPropagation();
 
       const isFocused = file.focused;
-      const currentIndex = others.findIndex((f) => f.opened);
-      file.close().blur();
+      const currentIndex = others.findIndex((f) => f.focused);
+      file.blur().close();
+
       if (isFocused) {
-        const next = others[currentIndex + 1] ?? others.at(-1);
-        if (next) next.focus();
+        const next = others[currentIndex + 1] ?? others[currentIndex - 1];
+        if (next) next.select().focus();
       }
     },
-    [file, others],
+    [file.focused, file, others],
   );
 
   const name = useMemo(() => {

@@ -31,7 +31,7 @@ export function useEditor() {
   }, []);
 
   const editor = useCodeMirror({
-    onChange: (v) => (focused!.content = v),
+    onChange: (v) => focused && (focused.content = v),
     theme: theme,
     extensions: [languageExtension, shortcutsExtension],
     basicSetup: {

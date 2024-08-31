@@ -25,3 +25,8 @@ export const env = validateEnv({
       );
   },
 });
+
+console.log('validated website variables', {
+  env: env,
+  'process.env': process.env,
+});

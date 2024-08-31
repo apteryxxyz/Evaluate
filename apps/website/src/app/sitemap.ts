@@ -32,13 +32,10 @@ async function loadDynamicPaths(url: string): Promise<MetadataRoute.Sitemap> {
 }
 
 export default async function getSitemap() {
-  console.log(
-    'trying to get env in sitemap...',
-    'env:',
+  console.log('trying to get env in sitemap...', {
     env,
-    'process.env:',
-    process.env,
-  );
+    'process.env': process.env,
+  });
 
   const staticPaths = await loadStaticPaths('https://evaluate.run');
   const dynamicPaths = await loadDynamicPaths('https://evaluate.run');

@@ -40,5 +40,6 @@
       "cache": false,
       "persistent": true
     }
-  }
+  },
+  "globalEnv": ["WEBSITE_URL", "DISCORD_TOKEN"]
 }

@@ -3,8 +3,8 @@
   "packageManager": "pnpm@9.3.0",
   "workspaces": ["apps/*", "bots/*", "configs/*", "extensions/*", "packages/*"],
   "scripts": {
-    "lint": "pnpm turbo --concurrency=50 lint",
-    "format": "pnpm turbo --concurrency=50 format",
+    "lint": "biome lint . --write",
+    "format": "biome format . --write",
     "check": "pnpm turbo --concurrency=50 check",
     "build": "pnpm turbo --concurrency=50 build",
     "build:packages": "pnpm turbo --concurrency=50 --filter=./packages/* build",

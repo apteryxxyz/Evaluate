@@ -40,8 +40,6 @@
     "./style.css": "./style.css"
   },
   "scripts": {
-    "format": "biome format . --write",
-    "lint": "biome lint . --write",
     "check": "tsc --noEmit",
     "build": "tsup",
     "dev": "pnpm build --watch"

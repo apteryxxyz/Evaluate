@@ -16,8 +16,6 @@
     }
   },
   "scripts": {
-    "format": "biome format . --write",
-    "lint": "biome lint . --write",
     "check": "tsc --noEmit",
     "build": "pnpm tsup",
     "dev": "pnpm build --watch"

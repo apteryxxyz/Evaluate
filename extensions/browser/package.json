@@ -13,8 +13,6 @@
     "permissions": ["contextMenus", "storage"]
   },
   "scripts": {
-    "lint": "biome lint . --write",
-    "format": "biome format . --write",
     "check": "tsc --noEmit",
     "dev": "plasmo dev",
     "build:styles": "cp ../../packages/react/style.css ./src/style.css",

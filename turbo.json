@@ -1,15 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
-    "format": {
-      "dependsOn": ["^format"],
-      "inputs": ["src/**"],
-      "outputs": ["src/**"]
-    },
-    "lint": {
-      "dependsOn": ["^lint"],
-      "inputs": ["src/**"]
-    },
     "test": {
       "dependsOn": ["^test"],
       "inputs": ["src/**", "test/**"]

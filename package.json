@@ -1,7 +1,7 @@
 {
   "name": "evaluate",
   "packageManager": "pnpm@9.3.0",
-  "workspaces": ["apps/*", "bots/*", "configs/*", "extensions/*", "packages/*"],
+  "workspaces": ["apps/*", "bots/*", "extensions/*", "packages/*"],
   "scripts": {
     "lint": "biome lint . --write",
     "format": "biome format . --write",

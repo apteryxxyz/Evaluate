@@ -9,8 +9,7 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    "**/node_modules": true,
-    "**/{dist,.next,.plasmo,.turbo,.nx}": true
+    "**/node_modules": true
   },
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#2fc186",

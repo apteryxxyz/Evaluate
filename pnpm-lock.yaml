@@ -210,21 +210,9 @@ importers:
         specifier: 3.22.4
         version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
     devDependencies:
-      '@configs/tsup':
-        specifier: workspace:^
-        version: link:../../configs/tsup
       '@types/node':
         specifier: ^20.16.2
         version: 20.16.2
-
-  configs/tsup:
-    devDependencies:
-      tsup:
-        specifier: ^8.2.4
-        version: 8.2.4(@swc/core@1.7.21)(jiti@1.21.6)(postcss@8.4.41)(tsx@4.19.0)(typescript@5.5.4)(yaml@2.5.0)
-      typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
 
   extensions/browser:
     dependencies:
@@ -299,9 +287,6 @@ importers:
         specifier: 3.22.4
         version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
     devDependencies:
-      '@configs/tsup':
-        specifier: workspace:^
-        version: link:../../configs/tsup
       '@types/node':
         specifier: ^20.16.2
         version: 20.16.2
@@ -321,9 +306,6 @@ importers:
         specifier: 3.22.4
         version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
     devDependencies:
-      '@configs/tsup':
-        specifier: workspace:^
-        version: link:../../configs/tsup
       '@types/node':
         specifier: ^20.16.2
         version: 20.16.2
@@ -403,9 +385,6 @@ importers:
         specifier: ^0.9.1
         version: 0.9.1(@types/react@18.3.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
-      '@configs/tsup':
-        specifier: workspace:^
-        version: link:../../configs/tsup
       '@types/react':
         specifier: ^18.3.4
         version: 18.3.4
@@ -455,9 +434,6 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
     devDependencies:
-      '@configs/tsup':
-        specifier: workspace:^
-        version: link:../../configs/tsup
       '@types/node':
         specifier: ^20.16.2
         version: 20.16.2
@@ -467,10 +443,6 @@ importers:
       zod:
         specifier: 3.22.4
         version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
-    devDependencies:
-      '@configs/tsup':
-        specifier: workspace:^
-        version: link:../../configs/tsup
 
 packages:
 

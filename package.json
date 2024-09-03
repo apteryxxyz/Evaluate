@@ -1,10 +1,10 @@
 {
   "name": "evaluate",
   "packageManager": "pnpm@9.3.0",
-  "workspaces": ["apps/*", "bots/*", "configs/*", "extensions/*", "packages/*"],
+  "workspaces": ["apps/*", "bots/*", "extensions/*", "packages/*"],
   "scripts": {
-    "lint": "pnpm turbo --concurrency=50 lint",
-    "format": "pnpm turbo --concurrency=50 format",
+    "lint": "biome lint . --write",
+    "format": "biome format . --write",
     "check": "pnpm turbo --concurrency=50 check",
     "build": "pnpm turbo --concurrency=50 build",
     "build:packages": "pnpm turbo --concurrency=50 --filter=./packages/* build",
@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
+    "@types/node": "^20.16.2",
     "resolve-tspaths": "^0.8.19",
     "tsup": "^8.2.4",
     "tsx": "^4.19.0",

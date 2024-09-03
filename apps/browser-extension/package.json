@@ -13,8 +13,6 @@
     "permissions": ["contextMenus", "storage"]
   },
   "scripts": {
-    "lint": "biome lint . --write",
-    "format": "biome format . --write",
     "check": "tsc --noEmit",
     "dev": "plasmo dev",
     "build:styles": "cp ../../packages/react/style.css ./src/style.css",
@@ -36,7 +34,6 @@
   },
   "devDependencies": {
     "@types/chrome": "^0.0.263",
-    "@types/node": "^20.16.2",
     "@types/react": "^18.3.4",
     "autoprefixer": "^10.4.20",
     "plasmo": "^0.85.2",

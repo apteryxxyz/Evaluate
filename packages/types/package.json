@@ -12,16 +12,11 @@
     }
   },
   "scripts": {
-    "format": "biome format . --write",
-    "lint": "biome lint . --write",
     "check": "tsc --noEmit",
     "build": "pnpm tsup",
     "dev": "pnpm build --watch"
   },
   "dependencies": {
     "zod": "3.22.4"
-  },
-  "devDependencies": {
-    "@configs/tsup": "workspace:^"
   }
 }

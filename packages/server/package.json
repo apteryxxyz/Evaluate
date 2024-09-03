@@ -12,8 +12,6 @@
     }
   },
   "scripts": {
-    "format": "biome format . --write",
-    "lint": "biome lint . --write",
     "check": "tsc --noEmit",
     "build": "pnpm tsup",
     "dev": "pnpm build --watch"
@@ -31,9 +29,5 @@
     "superjson": "^2.2.1",
     "zod": "3.22.4",
     "zod-validation-error": "^3.3.1"
-  },
-  "devDependencies": {
-    "@configs/tsup": "workspace:^",
-    "@types/node": "^20.16.2"
   }
 }

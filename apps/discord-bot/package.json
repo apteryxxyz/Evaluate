@@ -12,8 +12,6 @@
     }
   },
   "scripts": {
-    "lint": "biome lint . --write",
-    "format": "biome format . --write",
     "check": "tsc --noEmit",
     "build": "tsup",
     "dev": "pnpm build --watch"
@@ -29,9 +27,5 @@
     "discord-interactions": "^3.4.0",
     "posthog-node": "^3.6.3",
     "zod": "3.22.4"
-  },
-  "devDependencies": {
-    "@configs/tsup": "workspace:^",
-    "@types/node": "^20.16.2"
   }
 }

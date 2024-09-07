@@ -1,4 +1,4 @@
-import type { Snowflake } from 'discord-api-types/v10';
+import type { Snowflake } from '@buape/carbon';
 
 export const UnicodeEmojis = {
   joy: '😂',

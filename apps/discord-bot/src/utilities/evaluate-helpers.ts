@@ -1,15 +1,14 @@
-import type { APIEmbed } from 'discord-api-types/v10';
+import type { Embed } from '@buape/carbon';
 import { extractBoldText, extractCodeBlocks } from './discord-formatting';
 import { getEmbedField } from './embed-helpers';
 
 /**
  * Get the options from an evaluate embed.
- * @param t translate function, used to get the names of the fields
  * @param embed the embed to get the options from
  * @returns the options
  * @throws if the embed does not contain the required fields
  */
-export function getEvaluateOptions(embed: APIEmbed) {
+export function getEvaluateOptions(embed: Embed) {
   const runtime = extractBoldText(embed.description ?? '')[0];
   const code = extractCodeBlocks(embed.description ?? '')[0]?.code;
 
@@ -25,5 +24,5 @@ export function getEvaluateOptions(embed: APIEmbed) {
   const outputField = getEmbedField(embed, 'Output');
   const output = extractCodeBlocks(outputField?.value ?? '')[0]?.code;
 
-  return { runtime: runtime, code, input, args, output };
+  return { runtime, code, input, args, output };
 }

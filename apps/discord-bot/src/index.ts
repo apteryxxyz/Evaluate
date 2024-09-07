@@ -4,7 +4,6 @@ import {
   InteractionResponseType,
   InteractionType,
 } from '@buape/carbon';
-import { waitUntil } from '@vercel/functions';
 import { EvaluateCommand } from './commands/evaluate';
 import { env } from './env';
 import analytics from './services/analytics';
@@ -62,13 +61,13 @@ export default async function handler(request: Request) {
     });
 
     if (interaction.type === InteractionType.ApplicationCommand)
-      waitUntil(client.commandHandler.handleCommandInteraction(interaction));
+      await client.commandHandler.handleCommandInteraction(interaction);
     if (interaction.type === InteractionType.MessageComponent)
-      waitUntil(client.componentHandler.handleInteraction(interaction));
+      await client.componentHandler.handleInteraction(interaction);
     if (interaction.type === InteractionType.ModalSubmit)
-      waitUntil(client.modalHandler.handleInteraction(interaction));
+      await client.modalHandler.handleInteraction(interaction);
 
-    if (analytics) waitUntil(analytics.shutdown());
+    if (analytics) await analytics.shutdown();
     return new Response(null, { status: 204 });
   }
 

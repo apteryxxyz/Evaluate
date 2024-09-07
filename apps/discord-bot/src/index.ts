@@ -1,10 +1,8 @@
 import {
-  BaseInteraction,
   Client,
   ClientMode,
   InteractionResponseType,
   InteractionType,
-  User,
 } from '@buape/carbon';
 import { waitUntil } from '@vercel/functions';
 import { EvaluateCommand } from './commands/evaluate';

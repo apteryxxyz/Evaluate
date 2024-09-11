@@ -37,6 +37,22 @@ function isEdit(
   );
 }
 
+function compressOptions(options: {
+  code: string;
+  args?: string;
+  input?: string;
+}) {
+  return compress({
+    files: {
+      'file.code': options.code,
+      '::input::': options.input,
+      '::args::': options.args,
+    },
+    entry: 'file.code',
+    focused: 'file.code',
+  });
+}
+
 export async function handleEvaluating(
   interaction: CommandInteraction | ModalInteraction,
   options: { runtime: string; code: string; args?: string; input?: string },
@@ -76,7 +92,7 @@ export async function handleEvaluating(
   } else if (output.length > 1000) {
     output = `Output was too large to display, [click here to view the full output](${
       env.WEBSITE_URL
-    }/playgrounds/${runtime.id}#${compress(options)}).`;
+    }/playgrounds/${runtime.id}#${compressOptions(options)}).`;
   } else {
     output = codeBlock(output, 1000);
   }
@@ -138,12 +154,7 @@ export function createEvaluationPayload(
       new Row([
         new EditEvaluationButton(),
         new OpenEvaluationButton(
-          `${env.WEBSITE_URL}/playgrounds/${options.runtime.id}#${compress({
-            files: { 'file.code': options.code },
-            entry: 'file.code',
-            input: options.input,
-            args: options.args,
-          })}`,
+          `${env.WEBSITE_URL}/playgrounds/${options.runtime.id}#${compressOptions(options)}`,
         ),
       ]),
     ],

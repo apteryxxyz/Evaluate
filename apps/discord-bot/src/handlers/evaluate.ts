@@ -7,13 +7,16 @@ import {
   type User,
 } from '@buape/carbon';
 import { compress } from '@evaluate/engine/compress';
+import { executeCode } from '@evaluate/engine/execute';
+import {
+  getRuntimeDefaultFileName,
+  searchRuntimes,
+} from '@evaluate/engine/runtimes';
 import type { ExecuteResult, PartialRuntime } from '@evaluate/types';
 import { EditEvaluationButton } from '~/components/edit-evaluation-button';
 import { OpenEvaluationButton } from '~/components/open-evaluation-button';
 import { env } from '~/env';
 import { codeBlock } from '~/utilities/discord-formatting';
-import { executeCode } from '../../../../packages/engine/dist/execute';
-import { searchRuntimes } from '../../../../packages/engine/dist/runtimes';
 
 function isNew(
   interaction: CommandInteraction | ModalInteraction,
@@ -38,18 +41,22 @@ function isEdit(
 }
 
 function compressOptions(options: {
+  runtime: string | PartialRuntime;
   code: string;
   args?: string;
   input?: string;
 }) {
+  const identifier =
+    typeof options.runtime === 'string' ? options.runtime : options.runtime.id;
+  const fileName = getRuntimeDefaultFileName(identifier) ?? 'file.code';
   return compress({
     files: {
-      'file.code': options.code,
+      [fileName]: options.code,
       '::input::': options.input,
       '::args::': options.args,
     },
-    entry: 'file.code',
-    focused: 'file.code',
+    entry: fileName,
+    focused: fileName,
   });
 }
 

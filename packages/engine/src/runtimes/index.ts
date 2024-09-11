@@ -1,2 +1,2 @@
 export * from './fetch';
-export { getIconFromExtension } from './getters';
+export * from './getters';

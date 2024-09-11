@@ -35,6 +35,16 @@ export function getRuntimeAliases(identifier: string) {
 }
 
 /**
+ * Get the default file name of a runtime by its identifier.
+ * @param identifier the identifier of the runtime
+ * @returns the default file name of the runtime
+ */
+export function getRuntimeDefaultFileName(identifier: string) {
+  if (!isRuntimeIdentifier(identifier)) return;
+  return RuntimeExamples[identifier][0]?.name;
+}
+
+/**
  * Get the popularity of a runtime by its identifier.
  * @param identifier the identifier of the runtime
  * @returns the popularity of the runtime

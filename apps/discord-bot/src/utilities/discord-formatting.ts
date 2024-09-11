@@ -1,5 +1,3 @@
-import { escapeCodeBlock } from '@discordjs/builders';
-
 /**
  * Extract all the double asterisk text from a string.
  * @param content the string to extract bold text from
@@ -35,6 +33,15 @@ export function extractCodeBlocks(content: string) {
   }
 
   return codeBlocks;
+}
+
+/**
+ * Escapes code blocks in a string.
+ * @param content the string to escape code blocks in
+ * @returns the escaped string
+ */
+export function escapeCodeBlock(content: string) {
+  return content.replace(/(```)/g, '`\u200b``').replace(/(`)/g, '`\u200b');
 }
 
 /**

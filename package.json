@@ -8,11 +8,11 @@
     "check": "pnpm turbo --concurrency=50 check",
     "build": "pnpm turbo --concurrency=50 build",
     "build:packages": "pnpm turbo --concurrency=50 --filter=./packages/* build",
-    "build:apps": "pnpm turbo --concurrency=50 --filter=./apps/* --filter=./bots/* --filter=./extensions/* build",
+    "build:apps": "pnpm turbo --concurrency=50 build",
     "start": "pnpm turbo --concurrency=50 start",
     "dev": "pnpm turbo --concurrency=50 dev",
     "dev:packages": "pnpm turbo --concurrency=50 --filter=./packages/* dev",
-    "dev:apps": "pnpm turbo --concurrency=50 --filter=./apps/* --filter=./bots/* --filter=./extensions/* dev",
+    "dev:apps": "pnpm turbo --concurrency=50 dev",
     "test": "pnpm check && pnpm turbo --concurrency=50 test",
     "pretty": "pnpm lint && pnpm format",
     "graph": "pnpm dlx nx@latest graph"

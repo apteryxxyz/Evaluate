@@ -14,6 +14,7 @@ const client = new Client(
     publicKey: env.DISCORD_PUBLIC_KEY ?? 'x',
     clientId: env.DISCORD_CLIENT_ID ?? 'x',
     mode: env.ENV === 'development' ? ClientMode.NodeJS : ClientMode.Vercel,
+    autoRegister: true,
   },
   [new EvaluateCommand()],
 );
@@ -73,20 +74,11 @@ export default async function handler(request: Request) {
 
   if (request.url.endsWith('/debug')) {
     if (request.method !== 'GET') return new Response(null, { status: 405 });
-    return new Response(
-      JSON.stringify(
-        {
-          modals: client.modalHandler.modals,
-          commands: client.commandHandler.client.commands,
-          components: client.componentHandler.components,
-        },
-        null,
-        4,
-      ),
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
-    );
+    return Response.json({
+      modals: client.modalHandler.modals,
+      commands: client.commandHandler.client.commands,
+      components: client.componentHandler.components,
+    });
   }
 
   return new Response(null, { status: 404 });

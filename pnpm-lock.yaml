@@ -90,8 +90,8 @@ importers:
   apps/discord-bot:
     dependencies:
       '@buape/carbon':
-        specifier: ^0.3.2
-        version: 0.3.2
+        specifier: ^0.4.0
+        version: 0.4.0
       '@evaluate/engine':
         specifier: workspace:^
         version: link:../../packages/engine
@@ -569,8 +569,8 @@ packages:
     resolution: {integrity: sha512-vu/MjpUPUaeXdjsXdCQU1MCO6pV4Y+oYqAGYxsvX0PKIw2pawVSTyEZqlbvpajvz1gn8ES6ZcNn+YTVvgG8ORA==}
     engines: {node: '>=18'}
 
-  '@buape/carbon@0.3.2':
-    resolution: {integrity: sha512-slqQZcTfd25tg16dgQxu87inFlRI1LeMo2ZlWp0+5tDKvvvR1DzwZwEo6K7bCkT51XGzZMDjH0LaBiyK3PbHYQ==}
+  '@buape/carbon@0.4.0':
+    resolution: {integrity: sha512-9Bz2U70dwwzsu7IATKNcH1AG4+cxDGR6Sg73dsYkZCVuttF+paMG9Dt+/ez+2NNR/wbpubb3FmzgpCy/TlNqUg==}
 
   '@codemirror/autocomplete@6.18.0':
     resolution: {integrity: sha512-5DbOvBbY4qW5l57cjDsmmpDh3/TeK1vXfTHa+BUMrRzdWdcxKZ4U4V7vQaTtOpApNU4kLS4FQ6cINtLg245LXA==}
@@ -3544,8 +3544,8 @@ packages:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
 
-  discord-api-types@0.37.99:
-    resolution: {integrity: sha512-aQtiAeLF1RHh8iYC2manEQQwsCjeDTA/Y+vhL7TRcRu+8z8nKTd5fGquDG7nbBqOkw0zU3YsZBO5evHx240VVw==}
+  discord-api-types@0.37.100:
+    resolution: {integrity: sha512-a8zvUI0GYYwDtScfRd/TtaNBDTXwP5DiDVX7K5OmE+DRT57gBqKnwtOC5Ol8z0mRW8KQfETIgiB8U0YZ9NXiCA==}
 
   discord-verify@1.2.0:
     resolution: {integrity: sha512-8qlrMROW8DhpzWWzgNq9kpeLDxKanWa4EDVoj/ASVv2nr+dSr4JPmu2tFSydf3hAGI/OIJTnZyD0JulMYIxx4w==}
@@ -5644,11 +5644,11 @@ snapshots:
 
   '@buape/carbon-request@0.1.0': {}
 
-  '@buape/carbon@0.3.2':
+  '@buape/carbon@0.4.0':
     dependencies:
       '@buape/carbon-request': 0.1.0
       '@types/node': 20.16.2
-      discord-api-types: 0.37.99
+      discord-api-types: 0.37.100
       discord-verify: 1.2.0
       itty-router: 5.0.18
 
@@ -9016,7 +9016,7 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
-  discord-api-types@0.37.99: {}
+  discord-api-types@0.37.100: {}
 
   discord-verify@1.2.0:
     dependencies:

@@ -4,7 +4,8 @@ import {
   type CommandInteraction,
   type CommandOptions,
 } from '@buape/carbon';
-import { EvaluateModal } from '~/components/evaluate-modal';
+import { EditEvaluationButton } from '~/components/edit-evaluation-button';
+import { EvaluateModal, EvaluateModalEdit } from '~/components/evaluate-modal';
 import { handleEvaluating } from '~/handlers/evaluate';
 
 export class EvaluateCommand extends Command {
@@ -37,6 +38,9 @@ export class EvaluateCommand extends Command {
       required: false,
     },
   ];
+
+  override components = [EditEvaluationButton];
+  override modals = [EvaluateModal, EvaluateModalEdit];
 
   async run(interaction: CommandInteraction) {
     const runtime = interaction.options!.getString('runtime');

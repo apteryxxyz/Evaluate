@@ -50,7 +50,6 @@ export async function handleEvaluating(
 
   if (isNew(interaction)) await interaction.defer();
   if (isEdit(interaction)) await interaction.acknowledge();
-  interaction._deferred = true;
 
   const runtime = await searchRuntimes(options.runtime).then((r) => r[0]);
   if (!runtime) {
@@ -82,7 +81,7 @@ export async function handleEvaluating(
     output = codeBlock(output, 1000);
   }
 
-  return interaction.reply(
+  await interaction.reply(
     createEvaluationPayload(
       interaction.user,
       { ...options, runtime },

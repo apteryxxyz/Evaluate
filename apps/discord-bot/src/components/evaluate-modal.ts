@@ -30,7 +30,7 @@ export class EvaluateModal extends Modal {
   async run(interaction: ModalInteraction) {
     const runtime = interaction.fields.getText('runtime', true);
     const code = interaction.fields.getText('code', true);
-    const args = interaction.fields.getText('arguments');
+    const args = interaction.fields.getText('args');
     const input = interaction.fields.getText('input');
     return handleEvaluating(interaction, { runtime, code, args, input });
   }
@@ -62,7 +62,7 @@ class CodeInput extends TextInput {
 }
 
 class ArgumentsInput extends TextInput {
-  customId = 'arguments';
+  customId = 'args';
   label = 'Arguments';
   override placeholder =
     'Additional command line arguments to pass to the program.';

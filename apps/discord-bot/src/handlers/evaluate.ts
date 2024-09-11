@@ -81,7 +81,7 @@ export async function handleEvaluating(
     output = codeBlock(output, 1000);
   }
 
-  await interaction.reply(
+  return interaction.reply(
     createEvaluationPayload(
       interaction.user,
       { ...options, runtime },

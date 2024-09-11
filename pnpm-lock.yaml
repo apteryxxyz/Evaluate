@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  '@buape/carbon@0.4.0':
-    hash: nt3iq2htljwx4yeu4ctnkto7ca
-    path: patches/@buape__carbon@0.4.0.patch
   zod@3.22.4:
     hash: j5rlizeyx7cjhu35u4l53omnrq
     path: patches/zod@3.22.4.patch
@@ -93,8 +90,8 @@ importers:
   apps/discord-bot:
     dependencies:
       '@buape/carbon':
-        specifier: ^0.4.0
-        version: 0.4.0(patch_hash=nt3iq2htljwx4yeu4ctnkto7ca)
+        specifier: https://pkg.pr.new/buape/carbon/@buape/carbon@77
+        version: https://pkg.pr.new/buape/carbon/@buape/carbon@77
       '@evaluate/engine':
         specifier: workspace:^
         version: link:../../packages/engine
@@ -568,12 +565,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@buape/carbon-request@0.1.0':
-    resolution: {integrity: sha512-vu/MjpUPUaeXdjsXdCQU1MCO6pV4Y+oYqAGYxsvX0PKIw2pawVSTyEZqlbvpajvz1gn8ES6ZcNn+YTVvgG8ORA==}
+  '@buape/carbon-request@https://pkg.pr.new/buape/carbon/@buape/carbon-request@67960c7':
+    resolution: {tarball: https://pkg.pr.new/buape/carbon/@buape/carbon-request@67960c7}
+    version: 0.1.0
     engines: {node: '>=18'}
 
-  '@buape/carbon@0.4.0':
-    resolution: {integrity: sha512-9Bz2U70dwwzsu7IATKNcH1AG4+cxDGR6Sg73dsYkZCVuttF+paMG9Dt+/ez+2NNR/wbpubb3FmzgpCy/TlNqUg==}
+  '@buape/carbon@https://pkg.pr.new/buape/carbon/@buape/carbon@77':
+    resolution: {tarball: https://pkg.pr.new/buape/carbon/@buape/carbon@77}
+    version: 0.4.0
 
   '@codemirror/autocomplete@6.18.0':
     resolution: {integrity: sha512-5DbOvBbY4qW5l57cjDsmmpDh3/TeK1vXfTHa+BUMrRzdWdcxKZ4U4V7vQaTtOpApNU4kLS4FQ6cINtLg245LXA==}
@@ -5645,11 +5644,11 @@ snapshots:
   '@biomejs/cli-win32-x64@1.8.3':
     optional: true
 
-  '@buape/carbon-request@0.1.0': {}
+  '@buape/carbon-request@https://pkg.pr.new/buape/carbon/@buape/carbon-request@67960c7': {}
 
-  '@buape/carbon@0.4.0(patch_hash=nt3iq2htljwx4yeu4ctnkto7ca)':
+  '@buape/carbon@https://pkg.pr.new/buape/carbon/@buape/carbon@77':
     dependencies:
-      '@buape/carbon-request': 0.1.0
+      '@buape/carbon-request': https://pkg.pr.new/buape/carbon/@buape/carbon-request@67960c7
       '@types/node': 20.16.2
       discord-api-types: 0.37.100
       discord-verify: 1.2.0

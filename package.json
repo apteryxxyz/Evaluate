@@ -28,8 +28,7 @@
   },
   "pnpm": {
     "patchedDependencies": {
-      "zod@3.22.4": "patches/zod@3.22.4.patch",
-      "@buape/carbon@0.4.0": "patches/@buape__carbon@0.4.0.patch"
+      "zod@3.22.4": "patches/zod@3.22.4.patch"
     }
   }
 }

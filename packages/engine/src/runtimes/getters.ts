@@ -41,7 +41,7 @@ export function getRuntimeAliases(identifier: string) {
  */
 export function getRuntimeDefaultFileName(identifier: string) {
   if (!isRuntimeIdentifier(identifier)) return;
-  return RuntimeExamples[identifier][0]?.name;
+  return Object.keys(RuntimeExamples[identifier][0]?.files ?? {})[0];
 }
 
 /**

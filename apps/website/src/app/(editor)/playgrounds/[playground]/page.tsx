@@ -23,7 +23,9 @@ export async function generateMetadata(p: PageProps<['playground']>) {
 
   return generateBaseMetadata(`/playground/${id}`, {
     title: `${runtime.name} Playground on Evaluate`,
-    description: `Run code in ${runtime.name} and other programming languages effortlessly with Evaluate. Provide your source code, optional input, and command line arguments to receive instant outputs. Debug, optimise, and enhance your coding process by running ${runtime.name} code and exploring various languages. Elevate your programming experience with Evaluate's versatile code evaluation capabilities.`,
+    description: `Run code in ${runtime.name} and other programming languages effortlessly with Evaluate. Input your code, optional arguments, and get instant results. Debug, optimize, and elevate your coding experience with our versatile evaluation tools.`,
+    keywords: [runtime.name, ...runtime.aliases, ...runtime.tags] //
+      .map((k) => k.toLowerCase()),
   });
 }
 

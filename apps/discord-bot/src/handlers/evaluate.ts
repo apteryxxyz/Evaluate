@@ -16,6 +16,7 @@ import type { ExecuteResult, PartialRuntime } from '@evaluate/types';
 import { EditEvaluationButton } from '~/components/edit-evaluation-button';
 import { OpenEvaluationButton } from '~/components/open-evaluation-button';
 import { env } from '~/env';
+import analytics from '~/services/analytics';
 import { codeBlock } from '~/utilities/discord-formatting';
 
 function isNew(
@@ -90,6 +91,17 @@ export async function handleEvaluating(
     args: options.args,
   };
   const result = await executeCode({ runtime: runtime.id, ...executeOptions });
+
+  analytics?.capture({
+    distinctId: interaction.userId!,
+    event: 'code executed',
+    properties: {
+      platform: 'discord bot',
+      'runtime id': runtime.id,
+      'was successful':
+        result.run.code === 0 && (!result.compile || result.compile.code === 0),
+    },
+  });
 
   const resultKey = result?.compile?.code ? 'compile' : 'run';
   let output = result?.[resultKey]!.output;

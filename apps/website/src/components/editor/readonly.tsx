@@ -1,6 +1,6 @@
 'use client';
 
-import ReactCodeMirror from '@uiw/react-codemirror';
+import ReactCodeMirror, { EditorView } from '@uiw/react-codemirror';
 import { useTheme } from 'next-themes';
 import { useMemo } from 'react';
 import themes from './themes';
@@ -11,5 +11,12 @@ export function ReadonlyEditor({ content }: { content: string }) {
     () => (resolvedTheme === 'light' ? themes.light : themes.dark),
     [resolvedTheme],
   );
-  return <ReactCodeMirror readOnly value={content} theme={theme} />;
+  return (
+    <ReactCodeMirror
+      readOnly
+      extensions={[EditorView.lineWrapping]}
+      value={content}
+      theme={theme}
+    />
+  );
 }

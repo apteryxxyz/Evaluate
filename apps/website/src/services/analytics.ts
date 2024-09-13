@@ -12,8 +12,8 @@ if (enabled) {
     api_host: `${window.location.origin}/api/ingest`,
     ui_host: 'https://us.posthog.com/',
     persistence: 'localStorage',
-    enable_heatmaps: process.env.NODE_ENV === 'production',
     disable_compression: process.env.NODE_ENV === 'development',
+    enable_heatmaps: process.env.NODE_ENV === 'production',
   });
 
   posthog.register({

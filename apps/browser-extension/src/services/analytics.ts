@@ -18,15 +18,15 @@ if (enabled) {
       api_host: `${env.PLASMO_PUBLIC_WEBSITE_URL}/api/ingest`,
       ui_host: 'https://us.posthog.com/',
       persistence: 'memory',
-      enable_heatmaps: false,
-      disable_compression: true,
-      capture_pageview: false,
-      capture_pageleave: false,
-      autocapture: false,
       advanced_disable_decide: true,
+      autocapture: false,
+      capture_pageleave: false,
+      capture_pageview: false,
+      disable_compression: true,
+      disable_external_dependency_loading: true,
       disable_session_recording: true,
       disable_surveys: true,
-      disable_external_dependency_loading: true,
+      enable_heatmaps: false,
       async loaded() {
         if (!distinctId) {
           distinctId = posthog.get_distinct_id();

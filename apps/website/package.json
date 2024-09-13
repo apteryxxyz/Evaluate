@@ -35,7 +35,7 @@
     "material-icon-theme": "^5.9.0",
     "next": "^14.2.7",
     "next-themes": "npm:@wits/next-themes@^0.2.16",
-    "posthog-js": "npm:@apteryxxyz/posthog-js@^1.139.3",
+    "posthog-js": "^1.161.3",
     "react": "^18.3.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",

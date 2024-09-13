@@ -1,17 +1,19 @@
 import posthog from 'posthog-js';
 import { env } from '~/env';
 
-if (
+const enabled =
   typeof window !== 'undefined' &&
   !window.location.origin.endsWith('.vercel.app') &&
-  env.NEXT_PUBLIC_POSTHOG_KEY
-) {
-  posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
-    api_host: `${window.location.origin}/api/v1/ingest`,
+  env.NEXT_PUBLIC_POSTHOG_KEY;
+export default enabled ? posthog : null;
+
+if (enabled) {
+  posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY!, {
+    api_host: `${window.location.origin}/api/ingest`,
     ui_host: 'https://us.posthog.com/',
     persistence: 'localStorage',
-    enable_heatmaps: process.env.NODE_ENV === 'production',
     disable_compression: process.env.NODE_ENV === 'development',
+    enable_heatmaps: process.env.NODE_ENV === 'production',
   });
 
   posthog.register({
@@ -20,10 +22,8 @@ if (
   });
 }
 
-export default env.NEXT_PUBLIC_POSTHOG_KEY ? posthog : null;
-
 export function injectPageTracking() {
-  if (!posthog || typeof window === 'undefined') return false;
+  if (!enabled) return false;
   if (Reflect.get(history, '__injectPageTracking__')) return true;
 
   let isNavigating = false;

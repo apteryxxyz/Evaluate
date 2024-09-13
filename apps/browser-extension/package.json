@@ -27,7 +27,7 @@
     "@evaluate/types": "workspace:^",
     "framer-motion": "^11.3.30",
     "lucide-react": "^0.338.0",
-    "posthog-js": "npm:@apteryxxyz/posthog-js@^1.139.3",
+    "posthog-js": "^1.161.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zod": "3.22.4"

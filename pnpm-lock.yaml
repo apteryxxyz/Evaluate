@@ -56,8 +56,8 @@ importers:
         specifier: ^0.338.0
         version: 0.338.0(react@18.3.1)
       posthog-js:
-        specifier: npm:@apteryxxyz/posthog-js@^1.139.3
-        version: '@apteryxxyz/posthog-js@1.139.3'
+        specifier: ^1.161.3
+        version: 1.161.3
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -186,8 +186,8 @@ importers:
         specifier: npm:@wits/next-themes@^0.2.16
         version: '@wits/next-themes@0.2.16(next@14.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.8))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)'
       posthog-js:
-        specifier: npm:@apteryxxyz/posthog-js@^1.139.3
-        version: '@apteryxxyz/posthog-js@1.139.3'
+        specifier: ^1.161.3
+        version: 1.161.3
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -382,9 +382,6 @@ packages:
   '@apteryxxyz/lexure@0.17.0':
     resolution: {integrity: sha512-vmoD4qqv2A59BRrMP/9zqEq3Dr45+BICmqrLOg1EOGGHlDZFcDx7kYAtxhkquKcsPOy+QMDnkzC5szqg67+Ikw==}
     engines: {node: '>=12.0.0'}
-
-  '@apteryxxyz/posthog-js@1.139.3':
-    resolution: {integrity: sha512-0bcrwNqC91lKDMoTwLHaiu+E9v6BAlj8x4wNKg76ZJDHVvhGm4Rfa9cIgbu8KQIU+S2TS4AQtOIraAgPkT8FuA==}
 
   '@babel/code-frame@7.24.7':
     resolution: {integrity: sha512-BcYH1CVJBO9tvyIZ2jVeXgSIMvGZ2FDRvDdOIVQyuklNKSsx+eppDEBq/g47Ayw+RqNFE+URvOShmf+f/qwAlA==}
@@ -4578,6 +4575,9 @@ packages:
     resolution: {integrity: sha512-TesUflQ0WKZqAvg52PWL6kHgLKP6xB6heTOdoYM0Wt2UHyxNa4K25EZZMgKns3BH1RLVbZCREPpLY0rhnNoHVQ==}
     engines: {node: ^10 || ^12 || >=14}
 
+  posthog-js@1.161.3:
+    resolution: {integrity: sha512-TQ77jtLemkUJUyJAPrwGay6tLqcAmXEM1IJgXOx5Tr4UohiTx8JTznzrCuh/SdwPIrbcSM1r2YPwb72XwTC3wg==}
+
   posthog-node@4.2.0:
     resolution: {integrity: sha512-hgyCYMyzMvuF3qWMw6JvS8gT55v7Mtp5wKWcnDrw+nu39D0Tk9BXD7I0LOBp0lGlHEPaXCEVYUtviNKrhMALGA==}
     engines: {node: '>=15.0.0'}
@@ -5294,6 +5294,9 @@ packages:
   weak-lru-cache@1.2.2:
     resolution: {integrity: sha512-DEAoo25RfSYMuTGc9vPJzZcZullwIqRDSI9LOy+fkCJPi6hykCnfKaXTuPBDuXAUcqHXyOgFtHNp/kB2FjYHbw==}
 
+  web-vitals@4.2.3:
+    resolution: {integrity: sha512-/CFAm1mNxSmOj6i0Co+iGFJ58OS4NRGVP+AWS/l509uIK5a1bSoIVaHz/ZumpHTfHSZBpgrJ+wjfpAOrTHok5Q==}
+
   webidl-conversions@4.0.2:
     resolution: {integrity: sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==}
 
@@ -5374,11 +5377,6 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.25
 
   '@apteryxxyz/lexure@0.17.0': {}
-
-  '@apteryxxyz/posthog-js@1.139.3':
-    dependencies:
-      fflate: 0.4.8
-      preact: 10.23.2
 
   '@babel/code-frame@7.24.7':
     dependencies:
@@ -10007,6 +10005,12 @@ snapshots:
       picocolors: 1.0.1
       source-map-js: 1.2.0
 
+  posthog-js@1.161.3:
+    dependencies:
+      fflate: 0.4.8
+      preact: 10.23.2
+      web-vitals: 4.2.3
+
   posthog-node@4.2.0:
     dependencies:
       axios: 1.7.7
@@ -10804,6 +10808,8 @@ snapshots:
       defaults: 1.0.4
 
   weak-lru-cache@1.2.2: {}
+
+  web-vitals@4.2.3: {}
 
   webidl-conversions@4.0.2: {}
 

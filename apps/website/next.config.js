@@ -37,6 +37,10 @@ const nextConfig = {
       source: '/api/v1/ingest/:path*',
       destination: 'https://app.posthog.com/:path*',
     },
+    {
+      source: '/api/ingest/:path*',
+      destination: 'https://app.posthog.com/:path*',
+    },
   ],
 
   images: {

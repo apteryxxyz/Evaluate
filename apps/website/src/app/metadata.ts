@@ -11,7 +11,7 @@ export function generateBaseMetadata(
       metadataBase: new URL(env.WEBSITE_URL),
       title: 'Evaluate',
       description:
-        'Explore a diverse range of programming languages playgrounds and tools with our comprehensive online platform. Evaluate is the ultimate code evaluation tool, quickly evaluate code snippets in any programming language, with optional input and command-line arguments. Try it now!',
+        'Test code in any programming language with Evaluate! Quickly run snippets with optional input and command-line arguments using our easy online platform. Try it now!',
       keywords: [
         'Evaluate',
         'Code',

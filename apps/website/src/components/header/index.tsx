@@ -13,7 +13,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type React from 'react';
-import { Children, useCallback, useMemo, useState } from 'react';
+import { Children, useCallback, useState } from 'react';
 import { ThemeSwitcher } from './theme-switcher';
 
 export function Header() {
@@ -27,11 +27,7 @@ export function Header() {
   }, []);
 
   const pathname = usePathname();
-  const isFullWidth = useMemo(
-    // TODO: Add challenges editor page when it is created
-    () => pathname.startsWith('/playgrounds/'),
-    [pathname],
-  );
+  const isFullWidth = pathname.startsWith('/playgrounds/');
 
   return (
     <header className={cn('h-14 w-full px-4', !isFullWidth && 'container')}>

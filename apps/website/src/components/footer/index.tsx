@@ -13,7 +13,7 @@ export function Footer(p: { className?: string }) {
       className={cn(
         'flex flex-col items-center justify-center pb-8 text-foreground/50 text-xs',
         isFullWidth &&
-          'absolute bottom-0 left-0 w-full pb-2 text-foreground/10',
+          'absolute bottom-0 left-0 w-full pb-2 text-foreground/10 lg:pb-4',
         p.className,
       )}
     >

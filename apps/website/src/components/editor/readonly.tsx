@@ -13,6 +13,7 @@ export function ReadonlyEditor({ content }: { content: string }) {
   );
   return (
     <ReactCodeMirror
+      className="h-full [&>*]:h-full"
       readOnly
       extensions={[EditorView.lineWrapping]}
       value={content}

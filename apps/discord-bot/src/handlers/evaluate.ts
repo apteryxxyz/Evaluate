@@ -90,7 +90,15 @@ export async function handleEvaluating(
     input: options.input,
     args: options.args,
   };
-  const result = await executeCode({ runtime: runtime.id, ...executeOptions });
+
+  const result = await executeCode({
+    runtime: runtime.id,
+    ...executeOptions,
+  }).catch(async (error) => {
+    if (error instanceof Error)
+      await interaction.reply({ content: error.message });
+    throw error;
+  });
 
   analytics?.capture({
     distinctId: interaction.userId!,
@@ -104,10 +112,23 @@ export async function handleEvaluating(
   });
 
   const resultKey = result?.compile?.code ? 'compile' : 'run';
-  let output = result?.[resultKey]!.output;
-  if (!output.length) {
-    output =
-      'No output was returned from the evaluation, ensure something is being printed to the console.';
+  const hasTimedOut = result[resultKey]?.signal === 'SIGKILL';
+  const doesHaveDisplayableOutput = result[resultKey]?.output?.trim() !== '';
+
+  let output = result[resultKey]!.output;
+  if (!doesHaveDisplayableOutput) {
+    const isRun = resultKey === 'run';
+    if (hasTimedOut) {
+      if (isRun)
+        output =
+          'Your code execution exceeded the allotted time and was terminated. Consider optimising it for better performance.';
+      else
+        output =
+          'Your code compilation exceeded the allotted time and was terminated. Consider optimizing your code for faster compilation.';
+    } else {
+      output =
+        'Your code executed successfully; however, it did not generate any output for the console.';
+    }
   } else if (output.length > 1000) {
     output = `Output was too large to display, [click here to view the full output](${
       env.WEBSITE_URL

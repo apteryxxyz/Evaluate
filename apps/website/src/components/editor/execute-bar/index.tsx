@@ -109,6 +109,9 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
           data.run.code === 0 && (!data.compile || data.compile.code === 0),
       });
     },
+    onError(error) {
+      toast.error(error.message);
+    },
   });
 
   return (

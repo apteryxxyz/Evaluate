@@ -56,6 +56,9 @@ export function useEditor() {
   const handleExecuteClick = useCallback(() => {
     window.dispatchEvent(new CustomEvent('execute-code'));
   }, []);
+  const handleShareClick = useCallback(() => {
+    window.dispatchEvent(new CustomEvent('copy-url'));
+  }, []);
   const handleCopyClick = useCallback(() => {
     document.execCommand('copy');
   }, []);
@@ -75,6 +78,7 @@ export function useEditor() {
       copy: handleCopyClick,
       cut: handleCutClick,
       paste: handlePasteClick,
+      share: handleShareClick,
     },
   };
 }

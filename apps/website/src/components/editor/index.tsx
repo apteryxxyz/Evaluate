@@ -2,10 +2,11 @@
 
 import { Button } from '@evaluate/react/components/button';
 import { ScrollArea, ScrollBar } from '@evaluate/react/components/scroll-area';
+import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import { cn } from '@evaluate/react/utilities/class-name';
 import type { PartialRuntime } from '@evaluate/types';
-import { FilesIcon, TerminalIcon } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { FilesIcon, Share2Icon, TerminalIcon } from 'lucide-react';
+import { useCallback, useEffect, useRef } from 'react';
 import { ContextMenuWrapper } from '../context-menu-wrapper';
 import { ExecuteBar } from './execute-bar';
 import { useEditor } from './hooks';
@@ -16,9 +17,24 @@ export function Editor({ runtime }: { runtime: PartialRuntime }) {
   const { file, handlers, setContainer } = useEditor();
   useEffect(() => setContainer(editorRef.current!), [setContainer]);
 
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  const setEditorHeight = useCallback(() => {
+    if (!sectionRef.current || !headerRef.current) return;
+    const editorHeight =
+      sectionRef.current.clientHeight - headerRef.current.clientHeight - 25;
+    if (editorRef.current) editorRef.current.style.height = `${editorHeight}px`;
+  }, []);
+  useEventListener('resize', setEditorHeight);
+  useEffect(setEditorHeight, []);
+
   return (
-    <section className="h-full">
-      <div className="flex flex-col items-center gap-1 border-b px-0.5 lg:h-10 lg:flex-row">
+    <section ref={sectionRef} className="h-full">
+      <div
+        ref={headerRef}
+        className="flex flex-col items-center gap-1 border-b px-0.5 lg:h-10 lg:flex-row"
+      >
         <div className="flex w-full gap-1 lg:overflow-hidden">
           <ScrollArea className="flex w-full whitespace-nowrap">
             <OpenedFiles />
@@ -67,6 +83,11 @@ export function Editor({ runtime }: { runtime: PartialRuntime }) {
               shortcut: 'Ctrl+Enter',
               action: handlers.execute,
             },
+            {
+              label: 'Share URL',
+              shortcut: 'Ctrl+S',
+              action: handlers.share,
+            },
             null,
             { label: 'Copy', action: handlers.copy },
             { label: 'Paste', action: handlers.paste },
@@ -75,7 +96,6 @@ export function Editor({ runtime }: { runtime: PartialRuntime }) {
         >
           <div
             className={cn('h-full [&>*]:h-full', !file && 'hidden')}
-            style={{ maxHeight: 'calc(100% - 2.5rem)' }}
             ref={editorRef}
           />
         </ContextMenuWrapper>

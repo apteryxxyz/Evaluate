@@ -27,7 +27,15 @@ export function Editor({ runtime }: { runtime: PartialRuntime }) {
 
           <Button
             variant="secondary"
-            className="ml-auto aspect-square p-0 lg:hidden"
+            className="ml-auto aspect-square p-0"
+            onClick={handlers.share}
+          >
+            <Share2Icon size={16} strokeWidth={2} />
+          </Button>
+
+          <Button
+            variant="secondary"
+            className="aspect-square p-0 lg:hidden"
             onClick={() =>
               dispatchEvent(new CustomEvent('mobile-explorer-open-change'))
             }

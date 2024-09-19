@@ -2,6 +2,7 @@
 
 import { compress, decompress } from '@evaluate/engine/compress';
 import { toast } from '@evaluate/react/components/toast';
+import { useEventListener } from '@evaluate/react/hooks/event-listener';
 import type { Runtime } from '@evaluate/types';
 import _ from 'lodash';
 import {
@@ -14,7 +15,6 @@ import {
 } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useHotkeys } from 'react-hotkeys-hook';
 import { File, Folder } from 'virtual-file-explorer-backend';
 import { useHashFragment } from '~/hooks/use-hash-fragment';
 
@@ -49,18 +49,16 @@ export function ExplorerProvider({
     return root;
   }, []);
 
-  useHotkeys(
-    'ctrl+s',
-    (e) => {
+  const saveAndCopyUrl = useCallback(
+    (e: Event) => {
       e.preventDefault();
       setHash(stringifyExplorer(root));
       navigator.clipboard.writeText(location.href);
       toast.info('Saved and copied URL to clipboard');
     },
-    {
-      enableOnContentEditable: true,
-    },
+    [setHash, root],
   );
+  useEventListener('copy-url' as never, saveAndCopyUrl);
 
   return (
     <DndProvider backend={HTML5Backend}>

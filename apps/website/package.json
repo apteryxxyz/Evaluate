@@ -6,9 +6,7 @@
     "check": "tsc --noEmit",
     "build": "next build --no-lint",
     "start": "next start",
-    "dev": "pnpm run \"/^dev:.*/\"",
-    "dev:tunnel": "ssh -p 443 -R0:localhost:3000 -L4300:localhost:4300 qr@a.pinggy.io",
-    "dev:next": "next dev --turbo"
+    "dev": "next dev --turbo"
   },
   "dependencies": {
     "@codemirror/commands": "^6.6.0",

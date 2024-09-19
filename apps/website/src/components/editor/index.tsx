@@ -67,6 +67,7 @@ export function Editor({ runtime }: { runtime: PartialRuntime }) {
         >
           <div
             className={cn('h-full [&>*]:h-full', !file && 'hidden')}
+            style={{ maxHeight: 'calc(100% - 2.5rem)' }}
             ref={editorRef}
           />
         </ContextMenuWrapper>

@@ -2,6 +2,7 @@ import {
   type APIEmbedAuthor,
   CommandInteraction,
   Embed,
+  InteractionType,
   ModalInteraction,
   Row,
   type User,
@@ -75,11 +76,11 @@ export async function handleEvaluating(
   console.log('[EVALUATE] Handling evaluation', interaction, options);
 
   if (isNew(interaction)) {
-    console.log('[EVALUATE] New');
+    console.log('[EVALUATE] New', InteractionType[interaction.type]);
     await interaction.defer();
     console.log('[EVALUATE] Deferred');
   } else if (isEdit(interaction)) {
-    console.log('[EVALUATE] Edit');
+    console.log('[EVALUATE] Edit', InteractionType[interaction.type]);
     await interaction.acknowledge();
     console.log('[EVALUATE] Acknowledged');
   }

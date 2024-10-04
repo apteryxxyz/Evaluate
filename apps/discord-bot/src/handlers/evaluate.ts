@@ -72,8 +72,17 @@ export async function handleEvaluating(
   )
     Reflect.set(interaction.rawData.data, 'custom_id', 'evaluate:new');
 
-  if (isNew(interaction)) await interaction.defer();
-  if (isEdit(interaction)) await interaction.acknowledge();
+  console.log('[EVALUATE] Handling evaluation', interaction, options);
+
+  if (isNew(interaction)) {
+    console.log('[EVALUATE] New');
+    await interaction.defer();
+    console.log('[EVALUATE] Deferred');
+  } else if (isEdit(interaction)) {
+    console.log('[EVALUATE] Edit');
+    await interaction.acknowledge();
+    console.log('[EVALUATE] Acknowledged');
+  }
 
   const runtime = await searchRuntimes(options.runtime).then((r) => r[0]);
   if (!runtime) {
@@ -91,6 +100,7 @@ export async function handleEvaluating(
     args: options.args,
   };
 
+  console.log('[EVALUATE] Executing code', executeOptions);
   const result = await executeCode({
     runtime: runtime.id,
     ...executeOptions,
@@ -99,6 +109,7 @@ export async function handleEvaluating(
       await interaction.reply({ content: error.message });
     throw error;
   });
+  console.log('[EVALUATE] Executed code', result);
 
   analytics?.capture({
     distinctId: interaction.userId!,
@@ -137,6 +148,7 @@ export async function handleEvaluating(
     output = codeBlock(output, 1000);
   }
 
+  console.log('[EVALUATE] Replying with evaluation payload');
   return interaction.reply(
     createEvaluationPayload(
       interaction.user,

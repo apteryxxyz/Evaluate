@@ -66,7 +66,8 @@ export async function searchRuntimes(...queries: string[]) {
 
   return queries
     .flatMap((q) => fuse.search(q).map((r) => r.item))
-    .filter((r, i, a) => a.indexOf(r) === i);
+    .filter((r, i, a) => a.indexOf(r) === i)
+    .sort((a, b) => b.popularity - a.popularity);
 }
 
 /**

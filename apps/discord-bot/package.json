@@ -14,7 +14,7 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@buape/carbon": "https://pkg.pr.new/buape/carbon/@buape/carbon@8dd382f",
+    "@buape/carbon": "^0.5.0",
     "@evaluate/engine": "workspace:^",
     "@evaluate/env": "workspace:^",
     "@evaluate/types": "workspace:^",

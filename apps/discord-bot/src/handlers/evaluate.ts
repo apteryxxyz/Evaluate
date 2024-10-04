@@ -2,7 +2,6 @@ import {
   type APIEmbedAuthor,
   CommandInteraction,
   Embed,
-  InteractionType,
   ModalInteraction,
   Row,
   type User,
@@ -73,17 +72,8 @@ export async function handleEvaluating(
   )
     Reflect.set(interaction.rawData.data, 'custom_id', 'evaluate:new');
 
-  console.log('[EVALUATE] Handling evaluation', interaction, options);
-
-  if (isNew(interaction)) {
-    console.log('[EVALUATE] New', InteractionType[interaction.type]);
-    await interaction.defer();
-    console.log('[EVALUATE] Deferred');
-  } else if (isEdit(interaction)) {
-    console.log('[EVALUATE] Edit', InteractionType[interaction.type]);
-    await interaction.acknowledge();
-    console.log('[EVALUATE] Acknowledged');
-  }
+  if (isNew(interaction)) await interaction.defer();
+  if (isEdit(interaction)) await interaction.acknowledge();
 
   const runtime = await searchRuntimes(options.runtime).then((r) => r[0]);
   if (!runtime) {
@@ -101,7 +91,6 @@ export async function handleEvaluating(
     args: options.args,
   };
 
-  console.log('[EVALUATE] Executing code', executeOptions);
   const result = await executeCode({
     runtime: runtime.id,
     ...executeOptions,
@@ -110,7 +99,6 @@ export async function handleEvaluating(
       await interaction.reply({ content: error.message });
     throw error;
   });
-  console.log('[EVALUATE] Executed code', result);
 
   analytics?.capture({
     distinctId: interaction.userId!,
@@ -149,7 +137,6 @@ export async function handleEvaluating(
     output = codeBlock(output, 1000);
   }
 
-  console.log('[EVALUATE] Replying with evaluation payload');
   return interaction.reply(
     createEvaluationPayload(
       interaction.user,

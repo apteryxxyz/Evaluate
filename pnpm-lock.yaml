@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
+  posthog-js@1.161.3:
+    hash: samcy23dko2zqrwh44oxilsia4
+    path: patches/posthog-js@1.161.3.patch
   zod@3.22.4:
     hash: j5rlizeyx7cjhu35u4l53omnrq
     path: patches/zod@3.22.4.patch
@@ -57,7 +60,7 @@ importers:
         version: 0.338.0(react@18.3.1)
       posthog-js:
         specifier: ^1.161.3
-        version: 1.161.3
+        version: 1.161.3(patch_hash=samcy23dko2zqrwh44oxilsia4)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -186,8 +189,8 @@ importers:
         specifier: npm:@wits/next-themes@^0.2.16
         version: '@wits/next-themes@0.2.16(next@14.2.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.8))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)'
       posthog-js:
-        specifier: ^1.161.3
-        version: 1.161.3
+        specifier: ^1.166.1
+        version: 1.166.1
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -4577,6 +4580,9 @@ packages:
 
   posthog-js@1.161.3:
     resolution: {integrity: sha512-TQ77jtLemkUJUyJAPrwGay6tLqcAmXEM1IJgXOx5Tr4UohiTx8JTznzrCuh/SdwPIrbcSM1r2YPwb72XwTC3wg==}
+
+  posthog-js@1.166.1:
+    resolution: {integrity: sha512-K8IpV8FJTCdwhsXFSbKj5vZ6IXNV079lukpG3cRtst2q5vMmUXRQiks7W3lOZLrjWyuJLKZDUiCeeDIUFORRuQ==}
 
   posthog-node@4.2.0:
     resolution: {integrity: sha512-hgyCYMyzMvuF3qWMw6JvS8gT55v7Mtp5wKWcnDrw+nu39D0Tk9BXD7I0LOBp0lGlHEPaXCEVYUtviNKrhMALGA==}
@@ -10005,7 +10011,13 @@ snapshots:
       picocolors: 1.0.1
       source-map-js: 1.2.0
 
-  posthog-js@1.161.3:
+  posthog-js@1.161.3(patch_hash=samcy23dko2zqrwh44oxilsia4):
+    dependencies:
+      fflate: 0.4.8
+      preact: 10.23.2
+      web-vitals: 4.2.3
+
+  posthog-js@1.166.1:
     dependencies:
       fflate: 0.4.8
       preact: 10.23.2

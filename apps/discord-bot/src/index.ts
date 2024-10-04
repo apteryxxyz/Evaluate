@@ -45,6 +45,7 @@ export default async function handler(request: Request) {
     if (interaction.type === InteractionType.Ping)
       return Response.json({ type: InteractionResponseType.Pong });
 
+    console.log('[INTERACTION] Received interaction', interaction);
     const user = interaction.member?.user ?? interaction.user;
     analytics?.capture({
       distinctId: user.id,

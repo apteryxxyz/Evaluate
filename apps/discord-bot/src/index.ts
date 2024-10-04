@@ -15,6 +15,9 @@ const client = new Client(
     clientId: env.DISCORD_CLIENT_ID ?? 'x',
     mode: env.ENV === 'development' ? ClientMode.NodeJS : ClientMode.Vercel,
     autoRegister: true,
+    requestOptions: {
+      queueRequests: false,
+    },
   },
   [new EvaluateCommand()],
 );

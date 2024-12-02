@@ -5,7 +5,7 @@ import { EvaluateModalEdit } from './evaluate-modal';
 
 export class EditEvaluationButton extends Button {
   customId = 'evaluate:edit';
-  style = ButtonStyle.Success as const;
+  override style = ButtonStyle.Success as const;
   label = 'Edit';
   override emoji = resolveEmoji('pencil', true);
 

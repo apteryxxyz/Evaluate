@@ -1,21 +1,18 @@
 {
   "name": "evaluate",
-  "packageManager": "pnpm@9.3.0",
-  "workspaces": ["apps/*", "bots/*", "extensions/*", "packages/*"],
+  "packageManager": "pnpm@9.14.4",
+  "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "lint": "biome lint . --write",
     "format": "biome format . --write",
-    "check": "pnpm turbo --concurrency=50 check",
-    "build": "pnpm turbo --concurrency=50 build",
-    "build:packages": "pnpm turbo --concurrency=50 --filter=./packages/* build",
-    "build:apps": "pnpm turbo --concurrency=50 build",
-    "start": "pnpm turbo --concurrency=50 start",
-    "dev": "pnpm turbo --concurrency=50 dev",
-    "dev:packages": "pnpm turbo --concurrency=50 --filter=./packages/* dev",
-    "dev:apps": "pnpm turbo --concurrency=50 dev",
-    "test": "pnpm check && pnpm turbo --concurrency=50 test",
-    "pretty": "pnpm lint && pnpm format",
-    "graph": "pnpm dlx nx@latest graph"
+    "pretty": "biome check . --write",
+    "check": "turbo run check",
+    "build": "turbo run build",
+    "build:packages": "turbo run build --filter=\"./packages/*\"",
+    "dev": "pnpm run \"/dev:.*/\"",
+    "dev:packages": "turbo watch build --filter=\"./packages/*\"",
+    "dev:apps": "turbo run dev --filter=\"./apps/*\"",
+    "graph": "pnpx nx@18 graph"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",

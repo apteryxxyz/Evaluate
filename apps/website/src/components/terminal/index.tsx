@@ -16,8 +16,8 @@ import {
   PlayIcon,
   Trash2Icon,
 } from 'lucide-react';
-import { ReadonlyEditor } from '../editor/readonly';
 import { ContextMenuWrapper } from '../context-menu-wrapper';
+import { ReadonlyEditor } from '../editor/readonly';
 import { HtmlPreview } from './html-preview';
 import { useTerminal } from './use';
 

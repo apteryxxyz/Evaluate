@@ -2,14 +2,15 @@
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/Thumbs.db": true,
-    "**/node_modules": true
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit"
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    ".env": "*.env, .env.*",
+    "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml",
+    "*.ts": "$(capture).js, $(capture).d.ts.map, $(capture).*.ts, $(capture)_*.js, $(capture)_*.ts",
+    "*.tsx": "$(capture).ts, $(capture).*.tsx, $(capture)_*.ts, $(capture)_*.tsx, $(capture).less, $(capture).module.less, $(capture).module.less.d.ts, $(capture).scss, $(capture).module.scss, $(capture).module.scss.d.ts, $(capture).css.ts"
   },
   "workbench.colorCustomizations": {
     "titleBar.activeBackground": "#2fc186",
@@ -17,9 +18,52 @@
     "activityBarBadge.background": "#2fc186",
     "activityBarBadge.foreground": "#fff"
   },
-  "editor.codeActionsOnSave": {
-    "source.organizeImports.biome": "explicit"
-  },
+  "todohighlight.keywords": [
+    {
+      "text": "=====",
+      "color": "white",
+      "border": "1px solid white",
+      "borderRadius": "2px",
+      "backgroundColor": "rgba(0,0,0,.2)",
+      "isWholeLine": true
+    },
+    {
+      "text": "NOTE",
+      "regex": { "pattern": "NOTE(\\(.*?\\))?:" },
+      "color": "cyan",
+      "border": "1px solid cyan",
+      "borderRadius": "2px",
+      "backgroundColor": "rgba(0,0,0,.2)",
+      "isWholeLine": true
+    },
+    {
+      "text": "IDEA",
+      "regex": { "pattern": "IDEA(\\(.*?\\))?:" },
+      "color": "lime",
+      "border": "1px solid lime",
+      "borderRadius": "2px",
+      "backgroundColor": "rgba(0,0,0,.2)",
+      "isWholeLine": true
+    },
+    {
+      "text": "TODO",
+      "regex": { "pattern": "TODO(\\(.*?\\))?:" },
+      "color": "orange",
+      "border": "1px solid orange",
+      "borderRadius": "2px",
+      "backgroundColor": "rgba(0,0,0,.2)",
+      "isWholeLine": true
+    },
+    {
+      "text": "FIX",
+      "regex": { "pattern": "FIX(\\(.*?\\))?:" },
+      "color": "red",
+      "border": "1px solid red",
+      "borderRadius": "2px",
+      "backgroundColor": "rgba(0,0,0,.2)",
+      "isWholeLine": true
+    }
+  ],
   "cSpell.language": "en-GB",
   "cSpell.words": [
     "apteryx",
@@ -33,15 +77,12 @@
     "plasmo",
     "popover",
     "posthog",
-    "ratelimit",
-    "ratelimiter",
     "renameable",
     "resolvables",
     "runtimes",
     "tanstack",
     "trpc",
-    "uploadable",
-    "upstash"
+    "uploadable"
   ],
   "tailwindCSS.classAttributes": ["class", "className"],
   "tailwindCSS.experimental.configFile": "./packages/react/tailwind.config.cjs",

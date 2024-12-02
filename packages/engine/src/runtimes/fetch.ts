@@ -1,3 +1,8 @@
+import {
+  type PartialRuntime,
+  PistonRuntime,
+  type Runtime,
+} from '@evaluate/types';
 import Fuse from 'fuse.js';
 import { z } from 'zod';
 import {
@@ -10,11 +15,6 @@ import {
   isRuntimeIdentifier,
 } from './getters';
 import { makeIdentifier } from './identifier';
-import {
-  type PartialRuntime,
-  PistonRuntime,
-  type Runtime,
-} from '@evaluate/types';
 
 const Runtimes = new Map<string, PartialRuntime>();
 
@@ -49,8 +49,9 @@ export async function fetchRuntimes() {
     }
   }
 
-  return Array.from(Runtimes.values())
-    .sort((a, b) => b.popularity - a.popularity);
+  return Array.from(Runtimes.values()).sort(
+    (a, b) => b.popularity - a.popularity,
+  );
 }
 
 /**

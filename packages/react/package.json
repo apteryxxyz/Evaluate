@@ -41,8 +41,7 @@
   },
   "scripts": {
     "check": "tsc --noEmit",
-    "build": "tsup",
-    "dev": "pnpm build --watch"
+    "build": "tsup"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.0",

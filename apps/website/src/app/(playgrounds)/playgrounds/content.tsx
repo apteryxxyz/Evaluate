@@ -1,6 +1,5 @@
 'use client';
 
-import type { PartialRuntime } from '@evaluate/types';
 import { Input } from '@evaluate/react/components/input';
 import {
   Select,
@@ -12,6 +11,7 @@ import {
   SelectValue,
 } from '@evaluate/react/components/select';
 import { toast } from '@evaluate/react/components/toast';
+import type { PartialRuntime } from '@evaluate/types';
 import Fuse from 'fuse.js';
 import {
   ArrowDownWideNarrowIcon,

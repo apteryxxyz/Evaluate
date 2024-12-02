@@ -1,31 +1,15 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
-    "test": {
-      "dependsOn": ["^test"],
-      "inputs": ["src/**", "test/**"]
-    },
     "check": {
       "dependsOn": ["^check"],
-      "inputs": ["src/**", "test/**"]
+      "inputs": ["src/**"]
     },
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**", "dictionaries/*"],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        "dist/**",
-        ".plasmo/**",
-        "build/**"
-      ]
-    },
-    "start": {
-      "dependsOn": ["^start"],
-      "inputs": ["src/**"]
-    },
-    "everything": {
-      "dependsOn": ["format", "lint", "check", "build", "test"]
+      "inputs": ["src/**"],
+      "outputs": ["dist/**"],
+      "outputLogs": "new-only"
     },
     "dev": {
       "cache": false,

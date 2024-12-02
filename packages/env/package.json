@@ -20,12 +20,11 @@
   },
   "scripts": {
     "check": "tsc --noEmit",
-    "build": "tsup",
-    "dev": "pnpm build --watch"
+    "build": "tsup"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
-    "dotenv-expand": "^11.0.6",
+    "dotenv-expand": "^11.0.7",
     "zod": "3.22.4"
   }
 }

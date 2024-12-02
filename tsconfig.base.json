@@ -1,8 +1,8 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
+  "$schema": "https://json.schemastore.org/tsconfig.json",
 
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "coverage", "test", "tests"],
+  "include": ["${configDir}/src/**/*"],
+  "exclude": ["node_modules"],
 
   "compileOnSave": true,
   "compilerOptions": {
@@ -31,7 +31,6 @@
     "importHelpers": false,
     "newLine": "lf",
     "noEmitHelpers": true,
-    "outDir": "dist",
     "removeComments": false,
     "sourceMap": true,
 
@@ -41,9 +40,13 @@
     "isolatedModules": true,
 
     "experimentalDecorators": true,
-    "lib": ["ESNext"],
+    "lib": ["DOM", "ESNext"],
     "target": "ES2022",
     "useDefineForClassFields": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    "baseUrl": "${configDir}",
+    "outDir": "${configDir}/dist",
+    "paths": { "~/*": ["./src/*"] }
   }
 }

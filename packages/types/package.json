@@ -13,8 +13,7 @@
   },
   "scripts": {
     "check": "tsc --noEmit",
-    "build": "pnpm tsup",
-    "dev": "pnpm build --watch"
+    "build": "pnpm tsup"
   },
   "dependencies": {
     "zod": "3.22.4"

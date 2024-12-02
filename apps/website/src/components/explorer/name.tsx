@@ -10,7 +10,7 @@ import { cn } from '@evaluate/react/utilities/class-name';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { File, Folder } from 'virtual-file-explorer-backend';
 
-const InvalidNameRegex = /(^\s|\s$|^\.\.|\.$|[\\/:\*\?"<>\|])/;
+const InvalidNameRegex = /(^\s|\s$|^\.\.|\.$|[\\/:*?"<>|])/;
 const ErrorMessages = {
   EmptyName: 'A name must be provided.',
   InvalidName: 'This name is invalid.',

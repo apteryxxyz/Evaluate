@@ -19,12 +19,13 @@ import { wrapCapture } from '~services/analytics';
 export const getStyle: PlasmoGetStyle = () => {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.setAttribute('from', 'evaluate');
+  link.setAttribute('added-by-extension', 'evaluate');
   link.href =
     'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
   document.head.appendChild(link);
 
   const style = document.createElement('style');
+  style.setAttribute('added-by-extension', 'evaluate');
   style.textContent = themeCss.replaceAll(':root', ':host');
   style.textContent += `\n\n${sonnerCss}`;
   return style;

@@ -30,7 +30,7 @@
     {
       "name": "Hello World",
       "files": {
-        "Program.vb": "Module Program\n    Sub Main(args As String())\n        Console.WriteLine(\"Hello, World!\")\n    End Sub\nEnd Module"
+        "Program.vb": "Module Program\n  Sub Main(args As String())\n    Console.WriteLine(\"Hello, World!\")\n  End Sub\nEnd Module"
       },
       "entry": "Program.vb"
     }
@@ -117,7 +117,7 @@
     {
       "name": "Hello World",
       "files": {
-        "main.d": "import std.stdio;\n\nvoid main()\n{\n    writeln(\"Hello, World!\");\n}"
+        "main.d": "import std.stdio;\n\nvoid main()\n{\n  writeln(\"Hello, World!\");\n}"
       },
       "entry": "main.d"
     }
@@ -148,7 +148,7 @@
     {
       "name": "Hello World",
       "files": {
-        "main.erl": "-module(main).\n-export([start/0]).\n\nstart() ->\n    io:fwrite(\"Hello, World!\\n\")."
+        "main.erl": "-module(main).\n-export([start/0]).\n\nstart() ->\n  io:fwrite(\"Hello, World!\\n\")."
       },
       "entry": "main.erl"
     }
@@ -164,7 +164,7 @@
     {
       "name": "Hello World",
       "files": {
-        "main.go": "package main\n\nimport \"fmt\"\n\nfunc main() {\n    fmt.Println(\"Hello, World!\")\n}"
+        "main.go": "package main\n\nimport \"fmt\"\n\nfunc main() {\n  fmt.Println(\"Hello, World!\")\n}"
       },
       "entry": "main.go"
     }
@@ -224,7 +224,7 @@
     {
       "name": "Hello World",
       "files": {
-        "Main.kt": "fun main() {\n    println(\"Hello, World!\")\n}"
+        "Main.kt": "fun main() {\n  println(\"Hello, World!\")\n}"
       },
       "entry": "Main.kt"
     }
@@ -397,7 +397,7 @@
     {
       "name": "Hello World",
       "files": {
-        "main.v": "fn main() {\n    println('Hello, World!')\n}"
+        "main.v": "fn main() {\n  println('Hello, World!')\n}"
       },
       "entry": "main.v"
     }
@@ -408,7 +408,7 @@
     {
       "name": "Hello World",
       "files": {
-        "main.zig": "const std = @import(\"std\");\n\npub fn main() void {\n    std.debug.print(\"Hello, World!\\n\", .{});\n}"
+        "main.zig": "const std = @import(\"std\");\n\npub fn main() void {\n  std.debug.print(\"Hello, World!\\n\", .{});\n}"
       },
       "entry": "main.zig"
     }

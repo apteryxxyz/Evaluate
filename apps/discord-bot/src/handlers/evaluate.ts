@@ -42,7 +42,7 @@ function isEdit(
 }
 
 function compressOptions(options: {
-  runtime: string | PartialRuntime;
+  runtime: PartialRuntime;
   code: string;
   args?: string;
   input?: string;
@@ -132,7 +132,7 @@ export async function handleEvaluating(
   } else if (output.length > 1000) {
     output = `Output was too large to display, [click here to view the full output](${
       env.WEBSITE_URL
-    }/playgrounds/${runtime.id}#${compressOptions(options)}).`;
+    }/playgrounds/${runtime.id}#${compressOptions({ ...options, runtime })}).`;
   } else {
     output = codeBlock(output, 1000);
   }

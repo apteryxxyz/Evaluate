@@ -1,4 +1,5 @@
 import { compress } from '@evaluate/engine/dist/compress';
+import { getRuntimeDefaultFileName } from '@evaluate/engine/dist/runtimes';
 import { Button } from '@evaluate/react/components/button';
 import { Card, CardContent, CardHeader } from '@evaluate/react/components/card';
 import { Label } from '@evaluate/react/components/label';
@@ -100,23 +101,25 @@ function ResultContent(p: {
     return p.result.run;
   }, [p.result]);
 
-  const changeRuntimeUrl = useMemo(() => {
-    if (!p.code) return;
-    const state = compress({
-      files: { 'file.code': p.code },
-      entry: 'file.code',
+  const state = useMemo(() => {
+    if (!p.code) return null;
+    const fileName = getRuntimeDefaultFileName(p.runtime.id) ?? 'file.code';
+    return compress({
+      files: { [fileName]: p.code },
+      entry: fileName,
+      focused: fileName,
     });
+  }, [p.runtime.id, p.code]);
+
+  const changeRuntimeUrl = useMemo(() => {
+    if (!state) return;
     return `${env.PLASMO_PUBLIC_WEBSITE_URL}/playgrounds#${state}`;
-  }, [p.code]);
+  }, [state]);
 
   const editCodeUrl = useMemo(() => {
-    if (!p.code || !p.runtime) return;
-    const state = compress({
-      files: { 'file.code': p.code },
-      entry: 'file.code',
-    });
+    if (!state || !p.runtime) return;
     return `${env.PLASMO_PUBLIC_WEBSITE_URL}/playgrounds/${p.runtime.id}#${state}`;
-  }, [p.code, p.runtime]);
+  }, [state, p.runtime]);
 
   return (
     <div className="space-y-2">

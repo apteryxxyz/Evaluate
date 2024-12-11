@@ -1,5 +1,5 @@
 import { compress } from '@evaluate/engine/dist/compress';
-import { getRuntimeDefaultFileName } from '@evaluate/engine/runtimes';
+import { getRuntimeDefaultFileName } from '@evaluate/engine/dist/runtimes';
 import { Button } from '@evaluate/react/components/button';
 import { Card, CardContent, CardHeader } from '@evaluate/react/components/card';
 import { Label } from '@evaluate/react/components/label';

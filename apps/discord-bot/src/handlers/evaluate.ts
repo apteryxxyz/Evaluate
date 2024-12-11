@@ -42,7 +42,7 @@ function isEdit(
 }
 
 function compressOptions(options: {
-  runtime: string | PartialRuntime;
+  runtime: PartialRuntime;
   code: string;
   args?: string;
   input?: string;
@@ -50,6 +50,9 @@ function compressOptions(options: {
   const identifier =
     typeof options.runtime === 'string' ? options.runtime : options.runtime.id;
   const fileName = getRuntimeDefaultFileName(identifier) ?? 'file.code';
+  if (fileName === 'file.code')
+    console.log('!!!!!!!!!!!!!!!!!!!', { ...options, identifier, fileName });
+  else console.log({ ...options, identifier, fileName });
   return compress({
     files: {
       [fileName]: options.code,
@@ -132,7 +135,7 @@ export async function handleEvaluating(
   } else if (output.length > 1000) {
     output = `Output was too large to display, [click here to view the full output](${
       env.WEBSITE_URL
-    }/playgrounds/${runtime.id}#${compressOptions(options)}).`;
+    }/playgrounds/${runtime.id}#${compressOptions({ ...options, runtime })}).`;
   } else {
     output = codeBlock(output, 1000);
   }

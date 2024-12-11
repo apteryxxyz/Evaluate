@@ -8,21 +8,19 @@ import {
 } from '@evaluate/react/components/accordion';
 import { Button } from '@evaluate/react/components/button';
 import { cn } from '@evaluate/react/utilities/class-name';
+import { TextCursorInputIcon, Trash2Icon } from 'lucide-react';
 import type { Folder } from 'virtual-file-explorer-backend';
-import { ContextMenuWrapper } from '~/components/context-menu-wrapper';
 import { MaterialIcon } from '~/components/material-icon';
+import { useIsMobile } from '~/hooks/use-is-mobile';
 import { ExplorerItemName } from '../name';
 import { useWatch } from '../use';
 import { ExplorerFolderChildren } from './children';
 import {
-  useChildren,
   useClickable,
   useDeleteable,
-  useDownloadable,
   useDraggable,
   useDropzone,
   useNameable,
-  useUploadable,
 } from './hooks';
 
 namespace ExplorerFolderItem {
@@ -34,15 +32,12 @@ namespace ExplorerFolderItem {
 export function ExplorerFolderItem({ folder }: ExplorerFolderItem.Props) {
   useWatch(folder, ['children', 'expanded', 'selected']);
 
+  const isMobile = useIsMobile();
   const { draggableRef } = useDraggable(folder);
   const { isOver, dropzoneRef } = useDropzone(folder);
   const { handleClick } = useClickable(folder);
   const { naming, setNaming, handleRenameClick } = useNameable(folder);
   const { handleDeleteClick } = useDeleteable(folder);
-  const { handleDownloadClick } = useDownloadable(folder);
-  const { handleUploadClick, inputRef } = useUploadable(folder);
-  const { handleNewFileContextClick, handleNewFolderContextClick } =
-    useChildren(folder);
 
   return (
     <Accordion
@@ -55,40 +50,55 @@ export function ExplorerFolderItem({ folder }: ExplorerFolderItem.Props) {
     >
       <AccordionItem value="open" className="border-b-0">
         <AccordionTrigger className="h-auto w-full p-0 hover:no-underline">
-          <ContextMenuWrapper
-            items={[
-              { label: 'New File', action: handleNewFileContextClick },
-              { label: 'New Folder', action: handleNewFolderContextClick },
-              null,
-              { label: 'Rename Folder', action: handleRenameClick },
-              { label: 'Delete Folder', action: handleDeleteClick },
-              null,
-              { label: 'Upload File', action: handleUploadClick },
-              { label: 'Download Folder', action: handleDownloadClick },
-            ]}
+          <Button
+            ref={draggableRef}
+            variant={folder.selected ? 'secondary' : 'ghost'}
+            className="group relative h-auto w-full justify-start rounded-none p-0"
+            style={{
+              paddingLeft: `${6 + (folder.ancestors.length - 1) * 6}px`,
+            }}
+            data-ignore-blur
           >
-            <Button
-              ref={draggableRef}
-              variant={folder.selected ? 'secondary' : 'ghost'}
-              className="h-auto w-full justify-start rounded-none p-0"
-              style={{
-                paddingLeft: `${6 + (folder.ancestors.length - 1) * 6}px`,
-              }}
-              data-ignore-blur
+            <MaterialIcon
+              type="folder"
+              expanded={folder.expanded}
+              name={folder.name}
+            />
+            <ExplorerItemName
+              item={folder}
+              naming={naming}
+              setNaming={setNaming}
+            />
+
+            <div
+              className={cn(
+                'absolute top-[20%] right-0',
+                isMobile ? 'block' : 'hidden group-hover:block',
+              )}
             >
-              <input ref={inputRef} type="file" className="hidden" multiple />
-              <MaterialIcon
-                type="folder"
-                expanded={folder.expanded}
-                name={folder.name}
-              />
-              <ExplorerItemName
-                item={folder}
-                naming={naming}
-                setNaming={setNaming}
-              />
-            </Button>
-          </ContextMenuWrapper>
+              <Button
+                type="button"
+                size="icon"
+                variant={null}
+                className="h-auto w-auto p-0"
+                onClick={handleRenameClick}
+              >
+                <TextCursorInputIcon size={16} />
+                <span className="sr-only">Rename File</span>
+              </Button>
+
+              <Button
+                type="button"
+                size="icon"
+                variant={null}
+                className="h-auto w-auto p-0"
+                onClick={handleDeleteClick}
+              >
+                <Trash2Icon size={16} />
+                <span className="sr-only">Delete File</span>
+              </Button>
+            </div>
+          </Button>
         </AccordionTrigger>
 
         <AccordionContent className="flex flex-col pb-0">

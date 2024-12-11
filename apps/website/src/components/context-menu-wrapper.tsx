@@ -29,6 +29,8 @@ namespace ContextMenuWrapper {
   }
 }
 
+// NOTE: No longer used, but kept for archival purposes
+
 export function ContextMenuWrapper(props: ContextMenuWrapper.Props) {
   const { items = [], children } = props;
 

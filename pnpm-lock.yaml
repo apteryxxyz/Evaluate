@@ -170,6 +170,9 @@ importers:
       fuse.js:
         specifier: ^7.0.0
         version: 7.0.0
+      is-mobile:
+        specifier: ^5.0.0
+        version: 5.0.0
       jszip:
         specifier: ^3.10.1
         version: 3.10.1
@@ -4157,6 +4160,9 @@ packages:
 
   is-json@2.0.1:
     resolution: {integrity: sha512-6BEnpVn1rcf3ngfmViLM6vjUjGErbdrL4rwlv+u1NO1XO8kqT4YGL8+19Q+Z/bas8tY90BTWMk2+fW1g6hQjbA==}
+
+  is-mobile@5.0.0:
+    resolution: {integrity: sha512-Tz/yndySvLAEXh+Uk8liFCxOwVH6YutuR74utvOcu7I9Di+DwM0mtdPVZNaVvvBUM2OXxne/NhOs1zAO7riusQ==}
 
   is-number@7.0.0:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
@@ -9728,6 +9734,8 @@ snapshots:
   is-interactive@1.0.0: {}
 
   is-json@2.0.1: {}
+
+  is-mobile@5.0.0: {}
 
   is-number@7.0.0: {}
 

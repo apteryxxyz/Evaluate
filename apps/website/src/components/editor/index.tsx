@@ -7,7 +7,6 @@ import { cn } from '@evaluate/react/utilities/class-name';
 import type { PartialRuntime } from '@evaluate/types';
 import { FilesIcon, Share2Icon, TerminalIcon } from 'lucide-react';
 import { useCallback, useEffect, useRef } from 'react';
-import { ContextMenuWrapper } from '../context-menu-wrapper';
 import { ExecuteBar } from './execute-bar';
 import { useEditor } from './hooks';
 import { OpenedFiles } from './opened-files';
@@ -76,29 +75,10 @@ export function Editor({ runtime }: { runtime: PartialRuntime }) {
       </div>
 
       <div className="relative h-full w-full">
-        <ContextMenuWrapper
-          items={[
-            {
-              label: 'Execute Code',
-              shortcut: 'Ctrl+Enter',
-              action: handlers.execute,
-            },
-            {
-              label: 'Share URL',
-              shortcut: 'Ctrl+S',
-              action: handlers.share,
-            },
-            null,
-            { label: 'Copy', action: handlers.copy },
-            { label: 'Paste', action: handlers.paste },
-            { label: 'Cut', action: handlers.cut },
-          ]}
-        >
-          <div
-            className={cn('h-full [&>*]:h-full', !file && 'hidden')}
-            ref={editorRef}
-          />
-        </ContextMenuWrapper>
+        <div
+          className={cn('h-full [&>*]:h-full', !file && 'hidden')}
+          ref={editorRef}
+        />
       </div>
     </section>
   );

@@ -79,31 +79,21 @@ function createChild<C extends File | Folder>(
 }
 
 export function useChildren(folder: Folder) {
-  const handleNewFileToolbarClick = useCallback(
+  const handleNewFileClick = useCallback(
     () => createChild.call(folder, File),
     [folder],
   );
-  const handleNewFileContextClick = useCallback(
-    () => createChild.call(folder, File, folder),
-    [folder],
-  );
-  const handleNewFolderToolbarClick = useCallback(
+  const handleNewFolderClick = useCallback(
     () => createChild.call(folder, Folder),
     [folder],
   );
-  const handleNewFolderContextClick = useCallback(
-    () => createChild.call(folder, Folder, folder),
-    [folder],
-  );
-
   return {
-    handleNewFileToolbarClick,
-    handleNewFileContextClick,
-    handleNewFolderToolbarClick,
-    handleNewFolderContextClick,
+    handleNewFileClick,
+    handleNewFolderClick,
   };
 }
 
+// NOTE: Unused
 export function useUploadable(folder: Folder) {
   const inputRef = useRef<HTMLInputElement>(null);
   const handleUploadClick = useCallback(() => inputRef.current?.click(), []);

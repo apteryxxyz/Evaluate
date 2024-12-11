@@ -6,7 +6,6 @@
     "name": "Evaluate - Execute Any Code, Anywhere, Anytime",
     "short_name": "Evaluate",
     "description": "Execute any code snippet on any website with Evaluate.",
-    "version": "0.1.2",
     "author": "Apteryx Software",
     "homepage_url": "https://evaluate.run",
     "manifest_version": 3,

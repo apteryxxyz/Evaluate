@@ -7,8 +7,8 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**"],
-      "outputs": ["dist/**"],
+      "inputs": ["src/**", "public/**", "assets/**"],
+      "outputs": ["dist/**", "build/**", ".plasmo/**", ".next/**"],
       "outputLogs": "new-only"
     },
     "dev": {

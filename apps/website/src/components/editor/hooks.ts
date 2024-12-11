@@ -53,31 +53,14 @@ export function useEditor() {
     });
   }, [editor.view, focused]);
 
-  const handleExecuteClick = useCallback(() => {
-    window.dispatchEvent(new CustomEvent('execute-code'));
-  }, []);
   const handleShareClick = useCallback(() => {
     window.dispatchEvent(new CustomEvent('copy-url'));
-  }, []);
-  const handleCopyClick = useCallback(() => {
-    document.execCommand('copy');
-  }, []);
-  const handleCutClick = useCallback(() => {
-    document.execCommand('cut');
-  }, []);
-  const handlePasteClick = useCallback(async () => {
-    const text = await navigator.clipboard.readText();
-    document.execCommand('insertText', false, text);
   }, []);
 
   return {
     ...editor,
     file: focused,
     handlers: {
-      execute: handleExecuteClick,
-      copy: handleCopyClick,
-      cut: handleCutClick,
-      paste: handlePasteClick,
       share: handleShareClick,
     },
   };

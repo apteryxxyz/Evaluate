@@ -4,7 +4,6 @@ import { Button } from '@evaluate/react/components/button';
 import { XIcon } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
 import type { File } from 'virtual-file-explorer-backend';
-import { ContextMenuWrapper } from '~/components/context-menu-wrapper';
 import { useWatch } from '~/components/explorer/use';
 import { MaterialIcon } from '~/components/material-icon';
 
@@ -41,30 +40,28 @@ export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
   }, [file.name]);
 
   return (
-    <ContextMenuWrapper items={[{ label: 'Close', action: handleCloseClick }]}>
-      <Button
-        key={file.path}
-        variant="secondary"
-        className="group bg-card px-2 text-foreground/70 hover:text-foreground data-[state=active]:bg-muted data-[state=active]:text-foreground"
-        data-state={file.focused ? 'active' : ''}
-        onClick={handleClick}
-      >
-        <MaterialIcon type="file" name={file.name} />
-        <span>&nbsp;{name ?? 'Untitled'}</span>
+    <Button
+      key={file.path}
+      variant="secondary"
+      className="group bg-card px-2 text-foreground/70 hover:text-foreground data-[state=active]:bg-muted data-[state=active]:text-foreground"
+      data-state={file.focused ? 'active' : ''}
+      onClick={handleClick}
+    >
+      <MaterialIcon type="file" name={file.name} />
+      <span>&nbsp;{name ?? 'Untitled'}</span>
 
-        <Button
-          role="button"
-          size="icon"
-          variant={null}
-          className="w-auto pl-2 text-white/20 hover:text-white group-hover:text-white/50"
-          onClick={handleCloseClick}
-          asChild
-        >
-          <span>
-            <XIcon size={16} strokeWidth={1.5} />
-          </span>
-        </Button>
+      <Button
+        role="button"
+        size="icon"
+        variant={null}
+        className="w-auto pl-2 text-white/20 hover:text-white group-hover:text-white/50"
+        onClick={handleCloseClick}
+        asChild
+      >
+        <span>
+          <XIcon size={16} strokeWidth={1.5} />
+        </span>
       </Button>
-    </ContextMenuWrapper>
+    </Button>
   );
 }

@@ -50,9 +50,6 @@ function compressOptions(options: {
   const identifier =
     typeof options.runtime === 'string' ? options.runtime : options.runtime.id;
   const fileName = getRuntimeDefaultFileName(identifier) ?? 'file.code';
-  if (fileName === 'file.code')
-    console.log('!!!!!!!!!!!!!!!!!!!', { ...options, identifier, fileName });
-  else console.log({ ...options, identifier, fileName });
   return compress({
     files: {
       [fileName]: options.code,

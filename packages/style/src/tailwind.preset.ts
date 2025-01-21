@@ -1,4 +1,3 @@
-import twContainerQueriesPlugin from '@tailwindcss/container-queries';
 import type { Config as TailwindConfig } from 'tailwindcss';
 import twAnimatePlugin from 'tailwindcss-animate';
 
@@ -7,41 +6,23 @@ const tailwindConfig = {
   content: [],
 
   theme: {
-    container: {
-      center: true,
-    },
-
-    screens: {
-      '2xs': '364px',
-      xs: '492px',
-      sm: '640px',
-      md: '768px',
-      lg: '1024px',
-      xl: '1280px',
-      '2xl': '1536px',
-      '3xl': '1792px',
-      '4xl': '2048px',
-      '5xl': '2304px',
-      '6xl': '2560px',
-      '7xl': '2816px',
-    },
-
-    containers: {
-      '2xs': '16rem',
-      xs: '20rem',
-      sm: '24rem',
-      md: '28rem',
-      lg: '32rem',
-      xl: '36rem',
-      '2xl': '42rem',
-      '3xl': '48rem',
-      '4xl': '56rem',
-      '5xl': '64rem',
-      '6xl': '72rem',
-      '7xl': '80rem',
-    },
-
     extend: {
+      container: {
+        center: true,
+        padding: '2rem',
+        screens: { '2xl': '1400px' },
+      },
+
+      screens: {
+        '2xs': '364px',
+        xs: '492px',
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px',
+      },
+
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -106,6 +87,16 @@ const tailwindConfig = {
           from: { height: 'var(--radix-collapsible-content-height)' },
           to: { height: '0' },
         },
+        spotlight: {
+          from: {
+            opacity: '0',
+            transform: 'translate(-72%, -62%) scale(0.5)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'translate(-50%,-40%) scale(1)',
+          },
+        },
       },
 
       animation: {
@@ -114,11 +105,12 @@ const tailwindConfig = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'collapsible-down': 'collapsible-down 0.2s ease-out',
         'collapsible-up': 'collapsible-up 0.2s ease-out',
+        spotlight: 'spotlight 2s ease .75s 1 forwards',
       },
     },
   },
 
-  plugins: [twAnimatePlugin, twContainerQueriesPlugin],
+  plugins: [twAnimatePlugin],
 } satisfies TailwindConfig;
 
 export default tailwindConfig;

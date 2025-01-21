@@ -10,7 +10,7 @@
     "./css": "./dist/style.css"
   },
   "scripts": {
-    "build": "tsup & cp src/style.css dist/style.css"
+    "build": "tsup && cp src/style.css dist/style.css"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17",

@@ -10,5 +10,3 @@ const tailwindConfig = {
 };
 
 module.exports = tailwindConfig;
-
-console.log('tailwind.config.cjs', tailwindConfig.presets);

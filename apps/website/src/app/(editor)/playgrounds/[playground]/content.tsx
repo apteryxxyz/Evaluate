@@ -8,7 +8,7 @@ import {
 import { Sheet, SheetContent } from '@evaluate/components/sheet';
 import { useEventListener } from '@evaluate/hooks/event-listener';
 import { useMediaQuery } from '@evaluate/hooks/media-query';
-import type { Runtime } from '@evaluate/types';
+import type { Runtime } from '@evaluate/shapes';
 import React, { useState } from 'react';
 import { Editor } from '~/components/editor';
 import { Explorer } from '~/components/explorer';

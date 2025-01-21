@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from '@evaluate/components/select';
 import { toast } from '@evaluate/components/toast';
-import type { PartialRuntime } from '@evaluate/types';
+import type { PartialRuntime } from '@evaluate/shapes';
 import Fuse from 'fuse.js';
 import {
   ArrowDownWideNarrowIcon,

@@ -3,7 +3,7 @@
 import { toast } from '@evaluate/components/toast';
 import { compress, decompress } from '@evaluate/engine/compress';
 import { useEventListener } from '@evaluate/hooks/event-listener';
-import type { Runtime } from '@evaluate/types';
+import type { Runtime } from '@evaluate/shapes';
 import _ from 'lodash';
 import {
   createContext,

@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@evaluate/components/card';
-import type { PartialRuntime } from '@evaluate/types';
+import type { PartialRuntime } from '@evaluate/shapes';
 import { CodeIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRef, useState } from 'react';

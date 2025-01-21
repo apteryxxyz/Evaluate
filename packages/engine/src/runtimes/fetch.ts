@@ -2,7 +2,7 @@ import {
   type PartialRuntime,
   PistonRuntime,
   type Runtime,
-} from '@evaluate/types';
+} from '@evaluate/shapes';
 import Fuse from 'fuse.js';
 import { z } from 'zod';
 import {

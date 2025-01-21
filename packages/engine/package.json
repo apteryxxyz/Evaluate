@@ -20,7 +20,7 @@
     "build": "pnpm tsup"
   },
   "dependencies": {
-    "@evaluate/types": "workspace:^",
+    "@evaluate/shapes": "workspace:^",
     "fuse.js": "^7.0.0",
     "lexure": "npm:@apteryxxyz/lexure@^0.17.0",
     "pako": "^2.1.0",

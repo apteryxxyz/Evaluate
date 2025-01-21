@@ -3,7 +3,7 @@ import {
   ExecuteResult,
   PistonExecuteOptions,
   PistonExecuteResult,
-} from '@evaluate/types';
+} from '@evaluate/shapes';
 import { getRuntime } from '~/runtimes';
 import { extractIdentifier } from '~/runtimes/identifier';
 import { parseArguments } from './arguments';

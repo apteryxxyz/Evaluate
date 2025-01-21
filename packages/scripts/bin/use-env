@@ -1,0 +1,61 @@
+#!/usr/bin/env node
+
+import { spawn } from 'node:child_process';
+import nextEnv from '@next/env';
+const { loadEnvConfig } = nextEnv;
+import { join as joinPath } from 'node:path';
+import { createCommand } from 'commander';
+import { colours, logger } from './_logger.js';
+
+// Reorder arguments if there are two `--` separators
+const separatorCount = process.argv.filter((a) => a === '--').length;
+if (separatorCount === 2) {
+  const firstIndex = process.argv.indexOf('--');
+  const secondIndex = process.argv.indexOf('--', firstIndex + 1);
+  const secondGroup = process.argv.splice(secondIndex + 1);
+  process.argv.splice(firstIndex, 0, ...secondGroup);
+}
+
+const program = createCommand('use-env')
+  .option(
+    '-p, --public-prefix [prefix]',
+    'Append a prefix to each public variable',
+  )
+  .option(
+    '-P, --prod',
+    'Load production environment',
+    process.env.NODE_ENV === 'production',
+  )
+  .argument('<command...>', 'The command to run')
+  .parse(process.argv);
+
+const publicPrefix = program.opts().publicPrefix ?? '';
+const isProduction = program.opts().prod;
+const targetDirectory = joinPath(import.meta.dirname, '../../../.env');
+const commandToRun = program.args.map((a) => `"${a}"`).join(' ');
+
+// Load the environment variables
+const { loadedEnvFiles } = loadEnvConfig(targetDirectory, !isProduction);
+
+// Handle public variables with optional prefix
+for (const key in process.env) {
+  if (key.startsWith('PUBLIC_')) {
+    process.env[key.slice(7)] = process.env[key];
+    if (publicPrefix) {
+      process.env[`${publicPrefix}_${key}`] = process.env[key];
+      delete process.env[key];
+    }
+  }
+}
+
+const loadedFrom = loadedEnvFiles.map((f) => f.path).join(' ');
+if (loadedFrom) logger.info(`Environment: ${colours.italic(loadedFrom)}`);
+else logger.info('No Environment');
+process.env['>_'] = true;
+
+const child = spawn(commandToRun, {
+  stdio: 'inherit',
+  shell: process.env.SHELL,
+  env: process.env,
+});
+child.on('exit', process.exit);

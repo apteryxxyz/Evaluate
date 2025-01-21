@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+import { exec, spawn } from 'node:child_process';
+import { sep } from 'node:path';
+import { promisify } from 'node:util';
+import { createCommand } from 'commander';
+const execAsync = promisify(exec);
+
+const program = createCommand('run-in')
+  .arguments('<package> <command...>')
+  .parse(process.argv);
+
+const packagePaths = await execAsync('pnpm m ls --depth -1 --porcelain') //
+  .then(({ stdout }) => stdout.split('\n'));
+const packages = packagePaths //
+  .map((path) => ({ path, name: path.split(sep).pop() ?? '' }));
+
+const targetPackage = packages.find((p) => p.name === program.args[0]);
+const commandToRun = program.args
+  .slice(1)
+  .map((a) => `"${a}"`)
+  .join(' ');
+
+spawn(commandToRun, {
+  stdio: 'inherit',
+  shell: process.env.SHELL,
+  cwd: targetPackage.path,
+});

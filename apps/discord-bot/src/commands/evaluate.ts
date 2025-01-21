@@ -12,7 +12,7 @@ export class EvaluateCommand extends Command {
   name = 'evaluate';
   description =
     'Evaluate any piece of code in any runtime with optional input and command line arguments.';
-  override options: CommandOptions = [
+  options: CommandOptions = [
     {
       type: ApplicationCommandOptionType.String,
       name: 'runtime',
@@ -39,21 +39,20 @@ export class EvaluateCommand extends Command {
     },
   ];
 
-  override components = [EditEvaluationButton];
-  override modals = [EvaluateModal, EvaluateModalEdit];
+  components = [EditEvaluationButton];
+  modals = [EvaluateModal, EvaluateModalEdit];
 
   async run(interaction: CommandInteraction) {
-    const runtime = interaction.options!.getString('runtime');
-    const code = interaction.options!.getString('code');
-    const input = interaction.options!.getString('input');
-    const args = interaction.options!.getString('arguments');
+    const runtime = interaction.options.getString('runtime');
+    const code = interaction.options.getString('code');
+    const input = interaction.options.getString('input');
+    const args = interaction.options.getString('arguments');
 
     if (runtime && code) {
       return handleEvaluating(interaction, { runtime, code, args, input });
     } else {
-      return interaction.showModal(
-        new EvaluateModal({ runtime, code, args, input }),
-      );
+      const modal = new EvaluateModal({ runtime, code, args, input });
+      return interaction.showModal(modal);
     }
   }
 }

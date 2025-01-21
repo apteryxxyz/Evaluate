@@ -1,5 +1,4 @@
 import {
-  type APIEmbedAuthor,
   CommandInteraction,
   Embed,
   ModalInteraction,
@@ -124,7 +123,7 @@ export async function handleEvaluating(
           'Your code execution exceeded the allotted time and was terminated. Consider optimising it for better performance.';
       else
         output =
-          'Your code compilation exceeded the allotted time and was terminated. Consider optimizing your code for faster compilation.';
+          'Your code compilation exceeded the allotted time and was terminated. Consider optimising your code for faster compilation.';
     } else {
       output =
         'Your code executed successfully; however, it did not generate any output for the console.';
@@ -168,7 +167,7 @@ export function createEvaluationPayload(
     fields: [],
     author: user
       ? { name: user.username!, icon_url: user.avatarUrl! }
-      : (undefined as unknown as APIEmbedAuthor),
+      : undefined,
   });
 
   if (options.args)

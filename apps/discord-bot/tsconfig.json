@@ -5,6 +5,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist",
+    "noImplicitOverride": false,
     "paths": { "~/*": ["src/*"] },
     "lib": ["DOM", "ES2023"]
   }

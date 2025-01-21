@@ -1,5 +1,5 @@
-import { compress } from '@evaluate/engine/dist/compress';
 import { Toaster, toast } from '@evaluate/components/dist/toast';
+import { compress } from '@evaluate/engine/dist/compress';
 import type { ExecuteResult, PartialRuntime } from '@evaluate/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { PlasmoCSConfig, PlasmoGetStyle } from 'plasmo';

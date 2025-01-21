@@ -1,18 +1,16 @@
 # Node
 node_modules/
 
+# Meta
+.nx/
+.turbo/
+.ignore/
+
 # Build
 dist/
 build/
 .next/
 .plasmo/
 
-# Tools
-.nx/
-.turbo/
-
 # Environment
 .env*.local
-
-# Temp
-_temp/

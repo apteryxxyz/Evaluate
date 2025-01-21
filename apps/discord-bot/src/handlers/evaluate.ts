@@ -11,7 +11,7 @@ import {
   getRuntimeDefaultFileName,
   searchRuntimes,
 } from '@evaluate/engine/runtimes';
-import type { ExecuteResult, PartialRuntime } from '@evaluate/types';
+import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
 import { EditEvaluationButton } from '~/components/edit-evaluation-button';
 import { OpenEvaluationButton } from '~/components/open-evaluation-button';
 import { env } from '~/env';

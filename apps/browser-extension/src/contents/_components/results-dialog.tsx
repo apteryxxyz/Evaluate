@@ -11,7 +11,7 @@ import { Textarea } from '@evaluate/components/dist/textarea';
 import { compress } from '@evaluate/engine/dist/compress';
 import { getRuntimeDefaultFileName } from '@evaluate/engine/dist/runtimes';
 import { cn } from '@evaluate/helpers/dist/class';
-import type { ExecuteResult, PartialRuntime } from '@evaluate/types';
+import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
 import { ExternalLinkIcon, XIcon } from 'lucide-react';
 import { useMemo } from 'react';
 import { env } from '~env';

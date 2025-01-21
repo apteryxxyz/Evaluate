@@ -14,7 +14,7 @@ import { executeCode } from '@evaluate/engine/execute';
 import { cn } from '@evaluate/helpers/class';
 import { useEventListener } from '@evaluate/hooks/event-listener';
 import { useMediaQuery } from '@evaluate/hooks/media-query';
-import { ExecuteOptions, type PartialRuntime } from '@evaluate/types';
+import { ExecuteOptions, type PartialRuntime } from '@evaluate/shapes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon, PlayIcon } from 'lucide-react';

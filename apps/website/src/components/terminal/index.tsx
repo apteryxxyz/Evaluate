@@ -8,7 +8,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@evaluate/components/tabs';
-import type { PartialRuntime } from '@evaluate/types';
+import type { PartialRuntime } from '@evaluate/shapes';
 import {
   CodeIcon,
   FullscreenIcon,

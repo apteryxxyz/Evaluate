@@ -5,9 +5,9 @@ import { EvaluateModalEdit } from './evaluate-modal';
 
 export class EditEvaluationButton extends Button {
   customId = 'evaluate:edit';
-  override style = ButtonStyle.Success as const;
+  style = ButtonStyle.Success;
   label = 'Edit';
-  override emoji = resolveEmoji('pencil', true);
+  emoji = resolveEmoji('pencil', true);
 
   async run(click: ButtonInteraction) {
     const embed = click.embeds?.[0]!;

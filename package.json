@@ -3,8 +3,6 @@
   "packageManager": "pnpm@9.14.4",
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "lint": "biome lint . --write",
-    "format": "biome format . --write",
     "pretty": "biome check . --write",
     "check": "turbo run check",
     "build": "turbo run build",
@@ -15,7 +13,7 @@
     "graph": "pnpx nx@18 graph"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@biomejs/biome": "1.9.4",
     "@types/node": "^20.17.9",
     "resolve-tspaths": "^0.8.23",
     "tsup": "^8.3.5",

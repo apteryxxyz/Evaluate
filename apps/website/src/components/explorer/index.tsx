@@ -1,9 +1,9 @@
 'use client';
 
-import { Button } from '@evaluate/react/components/button';
-import { ScrollArea } from '@evaluate/react/components/scroll-area';
-import { Separator } from '@evaluate/react/components/separator';
-import { cn } from '@evaluate/react/utilities/class-name';
+import { Button } from '@evaluate/components/button';
+import { ScrollArea } from '@evaluate/components/scroll-area';
+import { Separator } from '@evaluate/components/separator';
+import { cn } from '@evaluate/helpers/class';
 import {
   FilePlusIcon,
   FolderPlusIcon,

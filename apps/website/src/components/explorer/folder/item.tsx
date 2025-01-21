@@ -5,9 +5,9 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@evaluate/react/components/accordion';
-import { Button } from '@evaluate/react/components/button';
-import { cn } from '@evaluate/react/utilities/class-name';
+} from '@evaluate/components/accordion';
+import { Button } from '@evaluate/components/button';
+import { cn } from '@evaluate/helpers/class';
 import { TextCursorInputIcon, Trash2Icon } from 'lucide-react';
 import type { Folder } from 'virtual-file-explorer-backend';
 import { MaterialIcon } from '~/components/material-icon';

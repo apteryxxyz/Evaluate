@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@evaluate/react/components/button';
+import { Button } from '@evaluate/components/button';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useCallback } from 'react';

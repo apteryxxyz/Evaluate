@@ -1,16 +1,16 @@
-import { compress } from '@evaluate/engine/dist/compress';
-import { getRuntimeDefaultFileName } from '@evaluate/engine/dist/runtimes';
-import { Button } from '@evaluate/react/components/button';
-import { Card, CardContent, CardHeader } from '@evaluate/react/components/card';
-import { Label } from '@evaluate/react/components/label';
+import { Button } from '@evaluate/components/dist/button';
+import { Card, CardContent, CardHeader } from '@evaluate/components/dist/card';
+import { Label } from '@evaluate/components/dist/label';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@evaluate/react/components/tabs';
-import { Textarea } from '@evaluate/react/components/textarea';
-import { cn } from '@evaluate/react/utilities/class-name';
+} from '@evaluate/components/dist/tabs';
+import { Textarea } from '@evaluate/components/dist/textarea';
+import { compress } from '@evaluate/engine/dist/compress';
+import { getRuntimeDefaultFileName } from '@evaluate/engine/dist/runtimes';
+import { cn } from '@evaluate/helpers/dist/class';
 import type { ExecuteResult, PartialRuntime } from '@evaluate/types';
 import { ExternalLinkIcon, XIcon } from 'lucide-react';
 import { useMemo } from 'react';

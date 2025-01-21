@@ -1,6 +1,6 @@
 'use client';
 
-import { useEventListener } from '@evaluate/react/hooks/event-listener';
+import { useEventListener } from '@evaluate/hooks/event-listener';
 import { useCallback, useState } from 'react';
 
 /**

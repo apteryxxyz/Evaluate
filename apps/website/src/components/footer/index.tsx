@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@evaluate/react/utilities/class-name';
+import { cn } from '@evaluate/helpers/class';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 

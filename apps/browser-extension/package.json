@@ -20,9 +20,12 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@evaluate/components": "workspace:^",
     "@evaluate/engine": "workspace:^",
     "@evaluate/env": "workspace:^",
-    "@evaluate/react": "workspace:^",
+    "@evaluate/helpers": "workspace:^",
+    "@evaluate/hooks": "workspace:^",
+    "@evaluate/style": "workspace:^",
     "@evaluate/types": "workspace:^",
     "framer-motion": "^11.12.0",
     "lucide-react": "^0.338.0",

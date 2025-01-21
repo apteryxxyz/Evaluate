@@ -1,9 +1,9 @@
 'use client';
 
-import { Button } from '@evaluate/react/components/button';
-import { ScrollArea, ScrollBar } from '@evaluate/react/components/scroll-area';
-import { useEventListener } from '@evaluate/react/hooks/event-listener';
-import { cn } from '@evaluate/react/utilities/class-name';
+import { Button } from '@evaluate/components/button';
+import { ScrollArea, ScrollBar } from '@evaluate/components/scroll-area';
+import { cn } from '@evaluate/helpers/class';
+import { useEventListener } from '@evaluate/hooks/event-listener';
 import type { PartialRuntime } from '@evaluate/types';
 import { FilesIcon, Share2Icon, TerminalIcon } from 'lucide-react';
 import { useCallback, useEffect, useRef } from 'react';

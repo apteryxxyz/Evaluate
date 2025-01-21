@@ -1,0 +1,27 @@
+{
+  "name": "@evaluate/helpers",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./*": {
+      "import": "./dist/*/index.js",
+      "types": "./dist/*/index.d.ts"
+    },
+    "./dist/*": {
+      "import": "./dist/*/index.js",
+      "types": "./dist/*/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.6.0",
+    "type-fest": "^4.32.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.4"
+  }
+}

@@ -1,8 +1,12 @@
+const twComponentsPreset = require('@evaluate/components/tailwind-preset');
+const twStylesPreset = require('@evaluate/style/tailwind-preset');
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    './src/**/*.{ts,tsx}',
-    '../../packages/react/src/components/**/*.{ts,tsx}',
-  ],
-  presets: [require('@evaluate/react/tailwind.config.js')],
+const tailwindConfig = {
+  presets: [twStylesPreset, twComponentsPreset],
+  content: ['./src/**/**/*']
+    .concat(twStylesPreset.content)
+    .concat(twComponentsPreset.content),
 };
+
+module.exports = tailwindConfig;

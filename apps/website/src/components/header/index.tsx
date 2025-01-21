@@ -1,13 +1,9 @@
 'use client';
 
-import { Button } from '@evaluate/react/components/button';
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from '@evaluate/react/components/sheet';
-import { useMediaQuery } from '@evaluate/react/hooks/media-query';
-import { cn } from '@evaluate/react/utilities/class-name';
+import { Button } from '@evaluate/components/button';
+import { Sheet, SheetContent, SheetTrigger } from '@evaluate/components/sheet';
+import { cn } from '@evaluate/helpers/class';
+import { useMediaQuery } from '@evaluate/hooks/media-query';
 import { MenuIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';

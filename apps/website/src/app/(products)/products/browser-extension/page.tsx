@@ -1,4 +1,4 @@
-import { Button } from '@evaluate/react/components/button';
+import { Button } from '@evaluate/components/button';
 import Link from 'next/link';
 import { ImageCarousel } from './_components/image-carousel';
 

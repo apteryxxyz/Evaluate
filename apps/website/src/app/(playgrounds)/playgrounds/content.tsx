@@ -1,6 +1,6 @@
 'use client';
 
-import { Input } from '@evaluate/react/components/input';
+import { Input } from '@evaluate/components/input';
 import {
   Select,
   SelectContent,
@@ -9,8 +9,8 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '@evaluate/react/components/select';
-import { toast } from '@evaluate/react/components/toast';
+} from '@evaluate/components/select';
+import { toast } from '@evaluate/components/toast';
 import type { PartialRuntime } from '@evaluate/types';
 import Fuse from 'fuse.js';
 import {

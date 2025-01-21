@@ -1,5 +1,5 @@
 import { Header } from '~/components/header';
-import { BodyProviders, HtmlProviders } from '../components/providers';
+import { BodyProviders, HtmlProviders } from '~/components/providers';
 import type { LayoutProps } from '../types';
 import { generateBaseMetadata } from './metadata';
 
@@ -9,9 +9,9 @@ export function generateMetadata() {
 
 import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
-import { Toaster } from '@evaluate/react/components/toast';
-import '@evaluate/react/style.css';
-import { cn } from '@evaluate/react/utilities/class-name';
+import { Toaster } from '@evaluate/components/toast';
+import '@evaluate/style/css';
+import { cn } from '@evaluate/helpers/class';
 import { Footer } from '~/components/footer';
 import './layout.css';
 

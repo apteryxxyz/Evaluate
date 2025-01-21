@@ -1,8 +1,8 @@
 'use client';
 
+import { toast } from '@evaluate/components/toast';
 import { compress, decompress } from '@evaluate/engine/compress';
-import { toast } from '@evaluate/react/components/toast';
-import { useEventListener } from '@evaluate/react/hooks/event-listener';
+import { useEventListener } from '@evaluate/hooks/event-listener';
 import type { Runtime } from '@evaluate/types';
 import _ from 'lodash';
 import {

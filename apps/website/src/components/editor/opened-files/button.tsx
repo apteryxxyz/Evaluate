@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@evaluate/react/components/button';
+import { Button } from '@evaluate/components/button';
 import { XIcon } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
 import type { File } from 'virtual-file-explorer-backend';

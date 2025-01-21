@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from '@evaluate/react/components/button';
-import { cn } from '@evaluate/react/utilities/class-name';
+import { Button } from '@evaluate/components/button';
+import { cn } from '@evaluate/helpers/class';
 import { TextCursorInputIcon, Trash2Icon } from 'lucide-react';
 import type { File } from 'virtual-file-explorer-backend';
 import { MaterialIcon } from '~/components/material-icon';

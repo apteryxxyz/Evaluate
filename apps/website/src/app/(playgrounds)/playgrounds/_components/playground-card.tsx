@@ -5,7 +5,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@evaluate/react/components/card';
+} from '@evaluate/components/card';
 import type { PartialRuntime } from '@evaluate/types';
 import { CodeIcon } from 'lucide-react';
 import Link from 'next/link';

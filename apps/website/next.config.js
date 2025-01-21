@@ -4,13 +4,7 @@ import withBundleAnalyser from '@next/bundle-analyzer';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
-  },
+  typescript: { ignoreBuildErrors: true },
 
   redirects: async () => [
     {
@@ -31,7 +25,6 @@ const nextConfig = {
       permanent: false,
     },
   ],
-
   rewrites: async () => [
     {
       source: '/api/v1/ingest/:path*',
@@ -54,6 +47,7 @@ const nextConfig = {
   },
 };
 
+const isTruthy = (v) => ['true', 't', '1'].includes(v);
 export default withBundleAnalyser({
-  enabled: process.env.ANALYSE === 'true',
+  enabled: isTruthy(String(process.env.ANALYSE)),
 })(nextConfig);

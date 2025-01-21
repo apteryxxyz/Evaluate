@@ -125,15 +125,24 @@ importers:
       '@codemirror/view':
         specifier: ^6.35.0
         version: 6.35.0
+      '@evaluate/components':
+        specifier: workspace:^
+        version: link:../../packages/components
       '@evaluate/engine':
         specifier: workspace:^
         version: link:../../packages/engine
       '@evaluate/env':
         specifier: workspace:^
         version: link:../../packages/env
-      '@evaluate/react':
+      '@evaluate/helpers':
         specifier: workspace:^
-        version: link:../../packages/react
+        version: link:../../packages/helpers
+      '@evaluate/hooks':
+        specifier: workspace:^
+        version: link:../../packages/hooks
+      '@evaluate/style':
+        specifier: workspace:^
+        version: link:../../packages/style
       '@evaluate/types':
         specifier: workspace:^
         version: link:../../packages/types

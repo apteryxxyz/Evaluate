@@ -4,10 +4,10 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from '@evaluate/react/components/resizable';
-import { Sheet, SheetContent } from '@evaluate/react/components/sheet';
-import { useEventListener } from '@evaluate/react/hooks/event-listener';
-import { useMediaQuery } from '@evaluate/react/hooks/media-query';
+} from '@evaluate/components/resizable';
+import { Sheet, SheetContent } from '@evaluate/components/sheet';
+import { useEventListener } from '@evaluate/hooks/event-listener';
+import { useMediaQuery } from '@evaluate/hooks/media-query';
 import type { Runtime } from '@evaluate/types';
 import React, { useState } from 'react';
 import { Editor } from '~/components/editor';

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@evaluate/react/components/button';
+import { Button } from '@evaluate/components/button';
 import {
   ContextMenu,
   ContextMenuContent,
@@ -8,7 +8,7 @@ import {
   ContextMenuSeparator,
   ContextMenuShortcut,
   ContextMenuTrigger,
-} from '@evaluate/react/components/context-menu';
+} from '@evaluate/components/context-menu';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 namespace ContextMenuWrapper {

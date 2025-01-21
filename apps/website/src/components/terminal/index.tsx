@@ -1,13 +1,13 @@
 'use client';
 
-import { Button } from '@evaluate/react/components/button';
-import { ScrollArea, ScrollBar } from '@evaluate/react/components/scroll-area';
+import { Button } from '@evaluate/components/button';
+import { ScrollArea, ScrollBar } from '@evaluate/components/scroll-area';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@evaluate/react/components/tabs';
+} from '@evaluate/components/tabs';
 import type { PartialRuntime } from '@evaluate/types';
 import {
   CodeIcon,

@@ -1,12 +1,12 @@
 'use client';
 
-import { Input } from '@evaluate/react/components/input';
+import { Input } from '@evaluate/components/input';
 import {
   Popover,
   PopoverAnchor,
   PopoverContent,
-} from '@evaluate/react/components/popover';
-import { cn } from '@evaluate/react/utilities/class-name';
+} from '@evaluate/components/popover';
+import { cn } from '@evaluate/helpers/class';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { File, Folder } from 'virtual-file-explorer-backend';
 

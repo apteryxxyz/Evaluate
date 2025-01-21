@@ -1,0 +1,39 @@
+apps:browser-extension:
+  - changed-files:
+      - any-glob-to-any-file:
+          - apps/browser-extension/*
+          - apps/browser-extension/**/*
+apps:discord-bot:
+  - changed-files:
+      - any-glob-to-any-file:
+          - apps/discord-bot/*
+          - apps/discord-bot/**/*
+apps:website:
+  - changed-files:
+      - any-glob-to-any-file:
+          - apps/website/*
+          - apps/website/**/*
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - pnpm-lock.yaml
+packages:engine:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/engine/*
+          - packages/engine/**/*
+packages:env:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/env/*
+          - packages/env/**/*
+packages:react:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/react/*
+          - packages/react/**/*
+packages:types:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/types/*
+          - packages/types/**/*

@@ -1,0 +1,32 @@
+- name: apps:browser-extension
+  color: 0075ca
+- name: apps:discord-bot
+  color: 0075ca
+- name: apps:website
+  color: 0075ca
+- name: blocked
+  color: d73a4a
+  description: Action required to proceed
+- name: bug
+  color: d73a4a
+  description: Something isn't working
+- name: chore
+  color: ffffff
+  description: Build process or auxiliary tool changes
+- name: dependencies
+  color: d93f0b
+  description: Dependency updates!!
+- name: duplicate
+  color: cfd3d7
+  description: This issue or pull request already exists
+- name: feature request
+  color: 0075ca
+  description: New feature or request
+- name: packages:engine
+  color: 0075ca
+- name: packages:env
+  color: 0075ca
+- name: packages:react
+  color: 0075ca
+- name: packages:types
+  color: 0075ca

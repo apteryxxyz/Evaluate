@@ -10,6 +10,7 @@
     "dev": "pnpm run \"/dev:.*/\"",
     "dev:packages": "turbo watch build --filter=\"./packages/*\"",
     "dev:apps": "turbo run dev --filter=\"./apps/*\"",
+    "prepare": "husky",
     "graph": "pnpx nx@18 graph"
   },
   "devDependencies": {
@@ -17,6 +18,7 @@
     "@types/node": "^22.10.7",
     "resolve-tspaths": "^0.8.23",
     "tsup": "^8.3.5",
+    "husky": "^9.1.7",
     "tsx": "^4.19.2",
     "turbo": "^2.3.3",
     "typescript": "^5.7.3"

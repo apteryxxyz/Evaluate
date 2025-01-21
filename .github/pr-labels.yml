@@ -17,6 +17,11 @@ dependencies:
   - changed-files:
       - any-glob-to-any-file:
           - pnpm-lock.yaml
+packages:components:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/components/*
+          - packages/components/**/*
 packages:engine:
   - changed-files:
       - any-glob-to-any-file:
@@ -27,11 +32,21 @@ packages:env:
       - any-glob-to-any-file:
           - packages/env/*
           - packages/env/**/*
-packages:react:
+packages:helpers:
   - changed-files:
       - any-glob-to-any-file:
-          - packages/react/*
-          - packages/react/**/*
+          - packages/helpers/*
+          - packages/helpers/**/*
+packages:hooks:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/hooks/*
+          - packages/hooks/**/*
+packages:style:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/style/*
+          - packages/style/**/*
 packages:types:
   - changed-files:
       - any-glob-to-any-file:

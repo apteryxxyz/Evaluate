@@ -22,11 +22,17 @@
 - name: feature request
   color: 0075ca
   description: New feature or request
+- name: packages:components
+  color: 0075ca
 - name: packages:engine
   color: 0075ca
 - name: packages:env
   color: 0075ca
-- name: packages:react
+- name: packages:helpers
+  color: 0075ca
+- name: packages:hooks
+  color: 0075ca
+- name: packages:style
   color: 0075ca
 - name: packages:types
   color: 0075ca

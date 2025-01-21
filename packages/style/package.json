@@ -1,0 +1,20 @@
+{
+  "name": "@evaluate/style",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./tailwind-preset": {
+      "types": "./dist/tailwind.preset.d.ts",
+      "default": "./dist/tailwind.preset.js"
+    },
+    "./css": "./dist/style.css"
+  },
+  "scripts": {
+    "build": "tsup & cp src/style.css dist"
+  },
+  "devDependencies": {
+    "@tailwindcss/container-queries": "^0.1.1",
+    "tailwindcss": "^3.4.17",
+    "tailwindcss-animate": "^1.0.7"
+  }
+}

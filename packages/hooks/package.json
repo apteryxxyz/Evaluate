@@ -1,0 +1,23 @@
+{
+  "name": "@evaluate/hooks",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./*": {
+      "import": "./dist/*.js",
+      "types": "./dist/*.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@evaluate/style": "workspace:^"
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.4"
+  }
+}

@@ -1,10 +1,8 @@
 {
   "name": "evaluate",
-  "packageManager": "pnpm@9.14.4",
+  "packageManager": "pnpm@9.15.4",
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "lint": "biome lint . --write",
-    "format": "biome format . --write",
     "pretty": "biome check . --write",
     "check": "turbo run check",
     "build": "turbo run build",
@@ -12,21 +10,24 @@
     "dev": "pnpm run \"/dev:.*/\"",
     "dev:packages": "turbo watch build --filter=\"./packages/*\"",
     "dev:apps": "turbo run dev --filter=\"./apps/*\"",
+    "prepare": "husky",
     "graph": "pnpx nx@18 graph"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
-    "@types/node": "^20.17.9",
+    "@biomejs/biome": "1.9.4",
+    "@types/node": "^22.10.7",
     "resolve-tspaths": "^0.8.23",
     "tsup": "^8.3.5",
+    "husky": "^9.1.7",
     "tsx": "^4.19.2",
     "turbo": "^2.3.3",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   },
   "pnpm": {
     "patchedDependencies": {
       "zod@3.22.4": "patches/zod@3.22.4.patch",
       "posthog-js@1.161.3": "patches/posthog-js@1.161.3.patch"
-    }
+    },
+    "allowNonAppliedPatches": true
   }
 }

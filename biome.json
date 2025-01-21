@@ -1,17 +1,19 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
     "ignore": [
-      "node_modules/**",
-      "dist/**",
-      ".next/**",
-      ".plasmo/**",
-      "build/**"
+      "node_modules/*",
+      "dist/*",
+      "build/*",
+      ".next/*",
+      ".plasmo/*",
+      ".ignore/*"
     ]
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
+    "indentWidth": 2,
     "lineEnding": "lf"
   },
   "linter": {
@@ -21,32 +23,44 @@
       "style": {
         "noNonNullAssertion": "off",
         "noUselessElse": "off",
-        "noParameterAssign": "off",
-        "noCommaOperator": "off"
+        "noParameterAssign": "off"
       },
       "suspicious": {
         "noAssignInExpressions": "off",
         "noArrayIndexKey": "off"
       },
-      "nursery": {
-        "recommended": true,
-        "useFocusableInteractive": "off",
+      "a11y": {
         "useSemanticElements": "off",
+        "useFocusableInteractive": "off"
+      },
+      "nursery": {
         "useSortedClasses": {
-          "level": "error",
+          "level": "warn",
           "options": {
             "attributes": ["className"],
-            "functions": ["cn"]
+            "functions": ["cn", "cva"]
           }
         }
       }
     }
   },
+  "organizeImports": {
+    "enabled": true
+  },
+
   "javascript": {
     "formatter": {
       "quoteStyle": "single",
       "jsxQuoteStyle": "double",
       "semicolons": "always"
+    }
+  },
+  "css": {
+    "formatter": {
+      "enabled": false
+    },
+    "linter": {
+      "enabled": false
     }
   }
 }

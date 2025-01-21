@@ -1,90 +1,85 @@
 {
+  "cSpell.language": "en-AU",
+  "explorer.compactFolders": true,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    ".env": "*.env, .env.*",
+    "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml",
+    "*.js": "$(capture).js.map, $(capture).d.ts",
+    "*.jsx": "$(capture).jsx.map, $(capture).d.ts",
+    "*.d.ts": "$(capture).d.ts.map"
+  },
   "editor.formatOnSave": true,
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
   "editor.codeActionsOnSave": {
     "source.organizeImports.biome": "explicit"
   },
-  "explorer.fileNesting.enabled": true,
-  "explorer.fileNesting.patterns": {
-    ".env": "*.env, .env.*",
-    "package.json": "pnpm-lock.yaml, pnpm-workspace.yaml",
-    "*.ts": "$(capture).js, $(capture).d.ts.map, $(capture).*.ts, $(capture)_*.js, $(capture)_*.ts",
-    "*.tsx": "$(capture).ts, $(capture).*.tsx, $(capture)_*.ts, $(capture)_*.tsx, $(capture).less, $(capture).module.less, $(capture).module.less.d.ts, $(capture).scss, $(capture).module.scss, $(capture).module.scss.d.ts, $(capture).css.ts"
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "material-icon-theme.folders.associations": {
+    "shapes": "middleware"
+  },
+  "cSpell.words": [],
+  "todo-tree.general.tags": ["=====", "NOTE", "IDEA", "TODO", "FIX", "HACK"],
+  "todo-tree.highlights.customHighlight": {
+    "=====": {
+      "type": "whole-line",
+      "icon": "bookmark",
+      "foreground": "#dadada",
+      "gutterIcon": true,
+      "hideFromTree": true
+    },
+    "NOTE": {
+      "type": "whole-line",
+      "icon": "note",
+      "foreground": "#8df7ff",
+      "gutterIcon": true,
+      "hideFromTree": true
+    },
+    "IDEA": {
+      "type": "whole-line",
+      "icon": "light-bulb",
+      "foreground": "#458efc",
+      "gutterIcon": true
+    },
+    "TODO": {
+      "type": "whole-line",
+      "icon": "check",
+      "foreground": "#ff9900",
+      "gutterIcon": true
+    },
+    "FIX": {
+      "type": "whole-line",
+      "icon": "bug",
+      "foreground": "#e63d00",
+      "gutterIcon": true
+    },
+    "HACK": {
+      "type": "whole-line",
+      "icon": "tools",
+      "foreground": "#45da20",
+      "gutterIcon": true
+    }
   },
   "workbench.colorCustomizations": {
-    "titleBar.activeBackground": "#2fc186",
-    "titleBar.activeForeground": "#fff",
-    "activityBarBadge.background": "#2fc186",
-    "activityBarBadge.foreground": "#fff"
-  },
-  "todohighlight.keywords": [
-    {
-      "text": "=====",
-      "color": "white",
-      "border": "1px solid white",
-      "borderRadius": "2px",
-      "backgroundColor": "rgba(0,0,0,.2)",
-      "isWholeLine": true
-    },
-    {
-      "text": "NOTE",
-      "regex": { "pattern": "NOTE(\\(.*?\\))?:" },
-      "color": "cyan",
-      "border": "1px solid cyan",
-      "borderRadius": "2px",
-      "backgroundColor": "rgba(0,0,0,.2)",
-      "isWholeLine": true
-    },
-    {
-      "text": "IDEA",
-      "regex": { "pattern": "IDEA(\\(.*?\\))?:" },
-      "color": "lime",
-      "border": "1px solid lime",
-      "borderRadius": "2px",
-      "backgroundColor": "rgba(0,0,0,.2)",
-      "isWholeLine": true
-    },
-    {
-      "text": "TODO",
-      "regex": { "pattern": "TODO(\\(.*?\\))?:" },
-      "color": "orange",
-      "border": "1px solid orange",
-      "borderRadius": "2px",
-      "backgroundColor": "rgba(0,0,0,.2)",
-      "isWholeLine": true
-    },
-    {
-      "text": "FIX",
-      "regex": { "pattern": "FIX(\\(.*?\\))?:" },
-      "color": "red",
-      "border": "1px solid red",
-      "borderRadius": "2px",
-      "backgroundColor": "rgba(0,0,0,.2)",
-      "isWholeLine": true
-    }
-  ],
-  "cSpell.language": "en-GB",
-  "cSpell.words": [
-    "apteryx",
-    "buape",
-    "codemirror",
-    "deleteable",
-    "dialog",
-    "hookform",
-    "lucide",
-    "pako",
-    "plasmo",
-    "popover",
-    "posthog",
-    "renameable",
-    "resolvables",
-    "runtimes",
-    "tanstack",
-    "trpc",
-    "uploadable"
-  ],
-  "tailwindCSS.classAttributes": ["class", "className"],
-  "tailwindCSS.experimental.configFile": "./packages/react/tailwind.config.cjs",
-  "typescript.tsdk": "node_modules/typescript/lib"
+    "activityBar.activeBackground": "#2fc186",
+    "activityBar.background": "#2fc186",
+    "activityBar.foreground": "#ffffff",
+    "activityBar.inactiveForeground": "#ffffff99",
+    "activityBarBadge.background": "#1e8a60",
+    "activityBarBadge.foreground": "#ffffff",
+    "commandCenter.border": "#2fc18699",
+    "sash.hoverBorder": "#2fc186",
+    "statusBar.background": "#1e8a60",
+    "statusBar.foreground": "#ffffff",
+    "statusBarItem.hoverBackground": "#2fc186",
+    "statusBarItem.remoteBackground": "#1e8a60",
+    "statusBarItem.remoteForeground": "#ffffff",
+    "titleBar.activeBackground": "#1e8a60",
+    "titleBar.activeForeground": "#ffffff",
+    "titleBar.inactiveBackground": "#1e8a6099",
+    "titleBar.inactiveForeground": "#ffffff99"
+  }
 }

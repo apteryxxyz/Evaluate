@@ -13,11 +13,10 @@
   },
   "scripts": {
     "check": "tsc --noEmit",
-    "dev": "plasmo dev",
+    "dev": "use-env -p PLASMO -- plasmo dev",
     "build:styles": "cp ../../packages/react/style.css ./src/style.css",
     "build": "pnpm build:chrome",
-    "build:chrome": "plasmo build --target=chrome-mv3 --zip",
-    "package": "plasmo package"
+    "build:chrome": "use-env -p PLASMO -P -- plasmo build --target=chrome-mv3 --zip"
   },
   "dependencies": {
     "@evaluate/components": "workspace:^",

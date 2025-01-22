@@ -52,9 +52,6 @@ importers:
       '@evaluate/engine':
         specifier: workspace:^
         version: link:../../packages/engine
-      '@evaluate/env':
-        specifier: workspace:^
-        version: link:../../packages/env
       '@evaluate/helpers':
         specifier: workspace:^
         version: link:../../packages/helpers
@@ -67,6 +64,9 @@ importers:
       '@evaluate/style':
         specifier: workspace:^
         version: link:../../packages/style
+      '@t3-oss/env-core':
+        specifier: ^0.11.1
+        version: 0.11.1(typescript@5.2.2)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
       framer-motion:
         specifier: ^11.12.0
         version: 11.12.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -113,12 +113,15 @@ importers:
       '@evaluate/engine':
         specifier: workspace:^
         version: link:../../packages/engine
-      '@evaluate/env':
+      '@evaluate/helpers':
         specifier: workspace:^
-        version: link:../../packages/env
+        version: link:../../packages/helpers
       '@evaluate/shapes':
         specifier: workspace:^
         version: link:../../packages/shapes
+      '@t3-oss/env-core':
+        specifier: ^0.11.1
+        version: 0.11.1(typescript@5.7.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
       '@vercel/functions':
         specifier: ^1.5.1
         version: 1.5.1
@@ -143,9 +146,6 @@ importers:
       '@evaluate/engine':
         specifier: workspace:^
         version: link:../../packages/engine
-      '@evaluate/env':
-        specifier: workspace:^
-        version: link:../../packages/env
       '@evaluate/helpers':
         specifier: workspace:^
         version: link:../../packages/helpers
@@ -161,6 +161,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.9.1
         version: 3.9.1(react-hook-form@7.53.2(react@18.3.1))
+      '@t3-oss/env-nextjs':
+        specifier: ^0.11.1
+        version: 0.11.1(typescript@5.7.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
       '@tanstack/react-query':
         specifier: ^5.62.0
         version: 5.62.0(react@18.3.1)
@@ -377,18 +380,6 @@ importers:
       '@types/pako':
         specifier: ^2.0.3
         version: 2.0.3
-
-  packages/env:
-    dependencies:
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
-      dotenv-expand:
-        specifier: ^11.0.7
-        version: 11.0.7
-      zod:
-        specifier: 3.22.4
-        version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
 
   packages/helpers:
     dependencies:
@@ -3097,6 +3088,24 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
+  '@t3-oss/env-core@0.11.1':
+    resolution: {integrity: sha512-MaxOwEoG1ntCFoKJsS7nqwgcxLW1SJw238AJwfJeaz3P/8GtkxXZsPPolsz1AdYvUTbe3XvqZ/VCdfjt+3zmKw==}
+    peerDependencies:
+      typescript: '>=5.0.0'
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+  '@t3-oss/env-nextjs@0.11.1':
+    resolution: {integrity: sha512-rx2XL9+v6wtOqLNJbD5eD8OezKlQD1BtC0WvvtHwBgK66jnF5+wGqtgkKK4Ygie1LVmoDClths2T4tdFmRvGrQ==}
+    peerDependencies:
+      typescript: '>=5.0.0'
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   '@tanstack/query-core@5.62.0':
     resolution: {integrity: sha512-sx38bGrqF9bop92AXOvzDr0L9fWDas5zXdPglxa9cuqeVSWS7lY6OnVyl/oodfXjgOGRk79IfCpgVmxrbHuFHg==}
 
@@ -3774,19 +3783,11 @@ packages:
     resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
     engines: {node: '>=12'}
 
-  dotenv-expand@11.0.7:
-    resolution: {integrity: sha512-zIHwmZPRshsCdpMDyVsqGmgyP0yT8GAgXUnkdAoJisxvf33k7yO6OuoKmcTGuXPWSsm8Oh88nZicRLA9Y0rUeA==}
-    engines: {node: '>=12'}
-
   dotenv-expand@5.1.0:
     resolution: {integrity: sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==}
 
   dotenv@16.3.1:
     resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
-    engines: {node: '>=12'}
-
-  dotenv@16.4.5:
-    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
 
   dotenv@7.0.0:
@@ -8633,6 +8634,25 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
+  '@t3-oss/env-core@0.11.1(typescript@5.2.2)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))':
+    dependencies:
+      zod: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
+    optionalDependencies:
+      typescript: 5.2.2
+
+  '@t3-oss/env-core@0.11.1(typescript@5.7.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))':
+    dependencies:
+      zod: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
+    optionalDependencies:
+      typescript: 5.7.3
+
+  '@t3-oss/env-nextjs@0.11.1(typescript@5.7.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))':
+    dependencies:
+      '@t3-oss/env-core': 0.11.1(typescript@5.7.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
+      zod: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
+    optionalDependencies:
+      typescript: 5.7.3
+
   '@tanstack/query-core@5.62.0': {}
 
   '@tanstack/query-devtools@5.61.4': {}
@@ -9350,15 +9370,9 @@ snapshots:
 
   dotenv-expand@10.0.0: {}
 
-  dotenv-expand@11.0.7:
-    dependencies:
-      dotenv: 16.4.5
-
   dotenv-expand@5.1.0: {}
 
   dotenv@16.3.1: {}
-
-  dotenv@16.4.5: {}
 
   dotenv@7.0.0: {}
 

@@ -14,7 +14,7 @@ import {
 import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
 import { EditEvaluationButton } from '~/components/edit-evaluation-button';
 import { OpenEvaluationButton } from '~/components/open-evaluation-button';
-import { env } from '~/env';
+import env from '~/env';
 import analytics from '~/services/analytics';
 import { codeBlock } from '~/utilities/discord-formatting';
 

@@ -1,23 +1,7 @@
-import { Client, InteractionType } from '@buape/carbon';
-import { EvaluateCommand } from './commands/evaluate';
-import { env } from './env';
+import { InteractionType } from '@buape/carbon';
+import env from './env';
 import analytics from './services/analytics';
-
-const client =
-  env.DISCORD_TOKEN &&
-  env.DISCORD_CLIENT_ID &&
-  env.DISCORD_PUBLIC_KEY &&
-  new Client(
-    {
-      baseUrl: 'unused',
-      clientId: env.DISCORD_CLIENT_ID,
-      publicKey: env.DISCORD_PUBLIC_KEY,
-      token: env.DISCORD_TOKEN,
-      deploySecret: 'unused',
-      requestOptions: { queueRequests: false },
-    },
-    [new EvaluateCommand()],
-  );
+import client from './services/client';
 
 export default async function handler(request: Request) {
   if (!client) return new Response('X|', { status: 503 });

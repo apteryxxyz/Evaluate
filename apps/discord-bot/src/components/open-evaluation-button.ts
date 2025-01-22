@@ -1,10 +1,10 @@
 import { LinkButton } from '@buape/carbon';
-import { env } from '~/env';
+import env from '~/env';
 import { resolveEmoji } from '~/utilities/resolve-emoji';
 
 export class OpenEvaluationButton extends LinkButton {
   label = 'Open Evaluation';
-  url = env.WEBSITE_URL;
+  url = `${env.WEBSITE_URL}`;
   emoji = resolveEmoji('globe', true);
 
   public constructor(url: string) {

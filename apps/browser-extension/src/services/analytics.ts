@@ -1,7 +1,9 @@
 import posthog from 'posthog-js';
-import { env } from '~env';
+import env from '~env';
 
-const enabled = env.PLASMO_PUBLIC_POSTHOG_KEY && env.PLASMO_PUBLIC_WEBSITE_URL;
+const enabled = Boolean(
+  env.PLASMO_PUBLIC_POSTHOG_KEY && env.PLASMO_PUBLIC_WEBSITE_URL,
+);
 export default enabled ? posthog : null;
 
 if (enabled) {

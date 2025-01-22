@@ -6,6 +6,10 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./env": {
+      "import": "./dist/env.js",
+      "types": "./dist/env.d.ts"
     }
   },
   "scripts": {
@@ -16,8 +20,9 @@
   "dependencies": {
     "@buape/carbon": "0.0.0-beta-20250120130953",
     "@evaluate/engine": "workspace:^",
-    "@evaluate/env": "workspace:^",
+    "@evaluate/helpers": "workspace:^",
     "@evaluate/shapes": "workspace:^",
+    "@t3-oss/env-core": "^0.11.1",
     "@vercel/functions": "^1.5.1",
     "posthog-node": "^4.3.1",
     "zod": "3.22.4"

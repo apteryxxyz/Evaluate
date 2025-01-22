@@ -2,14 +2,14 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fetchRuntimes } from '@evaluate/engine/runtimes';
 import type { MetadataRoute } from 'next/types';
-import { env } from '~/env';
+import env from '~/env';
 
 interface RoutesManifest {
   staticRoutes: { page: string }[];
   dynamicRoutes: { page: string }[];
 }
 
-async function loadStaticPaths(url: string): Promise<MetadataRoute.Sitemap> {
+async function loadStaticPaths(url: URL): Promise<MetadataRoute.Sitemap> {
   const manifestPath = join(process.cwd(), '.next', 'routes-manifest.json');
   const manifest = await readFile(manifestPath, 'utf8')
     .then((c) => JSON.parse(c) as RoutesManifest)
@@ -23,7 +23,7 @@ async function loadStaticPaths(url: string): Promise<MetadataRoute.Sitemap> {
     }));
 }
 
-async function loadDynamicPaths(url: string): Promise<MetadataRoute.Sitemap> {
+async function loadDynamicPaths(url: URL): Promise<MetadataRoute.Sitemap> {
   const runtimes = await fetchRuntimes();
   return runtimes.map((r) => ({
     url: `${url}/playgrounds/${r.id}`,

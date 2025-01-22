@@ -4,9 +4,9 @@
   "type": "module",
   "scripts": {
     "check": "tsc --noEmit",
-    "build": "use-env -p NEXT -P -- pnpm next build --no-lint",
-    "start": "use-env -p NEXT -P -- pnpm next start",
-    "dev": "use-env -p NEXT -- pnpm next dev --turbo"
+    "build": "use-env -p NEXT -P -- next build --no-lint",
+    "start": "use-env -p NEXT -P -- next start",
+    "dev": "use-env -p NEXT -- next dev --turbo"
   },
   "dependencies": {
     "@codemirror/commands": "^6.7.1",

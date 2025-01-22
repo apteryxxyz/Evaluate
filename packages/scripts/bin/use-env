@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { spawn } from 'node:child_process';
 import nextEnv from '@next/env';
+import { spawn } from 'cross-spawn';
 const { loadEnvConfig } = nextEnv;
 import { join as joinPath, dirname as pathDirname } from 'node:path';
 import { fileURLToPath } from 'node:url';

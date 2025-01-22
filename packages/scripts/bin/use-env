@@ -55,9 +55,12 @@ if (loadedFrom) logger.info(`Environment: ${colours.italic(loadedFrom)}`);
 else logger.info('No Environment');
 process.env['>_'] = true;
 
+// TODO: Remove this after debugging
+console.log(process.env);
+
 const child = spawn(commandToRun, {
   stdio: 'inherit',
-  shell: process.env.SHELL,
+  shell: process.env.SHELL || '/bin/bash',
   env: process.env,
 });
 child.on('exit', process.exit);

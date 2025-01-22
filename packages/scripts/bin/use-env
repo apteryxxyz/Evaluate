@@ -3,7 +3,8 @@
 import { spawn } from 'node:child_process';
 import nextEnv from '@next/env';
 const { loadEnvConfig } = nextEnv;
-import { join as joinPath } from 'node:path';
+import { join as joinPath, dirname as pathDirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createCommand } from 'commander';
 import { colours, logger } from './_logger.js';
 
@@ -31,8 +32,9 @@ const program = createCommand('use-env')
 
 const publicPrefix = program.opts().publicPrefix ?? '';
 const isProduction = program.opts().prod;
-const targetDirectory = joinPath(import.meta.dirname, '../../../.env');
 const commandToRun = program.args.map((a) => `"${a}"`).join(' ');
+const thisDirname = pathDirname(fileURLToPath(import.meta.url));
+const targetDirectory = joinPath(thisDirname, '../../../.env');
 
 // Load the environment variables
 const { loadedEnvFiles } = loadEnvConfig(targetDirectory, !isProduction);

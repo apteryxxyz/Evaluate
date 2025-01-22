@@ -1,27 +1,25 @@
-import { validateEnv } from '@evaluate/env/validator';
+import { URL } from '@evaluate/helpers/url';
+import { createEnv } from '@t3-oss/env-nextjs';
+import { vercel } from '@t3-oss/env-nextjs/presets';
+import discordEnv from 'discord-bot/env';
 import { z } from 'zod';
 
-export const env = validateEnv({
+export default createEnv({
+  extends: [discordEnv, vercel()],
+
   server: {
     WEBSITE_URL: z
       .string()
       .url()
-      .refine((v) => !v.endsWith('/'), 'should not end with a slash'),
+      .transform((v) => new URL(v).freeze()),
   },
-  prefix: 'NEXT_PUBLIC_',
   client: {
     NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
   },
 
-  variablesStrict: {
-    WEBSITE_URL: process.env.WEBSITE_URL || `https://${process.env.VERCEL_URL}`,
+  runtimeEnv: {
+    WEBSITE_URL: `https://${process.env.VERCEL_URL}`,
+    ...process.env,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
-  },
-
-  onValid(env) {
-    if (!env.NEXT_PUBLIC_POSTHOG_KEY)
-      console.warn(
-        'Missing Posthog environment variable, analytics will be disabled.',
-      );
   },
 });

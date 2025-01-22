@@ -22,7 +22,7 @@ export default function EditorContent(p: { runtime: Runtime }) {
 
   return (
     <div
-      style={{ '--bottom-spacing': isDesktop ? '6px' : '12px' }}
+      style={{ '--bottom-spacing': isDesktop ? '6px' : '12px' } as never}
       className="m-1.5 mt-0 h-[calc(-3.5rem_+_100vh_-_var(--bottom-spacing))]"
     >
       <ExplorerProvider runtime={p.runtime}>

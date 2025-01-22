@@ -1,10 +1,11 @@
 import posthog from 'posthog-js';
-import { env } from '~/env';
+import env from '~/env';
 
-const enabled =
+const enabled = Boolean(
   typeof window !== 'undefined' &&
-  !window.location.origin.endsWith('.vercel.app') &&
-  env.NEXT_PUBLIC_POSTHOG_KEY;
+    !window.location.origin.endsWith('.vercel.app') &&
+    env.NEXT_PUBLIC_POSTHOG_KEY,
+);
 export default enabled ? posthog : null;
 
 if (enabled) {

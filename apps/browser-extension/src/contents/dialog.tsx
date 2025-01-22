@@ -4,7 +4,7 @@ import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { PlasmoCSConfig, PlasmoGetStyle } from 'plasmo';
 import { useCallback, useEffect, useState } from 'react';
-import { env } from '~env';
+import env from '~env';
 import { ResultsCard } from './_components/results-dialog';
 
 export const config: PlasmoCSConfig = {

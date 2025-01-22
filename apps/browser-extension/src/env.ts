@@ -1,25 +1,20 @@
-import { validateEnv } from '@evaluate/env';
+import { URL } from '@evaluate/helpers/dist/url';
+import { createEnv } from '@t3-oss/env-core';
 import { z } from 'zod';
 
-export const env = validateEnv({
-  prefix: 'PLASMO_PUBLIC_',
+export default createEnv({
+  clientPrefix: 'PLASMO_PUBLIC_',
   client: {
     PLASMO_PUBLIC_WEBSITE_URL: z
       .string()
       .url()
-      .refine((v) => !v.endsWith('/'), 'should not end with a slash'),
+      .transform((v) => new URL(v).freeze()),
     PLASMO_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
   },
 
-  variablesStrict: {
+  runtimeEnv: {
+    ...process.env,
     PLASMO_PUBLIC_WEBSITE_URL: process.env.PLASMO_PUBLIC_WEBSITE_URL,
     PLASMO_PUBLIC_POSTHOG_KEY: process.env.PLASMO_PUBLIC_POSTHOG_KEY,
-  },
-
-  onValid(env) {
-    if (!env.PLASMO_PUBLIC_POSTHOG_KEY)
-      console.warn(
-        'Missing Posthog environment variable, analytics will be disabled.',
-      );
   },
 });

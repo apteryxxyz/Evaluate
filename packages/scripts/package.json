@@ -1,0 +1,14 @@
+{
+  "name": "@evaluate/scripts",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "run-in": "./bin/run-in",
+    "use-env": "./bin/use-env"
+  },
+  "dependencies": {
+    "@next/env": "^15.1.4",
+    "commander": "^13.0.0",
+    "cross-spawn": "^7.0.6"
+  }
+}

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import type { Metadata } from 'next/types';
-import { env } from '~/env';
+import env from '~/env';
 
 export function generateBaseMetadata(
   pathname: string,

@@ -13,20 +13,19 @@
   },
   "scripts": {
     "check": "tsc --noEmit",
-    "dev": "plasmo dev",
+    "dev": "use-env -p PLASMO -- plasmo dev",
     "build:styles": "cp ../../packages/react/style.css ./src/style.css",
     "build": "pnpm build:chrome",
-    "build:chrome": "plasmo build --target=chrome-mv3 --zip",
-    "package": "plasmo package"
+    "build:chrome": "use-env -p PLASMO -P -- plasmo build --target=chrome-mv3 --zip"
   },
   "dependencies": {
     "@evaluate/components": "workspace:^",
     "@evaluate/engine": "workspace:^",
-    "@evaluate/env": "workspace:^",
     "@evaluate/helpers": "workspace:^",
     "@evaluate/hooks": "workspace:^",
-    "@evaluate/style": "workspace:^",
     "@evaluate/shapes": "workspace:^",
+    "@evaluate/style": "workspace:^",
+    "@t3-oss/env-core": "^0.11.1",
     "framer-motion": "^11.12.0",
     "lucide-react": "^0.338.0",
     "posthog-js": "1.161.3",

@@ -14,7 +14,7 @@ import { cn } from '@evaluate/helpers/dist/class';
 import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
 import { ExternalLinkIcon, XIcon } from 'lucide-react';
 import { useMemo } from 'react';
-import { env } from '~env';
+import env from '~env';
 import { wrapCapture } from '~services/analytics';
 
 export function ResultsCard(p: {
@@ -34,7 +34,7 @@ export function ResultsCard(p: {
             className="mr-auto inline-flex items-center gap-2"
             target="_blank"
             rel="noreferrer noopener"
-            href={env.PLASMO_PUBLIC_WEBSITE_URL}
+            href={`${env.PLASMO_PUBLIC_WEBSITE_URL}`}
           >
             <img
               src={`${env.PLASMO_PUBLIC_WEBSITE_URL}/images/icon.png`}

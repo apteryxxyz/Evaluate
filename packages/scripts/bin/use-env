@@ -36,8 +36,12 @@ const commandToRun = program.args.map((a) => `"${a}"`).join(' ');
 const thisDirname = pathDirname(fileURLToPath(import.meta.url));
 const targetDirectory = joinPath(thisDirname, '../../../.env');
 
+console.log('process.env before', process.env);
+
 // Load the environment variables
 const { loadedEnvFiles } = loadEnvConfig(targetDirectory, !isProduction);
+
+console.log('process.env during', process.env);
 
 // Handle public variables with optional prefix
 for (const key in process.env) {
@@ -54,6 +58,8 @@ const loadedFrom = loadedEnvFiles.map((f) => f.path).join(' ');
 if (loadedFrom) logger.info(`Environment: ${colours.italic(loadedFrom)}`);
 else logger.info('No Environment');
 process.env['>_'] = true;
+
+console.log('process.env after', process.env);
 
 const child = spawn(commandToRun, {
   stdio: 'inherit',

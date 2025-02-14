@@ -13,6 +13,14 @@ import { useRef, useState } from 'react';
 import { ImageWithFallback } from '~/components/image-fallback';
 import { type RGB, getDominantColour } from '~/utilities/get-colour';
 
+declare module 'react' {
+  namespace CSS {
+    interface Properties {
+      [key: `--${string}`]: string;
+    }
+  }
+}
+
 export function PlaygroundCard(p: {
   runtime: PartialRuntime;
   hash?: string;

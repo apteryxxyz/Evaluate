@@ -1,3 +1,4 @@
+import fetch2 from '@evaluate/helpers/fetch';
 import {
   type PartialRuntime,
   PistonRuntime,
@@ -25,7 +26,7 @@ const Runtimes = new Map<string, PartialRuntime>();
 export async function fetchRuntimes() {
   if (Runtimes.size) return Array.from(Runtimes.values());
 
-  const pistonRuntimes = await fetch('https://emkc.org/api/v2/piston/runtimes')
+  const pistonRuntimes = await fetch2('https://emkc.org/api/v2/piston/runtimes')
     .then((response) => response.json())
     .then(z.array(PistonRuntime).parse);
 

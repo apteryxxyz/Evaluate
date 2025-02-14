@@ -1,4 +1,4 @@
-import { EnhancedURL } from '@evaluate/helpers/url';
+import URL2 from '@evaluate/helpers/url';
 import { createEnv } from '@t3-oss/env-core';
 import { z } from 'zod';
 
@@ -8,7 +8,7 @@ export default createEnv({
     VITE_PUBLIC_WEBSITE_URL: z
       .string()
       .url()
-      .transform((v) => new EnhancedURL(v)),
+      .transform((v) => new URL2(v)),
   },
 
   runtimeEnv: {

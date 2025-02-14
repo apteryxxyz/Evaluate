@@ -9,6 +9,7 @@
     }
   },
   "scripts": {
+    "check": "tsc --noEmit",
     "build": "tsup"
   },
   "dependencies": {

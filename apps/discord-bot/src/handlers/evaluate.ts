@@ -5,12 +5,12 @@ import {
   Row,
   type User,
 } from '@buape/carbon';
-import { compress } from '@evaluate/engine/compress';
 import { executeCode } from '@evaluate/engine/execute';
 import {
   getRuntimeDefaultFileName,
   searchRuntimes,
 } from '@evaluate/engine/runtimes';
+import { compress } from '@evaluate/helpers/compress';
 import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
 import { EditEvaluationButton } from '~/components/edit-evaluation-button';
 import { OpenEvaluationButton } from '~/components/open-evaluation-button';

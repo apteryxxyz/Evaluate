@@ -26,8 +26,7 @@
   },
   "pnpm": {
     "patchedDependencies": {
-      "zod@3.22.4": "patches/zod@3.22.4.patch",
-      "posthog-js@1.161.3": "patches/posthog-js@1.161.3.patch"
+      "zod@3.22.4": "patches/zod@3.22.4.patch"
     },
     "allowNonAppliedPatches": true
   }

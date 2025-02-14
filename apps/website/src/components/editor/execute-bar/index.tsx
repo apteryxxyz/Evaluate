@@ -23,7 +23,6 @@ import { useForm } from 'react-hook-form';
 import type { File } from 'virtual-file-explorer-backend';
 import { useExplorer, useWatch } from '~/components/explorer/use';
 import { useTerminal } from '~/components/terminal/use';
-import analytics from '~/services/analytics';
 
 export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
   const explorer = useExplorer();
@@ -103,11 +102,6 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
     onSuccess(data) {
       setResult(data);
       dispatchEvent(new CustomEvent('mobile-terminal-open-change'));
-      analytics?.capture('code executed', {
-        'runtime id': runtime.id,
-        'was successful':
-          data.run.code === 0 && (!data.compile || data.compile.code === 0),
-      });
     },
     onError(error) {
       toast.error(error.message);

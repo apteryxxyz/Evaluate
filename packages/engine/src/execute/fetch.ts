@@ -7,6 +7,7 @@ import {
 import { getRuntime } from '~/runtimes';
 import { extractIdentifier } from '~/runtimes/identifier';
 import { parseArguments } from './arguments';
+import { HttpError, TooManyRequestsError } from './error';
 
 /**
  * Execute code using the Piston API.
@@ -22,47 +23,92 @@ export async function executeCode(options: ExecuteOptions) {
   const { language } = extractIdentifier(identifier!);
   if (version === 'latest') version = runtime.versions.at(-1)!;
 
+  const body = PistonExecuteOptions.parse({
+    language,
+    version,
+    files: Object.entries(options.files)
+      .map(([name, content]) => ({ name, content }))
+      .sort((a, b) => {
+        if (options.entry === a.name) return -1;
+        if (options.entry === b.name) return 1;
+        return 0;
+      }),
+    stdin: options.input,
+    args: options.args ? parseArguments(options.args) : undefined,
+  });
+
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15000);
 
-  try {
-    const response = await fetch('https://emkc.org/api/v2/piston/execute', {
+  const response = await fetchWithRetry(
+    'https://emkc.org/api/v2/piston/execute',
+    {
+      signal: controller.signal,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(
-        PistonExecuteOptions.parse({
-          language,
-          version,
-          files: Object.entries(options.files)
-            .map(([name, content]) => ({ name, content }))
-            .sort((a, b) => {
-              if (options.entry === a.name) return -1;
-              if (options.entry === b.name) return 1;
-              return 0;
-            }),
-          stdin: options.input,
-          args: options.args ? parseArguments(options.args) : undefined,
-        }),
-      ),
-      signal: controller.signal,
-    });
-    const json = await response.json();
+      body: JSON.stringify(body),
+    },
+  ).finally(() => clearTimeout(timeout));
+  const json = await response.json();
 
-    try {
-      const result = PistonExecuteResult.parse(json);
-      return ExecuteResult.parse(result);
-    } catch (error) {
-      console.error(error, json);
-      throw new Error(
-        'An internal error occurred while trying to reach the execution engine',
-      );
-    }
+  try {
+    const result = PistonExecuteResult.parse(json);
+    return ExecuteResult.parse(result);
   } catch (error) {
-    console.error(error);
-    throw new Error(
-      'An internal error occurred while trying to reach the execution engine',
-    );
-  } finally {
-    clearTimeout(timeout);
+    console.error('Error parsing incoming json', error, json);
+    throw new Error('An error occurred while parsing the response');
   }
+}
+
+async function fetchWithRetry(
+  url: string | URL,
+  options?: RequestInit,
+  maxRetries = 3,
+  delayFunction = (attempt: number) => 2 ** attempt * 1000,
+) {
+  let retryCount = 0;
+
+  while (retryCount < maxRetries) {
+    const [error, response] = await fetch(url, options)
+      .then((response) => [null, response] as const)
+      .catch((error: Error) => [error, null] as const);
+    if (response?.ok) return response as Response & { ok: true };
+
+    if (error) {
+      if (error instanceof Error && error.name === 'AbortError')
+        throw new Error('Request was aborted');
+
+      retryCount++;
+      if (retryCount < maxRetries) {
+        const delay = delayFunction(retryCount);
+        console.warn(
+          `Request to ${url} failed, retrying in ${delay}ms (${retryCount}/${maxRetries})`,
+        );
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        continue;
+      } else {
+        console.error(error);
+        throw new Error('An unknown error occurred');
+      }
+    }
+
+    if (response.status === 429) {
+      retryCount++;
+      if (retryCount < maxRetries) {
+        const delay = delayFunction(retryCount);
+        console.warn(
+          `Request to ${url} was rate limited, retrying in ${delay}ms (${retryCount}/${maxRetries})`,
+        );
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        continue;
+      } else {
+        throw new TooManyRequestsError(response, 'Too many requests');
+      }
+    }
+
+    console.error(error);
+    throw new HttpError(response, 'An unknown error occurred');
+  }
+
+  throw new Error('Unreachable code');
 }

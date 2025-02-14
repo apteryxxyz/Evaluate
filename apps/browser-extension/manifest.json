@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json.schemastore.org/chrome-manifest",
+
+  "manifest_version": 3,
+  "version": "0.1.3",
+  "author": {
+    "name": "Apteryx Software",
+    "email": "kiaora@apteryx.xyz"
+  },
+  "name": "Evaluate - Execute Any Code, Anywhere, Anytime",
+  "short_name": "Evaluate",
+  "description": "Execute any code snippet on any website with Evaluate.",
+  "homepage_url": "https://evaluate.run",
+
+  "icons": {
+    "16": "images/icon/16.png",
+    "32": "images/icon/32.png",
+    "48": "images/icon/48.png",
+    "64": "images/icon/64.png",
+    "128": "images/icon/128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon/16.png",
+      "32": "images/icon/32.png",
+      "48": "images/icon/48.png",
+      "64": "images/icon/64.png",
+      "128": "images/icon/128.png"
+    }
+  },
+
+  "permissions": ["contextMenus"],
+  "background": {
+    "service_worker": "src/background/index.ts",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content-script/index.tsx"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["images/icon.png"],
+      "use_dynamic_url": false
+    }
+  ]
+}

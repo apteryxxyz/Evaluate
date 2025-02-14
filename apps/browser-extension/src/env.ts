@@ -1,20 +1,18 @@
-import { URL } from '@evaluate/helpers/dist/url';
+import { EnhancedURL } from '@evaluate/helpers/url';
 import { createEnv } from '@t3-oss/env-core';
 import { z } from 'zod';
 
 export default createEnv({
-  clientPrefix: 'PLASMO_PUBLIC_',
+  clientPrefix: 'VITE_PUBLIC_',
   client: {
-    PLASMO_PUBLIC_WEBSITE_URL: z
+    VITE_PUBLIC_WEBSITE_URL: z
       .string()
       .url()
-      .transform((v) => new URL(v).freeze()),
-    PLASMO_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
+      .transform((v) => new EnhancedURL(v)),
   },
 
   runtimeEnv: {
-    ...process.env,
-    PLASMO_PUBLIC_WEBSITE_URL: process.env.PLASMO_PUBLIC_WEBSITE_URL,
-    PLASMO_PUBLIC_POSTHOG_KEY: process.env.PLASMO_PUBLIC_POSTHOG_KEY,
+    ...import.meta.env,
+    VITE_PUBLIC_WEBSITE_URL: import.meta.env.VITE_PUBLIC_WEBSITE_URL,
   },
 });

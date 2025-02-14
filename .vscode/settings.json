@@ -21,7 +21,11 @@
   "material-icon-theme.folders.associations": {
     "shapes": "middleware"
   },
-  "cSpell.words": [],
+  "material-icon-theme.files.associations": {
+    "vite.config.chrome.ts": "vite",
+    "vite.config.firefox.ts": "vite"
+  },
+  "cSpell.words": ["posthog", "Resolvables"],
   "todo-tree.general.tags": ["=====", "NOTE", "IDEA", "TODO", "FIX", "HACK"],
   "todo-tree.highlights.customHighlight": {
     "=====": {

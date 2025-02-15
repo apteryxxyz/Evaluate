@@ -25,7 +25,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { useEffect, useState } from 'react';
-import { injectPageTracking } from '~/services/analytics';
+import { injectPageEventCapturing } from '~/services/posthog';
 import { BreakpointIndicator } from './breakpoint-indicator';
 
 export function BodyProviders(p: React.PropsWithChildren) {
@@ -47,7 +47,7 @@ export function BodyProviders(p: React.PropsWithChildren) {
   );
 
   useEffect(() => {
-    injectPageTracking();
+    injectPageEventCapturing();
   }, []);
 
   return (

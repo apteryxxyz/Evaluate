@@ -23,7 +23,7 @@ import { useForm } from 'react-hook-form';
 import type { File } from 'virtual-file-explorer-backend';
 import { useExplorer, useWatch } from '~/components/explorer/use';
 import { useTerminal } from '~/components/terminal/use';
-import analytics from '~/services/analytics';
+import posthog from '~/services/posthog';
 
 export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
   const explorer = useExplorer();
@@ -100,13 +100,25 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
   const { mutate, isPending } = useMutation({
     mutationKey: ['executeCode'],
     mutationFn: executeCode,
-    onSuccess(data) {
-      setResult(data);
+    onSuccess(result) {
+      setResult(result);
       dispatchEvent(new CustomEvent('mobile-terminal-open-change'));
-      analytics?.capture('code executed', {
-        'runtime id': runtime.id,
-        'was successful':
-          data.run.code === 0 && (!data.compile || data.compile.code === 0),
+
+      const [codeLength, codeLines] = files.reduce(
+        ([length, lines], file) => [
+          length + file.content.length,
+          lines + file.content.split('\n').length,
+        ],
+        [0, 0],
+      );
+      posthog?.capture('executed_code', {
+        runtime_id: runtime.id,
+        code_length: codeLength,
+        code_lines: codeLines,
+        compile_successful: result.compile ? result.compile.code === 0 : null,
+        execution_successful:
+          result.run.code === 0 &&
+          (!result.compile || result.compile.code === 0),
       });
     },
     onError(error) {

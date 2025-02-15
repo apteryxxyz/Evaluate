@@ -1,11 +1,17 @@
 import { Toaster } from '@evaluate/components/toast';
-import tailwindCss from '@evaluate/style/.css';
+import tailwindCss from '@evaluate/style/.css?inline';
 import { createRoot } from 'react-dom/client';
-import sonnerCss from 'sonner/dist/styles.css';
-import { onMessage } from 'webext-bridge/content-script';
+import sonnerCss from 'sonner/dist/styles.css?inline';
+import { onMessage, sendMessage } from 'webext-bridge/content-script';
 import { extractRuntimeResolvables } from '~/helpers/runtime-resolvables';
+import posthog, { sessionLog } from '~/services/posthog';
 import { Execution } from './execution';
 import { createIsolatedElement } from './shadow-root';
+
+sendMessage('getBackgroundSessionId', void 0).then((id) => {
+  sessionLog(id);
+  Reflect.set(posthog?.sessionManager ?? {}, '_sessionId', id);
+});
 
 onMessage('getSelectionInfo', () => {
   const selection = window.getSelection();

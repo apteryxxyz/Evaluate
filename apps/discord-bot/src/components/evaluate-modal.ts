@@ -6,6 +6,8 @@ import {
   TextInputStyle,
 } from '@buape/carbon';
 import { handleEvaluating } from '~/handlers/evaluate';
+import { captureEvent } from '~/services/posthog';
+import { getInteractionContext } from '~/utilities/session-context';
 
 export class EvaluateModal extends Modal {
   title = 'Evaluate';
@@ -27,13 +29,17 @@ export class EvaluateModal extends Modal {
     }
   }
 
-  async run(interaction: ModalInteraction) {
-    const runtime = interaction.fields.getText('runtime', true);
-    const code = interaction.fields.getText('code', true);
-    const args = interaction.fields.getText('args');
-    const input = interaction.fields.getText('input');
+  async run(submit: ModalInteraction) {
+    captureEvent(getInteractionContext(submit.rawData), 'submitted_modal', {
+      modal_id: this.customId,
+    });
 
-    return handleEvaluating(interaction, { runtime, code, args, input });
+    const runtime = submit.fields.getText('runtime', true);
+    const code = submit.fields.getText('code', true);
+    const args = submit.fields.getText('args');
+    const input = submit.fields.getText('input');
+
+    return handleEvaluating(submit, { runtime, code, args, input });
   }
 }
 

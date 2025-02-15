@@ -11,7 +11,6 @@ import {
 } from '@evaluate/components/select';
 import { toast } from '@evaluate/components/toast';
 import { executeCode } from '@evaluate/engine/execute';
-import { cn } from '@evaluate/helpers/class';
 import { useEventListener } from '@evaluate/hooks/event-listener';
 import { useMediaQuery } from '@evaluate/hooks/media-query';
 import { ExecuteOptions, type PartialRuntime } from '@evaluate/shapes';
@@ -20,6 +19,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { twMerge as cn } from 'tailwind-merge';
 import type { File } from 'virtual-file-explorer-backend';
 import { useExplorer, useWatch } from '~/components/explorer/use';
 import { useTerminal } from '~/components/terminal/use';

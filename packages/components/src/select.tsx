@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import {
   CheckIcon,
@@ -10,6 +9,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 const Select = SelectPrimitive.Root;
 

@@ -6,8 +6,8 @@ import {
   PopoverAnchor,
   PopoverContent,
 } from '@evaluate/components/popover';
-import { cn } from '@evaluate/helpers/class';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 import type { File, Folder } from 'virtual-file-explorer-backend';
 
 const InvalidNameRegex = /(^\s|\s$|^\.\.|\.$|[\\/:*?"<>|])/;

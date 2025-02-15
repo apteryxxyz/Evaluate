@@ -23,7 +23,6 @@
     "@evaluate/helpers": "workspace:^",
     "@evaluate/shapes": "workspace:^",
     "@t3-oss/env-core": "^0.11.1",
-    "@vercel/functions": "^1.5.1",
     "atomic-fns": "^1.1.6",
     "date-fns": "^4.1.0",
     "posthog-node": "^4.6.0",

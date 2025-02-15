@@ -1,9 +1,15 @@
-import { createLogger } from '@evaluate/helpers/logger';
+import { createLogger } from '@evaluate/helpers/create-logger';
 import posthog from 'posthog-js';
 import env from '~/env';
 
-export const captureLog = createLogger('posthog capture', '#eb9d2a');
-export const sessionLog = createLogger('posthog session', '#eb9d2a');
+export const captureLog = createLogger({
+  badge: 'posthog capture',
+  hex: '#eb9d2a',
+});
+export const sessionLog = createLogger({
+  badge: 'posthog session',
+  hex: '#eb9d2a',
+});
 
 export function isAvailable() {
   return Boolean(

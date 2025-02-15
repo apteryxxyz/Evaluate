@@ -1,5 +1,5 @@
-import { cn } from '@evaluate/helpers/class';
 import React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 export const Spotlight = React.forwardRef<
   React.ElementRef<'svg'>,

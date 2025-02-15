@@ -2,7 +2,6 @@
 
 import { Button } from '@evaluate/components/button';
 import { Sheet, SheetContent, SheetTrigger } from '@evaluate/components/sheet';
-import { cn } from '@evaluate/helpers/class';
 import { useMediaQuery } from '@evaluate/hooks/media-query';
 import { MenuIcon } from 'lucide-react';
 import Image from 'next/image';
@@ -10,6 +9,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type React from 'react';
 import { Children, useCallback, useState } from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 import { ThemeSwitcher } from './theme-switcher';
 
 export function Header() {

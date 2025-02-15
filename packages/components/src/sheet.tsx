@@ -1,9 +1,10 @@
 'use client';
 
-import { type VariantProps, cn, cva } from '@evaluate/helpers/class';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
+import { type VariantProps, cva } from 'class-variance-authority';
 import { XIcon } from 'lucide-react';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 const Sheet = SheetPrimitive.Root;
 

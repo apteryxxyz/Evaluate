@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "type": "module",
   "scripts": {
+    "check": "tsc --noEmit",
     "build": "pnpm run \"/build:.*/\"",
     "build:chrome": "use-env -p VITE -P -- vite build --config vite.config.chrome.ts",
     "build:firefox": "use-env -p VITE -P -- vite build --config vite.config.firefox.ts",
@@ -22,6 +23,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sonner": "^1.7.2",
+    "tailwind-merge": "^2.6.0",
     "webext-bridge": "^6.0.1",
     "webextension-polyfill": "^0.12.0",
     "zod": "3.22.4"

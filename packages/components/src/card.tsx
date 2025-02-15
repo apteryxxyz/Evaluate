@@ -1,5 +1,5 @@
-import { cn } from '@evaluate/helpers/class';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 const Card = React.forwardRef<
   HTMLDivElement,

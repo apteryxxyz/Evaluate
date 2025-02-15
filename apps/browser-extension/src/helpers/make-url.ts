@@ -1,5 +1,5 @@
+import { compress } from '@evaluate/engine/compress';
 import { getRuntimeDefaultFileName } from '@evaluate/engine/runtimes';
-import { compress } from '@evaluate/helpers/compress';
 import type { PartialRuntime } from '@evaluate/shapes';
 import env from '~/env';
 

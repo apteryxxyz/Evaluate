@@ -2,11 +2,11 @@
 
 import { Button } from '@evaluate/components/button';
 import { ScrollArea, ScrollBar } from '@evaluate/components/scroll-area';
-import { cn } from '@evaluate/helpers/class';
 import { useEventListener } from '@evaluate/hooks/event-listener';
 import type { PartialRuntime } from '@evaluate/shapes';
 import { FilesIcon, Share2Icon, TerminalIcon } from 'lucide-react';
 import { useCallback, useEffect, useRef } from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 import { ExecuteBar } from './execute-bar';
 import { useEditor } from './hooks';
 import { OpenedFiles } from './opened-files';

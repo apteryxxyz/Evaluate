@@ -1,10 +1,10 @@
 import { Button } from '@evaluate/components/button';
 import { Label } from '@evaluate/components/label';
 import { Textarea } from '@evaluate/components/textarea';
-import { cn } from '@evaluate/helpers/class';
 import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
 import { ExternalLinkIcon } from 'lucide-react';
 import { useMemo } from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 import { makeEditCodeUrl, makePickRuntimeUrl } from '~/helpers/make-url';
 
 export function ResultDialog({

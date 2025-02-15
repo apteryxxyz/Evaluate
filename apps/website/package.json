@@ -25,6 +25,7 @@
     "@uiw/codemirror-theme-vscode": "^4.23.6",
     "@uiw/react-codemirror": "^4.23.6",
     "@vercel/speed-insights": "^1.1.0",
+    "date-fns": "^4.1.0",
     "discord-bot": "workspace:^",
     "dompurify": "^3.2.2",
     "embla-carousel-autoplay": "^8.5.1",
@@ -45,7 +46,7 @@
     "react-hook-form": "^7.53.2",
     "react-hotkeys-hook": "^4.6.1",
     "sharp": "^0.33.5",
-    "superjson": "^2.2.1",
+    "tailwind-merge": "^2.6.0",
     "virtual-file-explorer-backend": "^0.0.4",
     "vscode-icons-js": "^11.6.1",
     "zod": "3.22.4"

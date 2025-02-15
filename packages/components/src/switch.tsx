@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import * as SwitchPrimitives from '@radix-ui/react-switch';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,

@@ -25,15 +25,9 @@ importers:
       husky:
         specifier: ^9.1.7
         version: 9.1.7
-      resolve-tspaths:
-        specifier: ^0.8.23
-        version: 0.8.23(typescript@5.7.3)
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(@swc/core@1.9.3(@swc/helpers@0.5.15))(jiti@1.21.6)(postcss@8.5.2)(tsx@4.19.2)(typescript@5.7.3)(yaml@2.6.1)
-      tsx:
-        specifier: ^4.19.2
-        version: 4.19.2
       turbo:
         specifier: ^2.3.3
         version: 2.3.3
@@ -76,6 +70,9 @@ importers:
       sonner:
         specifier: ^1.7.2
         version: 1.7.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      tailwind-merge:
+        specifier: ^2.6.0
+        version: 2.6.0
       webext-bridge:
         specifier: ^6.0.1
         version: 6.0.1
@@ -146,9 +143,6 @@ importers:
       '@t3-oss/env-core':
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
-      '@vercel/functions':
-        specifier: ^1.5.1
-        version: 1.5.1
       atomic-fns:
         specifier: ^1.1.6
         version: 1.1.6
@@ -212,6 +206,9 @@ importers:
       '@vercel/speed-insights':
         specifier: ^1.1.0
         version: 1.1.0(next@14.2.18(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.81.0))(react@18.3.1)(svelte@4.0.1)(vue@3.3.4)
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       discord-bot:
         specifier: workspace:^
         version: link:../discord-bot
@@ -272,9 +269,9 @@ importers:
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
-      superjson:
-        specifier: ^2.2.1
-        version: 2.2.1
+      tailwind-merge:
+        specifier: ^2.6.0
+        version: 2.6.0
       virtual-file-explorer-backend:
         specifier: ^0.0.4
         version: 0.0.4
@@ -309,9 +306,6 @@ importers:
 
   packages/components:
     dependencies:
-      '@evaluate/helpers':
-        specifier: workspace:^
-        version: link:../helpers
       '@radix-ui/react-accordion':
         specifier: ^1.2.1
         version: 1.2.1(@types/react-dom@19.0.3(@types/react@18.3.12))(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -348,9 +342,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.4
         version: 1.1.4(@types/react-dom@19.0.3(@types/react@18.3.12))(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
       cmdk:
         specifier: ^0.2.1
         version: 0.2.1(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -373,7 +367,7 @@ importers:
         specifier: ^1.7.2
         version: 1.7.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwind-merge:
-        specifier: ^2.5.5
+        specifier: ^2.6.0
         version: 2.6.0
     devDependencies:
       '@types/react':
@@ -382,9 +376,6 @@ importers:
       tailwindcss:
         specifier: ^3.4.15
         version: 3.4.17
-      tailwindcss-animate:
-        specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.17)
 
   packages/engine:
     dependencies:
@@ -411,30 +402,7 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3
 
-  packages/helpers:
-    dependencies:
-      class-variance-authority:
-        specifier: ^0.7.1
-        version: 0.7.1
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      pako:
-        specifier: ^2.1.0
-        version: 2.1.0
-      tailwind-merge:
-        specifier: ^2.6.0
-        version: 2.6.0
-      type-fest:
-        specifier: ^4.32.0
-        version: 4.33.0
-    devDependencies:
-      '@types/pako':
-        specifier: ^2.0.3
-        version: 2.0.3
-      '@types/react':
-        specifier: ^19.0.4
-        version: 19.0.7
+  packages/helpers: {}
 
   packages/hooks:
     dependencies:
@@ -2312,15 +2280,6 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
-  '@vercel/functions@1.5.1':
-    resolution: {integrity: sha512-cCdrWa4sUkNE8WjZu9ODA4Q3d92Y333bCL3zebvQ8XCOH0MCy37q3rQ02sJU93mn7BuZyEk5hWBnEtfOb6Sr2Q==}
-    engines: {node: '>= 16'}
-    peerDependencies:
-      '@aws-sdk/credential-provider-web-identity': '*'
-    peerDependenciesMeta:
-      '@aws-sdk/credential-provider-web-identity':
-        optional: true
-
   '@vercel/speed-insights@1.1.0':
     resolution: {integrity: sha512-rAXxuhhO4mlRGC9noa5F7HLMtGg8YF1zAN6Pjd1Ny4pII4cerhtwSG4vympbCl+pWkH7nBS9kVXRD4FAn54dlg==}
     peerDependencies:
@@ -2400,10 +2359,6 @@ packages:
     resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
     engines: {node: '>=0.4.0'}
     hasBin: true
-
-  ansi-colors@4.1.3:
-    resolution: {integrity: sha512-/6w/C21Pm1A7aZitlI5Ni/2J6FFQN8i1Cvz3kHABAAbw93v/NlvKdVOqz7CCWz/3iv/JplRSEEZ83XION15ovw==}
-    engines: {node: '>=6'}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -2573,10 +2528,6 @@ packages:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
 
-  commander@12.1.0:
-    resolution: {integrity: sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==}
-    engines: {node: '>=18'}
-
   commander@13.1.0:
     resolution: {integrity: sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw==}
     engines: {node: '>=18'}
@@ -2604,10 +2555,6 @@ packages:
 
   copy-anything@2.0.6:
     resolution: {integrity: sha512-1j20GZTsvKNkc4BY3NpMOM8tt///wY3FpIzozTOFO2ffuZcV61nojHXVKIy3WM+7ADCy5FVhdZYHYDdgTU0yJw==}
-
-  copy-anything@3.0.5:
-    resolution: {integrity: sha512-yCEafptTtb4bk7GLEQoM8KVJpxAfdBJYaXyzQEgQQQgYrZiDp8SJmGKlYza6CYjEDNstAdNdKA3UuoULlEbS6w==}
-    engines: {node: '>=12.13'}
 
   core-js@3.40.0:
     resolution: {integrity: sha512-7vsMc/Lty6AGnn7uFpYT56QesI5D2Y/UkgKounk87OP9Z2H9Z8kj6jzcSGAxFmUtDOS0ntK6lbQz+Nsa0Jj6mQ==}
@@ -3137,10 +3084,6 @@ packages:
   is-what@3.14.1:
     resolution: {integrity: sha512-sNxgpk9793nzSs7bA6JQJGeIuRBQhAaNGG77kzYQgMkrID+lS6SlK07K5LaptscDlSaIgH+GPFzf+d75FVxozA==}
 
-  is-what@4.1.16:
-    resolution: {integrity: sha512-ZhMwEosbFJkA0YhFnNDgTM4ZxDRsS6HqTo7qsZM08fehyRYIYa0yHu5R6mgo1n/8MgaPBXiPimPD77baVFYg+A==}
-    engines: {node: '>=12.13'}
-
   isarray@1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
 
@@ -3634,12 +3577,6 @@ packages:
   resolve-pkg-maps@1.0.0:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
 
-  resolve-tspaths@0.8.23:
-    resolution: {integrity: sha512-VMZPjXnYLHnNHXOmJ9Unkkls08zDc+0LSBUo8Rp+SKzRt8rfD9dMpBudQJ5PNG8Szex/fnwdNKzd7rqipIH/zg==}
-    hasBin: true
-    peerDependencies:
-      typescript: '>=3.0.3'
-
   resolve@1.22.8:
     resolution: {integrity: sha512-oKWePCxqpd6FlLvGV1VU0x7bkPmmCNolxzjMf4NczoDnQcIWrAF+cPtZn5i6n+RfD2d9i0tzpKnG6Yk168yIyw==}
     hasBin: true
@@ -3789,10 +3726,6 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
 
-  superjson@2.2.1:
-    resolution: {integrity: sha512-8iGv75BYOa0xRJHK5vRLEjE2H/i4lulTjzpUXic3Eg8akftYjkmQDa8JARQ42rlczXyFR3IeRoeFCc7RxHsYZA==}
-    engines: {node: '>=16'}
-
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
@@ -3936,10 +3869,6 @@ packages:
   type-fest@2.19.0:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
-
-  type-fest@4.33.0:
-    resolution: {integrity: sha512-s6zVrxuyKbbAsSAD5ZPTB77q4YIdRctkTbJ2/Dqlinwz+8ooH2gd+YA7VA6Pa93KML9GockVvoxjZ2vHP+mu8g==}
-    engines: {node: '>=16'}
 
   typescript@5.7.3:
     resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
@@ -6009,8 +5938,6 @@ snapshots:
       - '@codemirror/lint'
       - '@codemirror/search'
 
-  '@vercel/functions@1.5.1': {}
-
   '@vercel/speed-insights@1.1.0(next@14.2.18(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.81.0))(react@18.3.1)(svelte@4.0.1)(vue@3.3.4)':
     optionalDependencies:
       next: 14.2.18(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.81.0)
@@ -6113,8 +6040,6 @@ snapshots:
       acorn: 8.14.0
 
   acorn@8.14.0: {}
-
-  ansi-colors@4.1.3: {}
 
   ansi-regex@5.0.1: {}
 
@@ -6321,8 +6246,6 @@ snapshots:
     dependencies:
       delayed-stream: 1.0.0
 
-  commander@12.1.0: {}
-
   commander@13.1.0: {}
 
   commander@2.20.3:
@@ -6342,10 +6265,6 @@ snapshots:
     dependencies:
       is-what: 3.14.1
     optional: true
-
-  copy-anything@3.0.5:
-    dependencies:
-      is-what: 4.1.16
 
   core-js@3.40.0: {}
 
@@ -6607,6 +6526,7 @@ snapshots:
       '@esbuild/win32-arm64': 0.23.1
       '@esbuild/win32-ia32': 0.23.1
       '@esbuild/win32-x64': 0.23.1
+    optional: true
 
   esbuild@0.24.0:
     optionalDependencies:
@@ -6732,6 +6652,7 @@ snapshots:
   get-tsconfig@4.8.1:
     dependencies:
       resolve-pkg-maps: 1.0.0
+    optional: true
 
   glob-parent@5.1.2:
     dependencies:
@@ -6841,8 +6762,6 @@ snapshots:
 
   is-what@3.14.1:
     optional: true
-
-  is-what@4.1.16: {}
 
   isarray@1.0.0: {}
 
@@ -7294,14 +7213,8 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-pkg-maps@1.0.0: {}
-
-  resolve-tspaths@0.8.23(typescript@5.7.3):
-    dependencies:
-      ansi-colors: 4.1.3
-      commander: 12.1.0
-      fast-glob: 3.3.2
-      typescript: 5.7.3
+  resolve-pkg-maps@1.0.0:
+    optional: true
 
   resolve@1.22.8:
     dependencies:
@@ -7487,10 +7400,6 @@ snapshots:
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
 
-  superjson@2.2.1:
-    dependencies:
-      copy-anything: 3.0.5
-
   supports-preserve-symlinks-flag@1.0.0: {}
 
   svelte@4.0.1:
@@ -7654,6 +7563,7 @@ snapshots:
       get-tsconfig: 4.8.1
     optionalDependencies:
       fsevents: 2.3.3
+    optional: true
 
   turbo-darwin-64@2.3.3:
     optional: true
@@ -7683,8 +7593,6 @@ snapshots:
       turbo-windows-arm64: 2.3.3
 
   type-fest@2.19.0: {}
-
-  type-fest@4.33.0: {}
 
   typescript@5.7.3: {}
 

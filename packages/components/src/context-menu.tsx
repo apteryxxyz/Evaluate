@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import * as ContextMenuPrimitive from '@radix-ui/react-context-menu';
 import { CheckIcon, ChevronRightIcon, DotIcon } from 'lucide-react';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 const ContextMenu = ContextMenuPrimitive.Root;
 

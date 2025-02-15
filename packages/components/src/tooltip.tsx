@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 // TooltipProviderProps is not exported by react-tooltip
 type TooltipProviderProps = //

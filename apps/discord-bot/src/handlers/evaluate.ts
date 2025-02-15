@@ -15,7 +15,9 @@ import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
 import { EditEvaluationButton } from '~/components/edit-evaluation-button';
 import { OpenEvaluationButton } from '~/components/open-evaluation-button';
 import env from '~/env';
+import { captureEvent } from '~/services/posthog';
 import { codeBlock } from '~/utilities/discord-formatting';
+import { getInteractionContext } from '~/utilities/session-context';
 
 function isNew(
   interaction: CommandInteraction | ModalInteraction,
@@ -98,12 +100,22 @@ export async function handleEvaluating(
     throw error;
   });
 
+  captureEvent(getInteractionContext(interaction.rawData), 'executed_code', {
+    runtime_id: runtime.id,
+    code_length: options.code.length,
+    code_lines: options.code.split('\n').length,
+    compile_successful: result.compile ? result.compile.code === 0 : null,
+    execution_successful:
+      result.run.code === 0 && (!result.compile || result.compile.code === 0),
+  });
+
   const resultKey = result?.compile?.code ? 'compile' : 'run';
   const hasTimedOut = result[resultKey]?.signal === 'SIGKILL';
   const doesHaveDisplayableOutput = result[resultKey]?.output?.trim() !== '';
 
   let output = result[resultKey]!.output;
   if (!doesHaveDisplayableOutput) {
+    // TODO: This stuff would be better handled by the executeCode function
     const isRun = resultKey === 'run';
     if (hasTimedOut) {
       if (isRun)

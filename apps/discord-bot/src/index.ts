@@ -19,7 +19,7 @@ export default async function handler(request: Request) {
     if (request.method !== 'POST') return new Response(':O', { status: 405 });
 
     // @ts-expect-error - validateInteraction is a private method
-    const isValid = await client.validateInteractionRequest(request);
+    const isValid = await client.validateDiscordRequest(request);
     if (!isValid) return new Response('>:(', { status: 401 });
 
     const interaction = await request.json();

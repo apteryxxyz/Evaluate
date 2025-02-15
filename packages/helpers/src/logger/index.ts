@@ -54,7 +54,7 @@ function closestAnsiColour(r: number, g: number, b: number) {
 }
 
 function determineMode() {
-  return typeof navigator !== 'undefined' ? 'css' : 'ansi';
+  return typeof location !== 'undefined' ? 'css' : 'ansi';
 }
 
 function constructArgs(badge: string, colour: string, ...args: unknown[]) {
@@ -62,7 +62,7 @@ function constructArgs(badge: string, colour: string, ...args: unknown[]) {
 
   if (mode === 'ansi') {
     const open = hexToAnsi(colour);
-    return [`${open}\x1b[1;37m %s \x1b[0m`, badge];
+    return [`${open}\x1b[1;37m %s \x1b[0m`, badge, ...args];
   } else if (mode === 'css') {
     const style = `background-color: ${colour}; color: white; font-weight: bold; padding: 2px 5px; border-radius: 5px;`;
     return [`%c${badge}`, style, ...args];
@@ -71,9 +71,12 @@ function constructArgs(badge: string, colour: string, ...args: unknown[]) {
   }
 }
 
-export function createLogger(badge: string, colour: string, devOnly?: boolean) {
+export function createLogger(
+  badge: string,
+  colour: string,
+  enabled = process.env.NODE_ENV !== 'production',
+) {
   return function log(...args: unknown[]) {
-    if (devOnly && process.env.NODE_ENV !== 'development') return;
-    console.log(...constructArgs(badge, colour, ...args));
+    if (enabled) console.log(...constructArgs(badge, colour, ...args));
   };
 }

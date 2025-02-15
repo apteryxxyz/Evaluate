@@ -1,5 +1,5 @@
 import { createLogger } from '@evaluate/helpers/create-logger';
-import { merge } from 'atomic-fns';
+import { merge } from 'es-toolkit/object';
 import { PostHog } from 'posthog-node';
 import env from '~/env';
 

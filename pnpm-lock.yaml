@@ -143,12 +143,12 @@ importers:
       '@t3-oss/env-core':
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
-      atomic-fns:
-        specifier: ^1.1.6
-        version: 1.1.6
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
+      es-toolkit:
+        specifier: ^1.32.0
+        version: 1.32.0
       posthog-node:
         specifier: ^4.6.0
         version: 4.6.0
@@ -218,6 +218,9 @@ importers:
       embla-carousel-autoplay:
         specifier: ^8.5.1
         version: 8.5.1(embla-carousel@8.5.1)
+      es-toolkit:
+        specifier: ^1.32.0
+        version: 1.32.0
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
@@ -230,9 +233,6 @@ importers:
       jszip:
         specifier: ^3.10.1
         version: 3.10.1
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       lucide-react:
         specifier: ^0.338.0
         version: 0.338.0(react@18.3.1)
@@ -291,9 +291,6 @@ importers:
       '@types/file-saver':
         specifier: ^2.0.7
         version: 2.0.7
-      '@types/lodash':
-        specifier: ^4.17.13
-        version: 4.17.13
       '@types/react':
         specifier: ^18.3.12
         version: 18.3.12
@@ -2199,9 +2196,6 @@ packages:
   '@types/jasmine@3.10.18':
     resolution: {integrity: sha512-jOk52a1Kz+1oU5fNWwAcNe64/GsE7r/Q6ronwDox0D3ETo/cr4ICMQyeXrj7G6FPW1n8YjRoAZA2F0XBr6GicQ==}
 
-  '@types/lodash@4.17.13':
-    resolution: {integrity: sha512-lfx+dftrEZcdBPczf9d0Qv0x+j/rfNCMuC6OcfXmO8gkfeNAY88PgKUbvG56whcN23gc27yenwF6oJZXGFpYxg==}
-
   '@types/node@20.12.14':
     resolution: {integrity: sha512-scnD59RpYD91xngrQQLGkE+6UrHUPzeKZWhhjBSa3HSkwjbQc38+q3RoIVEwxQGRw3M+j5hpNAM+lgV3cVormg==}
 
@@ -2396,9 +2390,6 @@ packages:
 
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
-
-  atomic-fns@1.1.6:
-    resolution: {integrity: sha512-MjGr9FANRQ/UmllO+j9dAtt5+RpUgC+OrGuQl8Z/pmlayi9PoS1uu7zyTV89JXf3j4Z2aZuANP7ZoIuW0wTaIg==}
 
   autoprefixer@10.4.20:
     resolution: {integrity: sha512-XY25y5xSv/wEoqzDyXXME4AFfkZI0P23z6Fs3YgymDnKJkCGOnkL0iTxCa85UTqaSgfcqyf3UA6+c7wUvx/16g==}
@@ -2717,6 +2708,9 @@ packages:
   es-set-tostringtag@2.1.0:
     resolution: {integrity: sha512-j6vWzfrGVfyXxge+O0x5sh6cvxAog0a/4Rdd2K36zCMV5eJ+/+tOAngRO8cODMNWbVRdVlmGZQL2YS3yR8bIUA==}
     engines: {node: '>= 0.4'}
+
+  es-toolkit@1.32.0:
+    resolution: {integrity: sha512-ZfSfHP1l6ubgW/B/FRtqb9bYdMvI6jizbOSfbwwJNcOQ1QE6TFsC3jpQkZ900uUPSR3t3SU5Ds7UWKnYz+uP8Q==}
 
   esbuild-android-64@0.15.18:
     resolution: {integrity: sha512-wnpt3OXRhcjfIDSZu9bnzT4/TNTDsOUvip0foZOUBG7QbSt//w3QV4FInVJxNhKc/ErhUxc5z4QjHtMi7/TbgA==}
@@ -3156,9 +3150,6 @@ packages:
 
   lodash.sortby@4.7.0:
     resolution: {integrity: sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==}
-
-  lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -5813,8 +5804,6 @@ snapshots:
 
   '@types/jasmine@3.10.18': {}
 
-  '@types/lodash@4.17.13': {}
-
   '@types/node@20.12.14':
     dependencies:
       undici-types: 5.26.5
@@ -6068,8 +6057,6 @@ snapshots:
     optional: true
 
   asynckit@0.4.0: {}
-
-  atomic-fns@1.1.6: {}
 
   autoprefixer@10.4.20(postcss@8.4.49):
     dependencies:
@@ -6414,6 +6401,8 @@ snapshots:
       get-intrinsic: 1.2.7
       has-tostringtag: 1.0.2
       hasown: 2.0.2
+
+  es-toolkit@1.32.0: {}
 
   esbuild-android-64@0.15.18:
     optional: true
@@ -6833,8 +6822,6 @@ snapshots:
     optional: true
 
   lodash.sortby@4.7.0: {}
-
-  lodash@4.17.21: {}
 
   loose-envify@1.4.0:
     dependencies:

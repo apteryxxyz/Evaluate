@@ -1,7 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Hook to get and set a query parameter in the URL.
@@ -11,30 +10,36 @@ import { useCallback, useMemo } from 'react';
  */
 export function useQueryParameter(
   key: string,
-): [string | undefined, (value?: string) => void];
+): [
+  query: string | undefined,
+  setQuery: React.Dispatch<React.SetStateAction<string | undefined>>,
+];
 export function useQueryParameter<T extends string = string>(
   key: string,
   defaultValue: T | (string & {}),
-): [T | (string & {}), (value?: T) => void];
+): [
+  query: T | (string & {}),
+  setQuery: React.Dispatch<React.SetStateAction<string | undefined>>,
+];
 
 export function useQueryParameter(key: string, defaultValue?: string) {
-  const searchParams = useSearchParams();
-  const query = useMemo(
-    () => searchParams.get(key) ?? defaultValue,
-    [searchParams, defaultValue, key],
-  );
+  const [value, setValue] = useState(() => {
+    if (typeof window === 'undefined') return defaultValue;
+    const url = new URL(window.location.href);
+    return url.searchParams.get(key) ?? defaultValue;
+  });
 
-  const setQuery = useCallback(
-    (value?: string) => {
-      const params = new URLSearchParams(searchParams);
-      if (value && value !== defaultValue) params.set(key, value);
-      else params.delete(key);
-      const query = params.toString();
-      const url = `${window.location.pathname}${query ? `?${query}` : ''}`;
+  useEffect(() => {
+    const updateUrl = () => {
+      const url = new URL(window.location.href);
+      if (value && value !== defaultValue) url.searchParams.set(key, value);
+      else url.searchParams.delete(key);
       window.history.replaceState({}, '', url);
-    },
-    [searchParams, defaultValue, key],
-  );
+    };
 
-  return [query, setQuery] as const;
+    const timeout = setTimeout(updateUrl, 500);
+    return () => clearTimeout(timeout);
+  }, [value, key, defaultValue]);
+
+  return [value, setValue] as const;
 }

@@ -31,7 +31,7 @@ export function ExecutionDialog({
 }) {
   const open = results.length > 0;
   const onClose = () => setResults([]);
-  const successIndex = results.findIndex((r) => r.run?.code === 0) ?? 0;
+  const successIndex = results.findIndex((r) => r.run?.code === 0);
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -55,7 +55,7 @@ export function ExecutionDialog({
         </DialogHeader>
 
         <DialogContent>
-          <Tabs defaultValue={runtimes[successIndex]?.id}>
+          <Tabs defaultValue={runtimes[~successIndex ? successIndex : 0]?.id}>
             <TabsList className="w-full">
               {runtimes.map((runtime) => (
                 <TabsTrigger key={runtime.id} value={runtime.id}>

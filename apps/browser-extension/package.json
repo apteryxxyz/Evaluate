@@ -17,8 +17,8 @@
     "@evaluate/shapes": "workspace:^",
     "@evaluate/style": "workspace:^",
     "@t3-oss/env-core": "^0.11.1",
-    "@webext-core/storage": "^1.2.0",
     "lucide-react": "^0.475.0",
+    "posthog-js": "^1.217.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sonner": "^1.7.2",
@@ -27,7 +27,13 @@
     "zod": "3.22.4"
   },
   "devDependencies": {
+    "@babel/generator": "^7.26.9",
+    "@babel/parser": "^7.26.9",
+    "@babel/traverse": "^7.26.9",
+    "@babel/types": "^7.26.9",
     "@crxjs/vite-plugin": "2.0.0-beta.30",
+    "@types/babel__generator": "^7.6.8",
+    "@types/babel__traverse": "^7.20.6",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.5",
     "@types/webextension-polyfill": "^0.12.1",

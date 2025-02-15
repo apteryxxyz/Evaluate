@@ -9,10 +9,12 @@ export default createEnv({
       .string()
       .url()
       .transform((v) => new URL2(v)),
+    VITE_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
   },
 
   runtimeEnv: {
     ...import.meta.env,
     VITE_PUBLIC_WEBSITE_URL: import.meta.env.VITE_PUBLIC_WEBSITE_URL,
+    VITE_PUBLIC_POSTHOG_KEY: import.meta.env.VITE_PUBLIC_POSTHOG_KEY,
   },
 });

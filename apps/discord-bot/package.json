@@ -18,13 +18,14 @@
     "dev": "pnpm build --watch"
   },
   "dependencies": {
-    "@buape/carbon": "0.0.0-beta-20250120130953",
+    "@buape/carbon": "0.0.0-beta-20250204223027",
     "@evaluate/engine": "workspace:^",
     "@evaluate/helpers": "workspace:^",
     "@evaluate/shapes": "workspace:^",
     "@t3-oss/env-core": "^0.11.1",
-    "@vercel/functions": "^1.5.1",
-    "posthog-node": "^4.3.1",
+    "es-toolkit": "^1.32.0",
+    "date-fns": "^4.1.0",
+    "posthog-node": "^4.6.0",
     "zod": "3.22.4"
   }
 }

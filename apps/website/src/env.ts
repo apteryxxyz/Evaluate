@@ -1,4 +1,3 @@
-import { URL } from '@evaluate/helpers/url';
 import { createEnv } from '@t3-oss/env-nextjs';
 import { vercel } from '@t3-oss/env-nextjs/presets';
 import discordEnv from 'discord-bot/env';
@@ -11,7 +10,7 @@ export default createEnv({
     WEBSITE_URL: z
       .string()
       .url()
-      .transform((v) => new URL(v).freeze()),
+      .transform((v) => new URL(v)),
   },
   client: {
     NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),

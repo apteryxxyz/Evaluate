@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 const Tabs = TabsPrimitive.Root;
 

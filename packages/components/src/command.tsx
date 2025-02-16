@@ -1,10 +1,10 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import type { DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';
 import { SearchIcon } from 'lucide-react';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 import { Dialog, DialogContent } from './dialog';
 
 const Command = React.forwardRef<

@@ -1,11 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
-  "include": [".plasmo/index.d.ts", "src/**/*"],
-  "exclude": ["node_modules"],
+  "include": ["src/**/*", "vite-env.d.ts"],
+  "exclude": ["@types/node"],
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist",
-    "paths": { "~*": ["src/*"] },
+    "paths": { "~/*": ["src/*"] },
     "moduleResolution": "Bundler",
     "jsx": "preserve",
     "lib": ["DOM", "ES2023"]

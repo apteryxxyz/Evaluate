@@ -1,124 +1,104 @@
-import { executeCode } from '@evaluate/engine/dist/execute';
-import { searchRuntimes } from '@evaluate/engine/dist/runtimes';
-import type { PartialRuntime } from '@evaluate/shapes';
-import env from '~env';
-import analytics from '~services/analytics';
+import { executeCode } from '@evaluate/engine/execute';
+import { searchRuntimes } from '@evaluate/engine/runtimes';
+import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
+import type { ProtocolWithReturn } from 'webext-bridge';
+import { onMessage, sendMessage } from 'webext-bridge/background';
+import browser from 'webextension-polyfill';
+import env from '~/env';
+import posthog, { sessionLog } from '~/services/posthog';
 
-chrome.action.setTitle({ title: 'Evaluate' });
-
-chrome.runtime.onInstalled.addListener(async (details) => {
-  if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-    analytics?.capture('extension installed', {
-      $current_url: '',
-      platform: 'browser extension',
-    });
-  } else if (details.reason === chrome.runtime.OnInstalledReason.UPDATE) {
-    analytics?.capture('extension updated', {
-      $current_url: '',
-      platform: 'browser extension',
-    });
+declare module 'webext-bridge' {
+  export interface ProtocolMap {
+    getSelectionInfo: ProtocolWithReturn<
+      void,
+      { code: string; resolvables: string[] }
+    >;
+    unknownRuntime: ProtocolWithReturn<{ code: string }, void>;
+    executionStarted: ProtocolWithReturn<
+      { runtimeNameOrCount: string | number },
+      void
+    >;
+    executionFailed: ProtocolWithReturn<{ errorMessage: string }, void>;
+    executionFinished: ProtocolWithReturn<
+      { code: string; runtimes: PartialRuntime[]; results: ExecuteResult[] },
+      void
+    >;
+    getBackgroundSessionId: ProtocolWithReturn<void, string | undefined>;
   }
+}
 
-  chrome.contextMenus.create({
-    id: 'runCodeSelection',
-    title: 'Execute Code',
-    contexts: ['selection'],
-  });
-});
+browser.action.setTitle({ title: 'Evaluate' });
 
-chrome.action.onClicked.addListener(async () => {
-  analytics?.capture('browser action clicked', {
-    $current_url: '',
-    platform: 'browser extension',
-  });
-
-  chrome.tabs.create({
-    url: `${env.PLASMO_PUBLIC_WEBSITE_URL}`,
-  });
-});
-
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-  if (info.menuItemId === 'runCodeSelection' && tab?.id) {
-    analytics?.capture('context menu item clicked', {
-      $current_url: tab?.url || '',
-      platform: 'browser extension',
-    });
-
-    // While the info.selectionText is available, we need the element
-    // to extract the runtime resolvables, so we send a message to the
-    // messaging content script to get the runtime resolvables
-    chrome.tabs.sendMessage(tab.id, {
-      subject: 'parseSelection',
-    });
+browser.runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'install') {
+    posthog?.capture('installed_extension');
+  } else if (details.reason === 'update') {
+    posthog?.capture('updated_extension');
   }
 });
 
-chrome.runtime.onMessage.addListener(async (message, sender) => {
-  if (typeof sender.tab?.id !== 'number') return;
+browser.contextMenus.create({
+  id: 'runCodeSelection',
+  title: 'Execute Code',
+  contexts: ['selection'],
+});
 
-  if (message.relay === true) {
-    chrome.tabs.sendMessage(sender.tab.id, message);
-    return;
-  }
+browser.action.onClicked.addListener(async () => {
+  console.log(posthog);
+  posthog?.capture('clicked_browser_action');
+  browser.tabs.create({ url: `${env.VITE_PUBLIC_WEBSITE_URL}` });
+});
 
-  if (message.subject === 'prepareCode') {
-    const code = message.code as string;
-    const runtimeResolvables = message.runtimeResolvables as string[];
+browser.contextMenus.onClicked.addListener(async (info, tab) => {
+  if (info.menuItemId !== 'runCodeSelection' || !tab?.id) return;
 
-    const runtimes = await searchRuntimes(...runtimeResolvables) //
-      .then((r) => r.slice(0, 5));
+  posthog?.capture('clicked_context_menu_item', { $current_url: tab.url });
+  const endpoint = `content-script@${tab.id}`;
 
-    if (runtimes.length) {
-      message = {
-        subject: 'runCode',
-        ...{ code, runtimes },
-      };
-    } else {
-      chrome.tabs.sendMessage(sender.tab.id, {
-        subject: 'unknownRuntime',
-        ...{ code },
+  const selection = await sendMessage('getSelectionInfo', void 0, endpoint);
+  const { code, resolvables } = selection;
+  const runtimes = (await searchRuntimes(...resolvables)).slice(0, 5);
+  if (!runtimes.length)
+    return sendMessage('unknownRuntime', { code }, endpoint);
+
+  const runtimeNameOrCount =
+    runtimes.length === 1 ? runtimes[0]!.name : runtimes.length;
+  sendMessage('executionStarted', { runtimeNameOrCount }, endpoint);
+
+  const promises = [];
+  for (const runtime of runtimes) {
+    const initialPromise = executeCode({
+      runtime: runtime.id,
+      files: { 'file.code': code },
+      entry: 'file.code',
+    })
+      .then((result) => {
+        posthog?.capture('executed_code', {
+          runtime_id: runtime.id,
+          code_length: code.length,
+          code_lines: code.split('\n').length,
+          compile_successful: result.compile ? result.compile.code === 0 : null,
+          execution_successful:
+            result.run.code === 0 &&
+            (!result.compile || result.compile.code === 0),
+        });
+        return result;
+      })
+      .catch((error) => {
+        const message =
+          error instanceof Error ? error.message : 'Unknown error';
+        sendMessage('executionFailed', { errorMessage: message }, endpoint);
+        throw error;
       });
-    }
+    promises.push(initialPromise);
   }
 
-  //
+  const results = await Promise.all(promises);
+  sendMessage('executionFinished', { code, runtimes, results }, endpoint);
+});
 
-  if (message.subject === 'runCode') {
-    const code = message.code as string;
-    const runtimes = message.runtimes as PartialRuntime[];
-
-    chrome.tabs.sendMessage(sender.tab.id, {
-      subject: 'executionStarted',
-      ...{ runtimes },
-    });
-
-    const promises = [];
-    for (const runtime of runtimes) {
-      promises.push(
-        executeCode({
-          runtime: runtime.id,
-          files: { 'file.code': code },
-          entry: 'file.code',
-        }).then(async (r) => {
-          analytics?.capture('code executed', {
-            $current_url: sender.tab?.url || '',
-            platform: 'browser extension',
-            'runtime id': runtime.id,
-            'was successful':
-              r.run.code === 0 && (!r.compile || r.compile.code === 0),
-          });
-          return { ...r, runtime };
-        }),
-      );
-
-      if (runtimes.length > 1)
-        await new Promise((resolve) => setTimeout(resolve, 500));
-    }
-
-    const results = await Promise.all(promises);
-    chrome.tabs.sendMessage(sender.tab.id, {
-      subject: 'showResults',
-      ...{ code, results },
-    });
-  }
+onMessage('getBackgroundSessionId', () => {
+  const sessionId = posthog?.get_session_id();
+  sessionLog(sessionId);
+  return sessionId;
 });

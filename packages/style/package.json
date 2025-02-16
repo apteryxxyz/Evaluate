@@ -7,9 +7,11 @@
       "types": "./dist/tailwind.preset.d.ts",
       "default": "./dist/tailwind.preset.js"
     },
-    "./css": "./dist/style.css"
+    "./css": "./dist/style.css",
+    "./.css": "./dist/style.css"
   },
   "scripts": {
+    "check": "tsc --noEmit",
     "build": "tsup && cp src/style.css dist/style.css"
   },
   "devDependencies": {

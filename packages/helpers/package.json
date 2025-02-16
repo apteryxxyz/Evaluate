@@ -13,15 +13,7 @@
     }
   },
   "scripts": {
+    "check": "tsc --noEmit",
     "build": "tsup"
-  },
-  "dependencies": {
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^2.6.0",
-    "type-fest": "^4.32.0"
-  },
-  "devDependencies": {
-    "@types/react": "^19.0.4"
   }
 }

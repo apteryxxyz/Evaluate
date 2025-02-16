@@ -1,3 +1,4 @@
+import { betterFetch } from '@evaluate/helpers/better-fetch';
 import {
   type PartialRuntime,
   PistonRuntime,
@@ -25,7 +26,9 @@ const Runtimes = new Map<string, PartialRuntime>();
 export async function fetchRuntimes() {
   if (Runtimes.size) return Array.from(Runtimes.values());
 
-  const pistonRuntimes = await fetch('https://emkc.org/api/v2/piston/runtimes')
+  const pistonRuntimes = await betterFetch(
+    'https://emkc.org/api/v2/piston/runtimes',
+  )
     .then((response) => response.json())
     .then(z.array(PistonRuntime).parse);
 

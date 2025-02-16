@@ -1,3 +1,4 @@
+import { betterFetch } from '@evaluate/helpers/better-fetch';
 import {
   ExecuteOptions,
   ExecuteResult,
@@ -22,47 +23,36 @@ export async function executeCode(options: ExecuteOptions) {
   const { language } = extractIdentifier(identifier!);
   if (version === 'latest') version = runtime.versions.at(-1)!;
 
+  const body = PistonExecuteOptions.parse({
+    language,
+    version,
+    files: Object.entries(options.files)
+      .map(([name, content]) => ({ name, content }))
+      .sort((a, b) => {
+        if (options.entry === a.name) return -1;
+        if (options.entry === b.name) return 1;
+        return 0;
+      }),
+    stdin: options.input,
+    args: options.args ? parseArguments(options.args) : undefined,
+  });
+
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15000);
 
-  try {
-    const response = await fetch('https://emkc.org/api/v2/piston/execute', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(
-        PistonExecuteOptions.parse({
-          language,
-          version,
-          files: Object.entries(options.files)
-            .map(([name, content]) => ({ name, content }))
-            .sort((a, b) => {
-              if (options.entry === a.name) return -1;
-              if (options.entry === b.name) return 1;
-              return 0;
-            }),
-          stdin: options.input,
-          args: options.args ? parseArguments(options.args) : undefined,
-        }),
-      ),
-      signal: controller.signal,
-    });
-    const json = await response.json();
+  const response = await betterFetch('https://emkc.org/api/v2/piston/execute', {
+    signal: controller.signal,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  }).finally(() => clearTimeout(timeout));
+  const json = await response.json();
 
-    try {
-      const result = PistonExecuteResult.parse(json);
-      return ExecuteResult.parse(result);
-    } catch (error) {
-      console.error(error, json);
-      throw new Error(
-        'An internal error occurred while trying to reach the execution engine',
-      );
-    }
+  try {
+    const result = PistonExecuteResult.parse(json);
+    return ExecuteResult.parse(result);
   } catch (error) {
-    console.error(error);
-    throw new Error(
-      'An internal error occurred while trying to reach the execution engine',
-    );
-  } finally {
-    clearTimeout(timeout);
+    console.error('Error parsing incoming json', error, json);
+    throw new Error('An error occurred while parsing the response');
   }
 }

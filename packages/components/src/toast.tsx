@@ -1,20 +1,19 @@
 'use client';
 
-import { useTheme } from 'next-themes';
 import * as React from 'react';
 import { Toaster as Sonner, toast } from 'sonner';
 
 // So biome doesn't complain about only being used as type
 void React;
 
-type ToasterProps = React.ComponentProps<typeof Sonner>;
+type ToasterProps = React.ComponentProps<typeof Sonner> & {
+  getTheme?: () => string;
+};
 
-const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = 'system' } = useTheme();
-
+const Toaster = ({ getTheme, ...props }: ToasterProps) => {
   return (
     <Sonner
-      theme={theme as ToasterProps['theme']}
+      theme={(getTheme?.() ?? 'system') as never}
       className="toaster group"
       toastOptions={{
         classNames: {

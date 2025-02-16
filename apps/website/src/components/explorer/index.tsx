@@ -3,12 +3,12 @@
 import { Button } from '@evaluate/components/button';
 import { ScrollArea } from '@evaluate/components/scroll-area';
 import { Separator } from '@evaluate/components/separator';
-import { cn } from '@evaluate/helpers/class';
 import {
   FilePlusIcon,
   FolderPlusIcon,
   HardDriveDownloadIcon,
 } from 'lucide-react';
+import { twMerge as cn } from 'tailwind-merge';
 import type { File } from 'virtual-file-explorer-backend';
 import { ExplorerFileItem } from './file/item';
 import { ExplorerFolderChildren } from './folder/children';

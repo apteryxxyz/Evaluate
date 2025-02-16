@@ -15,8 +15,9 @@ import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
 import { EditEvaluationButton } from '~/components/edit-evaluation-button';
 import { OpenEvaluationButton } from '~/components/open-evaluation-button';
 import env from '~/env';
-import analytics from '~/services/analytics';
+import { captureEvent } from '~/services/posthog';
 import { codeBlock } from '~/utilities/discord-formatting';
+import { getInteractionContext } from '~/utilities/session-context';
 
 function isNew(
   interaction: CommandInteraction | ModalInteraction,
@@ -99,15 +100,13 @@ export async function handleEvaluating(
     throw error;
   });
 
-  analytics?.capture({
-    distinctId: interaction.userId!,
-    event: 'code executed',
-    properties: {
-      platform: 'discord bot',
-      'runtime id': runtime.id,
-      'was successful':
-        result.run.code === 0 && (!result.compile || result.compile.code === 0),
-    },
+  captureEvent(getInteractionContext(interaction.rawData), 'executed_code', {
+    runtime_id: runtime.id,
+    code_length: options.code.length,
+    code_lines: options.code.split('\n').length,
+    compile_successful: result.compile ? result.compile.code === 0 : null,
+    execution_successful:
+      result.run.code === 0 && (!result.compile || result.compile.code === 0),
   });
 
   const resultKey = result?.compile?.code ? 'compile' : 'run';
@@ -116,6 +115,7 @@ export async function handleEvaluating(
 
   let output = result[resultKey]!.output;
   if (!doesHaveDisplayableOutput) {
+    // TODO: This stuff would be better handled by the executeCode function
     const isRun = resultKey === 'run';
     if (hasTimedOut) {
       if (isRun)
@@ -193,7 +193,7 @@ export function createEvaluationPayload(
       new Row([
         new EditEvaluationButton(),
         new OpenEvaluationButton(
-          `${env.WEBSITE_URL}/playgrounds/${options.runtime.id}#${compressOptions(options)}`,
+          `${env.WEBSITE_URL}playgrounds/${options.runtime.id}#${compressOptions(options)}`,
         ),
       ]),
     ],

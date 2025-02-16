@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from 'lucide-react';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 const Accordion = AccordionPrimitive.Root;
 

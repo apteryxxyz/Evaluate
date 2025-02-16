@@ -7,6 +7,8 @@ import {
 import { EditEvaluationButton } from '~/components/edit-evaluation-button';
 import { EvaluateModal, EvaluateModalEdit } from '~/components/evaluate-modal';
 import { handleEvaluating } from '~/handlers/evaluate';
+import { captureEvent } from '~/services/posthog';
+import { getInteractionContext } from '~/utilities/session-context';
 
 export class EvaluateCommand extends Command {
   name = 'evaluate';
@@ -42,17 +44,21 @@ export class EvaluateCommand extends Command {
   components = [EditEvaluationButton];
   modals = [EvaluateModal, EvaluateModalEdit];
 
-  async run(interaction: CommandInteraction) {
-    const runtime = interaction.options.getString('runtime');
-    const code = interaction.options.getString('code');
-    const input = interaction.options.getString('input');
-    const args = interaction.options.getString('arguments');
+  async run(use: CommandInteraction) {
+    captureEvent(getInteractionContext(use.rawData), 'used_command', {
+      command_name: this.name,
+    });
+
+    const runtime = use.options.getString('runtime');
+    const code = use.options.getString('code');
+    const input = use.options.getString('input');
+    const args = use.options.getString('arguments');
 
     if (runtime && code) {
-      return handleEvaluating(interaction, { runtime, code, args, input });
+      return handleEvaluating(use, { runtime, code, args, input });
     } else {
       const modal = new EvaluateModal({ runtime, code, args, input });
-      return interaction.showModal(modal);
+      return use.showModal(modal);
     }
   }
 }

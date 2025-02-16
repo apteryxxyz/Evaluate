@@ -1,6 +1,7 @@
 import { Client } from '@buape/carbon';
 import { EvaluateCommand } from '~/commands/evaluate';
 import env from '~/env';
+import { ApplicationAuthorisedListener } from '~/events/application-authorised';
 
 const enabled = Boolean(
   env.DISCORD_CLIENT_ID && env.DISCORD_PUBLIC_KEY && env.DISCORD_TOKEN,
@@ -20,6 +21,9 @@ export default enabled
         deploySecret: 'unused',
         requestOptions: { queueRequests: false },
       },
-      [new EvaluateCommand()],
+      {
+        commands: [new EvaluateCommand()],
+        listeners: [new ApplicationAuthorisedListener()],
+      },
     )
   : null;

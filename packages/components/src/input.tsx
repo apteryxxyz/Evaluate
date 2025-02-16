@@ -1,8 +1,9 @@
-import { type VariantProps, cn, cva } from '@evaluate/helpers/class';
+import { type VariantProps, cva } from 'class-variance-authority';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 const inputVariants = cva(
-  'flex w-full rounded-md border border-input bg-transparent px-3 py-1 shadow-sm transition-colors disabled:cursor-not-allowed file:border-0 file:bg-transparent file:font-medium placeholder:text-muted-foreground disabled:opacity-50 focus-visible:outline-none focus-visible:ring-1',
+  'flex w-full rounded-md border border-input bg-transparent px-3 py-1 shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {

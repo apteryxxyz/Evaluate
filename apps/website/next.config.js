@@ -1,4 +1,3 @@
-import { fetchRuntimes } from '@evaluate/engine/runtimes';
 import withBundleAnalyser from '@next/bundle-analyzer';
 
 /** @type {import('next').NextConfig} */
@@ -12,29 +11,18 @@ const nextConfig = {
       destination: '/playgrounds',
       permanent: false,
     },
-    {
-      source: '/language(s)?/:slug*',
-      destination: '/playgrounds',
-      permanent: false,
-    },
-    {
-      source: `/:slug(${(await fetchRuntimes())
-        .map((r) => r.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-        .join('|')})`,
-      destination: '/playgrounds/:slug',
-      permanent: false,
-    },
   ],
   rewrites: async () => [
     {
-      source: '/api/v1/ingest/:path*',
-      destination: 'https://app.posthog.com/:path*',
+      source: '/api/ingest/static/:path*',
+      destination: 'https://us-assets.i.posthog.com/static/:path*',
     },
     {
       source: '/api/ingest/:path*',
-      destination: 'https://app.posthog.com/:path*',
+      destination: 'https://us.i.posthog.com/:path*',
     },
   ],
+  skipTrailingSlashRedirect: true,
 
   images: {
     remotePatterns: [

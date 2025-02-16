@@ -1,9 +1,12 @@
-import { createLogger } from '@evaluate/helpers/logger';
-import { merge } from 'atomic-fns';
+import { createLogger } from '@evaluate/helpers/create-logger';
+import { merge } from 'es-toolkit/object';
 import { PostHog } from 'posthog-node';
 import env from '~/env';
 
-export const captureLog = createLogger('posthog capture', '#eb9d2a');
+export const captureLog = createLogger({
+  badge: 'posthog capture',
+  hex: '#eb9d2a',
+});
 
 export function isAvailable() {
   return Boolean(

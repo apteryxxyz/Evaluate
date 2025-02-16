@@ -1,4 +1,3 @@
-import URL2 from '@evaluate/helpers/url';
 import { createEnv } from '@t3-oss/env-core';
 import { z } from 'zod';
 
@@ -7,7 +6,7 @@ export default createEnv({
     WEBSITE_URL: z
       .string()
       .url()
-      .transform((v) => new URL2(v)),
+      .transform((v) => new URL(v)),
     POSTHOG_KEY: z.string().optional(),
     DISCORD_TOKEN: z.string().min(1).optional(),
     DISCORD_PUBLIC_KEY: z.string().min(1).optional(),

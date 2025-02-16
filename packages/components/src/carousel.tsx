@@ -1,11 +1,11 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from 'embla-carousel-react';
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 import { Button } from './button';
 
 type CarouselApi = UseEmblaCarouselType[1];

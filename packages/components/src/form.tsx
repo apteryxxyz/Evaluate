@@ -1,4 +1,3 @@
-import { cn } from '@evaluate/helpers/class';
 import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
@@ -10,6 +9,7 @@ import {
   FormProvider,
   useFormContext,
 } from 'react-hook-form';
+import { twMerge as cn } from 'tailwind-merge';
 import { Label } from './label';
 
 const Form = FormProvider;

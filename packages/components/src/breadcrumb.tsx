@@ -1,7 +1,7 @@
-import { cn } from '@evaluate/helpers/class';
 import { Slot } from '@radix-ui/react-slot';
 import { ChevronRightIcon, CircleEllipsisIcon } from 'lucide-react';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 const Breadcrumb = React.forwardRef<
   HTMLElement,

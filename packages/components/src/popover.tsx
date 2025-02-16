@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 const Popover = PopoverPrimitive.Root;
 

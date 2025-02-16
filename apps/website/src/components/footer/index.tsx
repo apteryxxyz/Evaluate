@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { twMerge as cn } from 'tailwind-merge';
 
 export function Footer(p: { className?: string }) {
   const pathname = usePathname();

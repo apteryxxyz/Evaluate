@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import { GripVerticalIcon } from 'lucide-react';
 import * as React from 'react';
 import * as ResizablePrimitive from 'react-resizable-panels';
+import { twMerge as cn } from 'tailwind-merge';
 
 // So biome doesn't complain about only being used as type
 void React;

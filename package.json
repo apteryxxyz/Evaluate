@@ -1,9 +1,9 @@
 {
   "name": "evaluate",
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@9.15.5",
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
-    "pretty": "biome check . --write",
+    "format": "biome check . --write",
     "check": "turbo run check",
     "build": "turbo run build",
     "build:packages": "turbo run build --filter=\"./packages/*\"",
@@ -16,12 +16,10 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@evaluate/scripts": "workspace:^",
-    "@types/node": "^22.10.7",
+    "@types/node": "^22.13.4",
     "husky": "^9.1.7",
-    "resolve-tspaths": "^0.8.23",
-    "tsup": "^8.3.5",
-    "tsx": "^4.19.2",
-    "turbo": "^2.3.3",
+    "tsup": "^8.3.6",
+    "turbo": "^2.4.2",
     "typescript": "^5.7.3"
   },
   "pnpm": {

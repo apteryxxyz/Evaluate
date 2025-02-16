@@ -1,4 +1,4 @@
-import fetch2 from '@evaluate/helpers/fetch';
+import { betterFetch } from '@evaluate/helpers/better-fetch';
 import {
   ExecuteOptions,
   ExecuteResult,
@@ -40,7 +40,7 @@ export async function executeCode(options: ExecuteOptions) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15000);
 
-  const response = await fetch2('https://emkc.org/api/v2/piston/execute', {
+  const response = await betterFetch('https://emkc.org/api/v2/piston/execute', {
     signal: controller.signal,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

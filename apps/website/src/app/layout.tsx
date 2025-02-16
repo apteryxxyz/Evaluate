@@ -11,7 +11,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 import { Toaster } from '@evaluate/components/toast';
 import '@evaluate/style/css';
-import { cn } from '@evaluate/helpers/class';
+import { twMerge as cn } from 'tailwind-merge';
 import { Footer } from '~/components/footer';
 import './layout.css';
 

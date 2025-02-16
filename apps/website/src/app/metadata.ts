@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { merge } from 'es-toolkit/object';
 import type { Metadata } from 'next/types';
 import env from '~/env';
 
@@ -6,7 +6,7 @@ export function generateBaseMetadata(
   pathname: string,
   overrides: Metadata = {},
 ) {
-  const metadata = _.merge(
+  const metadata = merge(
     {
       metadataBase: new URL(env.WEBSITE_URL),
       title: 'Evaluate',

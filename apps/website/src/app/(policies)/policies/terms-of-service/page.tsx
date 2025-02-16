@@ -1,4 +1,4 @@
-import { formatDate } from '~/utilities/format-helpers';
+import { format } from 'date-fns';
 
 export default function TermsOfServicePage() {
   const updatedAt = new Date('2024-02-02');
@@ -10,7 +10,7 @@ export default function TermsOfServicePage() {
           dateTime={updatedAt.toISOString()}
           className="block text-muted-foreground text-sm"
         >
-          Updated on {formatDate(updatedAt, 'full')}
+          Updated on {format(updatedAt, 'yyyy-MM-dd')}
         </time>
 
         <h1 className="font-bold text-4xl leading-tight lg:text-5xl">

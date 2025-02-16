@@ -1,5 +1,5 @@
-import { cn } from '@evaluate/helpers/class';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}

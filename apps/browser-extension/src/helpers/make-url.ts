@@ -1,5 +1,5 @@
+import { compress } from '@evaluate/engine/compress';
 import { getRuntimeDefaultFileName } from '@evaluate/engine/runtimes';
-import { compress } from '@evaluate/helpers/compress';
 import type { PartialRuntime } from '@evaluate/shapes';
 import env from '~/env';
 
@@ -10,7 +10,7 @@ export function makeEditCodeUrl(runtime: PartialRuntime, code: string) {
     entry: fileName,
     focused: fileName,
   });
-  return `${env.VITE_PUBLIC_WEBSITE_URL}/playgrounds/${runtime.id}#${state}`;
+  return `${env.VITE_PUBLIC_WEBSITE_URL}playgrounds/${runtime.id}#${state}`;
 }
 
 export function makePickRuntimeUrl(code: string) {
@@ -19,5 +19,5 @@ export function makePickRuntimeUrl(code: string) {
     entry: 'file.code',
     focused: 'file.code',
   });
-  return `${env.VITE_PUBLIC_WEBSITE_URL}/playgrounds#${state}`;
+  return `${env.VITE_PUBLIC_WEBSITE_URL}playgrounds#${state}`;
 }

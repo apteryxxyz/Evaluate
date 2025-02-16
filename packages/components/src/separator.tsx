@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from '@evaluate/helpers/class';
 import * as SeparatorPrimitive from '@radix-ui/react-separator';
 import * as React from 'react';
+import { twMerge as cn } from 'tailwind-merge';
 
 const Separator = React.forwardRef<
   React.ElementRef<typeof SeparatorPrimitive.Root>,

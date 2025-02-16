@@ -1,21 +1,14 @@
 #!/usr/bin/env node
 
+import { dirname, join, resolve } from 'node:path';
 import nextEnv from '@next/env';
-import { spawn } from 'cross-spawn';
 const { loadEnvConfig } = nextEnv;
-import { join as joinPath, dirname as pathDirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createCommand } from 'commander';
+import { spawn } from 'cross-spawn';
 import { colours, logger } from './_logger.js';
 
-// Reorder arguments if there are two `--` separators
-const separatorCount = process.argv.filter((a) => a === '--').length;
-if (separatorCount === 2) {
-  const firstIndex = process.argv.indexOf('--');
-  const secondIndex = process.argv.indexOf('--', firstIndex + 1);
-  const secondGroup = process.argv.splice(secondIndex + 1);
-  process.argv.splice(firstIndex, 0, ...secondGroup);
-}
+// ===== //
 
 const program = createCommand('use-env')
   .option(
@@ -28,27 +21,18 @@ const program = createCommand('use-env')
     process.env.NODE_ENV === 'production',
   )
   .argument('<command...>', 'The command to run')
-  .parse(process.argv);
+  .parse(reorderProcessArguments(process.argv));
 
 const publicPrefix = program.opts().publicPrefix ?? '';
 const isProduction = program.opts().prod;
 const commandToRun = program.args.map((a) => `"${a}"`).join(' ');
-const thisDirname = pathDirname(fileURLToPath(import.meta.url));
-const targetDirectory = joinPath(thisDirname, '../../../.env');
+const rootDir = await getRootDirectory();
+const targetDirectory = resolve(rootDir, '.env');
 
-// Load the environment variables
-const { loadedEnvFiles } = loadEnvConfig(targetDirectory, !isProduction);
-
-// Handle public variables with optional prefix
-for (const key in process.env) {
-  if (key.startsWith('PUBLIC_')) {
-    process.env[key.slice(7)] = process.env[key];
-    if (publicPrefix) {
-      process.env[`${publicPrefix}_${key}`] = process.env[key];
-      delete process.env[key];
-    }
-  }
-}
+const { loadedEnvFiles } = loadEnvironmentVariables(
+  targetDirectory,
+  isProduction,
+);
 
 const loadedFrom = loadedEnvFiles.map((f) => f.path).join(' ');
 if (loadedFrom) logger.info(`Environment: ${colours.italic(loadedFrom)}`);
@@ -61,3 +45,38 @@ const child = spawn(commandToRun, {
   env: process.env,
 });
 child.on('exit', process.exit);
+
+// ===== //
+
+async function getRootDirectory() {
+  const cd = dirname(fileURLToPath(import.meta.url));
+  return join(cd, '../../..');
+}
+
+function reorderProcessArguments(argv) {
+  const argvCopy = [...argv];
+  const separatorCount = argvCopy.filter((a) => a === '--').length;
+  if (separatorCount === 2) {
+    const firstIndex = argvCopy.indexOf('--');
+    const secondIndex = argvCopy.indexOf('--', firstIndex + 1);
+    const secondGroup = argvCopy.splice(secondIndex + 1);
+    argvCopy.splice(firstIndex, 0, ...secondGroup);
+  }
+  return argv;
+}
+
+function loadEnvironmentVariables(targetDirectory, isProduction) {
+  const { loadedEnvFiles } = loadEnvConfig(targetDirectory, !isProduction);
+
+  for (const key in process.env) {
+    if (key.startsWith('PUBLIC_')) {
+      process.env[key.slice(7)] = process.env[key];
+      if (publicPrefix) {
+        process.env[`${publicPrefix}_${key}`] = process.env[key];
+        delete process.env[key];
+      }
+    }
+  }
+
+  return { loadedEnvFiles };
+}

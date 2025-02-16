@@ -3,57 +3,73 @@
 import { exec } from 'node:child_process';
 import { createWriteStream } from 'node:fs';
 import { readFile, readdir, rm, stat } from 'node:fs/promises';
-import { basename, relative, resolve, sep } from 'node:path';
+import { basename, dirname, join, relative, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 import gitignoreParser from '@gerhobbelt/gitignore-parser';
 import archiver from 'archiver';
-import { createCommand } from 'commander';
+import { logger } from './_logger.js';
 const execAsync = promisify(exec);
 
 // ===== //
 
-createCommand('ff-zip').parse(process.argv);
-
-const rootDir = await execAsync('git rev-parse --show-toplevel') //
-  .then(({ stdout }) => stdout.trim());
-const p = (...args) => resolve(rootDir, ...args);
-
-const outFile = p('apps/browser-extension/dist/firefox-source.zip');
+const rootDir = await getRootDirectory();
+const outFile = //
+  resolve(rootDir, 'apps/browser-extension/dist/firefox-source.zip');
 await rm(outFile, { force: true });
-const outStream = //
-  createWriteStream(p('apps/browser-extension/dist/firefox-source.zip'));
+const stream = createWriteStream(outFile);
 
 const archive = archiver('zip', { zlib: { level: 9 } });
-archive.pipe(outStream);
+archive.pipe(stream);
 
-outStream.on('close', () => {
-  console.log(`Created ${basename(outFile)}, ${archive.pointer()} total bytes`);
+stream.on('close', () => {
+  logger.info(`Created ${basename(outFile)}, ${archive.pointer()} total bytes`);
 });
 
-const ignorer = await getIgnorer();
-await addFilesToArchive(archive, p('.'), ignorer);
+// ===== //
+
+const ignorer = await getIgnorer(rootDir);
+await addFilesToArchive(rootDir, archive, rootDir, ignorer);
+await addProductionEnvironmentFilesToArchive(archive);
 await archive.finalize();
 
 // ===== //
 
-async function getIgnorer() {
+async function getRootDirectory() {
+  const cd = dirname(fileURLToPath(import.meta.url));
+  return join(cd, '../../..');
+}
+
+async function getIgnorer(rootDir) {
   return gitignoreParser.compile(`
-    ${await readFile(p('.gitignore'))}
-    ${await readFile(p('.ffignore'))}
+    ${await readFile(resolve(rootDir, '.gitignore'))}
+    ${await readFile(resolve(rootDir, '.ffignore'))}
   `);
 }
 
-async function addFilesToArchive(archive, directoryPath, ignorer) {
+async function addFilesToArchive(rootDir, archive, directoryPath, ignorer) {
   for (const itemName of await readdir(directoryPath)) {
     const itemPath = resolve(directoryPath, itemName);
-    const relativePath = relative('.', itemPath).replaceAll(sep, '/');
+    const relativePath = relative(rootDir, itemPath).replaceAll(sep, '/');
     if (ignorer.denies(relativePath)) continue;
 
     const itemInfo = await stat(itemPath);
     if (itemInfo.isDirectory()) {
-      await addFilesToArchive(archive, itemPath, ignorer);
+      await addFilesToArchive(rootDir, archive, itemPath, ignorer);
     } else {
       archive.file(itemPath, { name: relativePath });
     }
   }
+}
+
+async function addProductionEnvironmentFilesToArchive(archive) {
+  const websiteUrl = await execAsync(
+    'pnpm use-env -P -- echo $WEBSITE_URL',
+  ).then(({ stdout }) => stdout.trim().split('\n').at(-1));
+  const posthogKey = await execAsync(
+    'pnpm use-env -P -- echo $POSTHOG_KEY',
+  ).then(({ stdout }) => stdout.trim().split('\n').at(-1));
+
+  const content = `PUBLIC_WEBSITE_URL=${websiteUrl}\nPUBLIC_POSTHOG_KEY=${posthogKey}`;
+  archive.append(content, { name: '.env/.env.production.local' });
 }

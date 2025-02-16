@@ -1,28 +1,42 @@
 #!/usr/bin/env node
 
-import { exec, spawn } from 'node:child_process';
+import { exec } from 'node:child_process';
 import { sep } from 'node:path';
 import { promisify } from 'node:util';
 import { createCommand } from 'commander';
+import { spawn } from 'cross-spawn';
+import { logger } from './_logger.js';
 const execAsync = promisify(exec);
+
+// ===== //
 
 const program = createCommand('run-in')
   .arguments('<package> <command...>')
   .parse(process.argv);
 
-const packagePaths = await execAsync('pnpm m ls --depth -1 --porcelain') //
-  .then(({ stdout }) => stdout.split('\n'));
-const packages = packagePaths //
-  .map((path) => ({ path, name: path.split(sep).pop() ?? '' }));
-
+const packages = await getPackages();
 const targetPackage = packages.find((p) => p.name === program.args[0]);
+if (!targetPackage) {
+  logger.error(`Package ${program.args[0]} not found`);
+  process.exit(1);
+}
+
 const commandToRun = program.args
   .slice(1)
   .map((a) => `"${a}"`)
   .join(' ');
-
-spawn(commandToRun, {
+const child = spawn(commandToRun, {
   stdio: 'inherit',
-  shell: process.env.SHELL,
-  cwd: targetPackage.path,
+  shell: process.env.SHELL || '/bin/bash',
+  env: process.env,
 });
+child.on('exit', process.exit);
+
+// ===== //
+
+async function getPackages() {
+  const packagePaths = await execAsync('pnpm m ls --depth -1 --porcelain') //
+    .then(({ stdout }) => stdout.split('\n'));
+  return packagePaths //
+    .map((p) => ({ path: p, name: p.split(sep).pop() ?? '' }));
+}

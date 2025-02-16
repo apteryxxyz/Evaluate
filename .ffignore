@@ -11,4 +11,3 @@ packages/scripts/bin/ff-zip
 .gitignore
 .vercelignore
 biome.json
-pnpm-lock.yaml

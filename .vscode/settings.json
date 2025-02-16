@@ -16,10 +16,12 @@
     "source.organizeImports.biome": "explicit"
   },
   "files.associations": {
-    "*.css": "tailwindcss"
+    "*.css": "tailwindcss",
+    ".ffignore": "ignore"
   },
   "material-icon-theme.folders.associations": {
-    "shapes": "middleware"
+    "shapes": "middleware",
+    ".ffignore": "ignore"
   },
   "material-icon-theme.files.associations": {
     "vite.config.chrome.ts": "vite",

@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "type": "module",
   "bin": {
+    "ff-zip": "./bin/ff-zip",
     "run-in": "./bin/run-in",
     "use-env": "./bin/use-env"
   },
   "dependencies": {
+    "@gerhobbelt/gitignore-parser": "0.2.0-9",
     "@next/env": "^15.1.7",
+    "archiver": "^7.0.1",
     "commander": "^13.1.0",
     "cross-spawn": "^7.0.6"
   }

@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+
+import { exec } from 'node:child_process';
+import { createWriteStream } from 'node:fs';
+import { readFile, readdir, rm, stat } from 'node:fs/promises';
+import { basename, relative, resolve, sep } from 'node:path';
+import { promisify } from 'node:util';
+import gitignoreParser from '@gerhobbelt/gitignore-parser';
+import archiver from 'archiver';
+import { createCommand } from 'commander';
+const execAsync = promisify(exec);
+
+// ===== //
+
+createCommand('ff-zip').parse(process.argv);
+
+const rootDir = await execAsync('git rev-parse --show-toplevel') //
+  .then(({ stdout }) => stdout.trim());
+const p = (...args) => resolve(rootDir, ...args);
+
+const outFile = p('apps/browser-extension/dist/firefox-source.zip');
+await rm(outFile, { force: true });
+const outStream = //
+  createWriteStream(p('apps/browser-extension/dist/firefox-source.zip'));
+
+const archive = archiver('zip', { zlib: { level: 9 } });
+archive.pipe(outStream);
+
+outStream.on('close', () => {
+  console.log(`Created ${basename(outFile)}, ${archive.pointer()} total bytes`);
+});
+
+const ignorer = await getIgnorer();
+await addFilesToArchive(archive, p('.'), ignorer);
+await archive.finalize();
+
+// ===== //
+
+async function getIgnorer() {
+  return gitignoreParser.compile(`
+    ${await readFile(p('.gitignore'))}
+    ${await readFile(p('.ffignore'))}
+  `);
+}
+
+async function addFilesToArchive(archive, directoryPath, ignorer) {
+  for (const itemName of await readdir(directoryPath)) {
+    const itemPath = resolve(directoryPath, itemName);
+    const relativePath = relative('.', itemPath).replaceAll(sep, '/');
+    if (ignorer.denies(relativePath)) continue;
+
+    const itemInfo = await stat(itemPath);
+    if (itemInfo.isDirectory()) {
+      await addFilesToArchive(archive, itemPath, ignorer);
+    } else {
+      archive.file(itemPath, { name: relativePath });
+    }
+  }
+}

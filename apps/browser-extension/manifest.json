@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/chrome-manifest",
 
   "manifest_version": 3,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Apteryx Software",
   "name": "Evaluate - Run Code Anytime, Anywhere",
   "short_name": "Evaluate",
@@ -28,7 +28,7 @@
 
   "browser_specific_settings": {
     "gecko": {
-      "id": "addon@evaluate.run"
+      "id": "firefox-extension@evaluate.run"
     }
   },
 

@@ -193,7 +193,7 @@ export function createEvaluationPayload(
       new Row([
         new EditEvaluationButton(),
         new OpenEvaluationButton(
-          `${env.WEBSITE_URL}/playgrounds/${options.runtime.id}#${compressOptions(options)}`,
+          `${env.WEBSITE_URL}playgrounds/${options.runtime.id}#${compressOptions(options)}`,
         ),
       ]),
     ],

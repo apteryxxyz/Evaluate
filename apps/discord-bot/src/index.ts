@@ -1,6 +1,7 @@
 import { InteractionType } from '@buape/carbon';
 import env from './env';
 import client from './services/client';
+import posthog from './services/posthog';
 
 export default async function handler(request: Request) {
   if (!client) return new Response('X|', { status: 503 });
@@ -33,6 +34,7 @@ export default async function handler(request: Request) {
     if (interaction.type === InteractionType.ModalSubmit)
       await client.modalHandler.handleInteraction(interaction);
 
+    await posthog?.shutdown();
     return new Response(':)', { status: 200 });
   }
 

@@ -15,7 +15,13 @@ export default createEnv({
   },
 
   runtimeEnv: {
-    WEBSITE_URL: `https://${process.env.VERCEL_URL}`,
+    // For some reason, on Vercel our custom env variable parsing doesn't work
+    WEBSITE_URL:
+      process.env.PUBLIC_WEBSITE_URL ||
+      process.env.NEXT_PUBLIC_WEBSITE_URL ||
+      `https://${process.env.VERCEL_URL}`,
+    POSTHOG_KEY:
+      process.env.PUBLIC_POSTHOG_KEY || process.env.NEXT_PUBLIC_POSTHOG_KEY,
     ...process.env,
   },
 });

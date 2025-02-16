@@ -3,11 +3,8 @@
 
   "manifest_version": 3,
   "version": "0.2.0",
-  "author": {
-    "name": "Apteryx Software",
-    "email": "kiaora@apteryx.xyz"
-  },
-  "name": "Evaluate - Execute Any Code, Anywhere, Anytime",
+  "author": "Apteryx Software",
+  "name": "Evaluate - Run Code Anytime, Anywhere",
   "short_name": "Evaluate",
   "description": "Execute any code snippet on any website with Evaluate.",
   "homepage_url": "https://evaluate.run",
@@ -29,9 +26,16 @@
     }
   },
 
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "addon@evaluate.run"
+    }
+  },
+
   "permissions": ["contextMenus"],
   "background": {
     "service_worker": "src/background/index.ts",
+    "scripts": ["src/background/index.ts"],
     "type": "module"
   },
   "content_scripts": [

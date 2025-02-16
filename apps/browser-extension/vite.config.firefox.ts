@@ -6,20 +6,14 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import manifest from './manifest.json';
 import { removeExternalScriptLoading } from './vite-plugins';
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
   plugins: [
     removeExternalScriptLoading(),
     tsconfigPaths(),
     react(),
     chromeExtension({
       browser: 'firefox',
-      manifest: {
-        ...manifest,
-        background: {
-          scripts: [manifest.background.service_worker],
-          type: 'module',
-        },
-      },
+      manifest: manifest as never,
     }),
     zipPack({
       inDir: 'dist/firefox',
@@ -29,6 +23,6 @@ export default defineConfig(({ mode }) => ({
   ],
   build: {
     outDir: 'dist/firefox',
-    minify: mode === 'production',
+    minify: false,
   },
-}));
+});

@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 
 export default function PrivacyPolicyPage() {
-  const updatedAt = new Date('2024-02-02');
+  const updatedAt = new Date('2025-02-17');
 
   return (
     <>
@@ -34,7 +34,8 @@ export default function PrivacyPolicyPage() {
           Data Collection and Usage
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
-          Our service does not collect any information itself, however we do use{' '}
+          Our services do not track individual users or store personally
+          identifiable information. We use{' '}
           <a
             className="font-medium underline underline-offset-4"
             href="https://posthog.com/"
@@ -43,31 +44,49 @@ export default function PrivacyPolicyPage() {
           >
             PostHog Analytics
           </a>{' '}
-          to collect data about user behaviour, custom events capture, session
-          recordings, feature flags, and more. This data is used to analyse
-          traffic and usage of our all of our services. This allows us to
-          provide a better user experience for our visitors.
+          to collect <strong>session-based</strong> data to analyse traffic,
+          feature usage, and service performance. This data helps us improve our
+          products while ensuring anonymity and privacy.
+        </p>
+
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
+          GDPR & Compliance
+        </h2>
+        <p className="leading-7 [&:not(:first-child)]:mt-6">
+          We comply with the General Data Protection Regulation (GDPR) and other
+          relevant data protection laws. As our analytics are session-based and
+          do not involve tracking individual users or storing personal data, our
+          services do not require cookie consent banners. We ensure that any
+          data collected remains anonymous and is used solely for improving our
+          services.
+        </p>
+
+        <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
+          Your Privacy Choices
+        </h2>
+        <p className="leading-7 [&:not(:first-child)]:mt-6">
+          Since we do not track users personally, there is no need for an opt-in
+          or opt-out mechanism. However, if you have any concerns or questions
+          about our data handling, you may contact us for further clarification.
         </p>
 
         <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
           Policy Acceptance
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
-          Continued use of our service signifies your acceptance of this policy.
-          If you do not accept the policy then please do not use our services.
-          When registering we will further request your explicit acceptance of
-          the privacy policy.
+          By continuing to use our services, you acknowledge and accept this
+          privacy policy. If you do not agree with this policy, please refrain
+          from using our services.
         </p>
 
         <h2 className="mt-10 scroll-m-20 border-b pb-1 font-semibold text-3xl tracking-tight first:mt-0">
-          Policy Changes
+          Policy Updates
         </h2>
         <p className="leading-7 [&:not(:first-child)]:mt-6">
-          We may update this privacy policy from time to time. We encourage you
-          to review this privacy policy periodically to stay informed about how
-          we are helping to protect the personal information we collect. Your
-          continued use of this site after any change in this privacy policy
-          will constitute your acceptance of such change.
+          We may update this privacy policy periodically to reflect changes in
+          our practices or legal requirements. Any modifications will be posted
+          here, and continued use of our services after such changes will
+          indicate your acceptance of the updated policy.
         </p>
       </div>
     </>

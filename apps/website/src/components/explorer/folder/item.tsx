@@ -72,7 +72,7 @@ export function ExplorerFolderItem({ folder }: ExplorerFolderItem.Props) {
 
             <div
               className={cn(
-                'absolute top-[20%] right-0',
+                'absolute top-[20%] right-0 pr-[6px]',
                 isMobile ? 'block' : 'hidden group-hover:block',
               )}
             >

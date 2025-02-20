@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@evaluate/components/select';
+import { Separator } from '@evaluate/components/separator';
 import { toast } from '@evaluate/components/toast';
 import type { PartialRuntime } from '@evaluate/shapes';
 import Fuse from 'fuse.js';
@@ -21,6 +22,7 @@ import {
 } from 'lucide-react';
 import { useDeferredValue, useEffect, useMemo } from 'react';
 import { useHashFragment } from '~/hooks/use-hash-fragment';
+import { useLocalStorage } from '~/hooks/use-local-storage';
 import { useQueryParameter } from '~/hooks/use-query-parameter';
 import { PlaygroundCard } from './playground-card';
 
@@ -56,6 +58,11 @@ export function PlaygroundCardList({
         icon: <CircleDotIcon className="size-4" />,
       });
   }, [hash]);
+
+  const [pinnedRuntimeIds] = useLocalStorage<string[]>('evaluate.pinned', []);
+  const pinnedRuntimes = pinnedRuntimeIds
+    .map((id) => initialRuntimes.find((r) => r.id === id)!)
+    .filter(Boolean);
 
   return (
     <div className="space-y-3">
@@ -95,6 +102,21 @@ export function PlaygroundCardList({
           </SelectContent>
         </Select>
       </search>
+
+      {pinnedRuntimes.length > 0 && (
+        <>
+          <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
+            {pinnedRuntimes.map((runtime) => (
+              <PlaygroundCard
+                key={runtime.id}
+                runtime={runtime}
+                hash={hash || undefined}
+              />
+            ))}
+          </div>
+          <Separator />
+        </>
+      )}
 
       <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
         {sortedRuntimes.map((runtime) => (

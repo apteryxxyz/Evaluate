@@ -45,7 +45,7 @@ export function ExplorerFileItem({ file, meta }: ExplorerFileItem.Props) {
       {!meta && (
         <div
           className={cn(
-            'absolute top-[20%] right-0',
+            'absolute top-[20%] right-0 pr-1.5',
             isMobile ? 'block' : 'hidden group-hover:block',
           )}
         >

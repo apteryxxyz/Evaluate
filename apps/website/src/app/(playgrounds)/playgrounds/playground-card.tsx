@@ -10,11 +10,8 @@ import type { PartialRuntime } from '@evaluate/shapes';
 import { CodeIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
-import {
-  type RGB,
-  getDominantColour,
-} from '~/app/(playgrounds)/playgrounds/_components/get-colour';
 import { ImageWithFallback } from '~/components/image-fallback';
+import { type RGB, getDominantColour } from './get-colour';
 
 declare module 'react' {
   namespace CSS {
@@ -24,10 +21,10 @@ declare module 'react' {
   }
 }
 
-export function PlaygroundCard(p: {
-  runtime: PartialRuntime;
-  hash?: string;
-}) {
+export function PlaygroundCard({
+  runtime,
+  hash,
+}: { runtime: PartialRuntime; hash?: string }) {
   const imageRef = useRef<HTMLImageElement>(null);
   const [colour, setColour] = useState<RGB>();
 
@@ -40,27 +37,27 @@ export function PlaygroundCard(p: {
         <div className="flex items-center justify-start gap-2">
           <ImageWithFallback
             ref={imageRef}
-            src={p.runtime.icon && makeIconUrl(p.runtime.icon)}
+            src={runtime.icon && makeIconUrl(runtime.icon)}
             width={24}
             height={24}
-            alt={`${p.runtime.name} icon`}
+            alt={`${runtime.name} icon`}
             crossOrigin="anonymous"
             fallback={<CodeIcon />}
             onLoad={() => setColour(getDominantColour(imageRef.current!))}
           />
 
-          <CardTitle level={2}>{p.runtime.name}</CardTitle>
+          <CardTitle level={2}>{runtime.name}</CardTitle>
         </div>
-        <CardDescription>v{p.runtime.versions.at(-1)!}</CardDescription>
+        <CardDescription>v{runtime.versions.at(-1)!}</CardDescription>
       </CardHeader>
 
       <Link
         suppressHydrationWarning
         className="absolute inset-0"
-        href={`/playgrounds/${p.runtime.id}${p.hash ? `#${p.hash}` : ''}`}
+        href={`/playgrounds/${runtime.id}${hash ? `#${hash}` : ''}`}
         prefetch={false}
       >
-        <span className="sr-only">{`Open ${p.runtime.name} Playground`}</span>
+        <span className="sr-only">{`Open ${runtime.name} Playground`}</span>
       </Link>
     </Card>
   );

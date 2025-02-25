@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export function createMediaQueryHook<T extends Record<string, string>>(
   screens: T,
@@ -8,23 +8,27 @@ export function createMediaQueryHook<T extends Record<string, string>>(
       | Extract<keyof T, string>
       | (`(${'min' | 'max'}-width: ${string})` & {}),
   ) {
-    const [matches, setMatches] = useState(false);
     const mediaQuery =
       query in screens ? `(min-width: ${screens[query]})` : query;
 
-    useEffect(() => {
+    const [matches, setMatches] = useState<boolean>();
+
+    useIsomorphicLayoutEffect(() => {
+      if (typeof window === 'undefined') return;
+
       const mediaQueryList = window.matchMedia(mediaQuery);
       setMatches(mediaQueryList.matches);
 
-      const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
-      mediaQueryList.addEventListener('change', listener);
-      return () => mediaQueryList.removeEventListener('change', listener);
-    }, [mediaQuery]);
+      const syncMatches = () => setMatches(mediaQueryList.matches);
+      mediaQueryList.addEventListener('change', syncMatches);
+      return () => mediaQueryList.removeEventListener('change', syncMatches);
+    }, []);
 
     return matches;
   };
 }
 
 import tailwindConfig from '@evaluate/style/tailwind-preset';
+import { useIsomorphicLayoutEffect } from './isomorphic-layout-effect';
 export const useMediaQuery = //
   createMediaQueryHook(tailwindConfig.theme.extend.screens);

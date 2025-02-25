@@ -1,6 +1,6 @@
 import { Button } from '@evaluate/components/button';
 import Link from 'next/link';
-import { ImageCarousel } from './_components/image-carousel';
+import { ImageCarousel } from './image-carousel';
 
 export default function BrowserExtensionPlatformPage() {
   return (
@@ -16,81 +16,105 @@ export default function BrowserExtensionPlatformPage() {
           quick code execution capabilities.
         </p>
 
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex flex-col items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              variant="secondary"
+              className="flex items-center gap-2 rounded-full"
+              asChild
+            >
+              <Link
+                href="https://go.evaluate.run/chrome-extension"
+                target="_blank"
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/1024px-Google_Chrome_icon_%28February_2022%29.svg.png"
+                  className="aspect-square w-6"
+                  alt="Chrome"
+                />
+                <span>
+                  Evaluate for <span className="font-bold">Chrome</span>
+                </span>
+              </Link>
+            </Button>
+
+            <Button
+              title="Evaluate for Edge"
+              size="icon"
+              variant="secondary"
+              className="flex items-center gap-3 rounded-full"
+              asChild
+            >
+              <Link
+                href="https://go.evaluate.run/chrome-extension?for=edge"
+                target="_blank"
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Microsoft_Edge_logo_%282019%29.png"
+                  className="aspect-square w-6"
+                  alt="Edge"
+                />
+              </Link>
+            </Button>
+
+            <Button
+              title="Evaluate for Opera"
+              size="icon"
+              variant="secondary"
+              className="flex items-center gap-3 rounded-full"
+              asChild
+            >
+              <Link
+                href="https://go.evaluate.run/chrome-extension?for=opera"
+                target="_blank"
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/180px-Opera_2015_icon.svg.png"
+                  className="aspect-square w-6"
+                  alt="Opera"
+                />
+              </Link>
+            </Button>
+
+            <Button
+              title="Evaluate for Brave"
+              size="icon"
+              variant="secondary"
+              className="flex items-center gap-3 rounded-full"
+              asChild
+            >
+              <Link
+                href="https://go.evaluate.run/chrome-extension?for=brave"
+                target="_blank"
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Brave_lion_icon.svg"
+                  className="aspect-square w-6"
+                  alt="Brave"
+                />
+              </Link>
+            </Button>
+          </div>
+        </div>
+
+        <div>
           <Button
             variant="secondary"
             className="flex items-center gap-2 rounded-full"
             asChild
           >
             <Link
-              href="https://go.evaluate.run/chrome-extension"
+              href="https://go.evaluate.run/firefox-extension"
               target="_blank"
             >
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/1024px-Google_Chrome_icon_%28February_2022%29.svg.png"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/800px-Firefox_logo%2C_2019.svg.png"
                 className="aspect-square w-6"
-                alt="Chrome Logo"
+                alt="Firefox"
               />
               <span>
-                Evaluate for <span className="font-bold">Chrome</span>
+                Evaluate for <span className="font-bold">Firefox</span>
               </span>
-            </Link>
-          </Button>
-
-          <Button
-            size="icon"
-            variant="secondary"
-            className="flex items-center gap-3 rounded-full"
-            asChild
-          >
-            <Link
-              href="https://go.evaluate.run/chrome-extension?for=edge"
-              target="_blank"
-            >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Microsoft_Edge_logo_%282019%29.png"
-                className="aspect-square w-6"
-                alt="Edge Logo"
-              />
-              <span className="sr-only">Evaluate for Edge</span>
-            </Link>
-          </Button>
-
-          <Button
-            size="icon"
-            variant="secondary"
-            className="flex items-center gap-3 rounded-full"
-            asChild
-          >
-            <Link
-              href="https://go.evaluate.run/chrome-extension?for=opera"
-              target="_blank"
-            >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/180px-Opera_2015_icon.svg.png"
-                className="aspect-square w-6"
-                alt="Opera Logo"
-              />
-              <span className="sr-only">Evaluate for Opera</span>
-            </Link>
-          </Button>
-
-          <Button
-            size="icon"
-            variant="secondary"
-            className="flex items-center gap-3 rounded-full"
-            asChild
-          >
-            <Link
-              href="https://go.evaluate.run/chrome-extension?for=brave"
-              target="_blank"
-            >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Brave_lion_icon.svg"
-                className="aspect-square w-6"
-                alt="Brave Logo"
-              />
-              <span className="sr-only">Evaluate for Brave</span>
             </Link>
           </Button>
         </div>

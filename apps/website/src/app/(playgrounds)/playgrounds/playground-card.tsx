@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '@evaluate/components/button';
 import {
   Card,
   CardDescription,
@@ -7,10 +8,11 @@ import {
   CardTitle,
 } from '@evaluate/components/card';
 import type { PartialRuntime } from '@evaluate/shapes';
-import { CodeIcon } from 'lucide-react';
+import { CodeIcon, PinIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { ImageWithFallback } from '~/components/image-fallback';
+import { useLocalStorage } from '~/hooks/use-local-storage';
 import { type RGB, getDominantColour } from './get-colour';
 
 declare module 'react' {
@@ -28,10 +30,25 @@ export function PlaygroundCard({
   const imageRef = useRef<HTMLImageElement>(null);
   const [colour, setColour] = useState<RGB>();
 
+  const [pinnedRuntimes, setPinnedRuntimes] = //
+    useLocalStorage<string[]>('evaluate.pinned', []);
+  const pinned = useMemo(
+    () => pinnedRuntimes.includes(runtime.id),
+    [pinnedRuntimes, runtime.id],
+  );
+  const togglePin = useCallback(() => {
+    if (pinned) {
+      setPinnedRuntimes(pinnedRuntimes.filter((id) => id !== runtime.id));
+    } else {
+      setPinnedRuntimes([...pinnedRuntimes, runtime.id]);
+    }
+  }, [pinned, pinnedRuntimes, runtime.id, setPinnedRuntimes]);
+
   return (
     <Card
       style={{ '--colour': `rgb(${colour?.r}, ${colour?.g}, ${colour?.b})` }}
-      className="relative duration-300 hover:border-[var(--colour)]"
+      className="group relative min-h-[110px] duration-300 hover:border-[var(--colour)]"
+      data-pinned={pinned}
     >
       <CardHeader className="h-full justify-center">
         <div className="flex items-center justify-start gap-2">
@@ -48,6 +65,7 @@ export function PlaygroundCard({
 
           <CardTitle level={2}>{runtime.name}</CardTitle>
         </div>
+
         <CardDescription>v{runtime.versions.at(-1)!}</CardDescription>
       </CardHeader>
 
@@ -59,6 +77,20 @@ export function PlaygroundCard({
       >
         <span className="sr-only">{`Open ${runtime.name} Playground`}</span>
       </Link>
+
+      <div className="absolute top-0 right-0">
+        <Button
+          size="icon"
+          variant="ghost"
+          className="!bg-transparent text-muted-foreground opacity-0 transition-all group-hover:opacity-100 group-data-[pinned=true]:opacity-100"
+          onClick={togglePin}
+        >
+          <PinIcon
+            size={16}
+            className="group-data-[pinned=true]:fill-current"
+          />
+        </Button>
+      </div>
     </Card>
   );
 }

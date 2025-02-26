@@ -19,7 +19,7 @@
     "@evaluate/styles": "workspace:^",
     "@t3-oss/env-core": "^0.11.1",
     "lucide-react": "^0.476.0",
-    "posthog-js": "^1.218.1",
+    "posthog-js": "^1.223.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sonner": "^2.0.1",

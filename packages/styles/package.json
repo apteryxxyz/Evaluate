@@ -1,0 +1,14 @@
+{
+  "name": "@evaluate/styles",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "style": "./src/styles.css"
+    }
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.0.9",
+    "tailwindcss-animate": "^1.0.7"
+  }
+}

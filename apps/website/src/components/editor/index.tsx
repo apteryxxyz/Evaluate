@@ -32,7 +32,7 @@ export function Editor({ runtime }: { runtime: PartialRuntime }) {
     <section ref={sectionRef} className="h-full">
       <div
         ref={headerRef}
-        className="flex flex-col items-center gap-1 border-b px-0.5 lg:h-10 lg:flex-row"
+        className="flex flex-col items-center gap-1 border-b-2 px-0.5 lg:h-10 lg:flex-row"
       >
         <div className="flex w-full gap-1 lg:overflow-hidden">
           <ScrollArea className="flex w-full whitespace-nowrap">

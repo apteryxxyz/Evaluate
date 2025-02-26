@@ -30,7 +30,7 @@ export function MobileWrapper({ children }: React.PropsWithChildren) {
         </SheetContent>
       </Sheet>
 
-      <div className="m-1.5 h-full rounded-xl border-2 bg-card">{editor}</div>
+      <div className="m-1.5 h-full rounded-lg border-2 bg-card">{editor}</div>
 
       <Sheet open={terminalOpen} onOpenChange={setTerminalOpen}>
         <SheetContent

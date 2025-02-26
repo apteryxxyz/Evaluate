@@ -10,7 +10,7 @@ export function EditorWrapperSkeleton({ className }: { className?: string }) {
       )}
     >
       <Skeleton className="m-1.5 hidden w-[15vw] rounded-xl border-2 bg-card lg:block" />
-      <Skeleton className="m-1.5 w-[55vw] rounded-xl border-2 bg-card" />
+      <Skeleton className="m-1.5 w-full rounded-xl border-2 bg-card" />
       <Skeleton className="m-1.5 hidden w-[30vw] rounded-xl border-2 bg-card lg:block" />
     </div>
   );

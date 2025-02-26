@@ -12,9 +12,6 @@
     "check": "tsc --noEmit",
     "build": "tsup"
   },
-  "dependencies": {
-    "@evaluate/style": "workspace:^"
-  },
   "peerDependencies": {
     "react": "^18"
   },

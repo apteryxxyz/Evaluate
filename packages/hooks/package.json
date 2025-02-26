@@ -1,6 +1,5 @@
 {
   "name": "@evaluate/hooks",
-  "version": "1.0.0",
   "type": "module",
   "exports": {
     "./*": {
@@ -13,9 +12,9 @@
     "build": "tsup"
   },
   "peerDependencies": {
-    "react": "^18"
+    "react": "^19"
   },
   "devDependencies": {
-    "@types/react": "^18.3.18"
+    "@types/react": "^19.0.10"
   }
 }

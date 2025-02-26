@@ -55,9 +55,12 @@ export function ExplorerFileItem({ file, meta }: ExplorerFileItem.Props) {
             variant={null}
             className="h-auto w-auto p-0"
             onClick={handleRenameClick}
+            asChild
           >
-            <TextCursorInputIcon size={16} />
-            <span className="sr-only">Rename File</span>
+            <div role="button">
+              <TextCursorInputIcon size={16} />
+              <span className="sr-only">Rename File</span>
+            </div>
           </Button>
 
           <Button
@@ -66,9 +69,12 @@ export function ExplorerFileItem({ file, meta }: ExplorerFileItem.Props) {
             variant={null}
             className="h-auto w-auto p-0"
             onClick={handleDeleteClick}
+            asChild
           >
-            <Trash2Icon size={16} />
-            <span className="sr-only">Delete File</span>
+            <div role="button">
+              <Trash2Icon size={16} />
+              <span className="sr-only">Delete File</span>
+            </div>
           </Button>
         </div>
       )}

@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@evaluate/components/button';
-import { Sheet, SheetContent, SheetTrigger } from '@evaluate/components/sheet';
+import { Sheet, SheetBody, SheetTrigger } from '@evaluate/components/sheet';
 import { useMediaQuery } from '@evaluate/hooks/media-query';
 import { MenuIcon } from 'lucide-react';
 import Image from 'next/image';
@@ -107,7 +107,7 @@ function MobileNavigationWrapper(
           </Button>
         </SheetTrigger>
 
-        <SheetContent
+        <SheetBody
           side="right"
           className="border-l-0 bg-transparent"
           onClick={() => p.setOpen(false)}
@@ -127,7 +127,7 @@ function MobileNavigationWrapper(
               {p.children}
             </nav>
           </div>
-        </SheetContent>
+        </SheetBody>
       </Sheet>
     </div>
   );

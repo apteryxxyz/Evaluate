@@ -1,16 +1,11 @@
 {
   "name": "@evaluate/engine",
-  "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "typings": "src/index.ts",
   "exports": {
     "./*": {
-      "import": "./dist/*/index.js",
-      "types": "./dist/*/index.d.ts"
-    },
-    "./dist/*": {
       "import": "./dist/*/index.js",
       "types": "./dist/*/index.d.ts"
     }

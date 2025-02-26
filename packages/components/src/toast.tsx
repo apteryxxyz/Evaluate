@@ -1,16 +1,13 @@
 'use client';
 
-import * as React from 'react';
 import { Toaster as Sonner, toast } from 'sonner';
 
-// So biome doesn't complain about only being used as type
-void React;
-
-type ToasterProps = React.ComponentProps<typeof Sonner> & {
+function Toaster({
+  getTheme,
+  ...props
+}: React.ComponentProps<typeof Sonner> & {
   getTheme?: () => string;
-};
-
-const Toaster = ({ getTheme, ...props }: ToasterProps) => {
+}) {
   return (
     <Sonner
       theme={(getTheme?.() ?? 'system') as never}
@@ -21,14 +18,14 @@ const Toaster = ({ getTheme, ...props }: ToasterProps) => {
             'group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg',
           description: 'group-[.toast]:text-muted-foreground',
           actionButton:
-            'group-[.toast]:bg-primary group-[.toast]:text-primary-foreground',
+            'group-[.toast]:bg-primary group-[.toast]:text-primary-foreground font-medium',
           cancelButton:
-            'group-[.toast]:bg-muted group-[.toast]:text-muted-foreground',
+            'group-[.toast]:bg-muted group-[.toast]:text-muted-foreground font-medium',
         },
       }}
       {...props}
     />
   );
-};
+}
 
 export { Toaster, toast };

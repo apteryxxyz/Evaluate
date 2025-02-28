@@ -12,7 +12,7 @@ import { CodeIcon, PinIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { ImageWithFallback } from '~/components/image-fallback';
-import { useLocalStorage } from '~/hooks/use-local-storage';
+import { useLocalStorage } from '~/hooks/local-storage';
 import { type RGB, getDominantColour } from './get-colour';
 
 declare module 'react' {

@@ -11,7 +11,7 @@ import { TextCursorInputIcon, Trash2Icon } from 'lucide-react';
 import { twMerge as cn } from 'tailwind-merge';
 import type { Folder } from 'virtual-file-explorer-backend';
 import { MaterialIcon } from '~/components/material-icon';
-import { useIsMobile } from '~/hooks/use-is-mobile';
+import { useIsMobile } from '~/hooks/is-mobile';
 import { ExplorerItemName } from '../name';
 import { useWatch } from '../use';
 import { ExplorerFolderChildren } from './children';

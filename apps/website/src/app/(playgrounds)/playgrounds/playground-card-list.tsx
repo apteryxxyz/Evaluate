@@ -21,9 +21,9 @@ import {
   XIcon,
 } from 'lucide-react';
 import { useDeferredValue, useEffect, useMemo } from 'react';
-import { useHashFragment } from '~/hooks/use-hash-fragment';
-import { useLocalStorage } from '~/hooks/use-local-storage';
-import { useQueryParameter } from '~/hooks/use-query-parameter';
+import { useHashFragment } from '~/hooks/hash-fragment';
+import { useLocalStorage } from '~/hooks/local-storage';
+import { useQueryParameter } from '~/hooks/query-parameter';
 import { PlaygroundCard } from './playground-card';
 
 export function PlaygroundCardList({

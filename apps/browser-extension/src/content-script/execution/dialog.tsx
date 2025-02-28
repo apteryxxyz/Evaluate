@@ -35,7 +35,7 @@ export function ExecutionDialog({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogBody portalProps={{ container: portal }}>
+      <DialogBody portalProps={{ container: portal }} className="border-2">
         <DialogHeader className="flex-row">
           <img
             src={browser.runtime.getURL('images/icon.png')}

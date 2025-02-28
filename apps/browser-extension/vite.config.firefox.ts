@@ -1,4 +1,5 @@
 import { chromeExtension } from '@crxjs/vite-plugin';
+import tailwindCss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import zipPack from 'vite-plugin-zip-pack';
@@ -9,6 +10,7 @@ import { removeExternalScriptLoading } from './vite-plugins';
 export default defineConfig({
   plugins: [
     removeExternalScriptLoading(),
+    tailwindCss(),
     tsconfigPaths(),
     react(),
     chromeExtension({

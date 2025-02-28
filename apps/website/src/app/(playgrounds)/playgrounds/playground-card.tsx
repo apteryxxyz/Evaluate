@@ -46,8 +46,8 @@ export function PlaygroundCard({
 
   return (
     <Card
-      style={{ '--colour': `rgb(${colour?.r}, ${colour?.g}, ${colour?.b})` }}
-      className="group relative min-h-[110px] duration-300 hover:border-[var(--colour)]"
+      style={{ '--_': `rgb(${colour?.r}, ${colour?.g}, ${colour?.b})` }}
+      className="group relative min-h-[110px] border-2 duration-300 hover:border-(--_)"
       data-pinned={pinned}
     >
       <CardHeader className="h-full justify-center">

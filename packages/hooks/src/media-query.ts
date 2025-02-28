@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { useIsomorphicLayoutEffect } from './isomorphic-layout-effect';
 
 export function createMediaQueryHook<T extends Record<string, string>>(
-  screens: T,
+  breakpoints: T,
 ) {
   return function useMediaQuery(
     query:
@@ -9,7 +10,7 @@ export function createMediaQueryHook<T extends Record<string, string>>(
       | (`(${'min' | 'max'}-width: ${string})` & {}),
   ) {
     const mediaQuery =
-      query in screens ? `(min-width: ${screens[query]})` : query;
+      query in breakpoints ? `(min-width: ${breakpoints[query]})` : query;
 
     const [matches, setMatches] = useState<boolean>();
 
@@ -28,7 +29,10 @@ export function createMediaQueryHook<T extends Record<string, string>>(
   };
 }
 
-import tailwindConfig from '@evaluate/style/tailwind-preset';
-import { useIsomorphicLayoutEffect } from './isomorphic-layout-effect';
-export const useMediaQuery = //
-  createMediaQueryHook(tailwindConfig.theme.extend.screens);
+export const useMediaQuery = createMediaQueryHook({
+  sm: '640px',
+  md: '768px',
+  lg: '1024px',
+  xl: '1280px',
+  '2xl': '1536px',
+});

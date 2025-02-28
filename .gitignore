@@ -1,6 +1,7 @@
 node_modules/
 .nx/
 .turbo/
+.million/
 .ignore/
 dist/
 .next/

@@ -1,17 +1,26 @@
-import withBundleAnalyser from '@next/bundle-analyzer';
+import { fetchRuntimes } from '@evaluate/engine/runtimes';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   typescript: { ignoreBuildErrors: true },
 
-  redirects: async () => [
-    {
-      source: '/',
-      destination: '/playgrounds',
-      permanent: false,
-    },
-  ],
+  redirects: async () => {
+    return [
+      {
+        source: '/',
+        destination: '/playgrounds',
+        permanent: false,
+      },
+      {
+        source: `/:slug(${(await fetchRuntimes())
+          .map((r) => r.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+          .join('|')})`,
+        destination: '/playgrounds/:slug',
+        permanent: true,
+      },
+    ];
+  },
   rewrites: async () => [
     {
       source: '/api/ingest/static/:path*',
@@ -35,7 +44,12 @@ const nextConfig = {
   },
 };
 
-const isTruthy = (v) => ['true', 't', '1'].includes(v);
-export default withBundleAnalyser({
-  enabled: isTruthy(String(process.env.ANALYSE)),
-})(nextConfig);
+const truthy = (v) => ['true', 't', '1'].includes(v);
+export default [
+  truthy(process.env.ANALYSE) &&
+    (await import('@next/bundle-analyzer')).default({ enabled: true }),
+  !truthy(process.env.TURBOPACK) &&
+    (await import('@million/lint')).next({ rsc: true }),
+]
+  .filter(Boolean)
+  .reduce((acc, curr) => curr(acc), nextConfig);

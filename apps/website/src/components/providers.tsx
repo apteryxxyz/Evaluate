@@ -3,6 +3,7 @@
 import { ServerThemeProvider } from 'next-themes';
 
 export function HtmlProviders(p: React.PropsWithChildren) {
+  // TODO: This causes hydration errors, can this be replaced with latest?
   return (
     <ServerThemeProvider
       attribute="class"

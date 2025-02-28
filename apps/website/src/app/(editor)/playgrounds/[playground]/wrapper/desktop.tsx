@@ -14,7 +14,7 @@ export function DesktopWrapper({ children }: React.PropsWithChildren) {
         defaultSize={15}
         minSize={10}
         collapsible={false}
-        className="m-1.5 rounded-xl border-2 bg-card"
+        className="m-1.5 rounded-lg border-2 bg-card"
       >
         {explorer}
       </ResizablePanel>
@@ -25,7 +25,7 @@ export function DesktopWrapper({ children }: React.PropsWithChildren) {
         defaultSize={55}
         minSize={35}
         collapsible={false}
-        className="m-1.5 rounded-xl border-2 bg-card"
+        className="m-1.5 rounded-lg border-2 bg-card"
       >
         {editor}
       </ResizablePanel>
@@ -36,7 +36,7 @@ export function DesktopWrapper({ children }: React.PropsWithChildren) {
         defaultSize={30}
         minSize={10}
         collapsible={false}
-        className="m-1.5 rounded-xl border-2 bg-card"
+        className="m-1.5 rounded-lg border-2 bg-card"
       >
         {terminal}
       </ResizablePanel>

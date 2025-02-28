@@ -12,14 +12,12 @@ import {
 import { toast } from '@evaluate/components/toast';
 import { executeCode } from '@evaluate/engine/execute';
 import { useEventListener } from '@evaluate/hooks/event-listener';
-import { useMediaQuery } from '@evaluate/hooks/media-query';
 import { ExecuteOptions, type PartialRuntime } from '@evaluate/shapes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { twMerge as cn } from 'tailwind-merge';
 import type { File } from 'virtual-file-explorer-backend';
 import { useExplorer, useWatch } from '~/components/explorer/use';
 import { useTerminal } from '~/components/terminal/use';
@@ -153,7 +151,7 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
 
         <Button
           type="submit"
-          className={cn(!useMediaQuery('xs') && 'aspect-square p-0')}
+          className="aspect-square p-0 sm:aspect-auto sm:px-4 sm:py-2"
           disabled={isPending}
         >
           {isPending ? (
@@ -162,7 +160,7 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
             <PlayIcon className="size-4" />
           )}
           <span className="sr-only">Execute</span>
-          <span className="xs:block hidden">&nbsp;{runtime.name}</span>
+          <span className="hidden sm:block">&nbsp;{runtime.name}</span>
           <span className="sr-only">Code</span>
         </Button>
       </form>

@@ -14,9 +14,8 @@ export async function generateStaticParams() {
   return runtimes.map((r) => ({ playground: r.id }));
 }
 
-export async function generateMetadata({
-  params: { playground },
-}: PageProps<['playground']>) {
+export async function generateMetadata(props: PageProps<['[playground]']>) {
+  const playground = (await props.params).playground;
   const runtime = await getRuntime(decodeURIComponent(playground));
   if (!runtime) notFound();
 
@@ -28,9 +27,8 @@ export async function generateMetadata({
   });
 }
 
-export default async function EditorPage({
-  params: { playground },
-}: PageProps<['playground']>) {
+export default async function EditorPage(props: PageProps<['[playground]']>) {
+  const playground = (await props.params).playground;
   const runtime = await getRuntime(decodeURIComponent(playground));
   if (!runtime) notFound();
 

@@ -27,7 +27,7 @@
     "vite.config.chrome.ts": "vite",
     "vite.config.firefox.ts": "vite"
   },
-  "cSpell.words": ["posthog", "Resolvables"],
+  "cSpell.words": ["color", "posthog", "Resolvables"],
   "todo-tree.general.tags": ["=====", "NOTE", "IDEA", "TODO", "FIX", "HACK"],
   "todo-tree.highlights.customHighlight": {
     "=====": {

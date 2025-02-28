@@ -28,19 +28,21 @@ import { PlaygroundCard } from './playground-card';
 
 export function PlaygroundCardList({
   initialRuntimes,
-}: { initialRuntimes: PartialRuntime[] }) {
+}: {
+  initialRuntimes: PartialRuntime[];
+}) {
   const [search, setSearch] = useQueryParameter('search');
   const deferredSearch = useDeferredValue(search);
-  const searchedRuntimes = useMemo(() => {
-    if (!deferredSearch) return initialRuntimes;
-    const engine = new Fuse(initialRuntimes, {
+  const searchEngine = useMemo(() => {
+    return new Fuse(initialRuntimes, {
       keys: ['name', 'aliases', 'tags'],
       threshold: 0.3,
     });
-    return engine
-      .search(deferredSearch) //
-      .map((result) => result.item);
-  }, [initialRuntimes, deferredSearch]);
+  }, [initialRuntimes]);
+  const searchedRuntimes = useMemo(() => {
+    if (!deferredSearch) return initialRuntimes;
+    return searchEngine.search(deferredSearch).map((result) => result.item);
+  }, [initialRuntimes, deferredSearch, searchEngine]);
 
   type SortBy = 'popularity' | 'name';
   const [sortBy, setSortBy] = useQueryParameter<SortBy>('sort', 'popularity');
@@ -51,6 +53,13 @@ export function PlaygroundCardList({
     });
   }, [searchedRuntimes, sortBy]);
 
+  const [pinnedRuntimeIds] = useLocalStorage<string[]>('evaluate.pinned', []);
+  const pinnedRuntimes = useMemo(() => {
+    return pinnedRuntimeIds
+      .map((id) => initialRuntimes.find((r) => r.id === id)!)
+      .filter(Boolean);
+  }, [pinnedRuntimeIds, initialRuntimes]);
+
   const [hash] = useHashFragment();
   useEffect(() => {
     if (hash)
@@ -58,11 +67,6 @@ export function PlaygroundCardList({
         icon: <CircleDotIcon className="size-4" />,
       });
   }, [hash]);
-
-  const [pinnedRuntimeIds] = useLocalStorage<string[]>('evaluate.pinned', []);
-  const pinnedRuntimes = pinnedRuntimeIds
-    .map((id) => initialRuntimes.find((r) => r.id === id)!)
-    .filter(Boolean);
 
   return (
     <div className="space-y-3">

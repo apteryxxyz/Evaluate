@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@evaluate/components/button';
-import { Sheet, SheetContent, SheetTrigger } from '@evaluate/components/sheet';
+import { Sheet, SheetBody, SheetTrigger } from '@evaluate/components/sheet';
 import { useMediaQuery } from '@evaluate/hooks/media-query';
 import { MenuIcon } from 'lucide-react';
 import Image from 'next/image';
@@ -76,8 +76,8 @@ function DesktopNavigationWrapper(p: React.PropsWithChildren) {
     <nav
       className={cn(
         'flex h-full w-full items-center',
-        'first-of-type:[&>div]:pl-3',
-        'last-of-type:[&>div]:ml-auto',
+        '[&>div]:first-of-type:pl-3',
+        '[&>div]:last-of-type:ml-auto',
       )}
     >
       {p.children}
@@ -107,7 +107,7 @@ function MobileNavigationWrapper(
           </Button>
         </SheetTrigger>
 
-        <SheetContent
+        <SheetBody
           side="right"
           className="border-l-0 bg-transparent"
           onClick={() => p.setOpen(false)}
@@ -120,14 +120,14 @@ function MobileNavigationWrapper(
             <nav
               className={cn(
                 'flex h-full flex-col gap-3',
-                'first-of-type:[&>div]:flex first-of-type:[&>div]:flex-col [&>*]:first-of-type:[&>div]:justify-start',
-                'last-of-type:[&>div]:mt-auto last-of-type:[&>div]:rounded-xl last-of-type:[&>div]:border',
+                '[&>div]:first-of-type:flex [&>div]:first-of-type:flex-col [&>*]:[&>div]:first-of-type:justify-start',
+                '[&>div]:last-of-type:mt-auto [&>div]:last-of-type:rounded-xl [&>div]:last-of-type:border',
               )}
             >
               {p.children}
             </nav>
           </div>
-        </SheetContent>
+        </SheetBody>
       </Sheet>
     </div>
   );

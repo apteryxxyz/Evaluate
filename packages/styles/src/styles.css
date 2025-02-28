@@ -1,0 +1,141 @@
+@import "tailwindcss" source(none);
+@plugin "tailwindcss-animate";
+
+:root,
+:host {
+  --_background: hsl(0 0 100);
+  --_foreground: hsl(240 10 3.9);
+  --_card: hsl(0 0 100);
+  --_card-foreground: hsl(240 10 3.9);
+  --_popover: hsl(0 0 100);
+  --_popover-foreground: hsl(240 10 3.9);
+  --_primary: hsl(156 61 47);
+  --_primary-foreground: hsl(0 0 100);
+  --_secondary: hsl(240 4.8 95.9);
+  --_secondary-foreground: hsl(240 5.9 10);
+  --_muted: hsl(240 4.8 95.9);
+  --_muted-foreground: hsl(240 3.8 46.1);
+  --_accent: hsl(240 4.8 95.9);
+  --_accent-foreground: hsl(240 5.9 10);
+  --_destructive: hsl(0 84.2 60.2);
+  --_destructive-foreground: hsl(0 0 98);
+  --_border: hsl(240 5.9 90);
+  --_input: hsl(240 5.9 90);
+  --_ring: hsl(156 61 47);
+  --_radius: 0.75rem;
+}
+
+@custom-variant dark (&:is(.dark *));
+.dark {
+  --_background: hsl(20 14.3 4.1);
+  --_foreground: hsl(0 0 95);
+  --_card: hsl(24 9.8 10);
+  --_card-foreground: hsl(0 0 95);
+  --_popover: hsl(0 0 9);
+  --_popover-foreground: hsl(0 0 95);
+  --_primary: hsl(156 61 47);
+  --_primary-foreground: hsl(20 14.3 4.1);
+  --_secondary: hsl(240 3.7 15.9);
+  --_secondary-foreground: hsl(0 0 98);
+  --_muted: hsl(0 0 15);
+  --_muted-foreground: hsl(240 5 64.9);
+  --_accent: hsl(12 6.5 15.1);
+  --_accent-foreground: hsl(0 0 98);
+  --_destructive: hsl(0 69 42);
+  --_destructive-foreground: hsl(0 85.7 97.3);
+  --_border: hsl(240 3.7 15.9);
+  --_input: hsl(240 3.7 15.9);
+  --_ring: hsl(142.4 71.8 29.2);
+}
+
+@theme inline {
+  --color-border: var(--_border);
+  --color-input: var(--_input);
+  --color-ring: var(--_ring);
+  --color-background: var(--_background);
+  --color-foreground: var(--_foreground);
+  --color-primary: var(--_primary);
+  --color-primary-foreground: var(--_primary-foreground);
+  --color-secondary: var(--_secondary);
+  --color-secondary-foreground: var(--_secondary-foreground);
+  --color-muted: var(--_muted);
+  --color-muted-foreground: var(--_muted-foreground);
+  --color-accent: var(--_accent);
+  --color-accent-foreground: var(--_accent-foreground);
+  --color-destructive: var(--_destructive);
+  --color-destructive-foreground: var(--_destructive-foreground);
+  --color-popover: var(--_popover);
+  --color-popover-foreground: var(--_popover-foreground);
+  --color-card: var(--_card);
+  --color-card-foreground: var(--_card-foreground);
+
+  --radius-xl: calc(var(--_radius) + 4px);
+  --radius-lg: var(--_radius);
+  --radius-md: calc(var(--_radius) - 2px);
+  --radius-sm: calc(var(--_radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= 364px) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Backwards compatibility for tailwindcss v3.x */
+
+/* @layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+} */

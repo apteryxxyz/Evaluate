@@ -35,7 +35,7 @@ export function Explorer() {
 
   return (
     <section className="h-full w-full">
-      <div className="flex h-10 items-center gap-1 border-b px-3 py-1">
+      <div className="flex h-10 items-center gap-1 border-b-2 px-3 py-1">
         <span className="mr-auto font-medium text-sm">Explorer</span>
 
         {/* TODO: Upload button? Would likely need a confirm dialog as this will overwrite the current content */}

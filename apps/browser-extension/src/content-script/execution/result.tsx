@@ -32,8 +32,8 @@ export function ResultDialog({
           value={display.output}
           placeholder="The code ran successfully, but it didn't produce an output to the console."
           className={cn(
-            'min-h-[40vh] w-full resize-none',
-            display.code && 'border-2 border-destructive',
+            'min-h-[40vh] w-full resize-none border-2',
+            display.code && 'border-destructive',
             display.output && 'font-mono',
           )}
         />

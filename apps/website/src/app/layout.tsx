@@ -1,19 +1,18 @@
+import { Toaster } from '@evaluate/components/toast';
+import { Inter } from 'next/font/google';
+import { twMerge as cn } from 'tailwind-merge';
+import { Footer } from '~/components/footer';
 import { Header } from '~/components/header';
 import { BodyProviders, HtmlProviders } from '~/components/providers';
 import type { LayoutProps } from '../types';
 import { generateBaseMetadata } from './metadata';
+import '../styles.css';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export function generateMetadata() {
   return generateBaseMetadata('/');
 }
-
-import { Inter } from 'next/font/google';
-const inter = Inter({ subsets: ['latin'] });
-import { Toaster } from '@evaluate/components/toast';
-import '@evaluate/style/css';
-import { twMerge as cn } from 'tailwind-merge';
-import { Footer } from '~/components/footer';
-import './layout.css';
 
 export default function RootLayout(p: LayoutProps) {
   return (

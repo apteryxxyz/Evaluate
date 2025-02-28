@@ -1,6 +1,6 @@
 'use client';
 
-import { Sheet, SheetContent } from '@evaluate/components/sheet';
+import { Sheet, SheetBody } from '@evaluate/components/sheet';
 import { useEventListener } from '@evaluate/hooks/event-listener';
 import { Children, useState } from 'react';
 
@@ -15,7 +15,7 @@ export function MobileWrapper({ children }: React.PropsWithChildren) {
   return (
     <>
       <Sheet open={explorerOpen} onOpenChange={setExplorerOpen}>
-        <SheetContent
+        <SheetBody
           side="right"
           className="border-l-0 bg-transparent"
           onClick={() => setExplorerOpen(false)}
@@ -27,13 +27,13 @@ export function MobileWrapper({ children }: React.PropsWithChildren) {
           >
             {explorer}
           </div>
-        </SheetContent>
+        </SheetBody>
       </Sheet>
 
-      <div className="m-1.5 h-full rounded-xl border-2 bg-card">{editor}</div>
+      <div className="m-1.5 h-full rounded-lg border-2 bg-card">{editor}</div>
 
       <Sheet open={terminalOpen} onOpenChange={setTerminalOpen}>
-        <SheetContent
+        <SheetBody
           side="right"
           className="border-l-0 bg-transparent"
           onClick={() => setExplorerOpen(false)}
@@ -45,7 +45,7 @@ export function MobileWrapper({ children }: React.PropsWithChildren) {
           >
             {terminal}
           </div>
-        </SheetContent>
+        </SheetBody>
       </Sheet>
     </>
   );

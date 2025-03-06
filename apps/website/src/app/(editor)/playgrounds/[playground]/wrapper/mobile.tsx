@@ -17,7 +17,7 @@ export function MobileWrapper({ children }: React.PropsWithChildren) {
       <Sheet open={explorerOpen} onOpenChange={setExplorerOpen}>
         <SheetBody
           side="right"
-          className="border-l-0 bg-transparent"
+          className="border-l-0 bg-transparent [&>button]:hidden"
           onClick={() => setExplorerOpen(false)}
         >
           <div
@@ -35,7 +35,7 @@ export function MobileWrapper({ children }: React.PropsWithChildren) {
       <Sheet open={terminalOpen} onOpenChange={setTerminalOpen}>
         <SheetBody
           side="right"
-          className="border-l-0 bg-transparent"
+          className="border-l-0 bg-transparent [&>button]:hidden"
           onClick={() => setExplorerOpen(false)}
         >
           <div

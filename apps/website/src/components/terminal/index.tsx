@@ -44,8 +44,8 @@ export function Terminal({ runtime }: Terminal.Props) {
 
   return (
     <section className="h-full">
-      <Tabs defaultValue="run" className="h-full">
-        <ScrollArea className="flex items-center whitespace-nowrap">
+      <Tabs defaultValue="run" className="h-full gap-0">
+        <ScrollArea className="flex items-center whitespace-nowrap rounded-full">
           <TabsList className="h-10 w-full space-x-1 rounded-none border-b-2 bg-transparent px-0.5">
             {(
               [

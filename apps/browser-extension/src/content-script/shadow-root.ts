@@ -22,6 +22,7 @@ export function createIsolatedElement(options: CreateIsolatedElementOptions) {
   bodyElement.classList.add('dark');
   bodyElement.style.zIndex = '2147483647';
   bodyElement.style.position = 'relative';
+  bodyElement.style.height = '0px';
   shadowRoot.appendChild(bodyElement);
 
   let isolatedElement: HTMLElement = bodyElement;

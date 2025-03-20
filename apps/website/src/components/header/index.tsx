@@ -10,6 +10,7 @@ import { usePathname } from 'next/navigation';
 import type React from 'react';
 import { Children, useCallback, useState } from 'react';
 import { twMerge as cn } from 'tailwind-merge';
+import { DiscordIcon } from './discord-icon';
 import { ThemeSwitcher } from './theme-switcher';
 
 export function Header() {
@@ -64,6 +65,16 @@ export function Header() {
         </div>
 
         <div>
+          <Button variant="ghost" size="icon" asChild>
+            <a
+              href="https://discord.gg/TUskQz75F6"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <DiscordIcon className="size-4 fill-black dark:fill-white" />
+            </a>
+          </Button>
+
           <ThemeSwitcher />
         </div>
       </Nav>

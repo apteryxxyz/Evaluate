@@ -33,6 +33,8 @@ export default async function handler(request: Request) {
       await client.componentHandler.handleInteraction(interaction);
     if (interaction.type === InteractionType.ModalSubmit)
       await client.modalHandler.handleInteraction(interaction);
+    if (interaction.type === InteractionType.ApplicationCommandAutocomplete)
+      await client.commandHandler.handleAutocompleteInteraction(interaction);
 
     await posthog?.shutdown();
     return new Response(':)', { status: 200 });

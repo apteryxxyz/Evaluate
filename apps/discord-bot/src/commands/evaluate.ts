@@ -1,9 +1,11 @@
 import {
   ApplicationCommandOptionType,
+  type AutocompleteInteraction,
   Command,
   type CommandInteraction,
   type CommandOptions,
 } from '@buape/carbon';
+import { fetchRuntimes, searchRuntimes } from '@evaluate/engine/runtimes';
 import { EditEvaluationButton } from '~/components/edit-evaluation-button';
 import { EvaluateModal, EvaluateModalEdit } from '~/components/evaluate-modal';
 import { handleEvaluating } from '~/handlers/evaluate';
@@ -20,6 +22,7 @@ export class EvaluateCommand extends Command {
       name: 'runtime',
       description: 'The runtime in which the code is written.',
       required: false,
+      autocomplete: true,
     },
     {
       type: ApplicationCommandOptionType.String,
@@ -43,6 +46,22 @@ export class EvaluateCommand extends Command {
 
   components = [EditEvaluationButton];
   modals = [EvaluateModal, EvaluateModalEdit];
+
+  async autocomplete(interaction: AutocompleteInteraction) {
+    const runtime = interaction.options.getString('runtime');
+
+    if (runtime) {
+      const runtimes = await searchRuntimes(runtime);
+      return interaction.respond(
+        runtimes.slice(0, 25).map((r) => ({ name: r.name, value: r.id })),
+      );
+    } else {
+      const runtimes = await fetchRuntimes();
+      return interaction.respond(
+        runtimes.slice(0, 25).map((r) => ({ name: r.name, value: r.id })),
+      );
+    }
+  }
 
   async run(use: CommandInteraction) {
     captureEvent(getInteractionContext(use.rawData), 'used_command', {

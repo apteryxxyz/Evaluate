@@ -1,13 +1,4 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "include": ["src/**/*", "vite-env.d.ts"],
-  "exclude": ["@types/node"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "dist",
-    "paths": { "~/*": ["src/*"] },
-    "moduleResolution": "Bundler",
-    "jsx": "preserve",
-    "lib": ["DOM", "ES2023"]
-  }
+  "extends": "../../tsconfig.react.json",
+  "include": ["src/**/*", "vite-env.d.ts"]
 }

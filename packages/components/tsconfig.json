@@ -1,8 +1,1 @@
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": { "~/*": ["./src/*"] },
-    "jsx": "preserve"
-  }
-}
+{ "extends": "../../tsconfig.react.json" }

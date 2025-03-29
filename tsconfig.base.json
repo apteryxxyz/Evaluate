@@ -40,14 +40,16 @@
     "isolatedModules": true,
 
     "experimentalDecorators": true,
-    "lib": ["DOM", "ESNext"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "target": "ES2022",
     "useDefineForClassFields": true,
     "skipLibCheck": true,
 
+    "diagnostics": true,
     "baseUrl": "${configDir}",
     "outDir": "${configDir}/dist",
-    "paths": { "~/*": ["./src/*"] },
+    "tsBuildInfoFile": "${configDir}/dist/.tsbuildinfo",
+    "paths": { "~/*": ["src/*"] },
 
     "plugins": [
       { "transform": "typescript-transform-paths" },

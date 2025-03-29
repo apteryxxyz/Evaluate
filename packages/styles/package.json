@@ -8,7 +8,7 @@
     }
   },
   "devDependencies": {
-    "tailwindcss": "^4.0.9",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss": "^4.0.17",
+    "tw-animate-css": "^1.2.5"
   }
 }

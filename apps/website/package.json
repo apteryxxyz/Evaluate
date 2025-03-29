@@ -3,7 +3,6 @@
   "version": "2.0.0",
   "type": "module",
   "scripts": {
-    "check": "tsc --noEmit",
     "build": "use-env -p NEXT -P -- next build --no-lint",
     "start": "use-env -p NEXT -P -- next start",
     "dev": "use-env -p NEXT -- next dev --turbo",

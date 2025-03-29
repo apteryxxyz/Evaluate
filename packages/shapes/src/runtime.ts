@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ExecuteOptions } from './execute';
+import { ExecuteOptions } from './execute.js';
 
 export type PartialRuntime = z.infer<typeof PartialRuntime>;
 export const PartialRuntime = z.object({

@@ -1,1 +1,1 @@
-export * from './better-fetch';
+export * from './better-fetch.js';

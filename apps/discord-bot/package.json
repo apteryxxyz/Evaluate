@@ -13,9 +13,7 @@
     }
   },
   "scripts": {
-    "check": "tsc --noEmit",
-    "build": "tsup",
-    "dev": "pnpm build --watch"
+    "build": "pnpm tsup"
   },
   "dependencies": {
     "@buape/carbon": "0.7.0",

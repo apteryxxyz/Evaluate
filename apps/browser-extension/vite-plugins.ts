@@ -43,3 +43,16 @@ export function removeExternalScriptLoading(): Plugin {
     },
   };
 }
+
+/**
+ * Vite plugin to remove import attributes from import statements.
+ */
+export function removeImportAttributes(): Plugin {
+  return {
+    name: 'remove-import-attributes',
+    enforce: 'pre',
+    transform(code) {
+      return code.replaceAll(/(from\s['"](?:.*?)['"])(\swith\s\{.*?\})/g, '$1');
+    },
+  };
+}

@@ -5,9 +5,9 @@ import {
   PistonExecuteOptions,
   PistonExecuteResult,
 } from '@evaluate/shapes';
-import { getRuntime } from '~/runtimes';
-import { extractIdentifier } from '~/runtimes/identifier';
-import { parseArguments } from './arguments';
+import { extractIdentifier } from '~/runtimes/identifier.js';
+import { getRuntime } from '~/runtimes/index.js';
+import { parseArguments } from './arguments.js';
 
 /**
  * Execute code using the Piston API.

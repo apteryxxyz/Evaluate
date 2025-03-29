@@ -12,8 +12,7 @@
     }
   },
   "scripts": {
-    "check": "tsc --noEmit",
-    "build": "pnpm tsup"
+    "build": "tsc"
   },
   "dependencies": {
     "zod": "3.22.4"

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useIsomorphicLayoutEffect } from './isomorphic-layout-effect';
+import { useIsomorphicLayoutEffect } from './isomorphic-layout-effect.js';
 
 export function createMediaQueryHook<T extends Record<string, string>>(
   breakpoints: T,

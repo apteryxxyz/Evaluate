@@ -4,13 +4,12 @@
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "format": "biome check . --write",
-    "check": "turbo run check",
     "build": "turbo run build",
     "build:packages": "turbo run build --filter=\"./packages/*\"",
     "dev": "pnpm run \"/dev:.*/\"",
     "dev:packages": "turbo watch build --filter=\"./packages/*\"",
     "dev:apps": "turbo run dev --filter=\"./apps/*\"",
-    "prepare": "husky",
+    "prepare": "husky & ts-patch install",
     "graph": "pnpx nx@18 graph"
   },
   "devDependencies": {
@@ -18,9 +17,11 @@
     "@evaluate/scripts": "workspace:^",
     "@types/node": "^22.13.4",
     "husky": "^9.1.7",
+    "ts-patch": "^3.3.0",
     "tsup": "^8.3.6",
     "turbo": "^2.4.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "typescript-transform-paths": "^3.5.5"
   },
   "pnpm": {
     "patchedDependencies": {

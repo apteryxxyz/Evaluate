@@ -5,11 +5,15 @@ import { defineConfig } from 'vite';
 import zipPack from 'vite-plugin-zip-pack';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import manifest from './manifest.json';
-import { removeExternalScriptLoading } from './vite-plugins';
+import {
+  removeExternalScriptLoading,
+  removeImportAttributes,
+} from './vite-plugins';
 
 export default defineConfig({
   plugins: [
     removeExternalScriptLoading(),
+    removeImportAttributes(),
     tailwindCss(),
     tsconfigPaths(),
     react(),

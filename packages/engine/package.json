@@ -11,8 +11,7 @@
     }
   },
   "scripts": {
-    "check": "tsc --noEmit",
-    "build": "pnpm tsup"
+    "build": "tsc"
   },
   "dependencies": {
     "@evaluate/helpers": "workspace:^",

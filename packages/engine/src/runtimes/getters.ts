@@ -1,7 +1,7 @@
-import RuntimeExamples from './data/examples.json';
-import RuntimeExtensions from './data/extensions.json';
-import RuntimeIcons from './data/icons.json';
-import RuntimeNames from './data/names.json';
+import RuntimeExamples from './data/examples.json' with { type: 'json' };
+import RuntimeExtensions from './data/extensions.json' with { type: 'json' };
+import RuntimeIcons from './data/icons.json' with { type: 'json' };
+import RuntimeNames from './data/names.json' with { type: 'json' };
 
 /**
  * Check if the given identifier is a valid runtime identifier.

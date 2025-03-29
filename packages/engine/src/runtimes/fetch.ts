@@ -14,8 +14,8 @@ import {
   getRuntimePopularity,
   getRuntimeTags,
   isRuntimeIdentifier,
-} from './getters';
-import { makeIdentifier } from './identifier';
+} from './getters.js';
+import { makeIdentifier } from './identifier.js';
 
 const Runtimes = new Map<string, PartialRuntime>();
 

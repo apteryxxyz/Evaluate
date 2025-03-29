@@ -1,4 +1,4 @@
-import { HttpError, TooManyRequestsError } from './http-error';
+import { HttpError, TooManyRequestsError } from './http-error.js';
 
 export async function betterFetch(url: RequestInfo, options?: RequestInit) {
   let attempts = 0;

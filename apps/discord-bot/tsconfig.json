@@ -1,12 +1,1 @@
-{
-  "extends": "../../tsconfig.base.json",
-  "include": ["src/**/*", "scripts/**/*"],
-  "exclude": ["node_modules", ".next/**/*"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "dist",
-    "noImplicitOverride": false,
-    "paths": { "~/*": ["src/*"] },
-    "lib": ["DOM", "ES2023"]
-  }
-}
+{ "extends": "../../tsconfig.base.json" }

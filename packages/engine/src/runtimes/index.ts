@@ -1,2 +1,2 @@
-export * from './fetch';
-export * from './getters';
+export * from './fetch.js';
+export * from './getters.js';

@@ -1,24 +1,12 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "include": ["src/**/*", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"],
+  "extends": "../../tsconfig.react.json",
+  "include": ["src/**/*", "next-env.d.ts", ".next/types/**/*.ts"],
+
   "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "dist",
-    "paths": {
-      "~/*": ["src/*"]
-    },
-    "jsx": "preserve",
     "allowJs": true,
-    "skipLibCheck": true,
     "noEmit": true,
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "lib": ["dom", "es2023"],
+    "plugins": [{ "name": "next" }],
     "strictNullChecks": true
   }
 }

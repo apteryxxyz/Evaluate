@@ -3,7 +3,6 @@
   "version": "0.2.2",
   "type": "module",
   "scripts": {
-    "check": "tsc --noEmit",
     "build": "pnpm run \"/build:.*/\"",
     "build:chrome": "use-env -p VITE -P -- vite build --config vite.config.chrome.ts",
     "build:firefox": "use-env -p VITE -P -- vite build --config vite.config.firefox.ts && ff-zip || true",

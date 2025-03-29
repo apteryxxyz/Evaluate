@@ -8,8 +8,7 @@
     }
   },
   "scripts": {
-    "check": "tsc --noEmit",
-    "build": "tsup"
+    "build": "tsc"
   },
   "peerDependencies": {
     "react": "^19"

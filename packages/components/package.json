@@ -6,13 +6,12 @@
       "style": "./src/styles.css"
     },
     "./*": {
-      "import": "./dist/*.js",
+      "import": "./dist/*.jsx",
       "types": "./dist/*.d.ts"
     }
   },
   "scripts": {
-    "check": "tsc --noEmit",
-    "build": "tsup"
+    "build": "tsc"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.3",

@@ -3,7 +3,9 @@
   "packageManager": "pnpm@9.15.5",
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
+    "lint": "biome check . --write",
     "format": "biome check . --write",
+    "check": "turbo run check",
     "build": "turbo run build",
     "build:packages": "turbo run build --filter=\"./packages/*\"",
     "dev": "pnpm run \"/dev:.*/\"",
@@ -18,7 +20,6 @@
     "@types/node": "^22.13.4",
     "husky": "^9.1.7",
     "ts-patch": "^3.3.0",
-    "tsup": "^8.3.6",
     "turbo": "^2.4.2",
     "typescript": "^5.7.3",
     "typescript-transform-paths": "^3.5.5"

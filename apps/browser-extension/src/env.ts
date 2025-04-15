@@ -4,10 +4,7 @@ import { z } from 'zod';
 export default createEnv({
   clientPrefix: 'VITE_PUBLIC_',
   client: {
-    VITE_PUBLIC_WEBSITE_URL: z
-      .string()
-      .url()
-      .transform((v) => new URL(v)),
+    VITE_PUBLIC_WEBSITE_URL: z.url().transform((v) => new URL(v)),
     VITE_PUBLIC_POSTHOG_KEY: z.string().min(1).optional(),
   },
 

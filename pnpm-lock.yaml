@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  zod@3.22.4:
-    hash: j5rlizeyx7cjhu35u4l53omnrq
-    path: patches/zod@3.22.4.patch
-
 importers:
 
   .:
@@ -56,8 +51,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/styles
       '@t3-oss/env-core':
-        specifier: ^0.11.1
-        version: 0.11.1(typescript@5.8.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
+        specifier: ^0.12.0
+        version: 0.12.0(typescript@5.8.3)(zod@4.0.0-beta.20250414T061543)
       lucide-react:
         specifier: ^0.488.0
         version: 0.488.0(react@19.1.0)
@@ -83,8 +78,8 @@ importers:
         specifier: ^0.12.0
         version: 0.12.0
       zod:
-        specifier: 3.22.4
-        version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
+        specifier: 4.0.0-beta.20250414T061543
+        version: 4.0.0-beta.20250414T061543
     devDependencies:
       '@babel/generator':
         specifier: ^7.27.0
@@ -150,8 +145,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/shapes
       '@t3-oss/env-core':
-        specifier: ^0.11.1
-        version: 0.11.1(typescript@5.8.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
+        specifier: ^0.12.0
+        version: 0.12.0(typescript@5.8.3)(zod@4.0.0-beta.20250414T061543)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -162,8 +157,8 @@ importers:
         specifier: ^4.11.6
         version: 4.11.6
       zod:
-        specifier: 3.22.4
-        version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
+        specifier: 4.0.0-beta.20250414T061543
+        version: 4.0.0-beta.20250414T061543
     devDependencies:
       tsup:
         specifier: ^8.4.0
@@ -199,8 +194,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(react-hook-form@7.55.0(react@19.1.0))
       '@t3-oss/env-nextjs':
-        specifier: ^0.11.1
-        version: 0.11.1(typescript@5.8.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
+        specifier: ^0.12.0
+        version: 0.12.0(typescript@5.8.3)(zod@4.0.0-beta.20250414T061543)
       '@tanstack/react-query':
         specifier: ^5.74.3
         version: 5.74.3(react@19.1.0)
@@ -295,8 +290,8 @@ importers:
         specifier: ^11.6.1
         version: 11.6.1
       zod:
-        specifier: 3.22.4
-        version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
+        specifier: 4.0.0-beta.20250414T061543
+        version: 4.0.0-beta.20250414T061543
     devDependencies:
       '@million/lint':
         specifier: ^1.0.14
@@ -401,9 +396,6 @@ importers:
       pako:
         specifier: ^2.1.0
         version: 2.1.0
-      zod:
-        specifier: 3.22.4
-        version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
     devDependencies:
       '@types/pako':
         specifier: ^2.0.3
@@ -442,8 +434,8 @@ importers:
   packages/shapes:
     dependencies:
       zod:
-        specifier: 3.22.4
-        version: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
+        specifier: 4.0.0-beta.20250414T061543
+        version: 4.0.0-beta.20250414T061543
 
   packages/styles:
     devDependencies:
@@ -2027,22 +2019,32 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
-  '@t3-oss/env-core@0.11.1':
-    resolution: {integrity: sha512-MaxOwEoG1ntCFoKJsS7nqwgcxLW1SJw238AJwfJeaz3P/8GtkxXZsPPolsz1AdYvUTbe3XvqZ/VCdfjt+3zmKw==}
+  '@t3-oss/env-core@0.12.0':
+    resolution: {integrity: sha512-lOPj8d9nJJTt81mMuN9GMk8x5veOt7q9m11OSnCBJhwp1QrL/qR+M8Y467ULBSm9SunosryWNbmQQbgoiMgcdw==}
     peerDependencies:
       typescript: '>=5.0.0'
-      zod: ^3.0.0
+      valibot: ^1.0.0-beta.7 || ^1.0.0
+      zod: ^3.24.0
     peerDependenciesMeta:
       typescript:
         optional: true
+      valibot:
+        optional: true
+      zod:
+        optional: true
 
-  '@t3-oss/env-nextjs@0.11.1':
-    resolution: {integrity: sha512-rx2XL9+v6wtOqLNJbD5eD8OezKlQD1BtC0WvvtHwBgK66jnF5+wGqtgkKK4Ygie1LVmoDClths2T4tdFmRvGrQ==}
+  '@t3-oss/env-nextjs@0.12.0':
+    resolution: {integrity: sha512-rFnvYk1049RnNVUPvY8iQ55AuQh1Rr+qZzQBh3t++RttCGK4COpXGNxS4+45afuQq02lu+QAOy/5955aU8hRKw==}
     peerDependencies:
       typescript: '>=5.0.0'
-      zod: ^3.0.0
+      valibot: ^1.0.0-beta.7 || ^1.0.0
+      zod: ^3.24.0
     peerDependenciesMeta:
       typescript:
+        optional: true
+      valibot:
+        optional: true
+      zod:
         optional: true
 
   '@tailwindcss/node@4.1.4':
@@ -2299,6 +2301,9 @@ packages:
 
   '@xstate/fsm@1.6.5':
     resolution: {integrity: sha512-b5o1I6aLNeYlU/3CPlj/Z91ybk1gUsKT+5NAJI+2W4UjvS5KLG28K9v5UvNoFVjHV8PajVZ00RH3vnjyQO7ZAw==}
+
+  '@zod/core@0.5.0':
+    resolution: {integrity: sha512-9EW5fOng5558DM68WmVtecPzHuROdB5AcBVOBVqtPIup1quYRxxzwzT9+BPNX5Pr+so0wP/Hxv8+pCrBbjKQeg==}
 
   abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
@@ -4300,8 +4305,8 @@ packages:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
 
-  zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+  zod@4.0.0-beta.20250414T061543:
+    resolution: {integrity: sha512-1X7/cVHAWBt9jEIIg2Q2GFEApZy1VYe+YBxsjwVMmDZfMvn09CylsKLGZtfjZ/cwYrJha0OIWOh+MouaOj3Zdg==}
 
 snapshots:
 
@@ -5911,18 +5916,17 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@t3-oss/env-core@0.11.1(typescript@5.8.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))':
-    dependencies:
-      zod: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
+  '@t3-oss/env-core@0.12.0(typescript@5.8.3)(zod@4.0.0-beta.20250414T061543)':
     optionalDependencies:
       typescript: 5.8.3
+      zod: 4.0.0-beta.20250414T061543
 
-  '@t3-oss/env-nextjs@0.11.1(typescript@5.8.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))':
+  '@t3-oss/env-nextjs@0.12.0(typescript@5.8.3)(zod@4.0.0-beta.20250414T061543)':
     dependencies:
-      '@t3-oss/env-core': 0.11.1(typescript@5.8.3)(zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq))
-      zod: 3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq)
+      '@t3-oss/env-core': 0.12.0(typescript@5.8.3)(zod@4.0.0-beta.20250414T061543)
     optionalDependencies:
       typescript: 5.8.3
+      zod: 4.0.0-beta.20250414T061543
 
   '@tailwindcss/node@4.1.4':
     dependencies:
@@ -6190,6 +6194,8 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
 
   '@xstate/fsm@1.6.5': {}
+
+  '@zod/core@0.5.0': {}
 
   abort-controller@3.0.0:
     dependencies:
@@ -8130,4 +8136,6 @@ snapshots:
       compress-commons: 6.0.2
       readable-stream: 4.7.0
 
-  zod@3.22.4(patch_hash=j5rlizeyx7cjhu35u4l53omnrq): {}
+  zod@4.0.0-beta.20250414T061543:
+    dependencies:
+      '@zod/core': 0.5.0

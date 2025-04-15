@@ -1,6 +1,6 @@
 {
   "name": "evaluate",
-  "packageManager": "pnpm@9.15.5",
+  "packageManager": "pnpm@9.15.9",
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "lint": "biome check . --write",
@@ -17,17 +17,11 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@evaluate/scripts": "workspace:^",
-    "@types/node": "^22.13.14",
+    "@types/node": "^22.14.1",
     "husky": "^9.1.7",
     "ts-patch": "^3.3.0",
-    "turbo": "^2.4.4",
-    "typescript": "^5.8.2",
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.3",
     "typescript-transform-paths": "^3.5.5"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "zod@3.22.4": "patches/zod@3.22.4.patch"
-    },
-    "allowNonAppliedPatches": true
   }
 }

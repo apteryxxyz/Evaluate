@@ -5,7 +5,6 @@ import {
   type Runtime,
 } from '@evaluate/shapes';
 import Fuse from 'fuse.js';
-import { z } from 'zod';
 import {
   getRuntimeAliases,
   getRuntimeExamples,
@@ -30,7 +29,7 @@ export async function fetchRuntimes() {
     'https://emkc.org/api/v2/piston/runtimes',
   )
     .then((response) => response.json())
-    .then(z.array(PistonRuntime).parse);
+    .then(PistonRuntime.array().parse);
 
   for (const piston of pistonRuntimes) {
     const identifier = makeIdentifier(piston.language, piston.runtime);

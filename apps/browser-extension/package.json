@@ -16,7 +16,7 @@
     "@evaluate/helpers": "workspace:^",
     "@evaluate/shapes": "workspace:^",
     "@evaluate/styles": "workspace:^",
-    "@t3-oss/env-core": "^0.11.1",
+    "@t3-oss/env-core": "^0.12.0",
     "lucide-react": "^0.488.0",
     "posthog-js": "^1.236.1",
     "react": "^19.1.0",
@@ -25,7 +25,7 @@
     "tailwind-merge": "^3.2.0",
     "webext-bridge": "^6.0.1",
     "webextension-polyfill": "^0.12.0",
-    "zod": "3.22.4"
+    "zod": "4.0.0-beta.20250414T061543"
   },
   "devDependencies": {
     "@babel/generator": "^7.27.0",

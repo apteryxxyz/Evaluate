@@ -4,38 +4,51 @@ export type ExecuteOptions = z.infer<typeof ExecuteOptions>;
 export const ExecuteOptions = z
   .object({
     runtime: z
-      .string({ required_error: 'A runtime is required' })
-      .regex(/^(?:[\w]+\+)?[\w]+(?:@[\d.]+)?$/, 'Invalid runtime format'),
+      .string({ error: 'A runtime is required' })
+      .regex(/^(?:[\w]+\+)?[\w]+(?:@[\d.]+)?$/, {
+        error: 'Invalid runtime format',
+      }),
     files: z
       .record(
         z
-          .string({ required_error: 'File path is required' })
-          .max(200, 'File path length is too long'),
+          .string({ error: 'File path is required' })
+          .max(200, { error: 'File path length is too long' }),
         z
-          .string({ required_error: 'File content is required' })
-          .max(10_000, 'File content is too large'),
+          .string({ error: 'File content is required' })
+          .max(10_000, { error: 'File content is too large' }),
         {
-          required_error: 'At least one file is required',
-          invalid_type_error: 'Files must be an object',
+          error: (issue) =>
+            issue.input === undefined
+              ? 'At least one file is required'
+              : 'Files must be an object',
         },
       )
-      .refine((f) => Object.keys(f).length >= 0, 'Too few files')
-      .refine((f) => Object.keys(f).length <= 10, 'Too many files')
+      .refine((f) => Object.keys(f).length >= 0, { error: 'Too few files' })
+      .refine((f) => Object.keys(f).length <= 10, { error: 'Too many files' })
       .refine(
         (f) =>
           Object.values(f).reduce((acc, val: string) => acc + val.length, 0) <=
           10_000,
-        'Combined file content size is too large',
+        { error: 'Combined file content size is too large' },
       ),
-    entry: z.string({ required_error: 'An entry file is required' }),
-    input: z.string().max(2_000, 'Input length is too long').optional(),
-    args: z.string().max(2_000, 'Arguments length is too long').optional(),
+    entry: z.string({ error: 'An entry file is required' }),
+    input: z
+      .string()
+      .max(2_000, { error: 'Input length is too long' })
+      .optional(),
+    args: z
+      .string()
+      .max(2_000, { error: 'Arguments length is too long' })
+      .optional(),
   })
-  .refine((data) => {
-    // Omit is used elsewhere to remove files, so we need to check if it exists
-    if (!data.files) return true;
-    return data.entry in data.files;
-  }, 'Entry file does not exist');
+  .refine(
+    (data) => {
+      // Omit is used elsewhere to remove files, so we need to check if it exists
+      if (!data.files) return true;
+      return data.entry in data.files;
+    },
+    { error: 'Entry file does not exist' },
+  );
 
 export type ExecuteResult = z.infer<typeof ExecuteResult>;
 export const ExecuteResult = z.object({

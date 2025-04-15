@@ -16,7 +16,7 @@
     "@evaluate/helpers": "workspace:^",
     "@evaluate/shapes": "workspace:^",
     "@evaluate/styles": "workspace:^",
-    "@t3-oss/env-core": "^0.12.0",
+    "@t3-oss/env-core": "^0.11.1",
     "lucide-react": "^0.488.0",
     "posthog-js": "^1.236.1",
     "react": "^19.1.0",

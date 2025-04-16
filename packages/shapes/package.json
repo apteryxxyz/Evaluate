@@ -12,6 +12,7 @@
     }
   },
   "scripts": {
+    "check": "tsc --noEmit",
     "build": "tsc"
   },
   "dependencies": {

@@ -13,6 +13,7 @@
     }
   },
   "scripts": {
+    "check": "tsc --noEmit",
     "build": "pnpm tsup"
   },
   "dependencies": {

@@ -65,7 +65,7 @@ export async function searchRuntimes(...queries: string[]) {
 
   const runtimes = await fetchRuntimes();
   const keys = ['name', 'aliases', 'tags'];
-  const fuse = new Fuse(runtimes, { keys, threshold: 0.3 });
+  const fuse = new Fuse(runtimes, { keys, threshold: 0.35 });
 
   return queries
     .flatMap((q) => fuse.search(q).map((r) => r.item))

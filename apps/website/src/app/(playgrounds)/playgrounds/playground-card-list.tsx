@@ -36,12 +36,14 @@ export function PlaygroundCardList({
   const searchEngine = useMemo(() => {
     return new Fuse(initialRuntimes, {
       keys: ['name', 'aliases', 'tags'],
-      threshold: 0.3,
+      threshold: 0.35,
     });
   }, [initialRuntimes]);
   const searchedRuntimes = useMemo(() => {
     if (!deferredSearch) return initialRuntimes;
-    return searchEngine.search(deferredSearch).map((result) => result.item);
+    const result = searchEngine.search(deferredSearch).map((r) => r.item);
+    console.log(deferredSearch, result);
+    return result;
   }, [initialRuntimes, deferredSearch, searchEngine]);
 
   type SortBy = 'popularity' | 'name';

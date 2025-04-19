@@ -13,7 +13,6 @@ import {
 import { Separator } from '@evaluate/components/separator';
 import { toast } from '@evaluate/components/toast';
 import type { PartialRuntime } from '@evaluate/shapes';
-import Fuse from 'fuse.js';
 import {
   ArrowDownWideNarrowIcon,
   CircleDotIcon,
@@ -33,18 +32,27 @@ export function PlaygroundCardList({
 }) {
   const [search, setSearch] = useQueryParameter('search');
   const deferredSearch = useDeferredValue(search);
-  const searchEngine = useMemo(() => {
-    return new Fuse(initialRuntimes, {
-      keys: ['name', 'aliases', 'tags'],
-      threshold: 0.35,
-    });
-  }, [initialRuntimes]);
   const searchedRuntimes = useMemo(() => {
     if (!deferredSearch) return initialRuntimes;
-    const result = searchEngine.search(deferredSearch).map((r) => r.item);
-    console.log(deferredSearch, result);
-    return result;
-  }, [initialRuntimes, deferredSearch, searchEngine]);
+
+    return initialRuntimes.filter((runtime) => {
+      if (runtime.name.toLowerCase().includes(deferredSearch.toLowerCase()))
+        return true;
+      if (
+        runtime.aliases.some((alias) =>
+          alias.toLowerCase().includes(deferredSearch.toLowerCase()),
+        )
+      )
+        return true;
+      if (
+        runtime.tags.some((tag) =>
+          tag.toLowerCase().includes(deferredSearch.toLowerCase()),
+        )
+      )
+        return true;
+      return false;
+    });
+  }, [initialRuntimes, deferredSearch]);
 
   type SortBy = 'popularity' | 'name';
   const [sortBy, setSortBy] = useQueryParameter<SortBy>('sort', 'popularity');

@@ -7,6 +7,7 @@
     "noEmit": true,
     "incremental": true,
     "plugins": [{ "name": "next" }],
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "paths": { "~/*": ["./src/*"] }
   }
 }

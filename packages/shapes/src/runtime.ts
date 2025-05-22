@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import { ExecuteOptions } from './execute.js';
 
 export type PartialRuntime = z.infer<typeof PartialRuntime>;

@@ -1,7 +1,7 @@
 import { createEnv } from '@t3-oss/env-nextjs';
 import { vercel } from '@t3-oss/env-nextjs/presets-zod';
 import discordEnv from 'discord-bot/env';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export default createEnv({
   extends: [discordEnv, vercel()],

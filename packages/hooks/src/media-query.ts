@@ -1,38 +1,35 @@
 import { useState } from 'react';
 import { useIsomorphicLayoutEffect } from './isomorphic-layout-effect.js';
 
-export function createMediaQueryHook<T extends Record<string, string>>(
-  breakpoints: T,
-) {
-  return function useMediaQuery(
-    query:
-      | Extract<keyof T, string>
-      | (`(${'min' | 'max'}-width: ${string})` & {}),
-  ) {
-    const mediaQuery =
-      query in breakpoints ? `(min-width: ${breakpoints[query]})` : query;
-
-    const [matches, setMatches] = useState<boolean>();
-
-    useIsomorphicLayoutEffect(() => {
-      if (typeof window === 'undefined') return;
-
-      const mediaQueryList = window.matchMedia(mediaQuery);
-      setMatches(mediaQueryList.matches);
-
-      const syncMatches = () => setMatches(mediaQueryList.matches);
-      mediaQueryList.addEventListener('change', syncMatches);
-      return () => mediaQueryList.removeEventListener('change', syncMatches);
-    }, []);
-
-    return matches;
-  };
-}
-
-export const useMediaQuery = createMediaQueryHook({
+const breakpoints = {
   sm: '640px',
   md: '768px',
   lg: '1024px',
   xl: '1280px',
   '2xl': '1536px',
-});
+} as const;
+
+export function useMediaQuery(
+  query:
+    | Extract<keyof typeof breakpoints, string>
+    | (`(${'min' | 'max'}-width: ${string})` & {}),
+) {
+  const mediaQuery =
+    query in breakpoints
+      ? (`(min-width: ${breakpoints[query as 'sm']})` as const)
+      : query;
+  const [matches, setMatches] = useState<boolean>();
+
+  useIsomorphicLayoutEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const mediaQueryList = window.matchMedia(mediaQuery);
+    setMatches(mediaQueryList.matches);
+
+    const syncMatches = () => setMatches(mediaQueryList.matches);
+    mediaQueryList.addEventListener('change', syncMatches);
+    return () => mediaQueryList.removeEventListener('change', syncMatches);
+  }, []);
+
+  return matches;
+}

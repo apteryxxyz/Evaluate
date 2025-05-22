@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
 export type ExecuteOptions = z.infer<typeof ExecuteOptions>;
 export const ExecuteOptions = z

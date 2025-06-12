@@ -48,6 +48,21 @@ export function ExplorerProvider({
     return root;
   }, []);
 
+  const [hasChange, setHasChange] = useState(false);
+  useEffect(() => {
+    const onChange = () => setHasChange(true);
+    root.changes.on(['child', '*'], onChange);
+    return () => void root.changes.off(['child', '*'], onChange);
+  }, [root]);
+
+  const beforeUnload = useCallback(
+    (e: Event) => {
+      if (hasChange) e.preventDefault();
+    },
+    [hasChange],
+  );
+  useEventListener('beforeunload', beforeUnload);
+
   const saveAndCopyUrl = useCallback(
     (e: Event) => {
       e.preventDefault();

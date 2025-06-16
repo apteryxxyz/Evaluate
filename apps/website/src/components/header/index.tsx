@@ -3,7 +3,7 @@
 import { Button } from '@evaluate/components/button';
 import { Sheet, SheetBody, SheetTrigger } from '@evaluate/components/sheet';
 import { useMediaQuery } from '@evaluate/hooks/media-query';
-import { MenuIcon } from 'lucide-react';
+import { GithubIcon, MenuIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -71,7 +71,17 @@ export function Header() {
               target="_blank"
               rel="noreferrer"
             >
-              <DiscordIcon className="size-4 fill-black dark:fill-white" />
+              <DiscordIcon className="size-4" />
+            </a>
+          </Button>
+
+          <Button variant="ghost" size="icon" asChild>
+            <a
+              href="https://github.com/apteryxxyz/Evaluate"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <GithubIcon className="size-4" />
             </a>
           </Button>
 

@@ -1,12 +1,12 @@
 <p align="center">
-  <img alt="posthoglogo" src=".github/banner.png">
+  <img src=".github/banner.png">
 </p>
 
 <p align="center">
   <a href="https://evaluate.run/">Website</a> -
   <a href="https://evaluate.run/products/browser-extension">Browser Extension</a> -
   <a href="https://evaluate.run/products/discord-bot">Discord Bot</a> -
-  <a href="https://discord.gg/posthog">Community</a>
+  <a href="https://discord.gg/rtBC7mH5cy">Community</a>
 </p>
 
 ---

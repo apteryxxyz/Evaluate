@@ -10,12 +10,8 @@ export const ExecuteOptions = z
       }),
     files: z
       .record(
-        z
-          .string({ error: 'File path is required' })
-          .max(200, { error: 'File path length is too long' }),
-        z
-          .string({ error: 'File content is required' })
-          .max(10_000, { error: 'File content is too large' }),
+        z.string({ error: 'File path is required' }),
+        z.string({ error: 'File content is required' }),
         {
           error: (issue) =>
             issue.input === undefined
@@ -23,23 +19,10 @@ export const ExecuteOptions = z
               : 'Files must be an object',
         },
       )
-      .refine((f) => Object.keys(f).length >= 0, { error: 'Too few files' })
-      .refine((f) => Object.keys(f).length <= 10, { error: 'Too many files' })
-      .refine(
-        (f) =>
-          Object.values(f).reduce((acc, val: string) => acc + val.length, 0) <=
-          10_000,
-        { error: 'Combined file content size is too large' },
-      ),
+      .refine((f) => Object.keys(f).length >= 0, { error: 'Too few files' }),
     entry: z.string({ error: 'An entry file is required' }),
-    input: z
-      .string()
-      .max(2_000, { error: 'Input length is too long' })
-      .optional(),
-    args: z
-      .string()
-      .max(2_000, { error: 'Arguments length is too long' })
-      .optional(),
+    input: z.string().optional(),
+    args: z.string().optional(),
   })
   .refine(
     (data) => {

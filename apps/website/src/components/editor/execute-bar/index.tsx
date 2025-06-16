@@ -56,8 +56,8 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
 
   // Form
 
-  const form = useForm<ExecuteOptions>({
-    resolver: zodResolver(ExecuteOptions as never),
+  const form = useForm({
+    resolver: zodResolver(ExecuteOptions),
     defaultValues: {},
   });
   const handleSubmit = useCallback<ReturnType<typeof form.handleSubmit>>(

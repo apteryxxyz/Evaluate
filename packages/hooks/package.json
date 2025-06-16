@@ -1,5 +1,6 @@
 {
   "name": "@evaluate/hooks",
+  "description": "Reusable React hooks.",
   "type": "module",
   "exports": {
     "./*": {

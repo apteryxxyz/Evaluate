@@ -1,8 +1,3 @@
-/**
- * Convert a string to a URL-friendly format.
- * @param input yhe input string
- * @returns the URL-friendly string
- */
 function toUrl(input: string) {
   return input
     .replaceAll('+', 'plus')
@@ -19,9 +14,9 @@ function fromUrl(input: string) {
 
 /**
  * Make an identifier from a language and runtime.
- * @param language the name of the language
- * @param runtime the optional name of the runtime
- * @returns the identifier
+ * @param language the name of the language.
+ * @param runtime the optional name of the runtime.
+ * @returns Runtime identifier.
  */
 export function makeIdentifier(language: string, runtime?: string) {
   if (language === 'typescript' && !runtime) runtime = 'node';
@@ -30,8 +25,8 @@ export function makeIdentifier(language: string, runtime?: string) {
 
 /**
  * Extract the language and runtime from an identifier.
- * @param identifier the identifier to extract from
- * @returns the extracted language and runtime
+ * @param identifier Runtime identifier to extract from.
+ * @returns Extracted language and runtime.
  */
 export function extractIdentifier(identifier: string) {
   const [language, runtime] = identifier.split('+');

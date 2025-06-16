@@ -5,8 +5,8 @@ import RuntimeNames from './data/names.json' with { type: 'json' };
 
 /**
  * Check if the given identifier is a valid runtime identifier.
- * @param identifier the identifier to check
- * @returns true if the identifier is a valid runtime identifier, false otherwise
+ * @param identifier Identifier to check
+ * @returns True if the identifier is a valid runtime identifier, false otherwise
  */
 export function isRuntimeIdentifier(
   identifier: string,
@@ -16,8 +16,8 @@ export function isRuntimeIdentifier(
 
 /**
  * Get the name of a runtime by its identifier.
- * @param identifier the identifier of the runtime
- * @returns the name of the runtime
+ * @param identifier Identifier of the runtime.
+ * @returns Name of the runtime.
  */
 export function getRuntimeName(identifier: string) {
   if (!isRuntimeIdentifier(identifier)) return;
@@ -26,8 +26,8 @@ export function getRuntimeName(identifier: string) {
 
 /**
  * Get the aliases of a runtime by its identifier.
- * @param identifier the identifier of the runtime
- * @returns the aliases of the runtime
+ * @param identifier Identifier of the runtime.
+ * @returns Aliases of the runtime.
  */
 export function getRuntimeAliases(identifier: string) {
   if (!isRuntimeIdentifier(identifier)) return;
@@ -36,8 +36,8 @@ export function getRuntimeAliases(identifier: string) {
 
 /**
  * Get the default file name of a runtime by its identifier.
- * @param identifier the identifier of the runtime
- * @returns the default file name of the runtime
+ * @param identifier Identifier of the runtime.
+ * @returns Default file name of the runtime.
  */
 export function getRuntimeDefaultFileName(identifier: string) {
   if (!isRuntimeIdentifier(identifier)) return;
@@ -46,8 +46,8 @@ export function getRuntimeDefaultFileName(identifier: string) {
 
 /**
  * Get the popularity of a runtime by its identifier.
- * @param identifier the identifier of the runtime
- * @returns the popularity of the runtime
+ * @param identifier Identifier of the runtime.
+ * @returns Popularity of the runtime.
  */
 export function getRuntimePopularity(identifier: string) {
   if (!isRuntimeIdentifier(identifier)) return 0;
@@ -56,8 +56,8 @@ export function getRuntimePopularity(identifier: string) {
 
 /**
  * Get the tags of a runtime by its identifier.
- * @param identifier the identifier of the runtime
- * @returns the tags of the runtime
+ * @param identifier Identifier of the runtime.
+ * @returns Tags of the runtime.
  */
 export function getRuntimeTags(identifier: string) {
   if (!isRuntimeIdentifier(identifier)) return [];
@@ -66,8 +66,8 @@ export function getRuntimeTags(identifier: string) {
 
 /**
  * Get the icon of a runtime by its identifier.
- * @param identifier the identifier of the runtime
- * @returns the icon of the runtime
+ * @param identifier Identifier of the runtime.
+ * @returns Icon of the runtime.
  */
 export function getRuntimeIcon(identifier: string) {
   if (!isRuntimeIdentifier(identifier)) return;
@@ -76,8 +76,8 @@ export function getRuntimeIcon(identifier: string) {
 
 /**
  * Get the examples of a runtime by its identifier.
- * @param identifier the identifier of the runtime
- * @returns the examples of the runtime
+ * @param identifier Identifier of the runtime.
+ * @returns Examples of the runtime.
  */
 export function getRuntimeExamples(identifier: string) {
   if (!isRuntimeIdentifier(identifier)) return [];
@@ -86,8 +86,8 @@ export function getRuntimeExamples(identifier: string) {
 
 /**
  * Get the extensions of a runtime by its identifier.
- * @param extension the extension to check
- * @returns the identifier of the runtime
+ * @param extension Extension to check.
+ * @returns Identifier of the runtime.
  */
 export function getIconFromExtension(extension: string) {
   for (const [key, value] of Object.entries(RuntimeExtensions))

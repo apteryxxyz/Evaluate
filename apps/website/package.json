@@ -1,5 +1,6 @@
 {
   "name": "website",
+  "description": "Run code snippets in any programming language with Evaluate!",
   "version": "2.0.0",
   "type": "module",
   "scripts": {

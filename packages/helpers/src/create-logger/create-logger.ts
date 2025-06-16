@@ -1,9 +1,11 @@
 import { hexToAnsi } from './hex-to-ansi.js';
 
 function isCssSupported() {
+  // Browser
   return typeof location !== 'undefined';
 }
 function isAnsiSupported() {
+  // Terminal
   return typeof process !== 'undefined' && process.stdout.isTTY;
 }
 function determineMode() {
@@ -26,11 +28,21 @@ function constructArgs(badge: string, hex: `#${string}`, ...args: unknown[]) {
   }
 }
 
-export function createLogger(options: {
+export interface LoggerOptions {
+  /** The badge to display in the log message. */
   badge: string;
+  /** The hex color to use for the badge. */
   hex: `#${string}`;
+  /** Whether to enable the logger, defaults to `process.env.NODE_ENV !== 'production'`. */
   enabled?: boolean;
-}) {
+}
+
+/**
+ * Create a cross-platform logger function that can be used to log pretty messages.
+ * @param options {@link LoggerOptions}
+ * @returns ⁠{@link console.log}
+ */
+export function createLogger(options: LoggerOptions) {
   const enabled = options.enabled ?? process.env.NODE_ENV !== 'production';
   return function log(...args: unknown[]) {
     if (!enabled) return;

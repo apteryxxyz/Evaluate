@@ -20,7 +20,7 @@ const Runtimes = new Map<string, PartialRuntime>();
 
 /**
  * Fetches the runtimes from the Piston API.
- * @returns the runtimes
+ * @returns Array of {@link Runtime}.
  */
 export async function fetchRuntimes() {
   if (Runtimes.size) return Array.from(Runtimes.values());

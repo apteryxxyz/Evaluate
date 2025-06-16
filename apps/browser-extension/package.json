@@ -1,5 +1,6 @@
 {
   "name": "browser-extension",
+  "description": "Run any code snippet you come across on the web with the Evaluate browser extension!",
   "version": "0.2.2",
   "type": "module",
   "scripts": {

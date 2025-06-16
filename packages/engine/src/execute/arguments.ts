@@ -7,8 +7,8 @@ const Arguments = new Lexer().setQuotes([
 
 /**
  * Parse command line arguments.
- * @param args the arguments as a string
- * @returns the parsed arguments as an array
+ * @param args Arguments as a string.
+ * @returns Parsed arguments as an array.
  */
 export function parseArguments(args: string) {
   const tokens = Arguments.setInput(args).lex();

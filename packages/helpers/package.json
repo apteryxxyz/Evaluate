@@ -1,6 +1,6 @@
 {
   "name": "@evaluate/helpers",
-  "version": "1.0.0",
+  "description": "Reusable helper functions for simplifying common tasks.",
   "type": "module",
   "exports": {
     "./*": {

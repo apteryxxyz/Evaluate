@@ -1,5 +1,13 @@
 import { HttpError, TooManyRequestsError } from './http-error.js';
 
+/**
+ * A wrapper around fetch that automatically retries on 429 errors and throws
+ * a custom error for 4xx and 5xx responses.
+ * @returns Promise that resolves to a successful response.
+ * @throws Unknown error if the request fails.
+ * @throws ⁠{@link TooManyRequestsError} if the request is rate limited.
+ * @throws ⁠{@link HttpError} if the request fails with a non-2xx status code.
+ */
 export async function betterFetch(url: RequestInfo, options?: RequestInit) {
   let attempts = 0;
 

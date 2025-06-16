@@ -1,6 +1,6 @@
 {
   "name": "@evaluate/shapes",
-  "version": "1.0.0",
+  "description": "Zod schemas and TypeScript types for common data structures.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -1,5 +1,6 @@
 {
   "name": "@evaluate/components",
+  "description": "Shared React components.",
   "type": "module",
   "exports": {
     ".": {

@@ -1,6 +1,6 @@
 {
   "name": "@evaluate/scripts",
-  "version": "1.0.0",
+  "description": "Collection of utility scripts for build and development tasks.",
   "type": "module",
   "bin": {
     "ff-zip": "./bin/ff-zip",

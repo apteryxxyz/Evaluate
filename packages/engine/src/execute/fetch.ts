@@ -11,10 +11,12 @@ import { parseArguments } from './arguments.js';
 
 /**
  * Execute code using the Piston API.
- * @param options that will be passed to the Piston API
- * @returns the result of the execution
+ * @param options {@link ExecuteOptions} for the execution.
+ * @returns ​{@link ExecuteResult} of the execution.
  */
-export async function executeCode(options: ExecuteOptions) {
+export async function executeCode(
+  options: ExecuteOptions,
+): Promise<ExecuteResult> {
   options = ExecuteOptions.parse(options);
   const runtime = await getRuntime(options.runtime);
   if (!runtime) throw new Error('Runtime not found');

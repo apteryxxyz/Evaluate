@@ -120,22 +120,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-/* Backwards compatibility for tailwindcss v3.x */
-
-/* @layer base {
-  button:not(:disabled),
-  [role="button"]:not(:disabled) {
-    cursor: pointer;
-  }
-}
-
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-} */

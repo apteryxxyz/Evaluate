@@ -1,3 +1,6 @@
+/**
+ * Represents an error that occurred while making an HTTP request.
+ */
 export class HttpError extends Error {
   status: number;
 
@@ -12,6 +15,9 @@ export class HttpError extends Error {
   }
 }
 
+/**
+ * Represents an error that occurred while making an HTTP request due to rate limiting.
+ */
 export class TooManyRequestsError extends HttpError {
   constructor(
     response: Response,

@@ -1,5 +1,6 @@
 {
   "name": "discord-bot",
+  "description": "Run code snippets directly in your Discord server with the Evaluate bot!",
   "version": "4.1.0",
   "type": "module",
   "exports": {

@@ -1,6 +1,6 @@
 {
   "name": "@evaluate/styles",
-  "version": "1.0.0",
+  "description": "Shared styles and Tailwind styles.",
   "type": "module",
   "exports": {
     ".": {

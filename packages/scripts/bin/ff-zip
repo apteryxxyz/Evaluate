@@ -1,5 +1,12 @@
 #!/usr/bin/env node
 
+/**
+ * Builds a ZIP archive of the Firefox browser extension source.
+ * - Excludes files listed in .gitignore and .ffignore
+ * - Adds production env vars to .env.production.local
+ * - Outputs to apps/browser-extension/dist/firefox-source.zip
+ */
+
 import { exec } from 'node:child_process';
 import { createWriteStream } from 'node:fs';
 import { readFile, readdir, rm, stat } from 'node:fs/promises';

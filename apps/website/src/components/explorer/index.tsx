@@ -41,17 +41,6 @@ export function Explorer() {
         {/* TODO: Upload button? Would likely need a confirm dialog as this will overwrite the current content */}
 
         <Button
-          title="Download As Zip"
-          size="icon"
-          variant="ghost"
-          className="size-auto rounded-full"
-          onClick={handleDownloadClick}
-        >
-          <HardDriveDownloadIcon size={16} />
-          <span className="sr-only">Download As Zip</span>
-        </Button>
-
-        <Button
           title="New File"
           size="icon"
           variant="ghost"
@@ -71,6 +60,17 @@ export function Explorer() {
         >
           <FolderPlusIcon className="size-4" />
           <span className="sr-only">New Folder</span>
+        </Button>
+
+        <Button
+          title="Download As Zip"
+          size="icon"
+          variant="ghost"
+          className="size-auto rounded-full"
+          onClick={handleDownloadClick}
+        >
+          <HardDriveDownloadIcon size={16} />
+          <span className="sr-only">Download As Zip</span>
         </Button>
       </div>
 

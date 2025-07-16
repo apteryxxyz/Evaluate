@@ -1,7 +1,7 @@
 import { useEventCallback } from '@evaluate/hooks/event-callback';
 import { useEventListener } from '@evaluate/hooks/event-listener';
-import { useCallback, useEffect, useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 declare global {
   interface WindowEventMap {
@@ -137,7 +137,7 @@ export function useLocalStorage<T>(
     window.dispatchEvent(new StorageEvent('local-storage', { key }));
   });
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: _
   useEffect(() => {
     setStoredValue(readValue());
   }, [key]);

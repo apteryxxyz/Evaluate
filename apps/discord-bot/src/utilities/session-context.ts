@@ -1,5 +1,5 @@
 import crypto from 'node:crypto';
-import type { APIInteraction, APIUser } from '@buape/carbon';
+import { type APIInteraction, type APIUser, User } from '@buape/carbon';
 import { format, subHours } from 'date-fns';
 
 function hashSessionId(sessionId: string) {
@@ -19,9 +19,12 @@ export function getInteractionContext(
   return { interaction, user, channel, guild, session: { id: sessionId } };
 }
 
-export function getUserContext(user: APIUser) {
+export function getUserContext(user: APIUser | User) {
   const date = format(subHours(new Date(), 6), 'yyyyMMdd');
   const sessionId = hashSessionId(`${user.id}-${date}`);
+
+  // @ts-expect-error - rawData is a protected property
+  if (user instanceof User) user = user.rawData as APIUser;
 
   return { user, session: { id: sessionId } };
 }

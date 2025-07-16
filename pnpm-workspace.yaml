@@ -3,3 +3,7 @@ packages:
   - 'bots/*'
   - 'extensions/*'
   - 'packages/*'
+
+patchedDependencies:
+  "@tailwindcss/vite@4.1.11": "patches/@tailwindcss__vite@4.1.11.patch"
+allowUnusedPatches: true

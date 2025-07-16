@@ -1,3 +1,5 @@
+// TODO: Bug in Next.js 15.4.x, cannot upgrade, see https://github.com/vercel/next.js/issues/81628
+
 import { fetchRuntimes } from '@evaluate/engine/runtimes';
 
 /** @type {import('next').NextConfig} */

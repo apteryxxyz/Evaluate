@@ -46,13 +46,45 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
     ['parent'],
     () => !entry?.parent && setEntry(undefined),
   );
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Once trigger once
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!entry) setEntry(files.find((f) => Reflect.get(f, 'entry')));
     }, 1000);
     return () => clearTimeout(timeout);
   }, []);
+
+  // Mutation
+
+  const { setResult } = useTerminal();
+  const { mutate, isPending } = useMutation({
+    mutationKey: ['executeCode'],
+    mutationFn: executeCode,
+    onSuccess(result) {
+      setResult(result);
+      dispatchEvent(new CustomEvent('mobile-terminal-open-change'));
+
+      const [codeLength, codeLines] = files.reduce(
+        ([length, lines], file) => [
+          length + file.content.length,
+          lines + file.content.split('\n').length,
+        ],
+        [0, 0],
+      );
+      posthog?.capture('executed_code', {
+        runtime_id: runtime.id,
+        code_length: codeLength,
+        code_lines: codeLines,
+        compile_successful: result.compile ? result.compile.code === 0 : null,
+        execution_successful:
+          result.run.code === 0 &&
+          (!result.compile || result.compile.code === 0),
+      });
+    },
+    onError(error) {
+      toast.error(error.message);
+    },
+  });
 
   // Form
 
@@ -88,41 +120,9 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
         },
       )(e);
     },
-    [explorer, files, form, runtime, entry],
+    [explorer, files, form, runtime, entry, mutate],
   );
   useEventListener('execute-code' as never, handleSubmit);
-
-  // Mutation
-
-  const { setResult } = useTerminal();
-  const { mutate, isPending } = useMutation({
-    mutationKey: ['executeCode'],
-    mutationFn: executeCode,
-    onSuccess(result) {
-      setResult(result);
-      dispatchEvent(new CustomEvent('mobile-terminal-open-change'));
-
-      const [codeLength, codeLines] = files.reduce(
-        ([length, lines], file) => [
-          length + file.content.length,
-          lines + file.content.split('\n').length,
-        ],
-        [0, 0],
-      );
-      posthog?.capture('executed_code', {
-        runtime_id: runtime.id,
-        code_length: codeLength,
-        code_lines: codeLines,
-        compile_successful: result.compile ? result.compile.code === 0 : null,
-        execution_successful:
-          result.run.code === 0 &&
-          (!result.compile || result.compile.code === 0),
-      });
-    },
-    onError(error) {
-      toast.error(error.message);
-    },
-  });
 
   return (
     <Form {...form}>

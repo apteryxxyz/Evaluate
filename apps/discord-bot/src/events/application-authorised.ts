@@ -1,24 +1,21 @@
 import {
-  ApplicationIntegrationType,
-  ApplicationWebhookEventType,
-  Listener,
+  ApplicationAuthorizedListener,
+  type ApplicationWebhookEventType,
   type ListenerEventData,
 } from '@buape/carbon';
 import { captureEvent } from '~/services/posthog';
 import { getUserContext } from '~/utilities/session-context';
 
-export class ApplicationAuthorisedListener extends Listener {
-  type = ApplicationWebhookEventType.ApplicationAuthorized;
-
+export class ApplicationAuthorisedListener extends ApplicationAuthorizedListener {
   async handle(
-    data: ListenerEventData<ApplicationWebhookEventType.ApplicationAuthorized>,
+    data: ListenerEventData[ApplicationWebhookEventType.ApplicationAuthorized],
   ) {
-    if (data.integration_type === ApplicationIntegrationType.GuildInstall)
+    if (data.guild)
       captureEvent(getUserContext(data.user), 'installed_app', {
         install_type: 'guild',
-        guild_id: data.guild?.id,
+        guild_id: data.guild.id,
       });
-    else if (data.integration_type === ApplicationIntegrationType.UserInstall)
+    else if (data.user)
       captureEvent(getUserContext(data.user), 'installed_app', {
         install_type: 'user',
         user_id: data.user.id,

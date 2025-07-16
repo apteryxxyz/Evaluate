@@ -5,11 +5,7 @@ import { onMessage } from 'webext-bridge/content-script';
 import { makePickRuntimeUrl } from '~/helpers/make-url';
 import { ExecutionDialog } from './dialog';
 
-export function Execution({
-  dialogPortal,
-}: {
-  dialogPortal: HTMLElement;
-}) {
+export function Execution({ dialogPortal }: { dialogPortal: HTMLElement }) {
   const [code, setCode] = useState('');
   const [runtimes, setRuntimes] = useState<PartialRuntime[]>([]);
   const [results, setResults] = useState<ExecuteResult[]>([]);

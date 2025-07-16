@@ -30,7 +30,7 @@ export function ExplorerProvider({
   const [hash, setHash] = useHashFragment();
   const example = useMemo(() => runtime.examples[0], [runtime]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Only want triggered once
   const root = useMemo(() => {
     const root = hash
       ? parseExplorer(hash)
@@ -100,7 +100,7 @@ export function useWatch(
     else setTick((t) => t + 1);
   }, [callback]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Rest of the deps
   useEffect(() => {
     for (const e of events) item?.changes.on(e, update);
     return () => {

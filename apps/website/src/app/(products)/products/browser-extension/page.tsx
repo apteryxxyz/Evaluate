@@ -27,6 +27,7 @@ export default function BrowserExtensionPlatformPage() {
                 href="https://go.evaluate.run/chrome-extension"
                 target="_blank"
               >
+                {/** biome-ignore lint/performance/noImgElement: Want to use img */}
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Google_Chrome_icon_%28February_2022%29.svg/1024px-Google_Chrome_icon_%28February_2022%29.svg.png"
                   className="aspect-square w-6"
@@ -49,6 +50,7 @@ export default function BrowserExtensionPlatformPage() {
                 href="https://go.evaluate.run/chrome-extension?for=edge"
                 target="_blank"
               >
+                {/** biome-ignore lint/performance/noImgElement: Want to use img */}
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Microsoft_Edge_logo_%282019%29.png"
                   className="aspect-square w-6"
@@ -68,6 +70,7 @@ export default function BrowserExtensionPlatformPage() {
                 href="https://go.evaluate.run/chrome-extension?for=opera"
                 target="_blank"
               >
+                {/** biome-ignore lint/performance/noImgElement: Want to use img */}
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Opera_2015_icon.svg/180px-Opera_2015_icon.svg.png"
                   className="aspect-square w-6"
@@ -87,6 +90,7 @@ export default function BrowserExtensionPlatformPage() {
                 href="https://go.evaluate.run/chrome-extension?for=brave"
                 target="_blank"
               >
+                {/** biome-ignore lint/performance/noImgElement: Want to use img */}
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Brave_lion_icon.svg"
                   className="aspect-square w-6"
@@ -107,6 +111,7 @@ export default function BrowserExtensionPlatformPage() {
               href="https://go.evaluate.run/firefox-extension"
               target="_blank"
             >
+              {/** biome-ignore lint/performance/noImgElement: Want to use img */}
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Firefox_logo%2C_2019.svg/800px-Firefox_logo%2C_2019.svg.png"
                 className="aspect-square w-6"

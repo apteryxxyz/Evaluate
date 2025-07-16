@@ -23,7 +23,7 @@ import {
   useNameable,
 } from './hooks';
 
-namespace ExplorerFolderItem {
+export namespace ExplorerFolderItem {
   export interface Props {
     folder: Folder<false>;
   }
@@ -84,10 +84,8 @@ export function ExplorerFolderItem({ folder }: ExplorerFolderItem.Props) {
                 onClick={handleRenameClick}
                 asChild
               >
-                <div role="button">
-                  <TextCursorInputIcon size={16} />
-                  <span className="sr-only">Rename File</span>
-                </div>
+                <TextCursorInputIcon size={16} />
+                <span className="sr-only">Rename File</span>
               </Button>
 
               <Button
@@ -98,10 +96,8 @@ export function ExplorerFolderItem({ folder }: ExplorerFolderItem.Props) {
                 onClick={handleDeleteClick}
                 asChild
               >
-                <div role="button">
-                  <Trash2Icon size={16} />
-                  <span className="sr-only">Delete File</span>
-                </div>
+                <Trash2Icon size={16} />
+                <span className="sr-only">Delete File</span>
               </Button>
             </div>
           </Button>

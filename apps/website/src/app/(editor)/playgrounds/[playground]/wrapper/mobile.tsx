@@ -20,13 +20,7 @@ export function MobileWrapper({ children }: React.PropsWithChildren) {
           className="border-l-0 bg-transparent [&>button]:hidden"
           onClick={() => setExplorerOpen(false)}
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            onKeyUp={(e) => e.stopPropagation()}
-            className="h-full rounded-xl border-2 bg-card"
-          >
-            {explorer}
-          </div>
+          <div className="h-full rounded-xl border-2 bg-card">{explorer}</div>
         </SheetBody>
       </Sheet>
 
@@ -36,15 +30,9 @@ export function MobileWrapper({ children }: React.PropsWithChildren) {
         <SheetBody
           side="right"
           className="border-l-0 bg-transparent [&>button]:hidden"
-          onClick={() => setExplorerOpen(false)}
+          onClick={() => setTerminalOpen(false)}
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            onKeyUp={(e) => e.stopPropagation()}
-            className="h-full rounded-xl border-2 bg-card"
-          >
-            {terminal}
-          </div>
+          <div className="h-full rounded-xl border-2 bg-card">{terminal}</div>
         </SheetBody>
       </Sheet>
     </>

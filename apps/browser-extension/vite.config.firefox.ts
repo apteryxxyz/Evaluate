@@ -7,13 +7,13 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import manifest from './manifest.json';
 import {
   removeExternalScriptLoading,
-  removeImportAttributes,
+  replaceJsonImports,
 } from './vite-plugins';
 
 export default defineConfig({
   plugins: [
     removeExternalScriptLoading(),
-    removeImportAttributes(),
+    replaceJsonImports(),
     tailwindCss(),
     tsconfigPaths(),
     react(),

@@ -133,11 +133,7 @@ function MobileNavigationWrapper(
           className="border-l-0 bg-transparent"
           onClick={() => p.setOpen(false)}
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            onKeyUp={(e) => e.stopPropagation()}
-            className="h-full rounded-xl border-2 bg-card p-3"
-          >
+          <div className="h-full rounded-xl border-2 bg-card p-3">
             <nav
               className={cn(
                 'flex h-full flex-col gap-3',

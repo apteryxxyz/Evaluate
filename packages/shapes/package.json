@@ -16,6 +16,6 @@
     "build": "tsc"
   },
   "dependencies": {
-    "zod": "3.25.20"
+    "zod": "4.0.5"
   }
 }

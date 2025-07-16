@@ -17,7 +17,7 @@ const ErrorMessages = {
   NameExists: 'This name already exists.',
 };
 
-namespace ExplorerItemName {
+export namespace ExplorerItemName {
   export interface Props {
     item: File | Folder;
     naming: boolean;

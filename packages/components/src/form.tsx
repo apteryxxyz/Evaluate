@@ -13,7 +13,7 @@ import {
 import { twMerge as cn } from 'tailwind-merge';
 import { Label } from './label.jsx';
 
-const Form = FormProvider;
+const Form: typeof FormProvider = FormProvider;
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,

@@ -40,7 +40,7 @@ export function closestAnsiColour(r: number, g: number, b: number) {
   for (let i = 0; i < colours.length; i++) {
     const [cr, cg, cb] = colours[i]!;
     const dist = (cr - r) ** 2 + (cg - g) ** 2 + (cb - b) ** 2;
-    // biome-ignore lint/style/noCommaOperator: <explanation>
+
     if (dist < minDist) (minDist = dist), (closestColour = i);
   }
 

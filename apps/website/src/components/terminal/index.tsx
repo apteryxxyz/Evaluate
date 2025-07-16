@@ -20,7 +20,7 @@ import { ReadonlyEditor } from '../editor/readonly';
 import { HtmlPreview } from './html-preview';
 import { useTerminal } from './use';
 
-namespace Terminal {
+export namespace Terminal {
   export interface Props {
     runtime: PartialRuntime;
   }

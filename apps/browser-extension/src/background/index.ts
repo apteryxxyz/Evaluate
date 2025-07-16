@@ -69,6 +69,7 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
   for (const runtime of runtimes) {
     const initialPromise = executeCode({
       runtime: runtime.id,
+      // TODO: Use the get runtime default file name function
       files: { 'file.code': code },
       entry: 'file.code',
     })

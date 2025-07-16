@@ -11,7 +11,7 @@ import { getInteractionContext } from '~/utilities/session-context';
 
 export class EvaluateModal extends Modal {
   title = 'Evaluate';
-  customId = 'evaluate:new';
+  customId = 'evaluate,new';
 
   components = [
     new Row([new RuntimeInput()]),
@@ -44,7 +44,7 @@ export class EvaluateModal extends Modal {
 }
 
 export class EvaluateModalEdit extends EvaluateModal {
-  customId = 'evaluate:edit';
+  customId = 'evaluate,edit';
   title = 'Edit Evaluation';
 }
 

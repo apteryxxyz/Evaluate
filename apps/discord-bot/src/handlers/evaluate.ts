@@ -1,6 +1,7 @@
 import {
   CommandInteraction,
   Embed,
+  MessageFlags,
   ModalInteraction,
   Row,
   type User,
@@ -23,21 +24,21 @@ function isNew(
   interaction: CommandInteraction | ModalInteraction,
 ): interaction is
   | CommandInteraction
-  | (ModalInteraction & { rawData: { data: { custom_id: `evaluate:new` } } }) {
+  | (ModalInteraction & { rawData: { data: { custom_id: `evaluate,new` } } }) {
   return (
     interaction instanceof CommandInteraction ||
-    interaction.rawData.data.custom_id === 'evaluate:new'
+    interaction.rawData.data.custom_id === 'evaluate,new'
   );
 }
 
 function isEdit(
   interaction: CommandInteraction | ModalInteraction,
 ): interaction is ModalInteraction & {
-  rawData: { data: { custom_id: `evaluate:edit` } };
+  rawData: { data: { custom_id: `evaluate,edit` } };
 } {
   return (
     interaction instanceof ModalInteraction &&
-    interaction.rawData.data.custom_id === 'evaluate:edit'
+    interaction.rawData.data.custom_id === 'evaluate,edit'
   );
 }
 
@@ -70,7 +71,7 @@ export async function handleEvaluating(
     interaction.rawData.message.interaction_metadata?.user.id !==
       interaction.user?.id
   )
-    Reflect.set(interaction.rawData.data, 'custom_id', 'evaluate:new');
+    Reflect.set(interaction.rawData.data, 'custom_id', 'evaluate,new');
 
   if (isNew(interaction)) await interaction.defer();
   if (isEdit(interaction)) await interaction.acknowledge();
@@ -79,8 +80,16 @@ export async function handleEvaluating(
   if (!runtime) {
     const message =
       'I was unable to find the runtime you were looking for, try again with another name.';
-    if (isNew(interaction)) return interaction.reply({ content: message });
-    if (isEdit(interaction)) return interaction.followUp({ content: message });
+    if (isNew(interaction))
+      return interaction.reply({
+        content: message,
+        flags: MessageFlags.Ephemeral,
+      });
+    if (isEdit(interaction))
+      return interaction.followUp({
+        content: message,
+        flags: MessageFlags.Ephemeral,
+      });
     throw new Error(message);
   }
 
@@ -96,7 +105,10 @@ export async function handleEvaluating(
     ...executeOptions,
   }).catch(async (error) => {
     if (error instanceof Error)
-      await interaction.reply({ content: error.message });
+      await interaction.reply({
+        content: error.message,
+        flags: MessageFlags.Ephemeral,
+      });
     throw error;
   });
 

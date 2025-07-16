@@ -1,5 +1,10 @@
 import { Client } from '@buape/carbon';
 import { EvaluateCommand } from '~/commands/evaluate';
+import { EditEvaluationButton } from '~/components/edit-evaluation-button.js';
+import {
+  EvaluateModal,
+  EvaluateModalEdit,
+} from '~/components/evaluate-modal.js';
 import env from '~/env';
 import { ApplicationAuthorisedListener } from '~/events/application-authorised';
 
@@ -11,7 +16,7 @@ if (!enabled)
     'Missing Discord bot environment variables, bot will be disabled.',
   );
 
-export default enabled
+const client = enabled
   ? new Client(
       {
         baseUrl: 'unused',
@@ -24,6 +29,11 @@ export default enabled
       {
         commands: [new EvaluateCommand()],
         listeners: [new ApplicationAuthorisedListener()],
+        components: [new EditEvaluationButton()],
       },
     )
   : null;
+for (const modal of [new EvaluateModal(), new EvaluateModalEdit()])
+  client?.modalHandler.registerModal(modal);
+
+export default client;

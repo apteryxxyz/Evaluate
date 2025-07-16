@@ -6,7 +6,7 @@ import { getInteractionContext } from '~/utilities/session-context';
 import { EvaluateModalEdit } from './evaluate-modal';
 
 export class EditEvaluationButton extends Button {
-  customId = 'evaluate:edit';
+  customId = 'evaluate,edit';
   style = ButtonStyle.Success;
   label = 'Edit';
   emoji = resolveEmoji('pencil', true);

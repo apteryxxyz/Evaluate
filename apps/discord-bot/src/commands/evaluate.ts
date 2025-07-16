@@ -6,8 +6,7 @@ import {
   type CommandOptions,
 } from '@buape/carbon';
 import { fetchRuntimes, searchRuntimes } from '@evaluate/engine/runtimes';
-import { EditEvaluationButton } from '~/components/edit-evaluation-button';
-import { EvaluateModal, EvaluateModalEdit } from '~/components/evaluate-modal';
+import { EvaluateModal } from '~/components/evaluate-modal';
 import { handleEvaluating } from '~/handlers/evaluate';
 import { captureEvent } from '~/services/posthog';
 import { getInteractionContext } from '~/utilities/session-context';
@@ -43,9 +42,6 @@ export class EvaluateCommand extends Command {
       required: false,
     },
   ];
-
-  components = [EditEvaluationButton];
-  modals = [EvaluateModal, EvaluateModalEdit];
 
   async autocomplete(interaction: AutocompleteInteraction) {
     const runtime = interaction.options.getString('runtime');

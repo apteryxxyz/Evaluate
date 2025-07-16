@@ -8,6 +8,7 @@ import {
   isReturnStatement,
 } from '@babel/types';
 import type { Plugin } from 'vite';
+
 const generate = Reflect.get(generate_, 'default') as typeof generate_;
 const traverse = Reflect.get(traverse_, 'default') as typeof traverse_;
 

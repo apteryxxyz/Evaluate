@@ -7,12 +7,13 @@ import type { File } from 'virtual-file-explorer-backend';
 import { useWatch } from '~/components/explorer/use';
 import { MaterialIcon } from '~/components/material-icon';
 
-namespace OpenedFileButton {
+export namespace OpenedFileButton {
   export interface Props {
     file: File;
     others: File[];
   }
 }
+
 export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
   useWatch(file, ['name']);
 
@@ -51,7 +52,6 @@ export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
       <span>&nbsp;{name ?? 'Untitled'}</span>
 
       <Button
-        role="button"
         size="icon"
         variant={null}
         className="w-auto pl-2 text-white/20 hover:text-white group-hover:text-white/50"

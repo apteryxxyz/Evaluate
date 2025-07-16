@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { ImageWithFallback } from '~/components/image-fallback';
 import { useLocalStorage } from '~/hooks/local-storage';
-import { type RGB, getDominantColour } from './get-colour';
+import { getDominantColour, type RGB } from './get-colour';
 
 declare module 'react' {
   namespace CSS {
@@ -26,7 +26,10 @@ declare module 'react' {
 export function PlaygroundCard({
   runtime,
   hash,
-}: { runtime: PartialRuntime; hash?: string }) {
+}: {
+  runtime: PartialRuntime;
+  hash?: string;
+}) {
   const imageRef = useRef<HTMLImageElement>(null);
   const [colour, setColour] = useState<RGB>();
 

@@ -4,8 +4,8 @@ import * as SelectPrimitive from '@radix-ui/react-select';
 import {
   CheckIcon,
   ChevronDownIcon,
-  ChevronUpIcon,
   ChevronsUpDownIcon,
+  ChevronUpIcon,
   type LucideIcon,
 } from 'lucide-react';
 import { twMerge as cn } from 'tailwind-merge';

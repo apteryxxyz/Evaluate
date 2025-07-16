@@ -1,4 +1,4 @@
-import { Lexer, Parser, longShortStrategy } from 'lexure';
+import { Lexer, longShortStrategy, Parser } from 'lexure';
 
 const Arguments = new Lexer().setQuotes([
   ['"', '"'],

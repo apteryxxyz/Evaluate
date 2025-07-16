@@ -20,7 +20,7 @@ import { ReadonlyEditor } from '../editor/readonly';
 import { HtmlPreview } from './html-preview';
 import { useTerminal } from './use';
 
-namespace Terminal {
+export namespace Terminal {
   export interface Props {
     runtime: PartialRuntime;
   }
@@ -139,7 +139,7 @@ export function Terminal({ runtime }: Terminal.Props) {
                   <>
                     Your code compilation exceeded the allotted time and was
                     terminated. Consider optimizing your code for faster
-                    compilation.
+                    compilation.'
                   </>
                 ) : (
                   <>

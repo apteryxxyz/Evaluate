@@ -15,12 +15,13 @@ import {
   useNameable,
 } from './hooks';
 
-namespace ExplorerFileItem {
+export namespace ExplorerFileItem {
   export interface Props {
     file: File;
     meta?: boolean;
   }
 }
+
 export function ExplorerFileItem({ file, meta }: ExplorerFileItem.Props) {
   useWatch(file, ['selected']);
 
@@ -57,10 +58,8 @@ export function ExplorerFileItem({ file, meta }: ExplorerFileItem.Props) {
             onClick={handleRenameClick}
             asChild
           >
-            <div role="button">
-              <TextCursorInputIcon size={16} />
-              <span className="sr-only">Rename File</span>
-            </div>
+            <TextCursorInputIcon size={16} />
+            <span className="sr-only">Rename File</span>
           </Button>
 
           <Button
@@ -71,10 +70,8 @@ export function ExplorerFileItem({ file, meta }: ExplorerFileItem.Props) {
             onClick={handleDeleteClick}
             asChild
           >
-            <div role="button">
-              <Trash2Icon size={16} />
-              <span className="sr-only">Delete File</span>
-            </div>
+            <Trash2Icon size={16} />
+            <span className="sr-only">Delete File</span>
           </Button>
         </div>
       )}

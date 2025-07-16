@@ -15,7 +15,7 @@
     "graph": "pnpx nx@18 graph"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.1.1",
     "@evaluate/scripts": "workspace:^",
     "@types/node": "^22.14.1",
     "husky": "^9.1.7",

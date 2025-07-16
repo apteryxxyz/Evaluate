@@ -66,6 +66,8 @@ export function replaceJsonImports(): Plugin {
           if (importNode.source.value.endsWith('.json')) {
             const varName = importNode.specifiers[0].local.name;
             const jsonPath = resolve(dirname(id), importNode.source.value);
+            if (!jsonPath.startsWith(process.cwd())) {
+              throw new Error(`JSON import path '${jsonPath}' is outside project root`);
             const jsonContent = JSON.parse(readFileSync(jsonPath, 'utf8'));
 
             path.replaceWith(

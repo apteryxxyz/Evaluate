@@ -30,7 +30,7 @@ export function MobileWrapper({ children }: React.PropsWithChildren) {
         <SheetBody
           side="right"
           className="border-l-0 bg-transparent [&>button]:hidden"
-          onClick={() => setExplorerOpen(false)}
+          onClick={() => setTerminalOpen(false)}
         >
           <div className="h-full rounded-xl border-2 bg-card">{terminal}</div>
         </SheetBody>

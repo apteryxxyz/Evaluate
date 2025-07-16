@@ -139,7 +139,7 @@ export function Terminal({ runtime }: Terminal.Props) {
                   <>
                     Your code compilation exceeded the allotted time and was
                     terminated. Consider optimizing your code for faster
-                    compilation.'
+                    compilation.
                   </>
                 ) : (
                   <>

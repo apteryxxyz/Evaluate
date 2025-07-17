@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@tailwindcss/vite@4.1.11':
+    hash: c65ceb599655780709308f94a3ec9abe3fdf0669fb30069ad826bb182f83d03f
+    path: patches/@tailwindcss__vite@4.1.11.patch
+
 importers:
 
   .:
@@ -98,7 +103,7 @@ importers:
         version: 2.0.0-beta.30
       '@tailwindcss/vite':
         specifier: ^4.1.11
-        version: 4.1.11(vite@3.2.11(@types/node@22.16.4)(terser@5.39.2))
+        version: 4.1.11(patch_hash=c65ceb599655780709308f94a3ec9abe3fdf0669fb30069ad826bb182f83d03f)(vite@3.2.11(@types/node@22.16.4)(terser@5.39.2))
       '@types/babel__generator':
         specifier: ^7.27.0
         version: 7.27.0
@@ -6597,7 +6602,7 @@ snapshots:
       postcss: 8.5.3
       tailwindcss: 4.1.11
 
-  '@tailwindcss/vite@4.1.11(vite@3.2.11(@types/node@22.16.4)(terser@5.39.2))':
+  '@tailwindcss/vite@4.1.11(patch_hash=c65ceb599655780709308f94a3ec9abe3fdf0669fb30069ad826bb182f83d03f)(vite@3.2.11(@types/node@22.16.4)(terser@5.39.2))':
     dependencies:
       '@tailwindcss/node': 4.1.11
       '@tailwindcss/oxide': 4.1.11

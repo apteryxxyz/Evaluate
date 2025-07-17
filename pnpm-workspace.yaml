@@ -4,12 +4,5 @@ packages:
   - extensions/*
   - packages/*
 
-onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - '@vercel/speed-insights'
-  - core-js
-  - esbuild
-  - sharp
-
 patchedDependencies:
   '@tailwindcss/vite@4.1.11': patches/@tailwindcss__vite@4.1.11.patch

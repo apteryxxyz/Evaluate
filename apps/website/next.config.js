@@ -32,6 +32,14 @@ const nextConfig = {
       source: '/api/ingest/:path*',
       destination: 'https://us.i.posthog.com/:path*',
     },
+    {
+      source: '/api/journal/static/:path*',
+      destination: 'https://us-assets.i.posthog.com/static/:path*',
+    },
+    {
+      source: '/api/journal/:path*',
+      destination: 'https://us.i.posthog.com/:path*',
+    },
   ],
   skipTrailingSlashRedirect: true,
 

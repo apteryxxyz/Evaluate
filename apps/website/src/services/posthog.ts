@@ -19,7 +19,7 @@ export function initPostHog() {
   if (!isAvailable()) return;
 
   posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY!, {
-    api_host: '/api/ingest',
+    api_host: '/api/journal',
     ui_host: 'https://us.posthog.com/',
 
     // Minimal tracking, only sessions, never people

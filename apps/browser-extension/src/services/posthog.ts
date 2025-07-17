@@ -21,7 +21,7 @@ export function initPostHog() {
   if (!isAvailable()) return;
 
   posthog.init(env.VITE_PUBLIC_POSTHOG_KEY!, {
-    api_host: `${env.VITE_PUBLIC_WEBSITE_URL}api/ingest`,
+    api_host: `${env.VITE_PUBLIC_WEBSITE_URL}api/journal`,
     ui_host: 'https://us.posthog.com/',
 
     // Minimal tracking, only sessions, never people

@@ -1,5 +1,8 @@
 import { executeCode } from '@evaluate/engine/execute';
-import { searchRuntimes } from '@evaluate/engine/runtimes';
+import {
+  getRuntimeDefaultFileName,
+  searchRuntimes,
+} from '@evaluate/engine/runtimes';
 import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
 import type { ProtocolWithReturn } from 'webext-bridge';
 import { onMessage, sendMessage } from 'webext-bridge/background';
@@ -67,21 +70,19 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 
   const promises = [];
   for (const runtime of runtimes) {
+    const fileName = getRuntimeDefaultFileName(runtime.id) ?? 'file.code';
     const initialPromise = executeCode({
       runtime: runtime.id,
-      // TODO: Use the get runtime default file name function
-      files: { 'file.code': code },
-      entry: 'file.code',
+      files: { [fileName]: code },
+      entry: fileName,
     })
       .then((result) => {
         posthog?.capture('executed_code', {
           runtime_id: runtime.id,
           code_length: code.length,
           code_lines: code.split('\n').length,
-          compile_successful: result.compile ? result.compile.code === 0 : null,
-          execution_successful:
-            result.run.code === 0 &&
-            (!result.compile || result.compile.code === 0),
+          compile_successful: result.compile?.success ?? null,
+          execution_successful: result.success,
         });
         return result;
       })

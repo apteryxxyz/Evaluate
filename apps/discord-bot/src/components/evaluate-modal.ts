@@ -72,8 +72,8 @@ class ArgumentsInput extends TextInput {
   customId = 'args';
   label = 'Arguments';
   placeholder = 'Additional command line arguments to pass to the program.';
-  style = TextInputStyle.Paragraph;
-  minLength = 1;
+  style = TextInputStyle.Short;
+  minLength = 0;
   maxLength = 500;
   required = false;
 }
@@ -82,8 +82,8 @@ class InputInput extends TextInput {
   customId = 'input';
   label = 'Input';
   placeholder = 'The STDIN input to provide to the program.';
-  style = TextInputStyle.Paragraph;
-  minLength = 1;
+  style = TextInputStyle.Short;
+  minLength = 0;
   maxLength = 500;
   required = false;
 }

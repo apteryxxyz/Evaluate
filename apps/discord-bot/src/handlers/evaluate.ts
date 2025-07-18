@@ -6,19 +6,18 @@ import {
   Row,
   type User,
 } from '@buape/carbon';
-import { compress } from '@evaluate/engine/compress';
 import { executeCode } from '@evaluate/engine/execute';
 import {
   getRuntimeDefaultFileName,
   searchRuntimes,
 } from '@evaluate/engine/runtimes';
 import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
-import { EditEvaluationButton } from '~/components/edit-evaluation-button';
-import { OpenEvaluationButton } from '~/components/open-evaluation-button';
-import env from '~/env';
-import { captureEvent } from '~/services/posthog';
-import { codeBlock } from '~/utilities/discord-formatting';
-import { getInteractionContext } from '~/utilities/session-context';
+import { EditEvaluationButton } from '~/components/edit-evaluation-button.js';
+import { OpenEvaluationButton } from '~/components/open-evaluation-button.js';
+import { captureEvent } from '~/services/posthog.js';
+import { codeBlock } from '~/utilities/discord-formatting.js';
+import { makeEditCodeUrl } from '~/utilities/make-url.js';
+import { getInteractionContext } from '~/utilities/session-context.js';
 
 function isNew(
   interaction: CommandInteraction | ModalInteraction,
@@ -42,30 +41,11 @@ function isEdit(
   );
 }
 
-function compressOptions(options: {
-  runtime: PartialRuntime;
-  code: string;
-  args?: string;
-  input?: string;
-}) {
-  const identifier =
-    typeof options.runtime === 'string' ? options.runtime : options.runtime.id;
-  const fileName = getRuntimeDefaultFileName(identifier) ?? 'file.code';
-  return compress({
-    files: {
-      [fileName]: options.code,
-      '::input::': options.input,
-      '::args::': options.args,
-    },
-    entry: fileName,
-    focused: fileName,
-  });
-}
-
 export async function handleEvaluating(
   interaction: CommandInteraction | ModalInteraction,
   options: { runtime: string; code: string; args?: string; input?: string },
 ) {
+  // HACK: If trying to edit an existing evaluation owned by another user, create new instead
   if (
     interaction.rawData.message &&
     interaction.rawData.message.interaction_metadata?.user.id !==
@@ -93,9 +73,10 @@ export async function handleEvaluating(
     throw new Error(message);
   }
 
+  const fileName = getRuntimeDefaultFileName(runtime.id) ?? 'file.code';
   const executeOptions = {
-    files: { 'file.code': options.code },
-    entry: 'file.code',
+    files: { [fileName]: options.code },
+    entry: fileName,
     input: options.input,
     args: options.args,
   };
@@ -116,37 +97,23 @@ export async function handleEvaluating(
     runtime_id: runtime.id,
     code_length: options.code.length,
     code_lines: options.code.split('\n').length,
-    compile_successful: result.compile ? result.compile.code === 0 : null,
-    execution_successful:
-      result.run.code === 0 && (!result.compile || result.compile.code === 0),
+    compile_successful: result.compile?.success ?? null,
+    execution_successful: result.success,
   });
 
-  const resultKey = result?.compile?.code ? 'compile' : 'run';
-  const hasTimedOut = result[resultKey]?.signal === 'SIGKILL';
-  const doesHaveDisplayableOutput = result[resultKey]?.output?.trim() !== '';
-
-  let output = result[resultKey]!.output;
-  if (!doesHaveDisplayableOutput) {
-    // TODO: This stuff would be better handled by the executeCode function
-    const isRun = resultKey === 'run';
-    if (hasTimedOut) {
-      if (isRun)
-        output =
-          'Your code execution exceeded the allotted time and was terminated. Consider optimising it for better performance.';
-      else
-        output =
-          'Your code compilation exceeded the allotted time and was terminated. Consider optimising your code for faster compilation.';
-    } else {
-      output =
-        'Your code executed successfully; however, it did not generate any output for the console.';
-    }
-  } else if (output.length > 1000) {
-    output = `Output was too large to display, [click here to view the full output](${
-      env.WEBSITE_URL
-    }/playgrounds/${runtime.id}#${compressOptions({ ...options, runtime })}).`;
-  } else {
-    output = codeBlock(output, 1000);
-  }
+  let output = result.output;
+  if (result.compile?.expired)
+    output =
+      'Your code compilation exceeded the allotted time and was terminated. Consider optimising your code for faster compilation.';
+  else if (result.run.expired)
+    output =
+      'Your code execution exceeded the allotted time and was terminated. Consider optimising it for better performance.';
+  else if (!output)
+    output =
+      'Your code executed successfully; however, it did not generate any output for the console.';
+  else if (output.length > 900)
+    output = `Output was too large to display, [click here to view the full output](${makeEditCodeUrl(options)})`;
+  else output = codeBlock(output, 1000);
 
   return interaction.reply(
     createEvaluationPayload(
@@ -172,10 +139,7 @@ export function createEvaluationPayload(
   const embed = new Embed({
     title: 'Code Evaluation',
     description: `**${options.runtime.name}**\n${codeBlock(options.runtime.aliases[0]!, options.code, 4000)}`,
-    color:
-      result.run.code === 0 && (!result.compile || result.compile.code === 0)
-        ? 0x2fc086
-        : 0xff0000,
+    color: result.success ? 0x2fc086 : 0xff0000,
     fields: [],
     author: user
       ? { name: user.username!, icon_url: user.avatarUrl! }
@@ -205,7 +169,7 @@ export function createEvaluationPayload(
       new Row([
         new EditEvaluationButton(),
         new OpenEvaluationButton(
-          `${env.WEBSITE_URL}playgrounds/${options.runtime.id}#${compressOptions(options)}`,
+          makeEditCodeUrl({ ...options, runtime: options.runtime.id }),
         ),
       ]),
     ],

@@ -33,21 +33,31 @@ export const ExecuteOptions = z
     { error: 'Entry file does not exist' },
   );
 
-export type ExecuteResult = z.infer<typeof ExecuteResult>;
-export const ExecuteResult = z.object({
-  run: z.object({
-    output: z.string(),
+export type ExecutionPhaseResult = z.infer<typeof ExecutionPhaseResult>;
+export const ExecutionPhaseResult = z
+  .object({
+    output: z.string().transform((o) => o.trim() || undefined),
     signal: z.string().nullable(),
     code: z.number().nullable(),
-  }),
-  compile: z
-    .object({
-      output: z.string(),
-      signal: z.string().nullable(),
-      code: z.number().nullable(),
-    })
-    .optional(),
-});
+  })
+  .transform((r) => ({
+    ...r,
+    success: r.code === 0,
+    expired: r.signal === 'SIGKILL',
+  }));
+
+export type ExecuteResult = z.infer<typeof ExecuteResult>;
+export const ExecuteResult = z
+  .object({
+    run: ExecutionPhaseResult,
+    compile: ExecutionPhaseResult.optional(),
+  })
+  .transform((r) => ({
+    ...r,
+    success: r.run.success && (!r.compile || r.compile.success),
+    expired: Boolean(r.run.expired || r.compile?.expired),
+    output: (r.compile?.code || 0) > 0 ? r.compile?.output : r.run?.output,
+  }));
 
 export type PistonExecuteOptions = z.infer<typeof PistonExecuteOptions>;
 export const PistonExecuteOptions = z.object({

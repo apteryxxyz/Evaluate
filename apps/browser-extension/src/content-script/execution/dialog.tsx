@@ -55,25 +55,27 @@ export function ExecutionDialog({
         </DialogHeader>
 
         <DialogContent>
-          <Tabs defaultValue={runtimes[~successIndex ? successIndex : 0]?.id}>
-            <TabsList className="w-full">
-              {runtimes.map((runtime) => (
-                <TabsTrigger key={runtime.id} value={runtime.id}>
-                  {runtime.name}
-                </TabsTrigger>
-              ))}
-            </TabsList>
+          {results.length > 0 && (
+            <Tabs defaultValue={runtimes[~successIndex ? successIndex : 0]?.id}>
+              <TabsList className="w-full">
+                {runtimes.map((runtime) => (
+                  <TabsTrigger key={runtime.id} value={runtime.id}>
+                    {runtime.name}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
 
-            {runtimes.map((runtime, i) => (
-              <TabsContent key={runtime.id} value={runtime.id}>
-                <ResultDialog
-                  code={code}
-                  runtime={runtime}
-                  result={results[i]!}
-                />
-              </TabsContent>
-            ))}
-          </Tabs>
+              {runtimes.map((runtime, i) => (
+                <TabsContent key={runtime.id} value={runtime.id}>
+                  <ResultDialog
+                    code={code}
+                    runtime={runtime}
+                    result={results[i]!}
+                  />
+                </TabsContent>
+              ))}
+            </Tabs>
+          )}
         </DialogContent>
       </DialogBody>
     </Dialog>

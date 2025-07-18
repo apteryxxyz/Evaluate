@@ -32,7 +32,7 @@
   "devDependencies": {
     "@babel/generator": "^7.28.0",
     "@babel/parser": "^7.28.0",
-    "@babel/traverse": "^7.27.0",
+    "@babel/traverse": "^7.28.0",
     "@babel/types": "^7.28.1",
     "@crxjs/vite-plugin": "2.0.0-beta.30",
     "@tailwindcss/vite": "^4.1.11",

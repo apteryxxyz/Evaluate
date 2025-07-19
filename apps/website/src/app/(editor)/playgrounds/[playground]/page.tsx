@@ -1,4 +1,4 @@
-import { fetchRuntimes, getRuntime } from '@evaluate/engine/runtimes';
+import { fetchAllRuntimes, fetchRuntimeById } from '@evaluate/runtimes';
 import { notFound } from 'next/navigation';
 import { generateBaseMetadata } from '~/app/metadata';
 import { Editor } from '~/components/editor';
@@ -10,13 +10,13 @@ import type { PageProps } from '~/types';
 import { EditorWrapper } from './wrapper';
 
 export async function generateStaticParams() {
-  const runtimes = await fetchRuntimes();
+  const runtimes = await fetchAllRuntimes();
   return runtimes.map((r) => ({ playground: r.id }));
 }
 
 export async function generateMetadata(props: PageProps<['[playground]']>) {
   const playground = (await props.params).playground;
-  const runtime = await getRuntime(decodeURIComponent(playground));
+  const runtime = await fetchRuntimeById(decodeURIComponent(playground));
   if (!runtime) notFound();
 
   return generateBaseMetadata(`/playground/${playground}`, {
@@ -29,7 +29,7 @@ export async function generateMetadata(props: PageProps<['[playground]']>) {
 
 export default async function EditorPage(props: PageProps<['[playground]']>) {
   const playground = (await props.params).playground;
-  const runtime = await getRuntime(decodeURIComponent(playground));
+  const runtime = await fetchRuntimeById(decodeURIComponent(playground));
   if (!runtime) notFound();
 
   return (

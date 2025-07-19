@@ -12,7 +12,7 @@ import {
 } from '@evaluate/components/select';
 import { Separator } from '@evaluate/components/separator';
 import { toast } from '@evaluate/components/toast';
-import type { PartialRuntime } from '@evaluate/shapes';
+import type { Runtime } from '@evaluate/runtimes';
 import {
   ArrowDownWideNarrowIcon,
   CircleDotIcon,
@@ -28,7 +28,7 @@ import { PlaygroundCard } from './playground-card';
 export function PlaygroundCardList({
   initialRuntimes,
 }: {
-  initialRuntimes: PartialRuntime[];
+  initialRuntimes: Runtime[];
 }) {
   const [search, setSearch] = useQueryParameter('search');
   const deferredSearch = useDeferredValue(search);

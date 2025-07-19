@@ -1,0 +1,17 @@
+@import "@evaluate/style";
+@import "@evaluate/components";
+@source ".";
+
+::-webkit-scrollbar {
+  width: 17px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--color-background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--color-muted));
+  border-radius: var(--radius-xl);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--color-muted) / 0.8);
+}

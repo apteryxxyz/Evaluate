@@ -1,0 +1,25 @@
+{
+  "name": "@evaluate/execute",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@evaluate/fetch": "workspace:^",
+    "@evaluate/runtimes": "workspace:^",
+    "es-toolkit": "^1.39.7",
+    "lexure": "npm:@apteryxxyz/lexure@^0.17.0",
+    "pako": "^2.1.0",
+    "zod": "^4.0.5"
+  },
+  "devDependencies": {
+    "@types/pako": "^2.0.3"
+  }
+}

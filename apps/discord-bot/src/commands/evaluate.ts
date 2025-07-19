@@ -5,11 +5,11 @@ import {
   type CommandInteraction,
   type CommandOptions,
 } from '@buape/carbon';
-import { fetchRuntimes, searchRuntimes } from '@evaluate/engine/runtimes';
+import { fetchAllRuntimes, searchForRuntimes } from '@evaluate/runtimes';
 import { EvaluateModal } from '~/components/evaluate-modal';
 import { handleEvaluating } from '~/handlers/evaluate';
+import { getInteractionContext } from '~/helpers/session-context';
 import { captureEvent } from '~/services/posthog';
-import { getInteractionContext } from '~/utilities/session-context';
 
 export class EvaluateCommand extends Command {
   name = 'evaluate';
@@ -47,12 +47,12 @@ export class EvaluateCommand extends Command {
     const runtime = interaction.options.getString('runtime');
 
     if (runtime) {
-      const runtimes = await searchRuntimes(runtime);
+      const runtimes = await searchForRuntimes(runtime);
       return interaction.respond(
         runtimes.slice(0, 25).map((r) => ({ name: r.name, value: r.id })),
       );
     } else {
-      const runtimes = await fetchRuntimes();
+      const runtimes = await fetchAllRuntimes();
       return interaction.respond(
         runtimes.slice(0, 25).map((r) => ({ name: r.name, value: r.id })),
       );
@@ -70,7 +70,7 @@ export class EvaluateCommand extends Command {
     const args = use.options.getString('arguments');
 
     if (runtime && code) {
-      return handleEvaluating(use, { runtime, code, args, input });
+      return handleEvaluating(use, runtime, { code, args, input });
     } else {
       const modal = new EvaluateModal({ runtime, code, args, input });
       return use.showModal(modal);

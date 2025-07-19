@@ -1,4 +1,4 @@
-import { createLogger } from '@evaluate/helpers/create-logger';
+import createLogger from '@evaluate/logger';
 import posthog from 'posthog-js';
 import env from '~/env';
 

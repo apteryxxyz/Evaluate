@@ -6,7 +6,7 @@ import { Header } from '~/components/header';
 import { BodyProviders, HtmlProviders } from '~/components/providers';
 import type { LayoutProps } from '../types';
 import { generateBaseMetadata } from './metadata';
-import '../styles.css';
+import '../style.css';
 
 const inter = Inter({ subsets: ['latin'] });
 

@@ -1,6 +1,6 @@
 'use client';
 
-import type { ExecuteResult } from '@evaluate/shapes';
+import type { ExecuteResult } from '@evaluate/execute';
 import { createContext, useContext, useState } from 'react';
 
 const TerminalContext = createContext<{

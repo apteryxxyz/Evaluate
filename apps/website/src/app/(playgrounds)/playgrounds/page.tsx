@@ -1,4 +1,4 @@
-import { fetchRuntimes } from '@evaluate/engine/runtimes';
+import { fetchAllRuntimes } from '@evaluate/runtimes';
 import { generateBaseMetadata } from '~/app/metadata';
 import { PlaygroundCardList } from './playground-card-list';
 
@@ -7,7 +7,7 @@ export function generateMetadata() {
 }
 
 export default async function PlaygroundsPage() {
-  const runtimes = await fetchRuntimes();
+  const runtimes = await fetchAllRuntimes();
 
   return (
     <div className="container flex flex-col gap-6 py-6">

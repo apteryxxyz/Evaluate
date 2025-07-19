@@ -1,18 +1,23 @@
 import { Button } from '@evaluate/components/button';
 import { Label } from '@evaluate/components/label';
 import { Textarea } from '@evaluate/components/textarea';
-import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
+import {
+  type ExecuteResult,
+  makeEditCodePathname,
+  makePickRuntimePathname,
+} from '@evaluate/execute';
+import type { Runtime } from '@evaluate/runtimes';
 import { ExternalLinkIcon } from 'lucide-react';
 import { twMerge as cn } from 'tailwind-merge';
-import { makeEditCodeUrl, makePickRuntimeUrl } from '~/helpers/make-url';
+import env from '~/env.js';
 
 export function ResultDialog({
-  code,
   runtime,
+  options,
   result,
 }: {
-  code: string;
-  runtime: PartialRuntime;
+  runtime: Runtime;
+  options: { code: string };
   result: ExecuteResult;
 }) {
   let output = result.output;
@@ -41,12 +46,15 @@ export function ResultDialog({
       </div>
 
       <div className="flex justify-end gap-2">
-        {code && (
+        {options.code && (
           <Button variant="secondary" asChild>
             <a
               target="_blank"
               rel="noreferrer noopener"
-              href={makePickRuntimeUrl(code)}
+              href={new URL(
+                makePickRuntimePathname(options),
+                env.VITE_PUBLIC_WEBSITE_URL,
+              ).toString()}
             >
               <span>Change Runtime</span>
               <ExternalLinkIcon size={16} className="ml-1" />
@@ -54,12 +62,15 @@ export function ResultDialog({
           </Button>
         )}
 
-        {code && runtime && (
+        {options.code && runtime && (
           <Button variant="secondary" asChild>
             <a
               target="_blank"
               rel="noreferrer noopener"
-              href={makeEditCodeUrl(runtime, code)}
+              href={new URL(
+                makeEditCodePathname(runtime, options),
+                env.VITE_PUBLIC_WEBSITE_URL,
+              ).toString()}
             >
               <span>Edit Code</span>
               <ExternalLinkIcon size={16} className="ml-1" />

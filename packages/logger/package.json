@@ -1,0 +1,14 @@
+{
+  "name": "@evaluate/logger",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "build": "tsc"
+  }
+}

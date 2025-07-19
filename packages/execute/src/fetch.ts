@@ -41,7 +41,7 @@ export async function executeCode(
     files: Object.entries(executeOptions.files)
       .filter(([name]) => !name.startsWith('::'))
       .map(([n, c]) => ({ name: n, content: c }))
-      .sort((a) => (executeOptions.entry === a.name ? 1 : -1)),
+      .sort((a) => (executeOptions.entry === a.name ? -1 : 1)),
     stdin: executeOptions.files['::input::'],
     args: executeOptions.files['::args::']
       ? parseArguments(executeOptions.files['::args::'])

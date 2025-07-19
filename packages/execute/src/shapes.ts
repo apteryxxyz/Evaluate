@@ -37,7 +37,7 @@ export const FilesOptions = z
       })
       .partial()
       .catchall(z.string()),
-    entry: z.string(),
+    entry: z.string({ error: 'Entry file is required' }),
   })
   .refine((o) => o.entry in o.files, {
     error: 'Entry file does not exist',
@@ -46,24 +46,30 @@ export const FilesOptions = z
 export type FilesOptions = z.infer<typeof FilesOptions>;
 
 export const ExecuteOptions = Object.assign(
-  FilesOptions.extend({
-    focused: z.string().optional(),
-  }).transform((o) => {
-    const [codeLength, codeLines] = Object.values(o.files).reduce(
-      ([length, lines], file) => [
-        length + file.length,
-        lines + file.split('\n').length,
-      ],
-      [0, 0],
-    );
+  FilesOptions.and(
+    z.object({
+      focused: z.string().optional(),
+    }),
+  )
+    .refine((o) => !o.focused || o.focused in o.files, {
+      error: 'Focused file does not exist',
+    })
+    .transform((o) => {
+      const [codeLength, codeLines] = Object.values(o.files).reduce(
+        ([length, lines], file) => [
+          length + file.length,
+          lines + file.split('\n').length,
+        ],
+        [0, 0],
+      );
 
-    return {
-      ...o,
-      lines: codeLines,
-      length: codeLength,
-      focused: o.focused ?? o.entry,
-    };
-  }),
+      return {
+        ...o,
+        lines: codeLines,
+        length: codeLength,
+        focused: o.focused ?? o.entry,
+      };
+    }),
   {
     from(value: CodeOptions | FilesOptions): ExecuteOptions {
       if ('code' in value) {

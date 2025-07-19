@@ -24,16 +24,9 @@ export async function executeCode(
     if (name) {
       executeOptions.files[name] = executeOptions.files['file.code'];
       delete executeOptions.files['file.code'];
-      executeOptions.entry = executeOptions.entry || name;
+      executeOptions.entry = executeOptions.focused = name;
     }
   }
-
-  console.trace(
-    'executeCode',
-    { executeOptions },
-    Boolean(executeOptions.files['::args::']),
-    parseArguments(executeOptions.files['::args::']!),
-  );
 
   const body = {
     language,
@@ -43,12 +36,8 @@ export async function executeCode(
       .map(([n, c]) => ({ name: n, content: c }))
       .sort((a) => (executeOptions.entry === a.name ? -1 : 1)),
     stdin: executeOptions.files['::input::'],
-    args: executeOptions.files['::args::']
-      ? parseArguments(executeOptions.files['::args::'])
-      : undefined,
+    args: parseArguments(executeOptions.files['::args::']),
   };
-
-  console.log('executeCode', { body });
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10000);

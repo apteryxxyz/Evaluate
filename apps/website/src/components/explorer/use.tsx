@@ -133,7 +133,7 @@ function optionsToFolder(options: FilesOptions & { focused?: string }) {
   const root = new Folder<true>('::root::');
 
   for (const [path, content] of Object.entries(options.files)) {
-    let parent = root as unknown as Folder;
+    let parent = root;
 
     for (const name of path.split('/').slice(0, -1)) {
       const child = parent.children.find((c) => c.name === name);

@@ -58,7 +58,7 @@ export const ExecuteOptions = Object.assign(
       const [codeLength, codeLines] = Object.values(o.files).reduce(
         ([length, lines], file) => [
           length + file.length,
-          lines + file.split('\n').length,
+          lines + (file === '' ? 0 : file.split('\n').length),
         ],
         [0, 0],
       );

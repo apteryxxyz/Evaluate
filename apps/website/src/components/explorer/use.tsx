@@ -1,9 +1,14 @@
 'use client';
 
 import { toast } from '@evaluate/components/toast';
-import { compress, decompress } from '@evaluate/engine/compress';
+import {
+  compress,
+  decompress,
+  ExecuteOptions,
+  type FilesOptions,
+} from '@evaluate/execute';
 import { useEventListener } from '@evaluate/hooks/event-listener';
-import type { Runtime } from '@evaluate/shapes';
+import { getRuntimeExamples, type Runtime } from '@evaluate/runtimes';
 import {
   createContext,
   useCallback,
@@ -26,17 +31,21 @@ export const ExplorerConsumer = ExplorerContext.Consumer;
 export function ExplorerProvider({
   runtime,
   children,
-}: React.PropsWithChildren<{ runtime: Runtime }>) {
+}: React.PropsWithChildren<{
+  runtime: Runtime;
+}>) {
   const [hash, setHash] = useHashFragment();
-  const example = useMemo(() => runtime.examples[0], [runtime]);
+  const example = useMemo(
+    () => getRuntimeExamples(runtime.id)?.[0],
+    [runtime.id],
+  );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Only want triggered once
   const root = useMemo(() => {
-    const root = hash
-      ? parseExplorer(hash)
-      : example
-        ? expandExplorer(example)
-        : new Folder<true>('::root::');
+    let root: Folder<true>;
+    if (hash) root = decodeExplorer(hash);
+    else if (example) root = optionsToFolder(example);
+    else root = new Folder<true>('::root::');
 
     if (!root.children.some((c) => c.name === '::args::'))
       new File('::args::').parent = root;
@@ -44,29 +53,13 @@ export function ExplorerProvider({
       new File('::input::').parent = root;
 
     root.select().expand();
-    if (typeof window !== 'undefined') Reflect.set(window, 'root', root);
     return root;
   }, []);
-
-  const [hasChange, setHasChange] = useState(false);
-  useEffect(() => {
-    const onChange = () => setHasChange(true);
-    root.changes.on(['child', '*'], onChange);
-    return () => void root.changes.off(['child', '*'], onChange);
-  }, [root]);
-
-  const beforeUnload = useCallback(
-    (e: Event) => {
-      if (hasChange) e.preventDefault();
-    },
-    [hasChange],
-  );
-  useEventListener('beforeunload', beforeUnload);
 
   const saveAndCopyUrl = useCallback(
     (e: Event) => {
       e.preventDefault();
-      setHash(stringifyExplorer(root));
+      setHash(encodeExplorer(root));
       navigator.clipboard.writeText(location.href);
       toast.info('Saved and copied URL to clipboard');
     },
@@ -109,52 +102,38 @@ export function useWatch(
   }, [item, update, ...events]);
 }
 
-function stringifyExplorer(explorer: Folder) {
+//
+
+function encodeExplorer(explorer: Folder) {
   if (explorer.children.length === 0) return '';
-  return compress(flattenExplorer(explorer));
+  return compress(folderToOptions(explorer));
 }
 
-function parseExplorer(hash: string) {
+function decodeExplorer(hash: string) {
   if (!hash) return new Folder<true>('::root::');
-  return expandExplorer(decompress(hash));
+  return optionsToFolder(decompress(hash));
 }
 
-function flattenExplorer(explorer: Folder) {
-  if (explorer.children.length === 0) return { files: {} };
-
+function folderToOptions(folder: Folder) {
   const files: Record<string, string> = {};
   let entry: string | undefined;
   let focused: string | undefined;
 
-  for (const file of explorer.descendants //
+  for (const file of folder.descendants //
     .filter((f): f is File => f.type === 'file')) {
-    const path = file.path;
-    const content = file.content;
-    const isEntry = Reflect.get(file, 'entry');
-    const isFocused = file.focused;
-
-    if (isEntry) entry = path;
-    if (isFocused) focused = path;
-
-    files[path] = content;
+    if (Reflect.get(file, 'entry')) entry = file.path;
+    if (file.focused) focused = file.path;
+    files[file.path] = file.content;
   }
 
-  return {
-    files,
-    entry,
-    focused,
-  };
+  return ExecuteOptions.parse({ files, entry, focused });
 }
 
-function expandExplorer(
-  object: Omit<ReturnType<typeof flattenExplorer>, 'entry'> & {
-    entry?: string;
-  },
-) {
+function optionsToFolder(options: FilesOptions & { focused?: string }) {
   const root = new Folder<true>('::root::');
 
-  for (const [path, content] of Object.entries(object.files)) {
-    let parent = root as unknown as Folder;
+  for (const [path, content] of Object.entries(options.files)) {
+    let parent = root;
 
     for (const name of path.split('/').slice(0, -1)) {
       const child = parent.children.find((c) => c.name === name);
@@ -176,11 +155,9 @@ function expandExplorer(
       file.content = content;
       file.parent = parent;
 
-      if (path === object.entry) Reflect.set(file, 'entry', true);
-      if (path === (object.focused ?? object.entry)) {
-        file.opened = true;
-        file.focused = true;
-      }
+      if (path === options.entry) Reflect.set(file, 'entry', true);
+      if (path === (options.focused ?? options.entry))
+        file.opened = file.focused = true;
     }
   }
 

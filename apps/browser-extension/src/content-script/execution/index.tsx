@@ -1,13 +1,14 @@
 import { toast } from '@evaluate/components/toast';
-import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
+import { type ExecuteResult, makePickRuntimePathname } from '@evaluate/execute';
+import type { Runtime } from '@evaluate/runtimes';
 import { useEffect, useState } from 'react';
 import { onMessage } from 'webext-bridge/content-script';
-import { makePickRuntimeUrl } from '~/helpers/make-url';
+import env from '~/env.js';
 import { ExecutionDialog } from './dialog';
 
 export function Execution({ dialogPortal }: { dialogPortal: HTMLElement }) {
   const [code, setCode] = useState('');
-  const [runtimes, setRuntimes] = useState<PartialRuntime[]>([]);
+  const [runtimes, setRuntimes] = useState<Runtime[]>([]);
   const [results, setResults] = useState<ExecuteResult[]>([]);
 
   useEffect(() => {
@@ -16,7 +17,10 @@ export function Execution({ dialogPortal }: { dialogPortal: HTMLElement }) {
     const removeUnknownRuntimeListener = onMessage(
       'unknownRuntime',
       ({ data: { code } }) => {
-        const pickUrl = makePickRuntimeUrl(code);
+        const pickUrl = new URL(
+          makePickRuntimePathname({ code }),
+          env.VITE_PUBLIC_WEBSITE_URL,
+        );
         toast.error('Could not determine runtime', {
           description:
             'Evaluate was unable to determine a runtime for the selected text.',

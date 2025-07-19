@@ -8,7 +8,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@evaluate/components/tabs';
-import type { PartialRuntime } from '@evaluate/shapes';
+import type { Runtime } from '@evaluate/runtimes';
 import {
   CodeIcon,
   FullscreenIcon,
@@ -22,7 +22,7 @@ import { useTerminal } from './use';
 
 export namespace Terminal {
   export interface Props {
-    runtime: PartialRuntime;
+    runtime: Runtime;
   }
 }
 export function Terminal({ runtime }: Terminal.Props) {

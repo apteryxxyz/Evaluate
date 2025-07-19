@@ -10,9 +10,9 @@ import {
   SelectValue,
 } from '@evaluate/components/select';
 import { toast } from '@evaluate/components/toast';
-import { executeCode } from '@evaluate/engine/execute';
+import { executeCode, FilesOptions } from '@evaluate/execute';
 import { useEventListener } from '@evaluate/hooks/event-listener';
-import { ExecuteOptions, type PartialRuntime } from '@evaluate/shapes';
+import type { Runtime } from '@evaluate/runtimes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
@@ -23,10 +23,12 @@ import { useExplorer, useWatch } from '~/components/explorer/use';
 import { useTerminal } from '~/components/terminal/use';
 import posthog from '~/services/posthog';
 
-export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
+export function ExecuteBar({ runtime }: { runtime: Runtime }) {
   const explorer = useExplorer();
   const files = explorer.descendants //
-    .filter((f): f is File => f.type === 'file' && !/::\w+::/.test(f.name));
+    .filter((f): f is File => f.type === 'file');
+
+  // Files
 
   const [entry, setEntry] = useState<File>();
   const handleEntryChange = useCallback(
@@ -50,7 +52,7 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!entry) setEntry(files.find((f) => Reflect.get(f, 'entry')));
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -58,27 +60,18 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
 
   const { setResult } = useTerminal();
   const { mutate, isPending } = useMutation({
-    mutationKey: ['executeCode'],
-    mutationFn: executeCode,
-    onSuccess(result) {
+    mutationKey: ['executeCode', runtime.id],
+    mutationFn: (o: FilesOptions) => executeCode(runtime, o),
+    onSuccess([result, options]) {
       setResult(result);
       dispatchEvent(new CustomEvent('mobile-terminal-open-change'));
 
-      const [codeLength, codeLines] = files.reduce(
-        ([length, lines], file) => [
-          length + file.content.length,
-          lines + file.content.split('\n').length,
-        ],
-        [0, 0],
-      );
       posthog?.capture('executed_code', {
         runtime_id: runtime.id,
-        code_length: codeLength,
-        code_lines: codeLines,
-        compile_successful: result.compile ? result.compile.code === 0 : null,
-        execution_successful:
-          result.run.code === 0 &&
-          (!result.compile || result.compile.code === 0),
+        code_length: options.length,
+        code_lines: options.lines,
+        compile_successful: result.compile?.success ?? null,
+        execution_successful: result.success,
       });
     },
     onError(error) {
@@ -89,27 +82,18 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
   // Form
 
   const form = useForm({
-    resolver: zodResolver(ExecuteOptions),
+    resolver: zodResolver(FilesOptions),
     defaultValues: {},
   });
   const handleSubmit = useCallback<ReturnType<typeof form.handleSubmit>>(
     (e) => {
-      form.setValue('runtime', runtime.id);
       form.setValue('entry', entry?.path!);
-
       const map = Object.fromEntries(files.map((f) => [f.path, f.content]));
       form.setValue('files', map);
 
-      const args = explorer.children //
-        .find((c): c is File => c.name === '::args::');
-      if (args) form.setValue('args', args.content);
-      const input = explorer.children //
-        .find((c): c is File => c.name === '::input::');
-      if (input) form.setValue('input', input.content);
-
       return form.handleSubmit(
-        function onValid(data) {
-          mutate(data);
+        function onValid(variables) {
+          mutate(variables);
         },
         function onInvalid(errors) {
           for (const error of Object.values(errors)) {
@@ -120,7 +104,7 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
         },
       )(e);
     },
-    [explorer, files, form, runtime, entry, mutate],
+    [files, form, entry, mutate],
   );
   useEventListener('execute-code' as never, handleSubmit);
 
@@ -135,7 +119,7 @@ export function ExecuteBar({ runtime }: { runtime: PartialRuntime }) {
           <SelectContent>
             {files.map(
               (f) =>
-                f.path && (
+                !f.path.startsWith('::') && (
                   <SelectItem key={f.path} value={f.path}>
                     {f.path}
                   </SelectItem>

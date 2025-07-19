@@ -2,22 +2,27 @@ import {
   CommandInteraction,
   Embed,
   MessageFlags,
+  type MessagePayload,
   ModalInteraction,
   Row,
   type User,
 } from '@buape/carbon';
-import { executeCode } from '@evaluate/engine/execute';
 import {
-  getRuntimeDefaultFileName,
-  searchRuntimes,
-} from '@evaluate/engine/runtimes';
-import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
+  type CodeOptions,
+  type ExecuteOptions,
+  type ExecuteResult,
+  executeCode,
+  makeEditCodePathname,
+} from '@evaluate/execute';
+import { type Runtime, searchForRuntimes } from '@evaluate/runtimes';
 import { EditEvaluationButton } from '~/components/edit-evaluation-button.js';
 import { OpenEvaluationButton } from '~/components/open-evaluation-button.js';
+import env from '~/env.js';
+import { codeBlock } from '~/helpers/discord-formatting.js';
+import { getInteractionContext } from '~/helpers/session-context.js';
 import { captureEvent } from '~/services/posthog.js';
-import { codeBlock } from '~/utilities/discord-formatting.js';
-import { makeEditCodeUrl } from '~/utilities/make-url.js';
-import { getInteractionContext } from '~/utilities/session-context.js';
+
+//
 
 function isNew(
   interaction: CommandInteraction | ModalInteraction,
@@ -41,9 +46,12 @@ function isEdit(
   );
 }
 
+//
+
 export async function handleEvaluating(
   interaction: CommandInteraction | ModalInteraction,
-  options: { runtime: string; code: string; args?: string; input?: string },
+  runtimeResolvable: string,
+  options: CodeOptions,
 ) {
   // HACK: If trying to edit an existing evaluation owned by another user, create new instead
   if (
@@ -56,7 +64,7 @@ export async function handleEvaluating(
   if (isNew(interaction)) await interaction.defer();
   if (isEdit(interaction)) await interaction.acknowledge();
 
-  const runtime = await searchRuntimes(options.runtime).then((r) => r[0]);
+  const runtime = await searchForRuntimes(runtimeResolvable).then((r) => r[0]);
   if (!runtime) {
     const message =
       'I was unable to find the runtime you were looking for, try again with another name.';
@@ -73,53 +81,36 @@ export async function handleEvaluating(
     throw new Error(message);
   }
 
-  const fileName = getRuntimeDefaultFileName(runtime.id) ?? 'file.code';
-  const executeOptions = {
-    files: { [fileName]: options.code },
-    entry: fileName,
-    input: options.input,
-    args: options.args,
-  };
-
-  const result = await executeCode({
-    runtime: runtime.id,
-    ...executeOptions,
-  }).catch(async (error) => {
-    if (error instanceof Error)
-      await interaction.reply({
-        content: error.message,
-        flags: MessageFlags.Ephemeral,
-      });
-    throw error;
-  });
+  const [executeResult, executeOptions] = await executeCode(runtime, options);
 
   captureEvent(getInteractionContext(interaction.rawData), 'executed_code', {
     runtime_id: runtime.id,
-    code_length: options.code.length,
-    code_lines: options.code.split('\n').length,
-    compile_successful: result.compile?.success ?? null,
-    execution_successful: result.success,
+    code_length: executeOptions.length,
+    code_lines: executeOptions.lines,
+    compile_successful: executeResult.compile?.success ?? null,
+    execution_successful: executeResult.success,
   });
 
-  let output = result.output;
-  if (result.compile?.expired)
+  let output = executeResult.output;
+  if (executeResult.compile?.expired)
     output =
       'Your code compilation exceeded the allotted time and was terminated. Consider optimising your code for faster compilation.';
-  else if (result.run.expired)
+  else if (executeResult.run.expired)
     output =
       'Your code execution exceeded the allotted time and was terminated. Consider optimising it for better performance.';
   else if (!output)
     output =
       'Your code executed successfully; however, it did not generate any output for the console.';
   else if (output.length > 900)
-    output = `Output was too large to display, [click here to view the full output](${makeEditCodeUrl(options)})`;
+    output = `Output was too large to display, [click here to view the full output](${new URL(makeEditCodePathname(runtime, executeOptions), env.WEBSITE_URL)})`;
   else output = codeBlock(output, 1000);
 
   return interaction.reply(
     createEvaluationPayload(
       interaction.user,
-      { ...options, runtime },
-      result,
+      runtime,
+      executeOptions,
+      executeResult,
       output,
     ),
   );
@@ -127,18 +118,14 @@ export async function handleEvaluating(
 
 export function createEvaluationPayload(
   user: User | null,
-  options: {
-    runtime: PartialRuntime;
-    code: string;
-    input?: string;
-    args?: string;
-  },
+  runtime: Runtime,
+  options: ExecuteOptions,
   result: ExecuteResult,
   output: string,
-) {
+): MessagePayload {
   const embed = new Embed({
     title: 'Code Evaluation',
-    description: `**${options.runtime.name}**\n${codeBlock(options.runtime.aliases[0]!, options.code, 4000)}`,
+    description: `**${runtime.name}** (v${runtime.version})\n${codeBlock(runtime.aliases[0]!, options.files[options.entry]!, 4000)}`,
     color: result.success ? 0x2fc086 : 0xff0000,
     fields: [],
     author: user
@@ -146,17 +133,17 @@ export function createEvaluationPayload(
       : undefined,
   });
 
-  if (options.args)
+  if (options.files['::args::'])
     embed.fields?.push({
       inline: true,
       name: 'CLI Arguments',
-      value: codeBlock(options.args, 1000),
+      value: codeBlock(options.files['::args::'], 1000),
     });
-  if (options.input)
+  if (options.files['::input::'])
     embed.fields?.push({
       inline: true,
       name: 'STD Input',
-      value: codeBlock(options.input, 1000),
+      value: codeBlock(options.files['::input::'], 1000),
     });
   embed.fields?.push({
     name: 'Output',
@@ -169,7 +156,10 @@ export function createEvaluationPayload(
       new Row([
         new EditEvaluationButton(),
         new OpenEvaluationButton(
-          makeEditCodeUrl({ ...options, runtime: options.runtime.id }),
+          new URL(
+            makeEditCodePathname(runtime, options),
+            env.WEBSITE_URL,
+          ).toString(),
         ),
       ]),
     ],

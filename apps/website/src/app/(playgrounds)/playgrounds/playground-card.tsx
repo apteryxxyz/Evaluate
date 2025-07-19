@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@evaluate/components/card';
-import type { PartialRuntime } from '@evaluate/shapes';
+import { getRuntimeIconUrl, type Runtime } from '@evaluate/runtimes';
 import { CodeIcon, PinIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -27,7 +27,7 @@ export function PlaygroundCard({
   runtime,
   hash,
 }: {
-  runtime: PartialRuntime;
+  runtime: Runtime;
   hash?: string;
 }) {
   const imageRef = useRef<HTMLImageElement>(null);
@@ -57,7 +57,7 @@ export function PlaygroundCard({
         <div className="flex items-center justify-start gap-2">
           <ImageWithFallback
             ref={imageRef}
-            src={runtime.icon && makeIconUrl(runtime.icon)}
+            src={getRuntimeIconUrl(runtime.id) || ''}
             width={24}
             height={24}
             alt={`${runtime.name} icon`}
@@ -69,7 +69,7 @@ export function PlaygroundCard({
           <CardTitle level={2}>{runtime.name}</CardTitle>
         </div>
 
-        <CardDescription>v{runtime.versions.at(-1)!}</CardDescription>
+        <CardDescription>v{runtime.version}</CardDescription>
       </CardHeader>
 
       <Link
@@ -96,8 +96,4 @@ export function PlaygroundCard({
       </div>
     </Card>
   );
-}
-
-function makeIconUrl(icon: string) {
-  return `https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/940f2ea7a6fcdc0221ab9a8fc9454cc585de11f0/icons/${icon}.svg`;
 }

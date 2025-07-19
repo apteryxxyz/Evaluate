@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { fetchRuntimes } from '@evaluate/engine/runtimes';
+import { fetchAllRuntimes } from '@evaluate/runtimes';
 import type { MetadataRoute } from 'next/types';
 import env from '~/env';
 
@@ -24,7 +24,7 @@ async function loadStaticPaths(url: URL): Promise<MetadataRoute.Sitemap> {
 }
 
 async function loadDynamicPaths(url: URL): Promise<MetadataRoute.Sitemap> {
-  const runtimes = await fetchRuntimes();
+  const runtimes = await fetchAllRuntimes();
   return runtimes.map((r) => ({
     url: `${url}/playgrounds/${r.id}`,
     lastModified: new Date(),

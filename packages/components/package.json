@@ -4,7 +4,7 @@
   "type": "module",
   "exports": {
     ".": {
-      "style": "./src/styles.css"
+      "style": "./src/style.css"
     },
     "./*": {
       "import": "./dist/*.jsx",

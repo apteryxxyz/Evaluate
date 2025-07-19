@@ -3,8 +3,8 @@ import {
   type ApplicationWebhookEventType,
   type ListenerEventData,
 } from '@buape/carbon';
+import { getUserContext } from '~/helpers/session-context';
 import { captureEvent } from '~/services/posthog';
-import { getUserContext } from '~/utilities/session-context';
 
 export class ApplicationAuthorisedListener extends ApplicationAuthorizedListener {
   async handle(

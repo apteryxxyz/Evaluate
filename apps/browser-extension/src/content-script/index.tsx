@@ -1,10 +1,10 @@
 import { Toaster } from '@evaluate/components/toast';
 import { createRoot } from 'react-dom/client';
-import sonnerCss from 'sonner/dist/styles.css?inline';
+// import sonnerCss from 'sonner/dist/styles.css?inline';
 import { onMessage, sendMessage } from 'webext-bridge/content-script';
 import { extractRuntimeResolvables } from '~/helpers/runtime-resolvables';
 import posthog, { sessionLog } from '~/services/posthog';
-import tailwindCss from '../styles.css?inline';
+import tailwindCss from '../style.css?inline';
 import { Execution } from './execution';
 import { createIsolatedElement } from './shadow-root';
 
@@ -33,7 +33,7 @@ const { parentElement, portalElement, isolatedElement } = createIsolatedElement(
     styles: {
       // TODO: Figure out why this is necessary
       tailwind: tailwindCss.replaceAll('border-style:', '__ignore__:'),
-      sonner: sonnerCss,
+      // sonner: sonnerCss,
     },
     isolatedEvents: true,
   },

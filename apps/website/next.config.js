@@ -1,6 +1,6 @@
 // TODO: Bug in Next.js 15.4.x, cannot upgrade, see https://github.com/vercel/next.js/issues/81628
 
-import { fetchRuntimes } from '@evaluate/engine/runtimes';
+import { fetchAllRuntimes } from '@evaluate/runtimes';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -15,7 +15,7 @@ const nextConfig = {
         permanent: false,
       },
       {
-        source: `/:slug(${(await fetchRuntimes())
+        source: `/:slug(${(await fetchAllRuntimes())
           .map((r) => r.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
           .join('|')})`,
         destination: '/playgrounds/:slug',

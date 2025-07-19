@@ -11,7 +11,8 @@ import {
   TabsList,
   TabsTrigger,
 } from '@evaluate/components/tabs';
-import type { ExecuteResult, PartialRuntime } from '@evaluate/shapes';
+import type { ExecuteResult } from '@evaluate/execute';
+import type { Runtime } from '@evaluate/runtimes';
 import browser from 'webextension-polyfill';
 import env from '~/env';
 import { ResultDialog } from './result';
@@ -25,7 +26,7 @@ export function ExecutionDialog({
 }: {
   portal: HTMLElement;
   code: string;
-  runtimes: PartialRuntime[];
+  runtimes: Runtime[];
   results: ExecuteResult[];
   setResults: (results: ExecuteResult[]) => void;
 }) {
@@ -68,7 +69,7 @@ export function ExecutionDialog({
               {runtimes.map((runtime, i) => (
                 <TabsContent key={runtime.id} value={runtime.id}>
                   <ResultDialog
-                    code={code}
+                    options={{ code }}
                     runtime={runtime}
                     result={results[i]!}
                   />

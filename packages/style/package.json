@@ -1,0 +1,14 @@
+{
+  "name": "@evaluate/style",
+  "description": "Shared styles and Tailwind styles.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "style": "./src/style.css"
+    }
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.1.11",
+    "tw-animate-css": "^1.3.5"
+  }
+}

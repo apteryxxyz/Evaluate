@@ -22,33 +22,39 @@ packages:components:
       - any-glob-to-any-file:
           - packages/components/*
           - packages/components/**/*
-packages:engine:
+packages:execute:
   - changed-files:
       - any-glob-to-any-file:
-          - packages/engine/*
-          - packages/engine/**/*
-packages:env:
+          - packages/execute/*
+          - packages/execute/**/*
+packages:fetch:
   - changed-files:
       - any-glob-to-any-file:
-          - packages/env/*
-          - packages/env/**/*
-packages:helpers:
-  - changed-files:
-      - any-glob-to-any-file:
-          - packages/helpers/*
-          - packages/helpers/**/*
+          - packages/fetch/*
+          - packages/fetch/**/*
 packages:hooks:
   - changed-files:
       - any-glob-to-any-file:
           - packages/hooks/*
           - packages/hooks/**/*
+packages:logger:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/logger/*
+          - packages/logger/**/*
+packages:runtimes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/runtimes/*
+          - packages/runtimes/**/*
+packages:scripts:
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/scripts/*
+          - packages/scripts/**/*
 packages:style:
   - changed-files:
       - any-glob-to-any-file:
           - packages/style/*
           - packages/style/**/*
-packages:types:
-  - changed-files:
-      - any-glob-to-any-file:
-          - packages/types/*
-          - packages/types/**/*
+

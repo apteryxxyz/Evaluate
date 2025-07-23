@@ -119,6 +119,7 @@ export function ExecuteBar({ runtime }: { runtime: Runtime }) {
           <SelectContent>
             {files.map(
               (f) =>
+                f.path &&
                 !f.path.startsWith('::') && (
                   <SelectItem key={f.path} value={f.path}>
                     {f.path}

@@ -60,7 +60,20 @@ export function ExplorerItemName(props: ExplorerItemName.Props) {
 
       const name = inputRef.current?.value ?? '';
       if (name !== item.name && !errorMessage) item.name = name;
-      else if (!item.name && !name) item.parent = null;
+      else if (!item.name && !name) {
+        if (item.type === 'file') {
+          const opened =
+            item.root?.descendants //
+              .filter((f): f is File => f.type === 'file' && f.opened) ?? [];
+          const currentIndex = opened.findIndex((f) => f.focused);
+          if (item.focused) {
+            const next = opened[currentIndex + 1] ?? opened[currentIndex - 1];
+            if (next) next.select().focus();
+          }
+          item.blur().close();
+        }
+        item.parent = null;
+      }
       setNaming(false);
     },
     [item, errorMessage, setNaming],

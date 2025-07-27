@@ -34,5 +34,8 @@ async function loadDynamicPaths(url: URL): Promise<MetadataRoute.Sitemap> {
 export default async function getSitemap() {
   const staticPaths = await loadStaticPaths(env.WEBSITE_URL);
   const dynamicPaths = await loadDynamicPaths(env.WEBSITE_URL);
-  return [...staticPaths, ...dynamicPaths];
+  return [...staticPaths, ...dynamicPaths].map((r) => ({
+    ...r,
+    url: r.url.replaceAll('//', '/'),
+  }));
 }

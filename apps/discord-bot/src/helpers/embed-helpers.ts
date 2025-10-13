@@ -7,5 +7,5 @@ import type { Embed } from '@buape/carbon';
  * @returns the value of the field, or `undefined` if the field does not exist
  */
 export function getEmbedField(embed: Embed, name: string) {
-  return embed.fields?.find((f) => f.name === name);
+  return embed.fields?.find((f) => f.name.includes(name));
 }

@@ -1,4 +1,6 @@
 import { Client } from '@buape/carbon';
+import { CommandDataPlugin } from '@buape/carbon/command-data';
+import { SayablePlugin } from '@sayable/carbon';
 import { EvaluateCommand } from '~/commands/evaluate';
 import { EditEvaluationButton } from '~/components/edit-evaluation-button.js';
 import {
@@ -7,6 +9,7 @@ import {
 } from '~/components/evaluate-modal.js';
 import env from '~/env';
 import { ApplicationAuthorisedListener } from '~/events/application-authorised';
+import say from '~/i18n.js';
 
 const enabled = Boolean(
   env.DISCORD_CLIENT_ID && env.DISCORD_PUBLIC_KEY && env.DISCORD_TOKEN,
@@ -19,21 +22,22 @@ if (!enabled)
 const client = enabled
   ? new Client(
       {
-        baseUrl: 'unused',
+        baseUrl: `${env.WEBSITE_URL}api/discord`,
         clientId: env.DISCORD_CLIENT_ID!,
         publicKey: env.DISCORD_PUBLIC_KEY!,
         token: env.DISCORD_TOKEN!,
-        deploySecret: 'unused',
+        deploySecret: env.DISCORD_CLIENT_ID!,
         requestOptions: { queueRequests: false },
       },
       {
-        commands: [new EvaluateCommand()],
+        commands: [new EvaluateCommand(say)],
         listeners: [new ApplicationAuthorisedListener()],
-        components: [new EditEvaluationButton()],
+        components: [new EditEvaluationButton(say)],
       },
+      [new CommandDataPlugin(), new SayablePlugin(say)],
     )
   : null;
-for (const modal of [new EvaluateModal(), new EvaluateModalEdit()])
+for (const modal of [new EvaluateModal(say), new EvaluateModalEdit(say)])
   client?.modalHandler.registerModal(modal);
 
 export default client;

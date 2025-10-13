@@ -22,9 +22,6 @@ export function getInteractionContext(
 export function getUserContext(user: APIUser | User) {
   const date = format(subHours(new Date(), 6), 'yyyyMMdd');
   const sessionId = hashSessionId(`${user.id}-${date}`);
-
-  // @ts-expect-error - rawData is a protected property
   if (user instanceof User) user = user.rawData as APIUser;
-
   return { user, session: { id: sessionId } };
 }

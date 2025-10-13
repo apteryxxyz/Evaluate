@@ -1,32 +1,28 @@
 import {
+  Label,
   Modal,
   type ModalInteraction,
-  Row,
   TextInput,
   TextInputStyle,
 } from '@buape/carbon';
+import { sayable } from '@sayable/carbon';
+import type { Sayable } from 'sayable';
 import { handleEvaluating } from '~/handlers/evaluate';
 import { getInteractionContext } from '~/helpers/session-context';
 import { captureEvent } from '~/services/posthog';
 
-export class EvaluateModal extends Modal {
-  title = 'Evaluate';
+export class EvaluateModal extends sayable(Modal) {
   customId = 'evaluate,new';
-
-  components = [
-    new Row([new RuntimeInput()]),
-    new Row([new CodeInput()]),
-    new Row([new ArgumentsInput()]),
-    new Row([new InputInput()]),
-  ];
-  constructor(defaultValues: Record<string, string | undefined> = {}) {
-    super();
-
-    const components = this.components.flatMap((row) => row.components);
-    for (const component of components) {
-      const value = defaultValues[component.customId];
-      if (value) component.value = value;
-    }
+  constructor(say: Sayable, values?: Record<string, string | undefined>) {
+    super({
+      title: say`Evaluate`,
+      components: [
+        new RuntimeLabel(say, values?.runtime),
+        new CodeLabel(say, values?.code),
+        new ArgumentsLabel(say, values?.args),
+        new InputLabel(say, values?.input),
+      ],
+    });
   }
 
   async run(submit: ModalInteraction) {
@@ -45,9 +41,87 @@ export class EvaluateModal extends Modal {
 
 export class EvaluateModalEdit extends EvaluateModal {
   customId = 'evaluate,edit';
-  title = 'Edit Evaluation';
+  constructor(say: Sayable, values?: Record<string, string | undefined>) {
+    super(say, values);
+    Reflect.set(this, 'title', say`Edit Evaluation`);
+  }
 }
 
+class RuntimeTextInput extends sayable(TextInput) {
+  customId = 'runtime';
+  constructor(say: Sayable, value?: string) {
+    super({ placeholder: say`The runtime in which the code is written.` });
+    if (value) this.value = value;
+  }
+  style = TextInputStyle.Short;
+  minLength = 1;
+  maxLength = 100;
+  required = true;
+}
+
+class RuntimeLabel extends sayable(Label) {
+  constructor(say: Sayable, value?: string) {
+    super({ label: say`Runtime` }, new RuntimeTextInput(say, value));
+  }
+}
+
+class CodeTextInput extends sayable(TextInput) {
+  customId = 'code';
+  constructor(say: Sayable, value?: string) {
+    super({ placeholder: say`The source code to evaluate.` });
+    if (value) this.value = value;
+  }
+  style = TextInputStyle.Paragraph;
+  minLength = 1;
+  maxLength = 4000;
+  required = true;
+}
+
+class CodeLabel extends sayable(Label) {
+  constructor(say: Sayable, value?: string) {
+    super({ label: say`Code` }, new CodeTextInput(say, value));
+  }
+}
+
+class ArgumentsTextInput extends sayable(TextInput) {
+  customId = 'args';
+  constructor(say: Sayable, value?: string) {
+    super({
+      placeholder: say`Additional command line arguments to pass to the program.`,
+    });
+    if (value) this.value = value;
+  }
+  style = TextInputStyle.Short;
+  minLength = 0;
+  maxLength = 500;
+  required = false;
+}
+
+class ArgumentsLabel extends sayable(Label) {
+  constructor(say: Sayable, value?: string) {
+    super({ label: say`Arguments` }, new ArgumentsTextInput(say, value));
+  }
+}
+
+class InputTextInput extends sayable(TextInput) {
+  customId = 'input';
+  constructor(say: Sayable, value?: string) {
+    super({ placeholder: say`The STDIN input to provide to the program.` });
+    if (value) this.value = value;
+  }
+  style = TextInputStyle.Short;
+  minLength = 0;
+  maxLength = 500;
+  required = false;
+}
+
+class InputLabel extends sayable(Label) {
+  constructor(say: Sayable, value?: string) {
+    super({ label: say`Input` }, new InputTextInput(say, value));
+  }
+}
+
+/*
 class RuntimeInput extends TextInput {
   customId = 'runtime';
   label = 'Runtime';
@@ -87,3 +161,4 @@ class InputInput extends TextInput {
   maxLength = 500;
   required = false;
 }
+*/

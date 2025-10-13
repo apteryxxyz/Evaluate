@@ -9,6 +9,7 @@ import {
 } from '@evaluate/execute';
 import { useEventListener } from '@evaluate/hooks/event-listener';
 import { getRuntimeExamples, type Runtime } from '@evaluate/runtimes';
+import { useSay } from '@sayable/react';
 import {
   createContext,
   useCallback,
@@ -19,6 +20,7 @@ import {
 } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import type { Sayable } from 'sayable';
 import { File, Folder } from 'virtual-file-explorer-backend';
 import { useHashFragment } from '~/hooks/hash-fragment';
 
@@ -34,6 +36,8 @@ export function ExplorerProvider({
 }: React.PropsWithChildren<{
   runtime: Runtime;
 }>) {
+  const say = useSay() as Sayable;
+
   const [hash, setHash] = useHashFragment();
   const example = useMemo(
     () => getRuntimeExamples(runtime.id)?.[0],
@@ -61,9 +65,9 @@ export function ExplorerProvider({
       e.preventDefault();
       setHash(encodeExplorer(root));
       navigator.clipboard.writeText(location.href);
-      toast.info('Saved and copied URL to clipboard');
+      toast.info(say`Saved and copied URL to clipboard`);
     },
-    [setHash, root],
+    [say, setHash, root],
   );
   useEventListener('copy-url' as never, saveAndCopyUrl);
 

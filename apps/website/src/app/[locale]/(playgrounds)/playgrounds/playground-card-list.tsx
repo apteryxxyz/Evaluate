@@ -13,6 +13,7 @@ import {
 import { Separator } from '@evaluate/components/separator';
 import { toast } from '@evaluate/components/toast';
 import type { Runtime } from '@evaluate/runtimes';
+import { Say, useSay } from '@sayable/react';
 import {
   ArrowDownWideNarrowIcon,
   CircleDotIcon,
@@ -20,6 +21,7 @@ import {
   XIcon,
 } from 'lucide-react';
 import { useDeferredValue, useEffect, useMemo } from 'react';
+import type { Sayable } from 'sayable';
 import { useHashFragment } from '~/hooks/hash-fragment';
 import { useLocalStorage } from '~/hooks/local-storage';
 import { useQueryParameter } from '~/hooks/query-parameter';
@@ -30,6 +32,8 @@ export function PlaygroundCardList({
 }: {
   initialRuntimes: Runtime[];
 }) {
+  const say = useSay() as Sayable;
+
   const [search, setSearch] = useQueryParameter('search');
   const deferredSearch = useDeferredValue(search);
   const searchedRuntimes = useMemo(() => {
@@ -73,10 +77,10 @@ export function PlaygroundCardList({
   const [hash] = useHashFragment();
   useEffect(() => {
     if (hash)
-      toast.info('Choose a playground!', {
+      toast.info(say`Choose a playground!`, {
         icon: <CircleDotIcon className="size-4" />,
       });
-  }, [hash]);
+  }, [say, hash]);
 
   return (
     <div className="space-y-3">
@@ -86,7 +90,7 @@ export function PlaygroundCardList({
 
           <Input
             className="absolute inset-0 h-full w-full pl-7"
-            placeholder="Search runtime playgrounds..."
+            placeholder={say`Search runtime playgrounds...`}
             value={search ?? ''}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -97,21 +101,33 @@ export function PlaygroundCardList({
               className="absolute top-[27%] right-2 size-4 cursor-pointer opacity-50"
               onClick={() => setSearch('')}
             >
-              <span className="sr-only">Clear Search</span>
+              <span className="sr-only">
+                <Say>
+                  <Say>Clear Search</Say>
+                </Say>
+              </span>
             </XIcon>
           )}
         </div>
 
         <Select value={sortBy} onValueChange={setSortBy as never}>
           <SelectTrigger className="w-[205px]" icon={ArrowDownWideNarrowIcon}>
-            <SelectValue placeholder="Sort by..." />
-            <span className="sr-only">Toggle Sort By Dropdown</span>
+            <SelectValue placeholder={say`Sort by...`} />
+            <span className="sr-only">
+              <Say>Toggle Sort By Dropdown</Say>
+            </span>
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Sort By</SelectLabel>
-              <SelectItem value="popularity">Popularity</SelectItem>
-              <SelectItem value="name">Name</SelectItem>
+              <SelectLabel>
+                <Say>Sort By</Say>
+              </SelectLabel>
+              <SelectItem value="popularity">
+                <Say>Popularity</Say>
+              </SelectItem>
+              <SelectItem value="name">
+                <Say>Name</Say>
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

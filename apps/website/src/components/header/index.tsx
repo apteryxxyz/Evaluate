@@ -3,14 +3,16 @@
 import { Button } from '@evaluate/components/button';
 import { Sheet, SheetBody, SheetTrigger } from '@evaluate/components/sheet';
 import { useMediaQuery } from '@evaluate/hooks/media-query';
+import { Say } from '@sayable/react';
 import { GithubIcon, MenuIcon } from 'lucide-react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import type React from 'react';
 import { Children, useCallback, useState } from 'react';
 import { twMerge as cn } from 'tailwind-merge';
+import { LocalisedLink } from '../localised-link';
 import { DiscordIcon } from './discord-icon';
+import { LocaleSwitcher } from './locale-switcher';
 import { ThemeSwitcher } from './theme-switcher';
 
 export function Header() {
@@ -23,13 +25,15 @@ export function Header() {
     return true;
   }, []);
 
-  const pathname = usePathname();
-  const isFullWidth = pathname.startsWith('/playgrounds/');
+  const isFullWidth = 'playground' in useParams();
 
   return (
     <header className={cn('h-14 w-full px-4', !isFullWidth && 'container')}>
       <Nav open={open} setOpen={setOpen}>
-        <Link href="/" className="flex items-center justify-center gap-1">
+        <LocalisedLink
+          href="/"
+          className="flex items-center justify-center gap-1"
+        >
           <Image
             src="/images/icon.png"
             alt="Evaluate Logo"
@@ -38,11 +42,13 @@ export function Header() {
             className="inline"
           />
           <span className="font-bold text-primary text-xl">Evaluate</span>
-        </Link>
+        </LocalisedLink>
 
         <div>
           <Button variant="ghost" onClick={closeByLink} asChild>
-            <Link href="/playgrounds">Playgrounds</Link>
+            <LocalisedLink href="/playgrounds">
+              <Say>Playgrounds</Say>
+            </LocalisedLink>
           </Button>
 
           <Button
@@ -51,16 +57,18 @@ export function Header() {
             className="relative"
             asChild
           >
-            <Link href="/products/browser-extension">
-              Browser Extension
+            <LocalisedLink href="/products/browser-extension">
+              <Say>Browser Extension</Say>
               <span className="absolute top-0 left-[5.8rem] text-primary text-xs">
-                new
+                <Say>new</Say>
               </span>
-            </Link>
+            </LocalisedLink>
           </Button>
 
           <Button variant="ghost" onClick={closeByLink} asChild>
-            <Link href="/products/discord-bot">Discord Bot</Link>
+            <LocalisedLink href="/products/discord-bot">
+              <Say>Discord Bot</Say>
+            </LocalisedLink>
           </Button>
         </div>
 
@@ -86,6 +94,7 @@ export function Header() {
           </Button>
 
           <ThemeSwitcher />
+          <LocaleSwitcher />
         </div>
       </Nav>
     </header>
@@ -124,7 +133,9 @@ function MobileNavigationWrapper(
             className="ml-auto aspect-square"
           >
             <MenuIcon className="size-4" />
-            <span className="sr-only">Toggle Mobile Navigation</span>
+            <span className="sr-only">
+              <Say>Toggle Mobile Navigation</Say>
+            </span>
           </Button>
         </SheetTrigger>
 

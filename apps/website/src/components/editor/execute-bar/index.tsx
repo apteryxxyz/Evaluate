@@ -14,6 +14,7 @@ import { executeCode, FilesOptions } from '@evaluate/execute';
 import { useEventListener } from '@evaluate/hooks/event-listener';
 import type { Runtime } from '@evaluate/runtimes';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Say } from '@sayable/react';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
@@ -128,7 +129,7 @@ export function ExecuteBar({ runtime }: { runtime: Runtime }) {
             )}
             {files.length === 0 && (
               <SelectItem value="null" disabled>
-                No files found
+                <Say>No files found</Say>
               </SelectItem>
             )}
           </SelectContent>
@@ -144,9 +145,11 @@ export function ExecuteBar({ runtime }: { runtime: Runtime }) {
           ) : (
             <PlayIcon className="size-4" />
           )}
-          <span className="sr-only">Execute</span>
-          <span className="hidden sm:block">&nbsp;{runtime.name}</span>
-          <span className="sr-only">Code</span>
+          <Say>
+            <span className="sr-only">Execute</span>
+            <span className="hidden sm:block">{runtime.name}</span>
+            <span className="sr-only">Code</span>
+          </Say>
         </Button>
       </form>
     </Form>

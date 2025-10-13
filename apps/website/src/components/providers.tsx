@@ -23,6 +23,7 @@ const HTTP_STATUS_TO_NOT_RETRY = [400, 401, 403, 404];
 
 import { Toaster } from '@evaluate/components/toast';
 import { TooltipProvider } from '@evaluate/components/tooltip';
+import { SayProvider } from '@sayable/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -30,7 +31,9 @@ import { useEffect, useState } from 'react';
 import { injectPageEventCapturing } from '~/services/posthog';
 import { BreakpointIndicator } from './breakpoint-indicator';
 
-export function BodyProviders(p: React.PropsWithChildren) {
+export function BodyProviders(
+  p: React.PropsWithChildren<React.ComponentProps<typeof SayProvider>>,
+) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -55,7 +58,7 @@ export function BodyProviders(p: React.PropsWithChildren) {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        {p.children}
+        <SayProvider {...p}>{p.children}</SayProvider>
         <ReactQueryDevtools initialIsOpen={false} />
         <BreakpointIndicator />
         <SpeedInsights />

@@ -6,16 +6,13 @@ import {
   PopoverAnchor,
   PopoverContent,
 } from '@evaluate/components/popover';
+import { useSay } from '@sayable/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { Sayable } from 'sayable';
 import { twMerge as cn } from 'tailwind-merge';
 import type { File, Folder } from 'virtual-file-explorer-backend';
 
 const InvalidNameRegex = /(^\s|\s$|^\.\.|\.$|[\\/:*?"<>|])/;
-const ErrorMessages = {
-  EmptyName: 'A name must be provided.',
-  InvalidName: 'This name is invalid.',
-  NameExists: 'This name already exists.',
-};
 
 export namespace ExplorerItemName {
   export interface Props {
@@ -27,6 +24,7 @@ export namespace ExplorerItemName {
 
 export function ExplorerItemName(props: ExplorerItemName.Props) {
   const { item, naming, setNaming } = props;
+  const say = useSay() as Sayable;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -36,13 +34,13 @@ export function ExplorerItemName(props: ExplorerItemName.Props) {
 
   const handleChange = useCallback(() => {
     const name = inputRef.current?.value ?? '';
-    if (!name) return setErrorMessage(ErrorMessages.EmptyName);
+    if (!name) return setErrorMessage(say`A name must be provided.`);
     if (InvalidNameRegex.test(name) || name.length > 255)
-      return setErrorMessage(ErrorMessages.InvalidName);
+      return setErrorMessage(say`This name is invalid.`);
     if (item.parent?.children.find((c) => c !== item && c.name === name))
-      return setErrorMessage(ErrorMessages.NameExists);
+      return setErrorMessage(say`This name already exists.`);
     setErrorMessage(undefined);
-  }, [item]);
+  }, [say, item]);
 
   const handleKeyUp = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement>) => {
@@ -80,10 +78,10 @@ export function ExplorerItemName(props: ExplorerItemName.Props) {
   );
 
   const name = useMemo(() => {
-    if (item.name === '::args::') return 'CLI Arguments';
-    if (item.name === '::input::') return 'STD Input';
+    if (item.name === '::args::') return say`CLI Arguments`;
+    if (item.name === '::input::') return say`STD Input`;
     return item.name;
-  }, [item.name]);
+  }, [say, item.name]);
 
   return (
     <Popover open={Boolean(errorMessage)}>

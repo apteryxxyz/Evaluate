@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "check": "tsc --noEmit",
-    "build": "use-env -p NEXT -P -- next build --no-lint",
+    "build": "use-env -p NEXT -P -- next build --no-lint && pnpm build:sitemap",
+    "build:sitemap": "use-env -p NEXT -P -- next-sitemap --config sitemap.config.ts",
     "start": "use-env -p NEXT -P -- next start",
     "dev": "use-env -p NEXT -- next dev --turbo"
   },
@@ -19,6 +20,7 @@
     "@evaluate/runtimes": "workspace:^",
     "@evaluate/style": "workspace:^",
     "@hookform/resolvers": "^5.1.1",
+    "@sayable/react": "0.0.0-alpha.6",
     "@t3-oss/env-nextjs": "^0.13.8",
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-query-devtools": "^5.83.0",
@@ -46,6 +48,8 @@
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.60.0",
     "react-hotkeys-hook": "^5.1.0",
+    "sayable": "0.0.0-alpha.6",
+    "server-only": "^0.0.1",
     "sharp": "^0.34.3",
     "tailwind-merge": "^3.3.1",
     "type-fest": "^4.41.0",
@@ -56,10 +60,15 @@
   "devDependencies": {
     "@million/lint": "^1.0.14",
     "@next/bundle-analyzer": "15.3.5",
+    "@sayable/config": "0.0.0-alpha.4",
+    "@sayable/factory": "0.0.0-alpha.6",
+    "@sayable/format-po": "0.0.0-alpha.4",
+    "@sayable/swc-plugin": "0.0.0-alpha.5",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/file-saver": "^2.0.7",
     "@types/react": "^19.1.8",
     "autoprefixer": "^10.4.21",
+    "next-sitemap": "^4.2.3",
     "tailwindcss": "^4.1.11"
   }
 }

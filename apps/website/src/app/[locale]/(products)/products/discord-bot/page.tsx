@@ -1,4 +1,5 @@
 import { Button } from '@evaluate/components/button';
+import { Say } from '@sayable/react';
 import Link from 'next/link';
 
 export default function BrowserExtensionPlatformContent() {
@@ -6,12 +7,16 @@ export default function BrowserExtensionPlatformContent() {
     <div className="container flex flex-col gap-6 py-6">
       <div className="space-y-6 pt-[20vh] text-center">
         <h1 className="font-bold text-3xl tracking-tight md:text-5xl">
-          The <span className="text-primary">Evaluate</span> Discord Bot
+          <Say>
+            The <span className="text-primary">Evaluate</span> Discord Bot
+          </Say>
         </h1>
         <p className="mx-auto max-w-5xl text-balance text-sm md:text-base">
-          Run code snippets directly in your Discord server with the Evaluate
-          bot! Evaluate supports over 70 languages and is perfect for quickly
-          testing code and sharing results with your friends.
+          <Say>
+            Run code snippets directly in your Discord server with the Evaluate
+            bot! Evaluate supports over 70 languages and is perfect for quickly
+            testing code and sharing results with your friends.
+          </Say>
         </p>
       </div>
 
@@ -29,7 +34,9 @@ export default function BrowserExtensionPlatformContent() {
               alt="Discord Logo"
             />
             <span>
-              Evaluate for <span className="font-bold">Discord</span>
+              <Say>
+                Evaluate for <span className="font-bold">Discord</span>
+              </Say>
             </span>
           </Link>
         </Button>

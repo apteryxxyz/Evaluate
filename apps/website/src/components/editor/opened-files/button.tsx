@@ -1,8 +1,10 @@
 'use client';
 
 import { Button } from '@evaluate/components/button';
+import { useSay } from '@sayable/react';
 import { XIcon } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
+import type { Sayable } from 'sayable';
 import type { File } from 'virtual-file-explorer-backend';
 import { useWatch } from '~/components/explorer/use';
 import { MaterialIcon } from '~/components/material-icon';
@@ -16,6 +18,7 @@ export namespace OpenedFileButton {
 
 export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
   useWatch(file, ['name']);
+  const say = useSay() as Sayable;
 
   const handleClick = useCallback(() => file.select().focus(), [file]);
   const handleCloseClick = useCallback(
@@ -35,10 +38,10 @@ export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
   );
 
   const name = useMemo(() => {
-    if (file.name === '::args::') return 'CLI Arguments';
-    if (file.name === '::input::') return 'STD Input';
-    return file.name || 'Untitled';
-  }, [file.name]);
+    if (file.name === '::args::') return say`CLI Arguments`;
+    if (file.name === '::input::') return say`STD Input`;
+    return file.name || say`Untitled`;
+  }, [say, file.name]);
 
   return (
     <Button
@@ -49,7 +52,7 @@ export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
       onClick={handleClick}
     >
       <MaterialIcon type="file" name={file.name} />
-      <span>&nbsp;{name ?? 'Untitled'}</span>
+      <span>&nbsp;{name ?? say`Untitled`}</span>
 
       <Button
         size="icon"

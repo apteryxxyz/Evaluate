@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@evaluate/components/button';
+import { Say } from '@sayable/react';
 import { TextCursorInputIcon, Trash2Icon } from 'lucide-react';
 import { twMerge as cn } from 'tailwind-merge';
 import type { File } from 'virtual-file-explorer-backend';
@@ -60,7 +61,9 @@ export function ExplorerFileItem({ file, meta }: ExplorerFileItem.Props) {
           >
             <div>
               <TextCursorInputIcon size={16} />
-              <span className="sr-only">Rename File</span>
+              <span className="sr-only">
+                <Say>Rename File</Say>
+              </span>
             </div>
           </Button>
 
@@ -74,7 +77,9 @@ export function ExplorerFileItem({ file, meta }: ExplorerFileItem.Props) {
           >
             <div>
               <Trash2Icon size={16} />
-              <span className="sr-only">Delete File</span>
+              <span className="sr-only">
+                <Say>Delete File</Say>
+              </span>
             </div>
           </Button>
         </div>

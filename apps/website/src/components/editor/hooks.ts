@@ -23,7 +23,7 @@ export function useEditor() {
 
   const languageExtension = useMemo(() => {
     const language = detectLanguage(focused?.name);
-    return loadLanguage(language)!;
+    return loadLanguage(language) ?? loadLanguage('textile')!;
   }, [focused?.name]);
 
   const shortcutsExtension = useMemo(() => {

@@ -199,8 +199,8 @@ importers:
         specifier: ^5.1.1
         version: 5.2.2(react-hook-form@7.63.0(react@19.2.0))
       '@sayable/react':
-        specifier: 0.0.0-alpha.6
-        version: 0.0.0-alpha.6(@types/react@19.2.0)(react@19.2.0)(sayable@0.0.0-alpha.6)
+        specifier: 0.0.0-alpha.8
+        version: 0.0.0-alpha.8(react@19.2.0)(sayable@0.0.0-alpha.6)
       '@t3-oss/env-nextjs':
         specifier: ^0.13.8
         version: 0.13.8(typescript@5.9.3)(zod@4.0.5)
@@ -2156,8 +2156,8 @@ packages:
     peerDependencies:
       '@sayable/config': '*'
 
-  '@sayable/react@0.0.0-alpha.6':
-    resolution: {integrity: sha512-7Skm7hElXFUC3pJY+I1keGjJgXrROYDqFIKqYPdkrq2bnVgHzoY0asqfzDxH5vaxZu4mweALbTYAQfbPmhZu3w==}
+  '@sayable/react@0.0.0-alpha.8':
+    resolution: {integrity: sha512-UtOSYw/tRni8C8y1mVcJkuZ54ZpgQd756GMLR1Ih75Sh87Mjy6qyb722CNjMXI54gPVC4wB85/Ude4nzbt3Tpg==}
     peerDependencies:
       react: '*'
       sayable: '*'
@@ -3453,9 +3453,6 @@ packages:
     resolution: {integrity: sha512-IXO6OCs9yg8tMKzfPZ1YmheJbZCiEsnBdcB03l0OcfK9prKnJb96siuHCr5Fl37/yo9DnKU+TLpxzTUspw9shg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  lodash.noop@3.0.1:
-    resolution: {integrity: sha512-TmYdmu/pebrdTIBDK/FDx9Bmfzs9x0sZG6QIJuMDTqEPfeciLcN13ij+cOd0i9vwJfBtbG9UQ+C7MkXgYxrIJg==}
-
   lodash.sortby@4.7.0:
     resolution: {integrity: sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==}
 
@@ -3815,16 +3812,6 @@ packages:
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
-
-  react-html-string-parser@1.4.1:
-    resolution: {integrity: sha512-rbgLQbXdzq9n2KjDzTsbP0dxbugRYbcmGklPD4Zq9hbWwj8+fyNwj8Cv6iKUbnsenv+VsOQ2mdc6gyb6il1C9Q==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      '@types/react': '>=16.8.0'
-      react: '>=16.8.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -6245,13 +6232,10 @@ snapshots:
       date-fns: 4.1.0
       pofile: 1.1.4
 
-  '@sayable/react@0.0.0-alpha.6(@types/react@19.2.0)(react@19.2.0)(sayable@0.0.0-alpha.6)':
+  '@sayable/react@0.0.0-alpha.8(react@19.2.0)(sayable@0.0.0-alpha.6)':
     dependencies:
       react: 19.2.0
-      react-html-string-parser: 1.4.1(@types/react@19.2.0)(react@19.2.0)
       sayable: 0.0.0-alpha.6
-    transitivePeerDependencies:
-      - '@types/react'
 
   '@sayable/swc-plugin@0.0.0-alpha.5': {}
 
@@ -7448,8 +7432,6 @@ snapshots:
 
   load-tsconfig@0.2.5: {}
 
-  lodash.noop@3.0.1: {}
-
   lodash.sortby@4.7.0: {}
 
   lodash@4.17.21: {}
@@ -7751,13 +7733,6 @@ snapshots:
     dependencies:
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
-
-  react-html-string-parser@1.4.1(@types/react@19.2.0)(react@19.2.0):
-    dependencies:
-      lodash.noop: 3.0.1
-      react: 19.2.0
-    optionalDependencies:
-      '@types/react': 19.2.0
 
   react-is@16.13.1: {}
 

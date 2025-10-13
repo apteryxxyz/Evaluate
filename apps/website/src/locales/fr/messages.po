@@ -51,28 +51,28 @@ msgstr "<0>Si</0> ce runtime nécessite une compilation, la sortie sera affiché
 msgid "This runtime does not have a way to display any preview."
 msgstr "Ce runtime n'a pas de moyen d'afficher un aperçu."
 
-#: src/components/header/index.tsx:51
-#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:12
+#: src/components/header/index.tsx:50
+#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:20
 msgid "Playgrounds"
 msgstr "Espaces de jeu"
 
-#: src/components/header/index.tsx:62
+#: src/components/header/index.tsx:61
 msgid "Browser Extension"
 msgstr "Extension de navigateur"
 
-#: src/components/header/index.tsx:64
+#: src/components/header/index.tsx:63
 msgid "new"
 msgstr "nouveau"
 
-#: src/components/header/index.tsx:71
+#: src/components/header/index.tsx:70
 msgid "Discord Bot"
 msgstr "Bot Discord"
 
-#: src/components/header/index.tsx:138
+#: src/components/header/index.tsx:137
 msgid "Toggle Mobile Navigation"
 msgstr "Basculer la navigation mobile"
 
-#: src/components/header/locale-switcher.tsx:22
+#: src/components/header/locale-switcher.tsx:24
 msgid "Change Language"
 msgstr "Changer de langue"
 
@@ -151,27 +151,27 @@ msgid "<0>Execute</0> <1>{2}</1> <3>Code</3>"
 msgstr "<0>Exécuter</0> <1>{2}</1> <3>Code</3>"
 
 #: src/app/manifest.ts:10
-#: src/app/[locale]/metadata.ts:14
+#: src/app/[locale]/metadata.ts:15
 msgid "Test code in any programming language with Evaluate! Run code snippets in your browser, without installing anything."
 msgstr "Testez du code dans n'importe quel langage de programmation avec Evaluate ! Exécutez des extraits de code dans votre navigateur, sans installer quoi que ce soit."
 
-#: src/app/[locale]/metadata.ts:16
+#: src/app/[locale]/metadata.ts:17
 msgid "online playground"
 msgstr "espace de jeu en ligne"
 
-#: src/app/[locale]/metadata.ts:17
+#: src/app/[locale]/metadata.ts:18
 msgid "code playground"
 msgstr "espace de jeu de code"
 
-#: src/app/[locale]/metadata.ts:18
+#: src/app/[locale]/metadata.ts:19
 msgid "code sandbox"
 msgstr "bac à sable de code"
 
-#: src/app/[locale]/metadata.ts:19
+#: src/app/[locale]/metadata.ts:20
 msgid "online compiler"
 msgstr "compilateur en ligne"
 
-#: src/app/[locale]/metadata.ts:20
+#: src/app/[locale]/metadata.ts:21
 msgid "online interpreter"
 msgstr "interpréteur en ligne"
 
@@ -203,11 +203,11 @@ msgstr "Evaluate pour <0>Chrome</0>"
 msgid "Evaluate for <0>Firefox</0>"
 msgstr "Evaluate pour <0>Firefox</0>"
 
-#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:15
+#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:23
 msgid "Explore and run code in different programming languages and runtimes."
 msgstr "Explorez et exécutez du code dans différents langages de programmation et environnements d'exécution."
 
-#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:21
+#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:29
 msgid "Powered by the Piston execution engine."
 msgstr "Alimenté par le moteur d'exécution Piston."
 

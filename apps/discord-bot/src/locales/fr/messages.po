@@ -6,39 +6,39 @@ msgstr ""
 "Language: fr\n"
 "X-Generator: sayable\n"
 
-#: src/handlers/evaluate.ts:70
+#: src/handlers/evaluate.ts:71
 msgid "I was unable to find the runtime you were looking for, try again with another name."
 msgstr "Impossible de trouver l'environnement. Essayez un autre nom."
 
-#: src/handlers/evaluate.ts:96
+#: src/handlers/evaluate.ts:97
 msgid "Your code compilation exceeded the allotted time and was terminated. Consider optimising your code for faster compilation."
 msgstr "La compilation a dépassé le temps alloué et a été arrêtée. Optimisez votre code."
 
-#: src/handlers/evaluate.ts:98
+#: src/handlers/evaluate.ts:99
 msgid "Your code execution exceeded the allotted time and was terminated. Consider optimising it for better performance."
 msgstr "L'exécution a dépassé le temps alloué et a été arrêtée. Optimisez-le."
 
-#: src/handlers/evaluate.ts:100
+#: src/handlers/evaluate.ts:101
 msgid "Your code executed successfully; however, it did not generate any output for the console."
 msgstr "Le code a réussi, mais n'a généré aucune sortie pour la console."
 
-#: src/handlers/evaluate.ts:106
+#: src/handlers/evaluate.ts:107
 msgid "Output was too large to display, [click here to view the full output]({url})."
 msgstr "Sortie trop longue, [cliquez ici pour voir la sortie complète]({url})."
 
-#: src/handlers/evaluate.ts:128
+#: src/handlers/evaluate.ts:129
 msgid "Code Evaluation"
 msgstr "Évaluation du code"
 
-#: src/handlers/evaluate.ts:143
+#: src/handlers/evaluate.ts:144
 msgid "CLI Arguments"
 msgstr "Args CLI"
 
-#: src/handlers/evaluate.ts:149
+#: src/handlers/evaluate.ts:150
 msgid "STD Input"
 msgstr "Entrée STD"
 
-#: src/handlers/evaluate.ts:153
+#: src/handlers/evaluate.ts:154
 msgid "Output"
 msgstr "Sortie"
 

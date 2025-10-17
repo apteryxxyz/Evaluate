@@ -8,7 +8,9 @@ export default async function override(request: Request) {
   if (!discord || !handler)
     return new Response('Service Unavailable', { status: 503 });
 
-  const response = await handler(request, {});
-  await posthog?.shutdown();
-  return response;
+  try {
+    return await handler(request, {});
+  } finally {
+    await posthog?.shutdown();
+  }
 }

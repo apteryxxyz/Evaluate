@@ -51,7 +51,7 @@ function LocaleSwitcherItem({ locale, ...props }: { locale: string }) {
     const segments = pathname.split('/').filter(Boolean);
     if (/^[a-z]{2}(-[A-Z]{2})?$/.test(segments[0]!)) segments[0] = locale;
     else segments.unshift(locale);
-    return `${segments.join('/')}?${searchParams}`;
+    return `/${segments.join('/')}${searchParams.size ? '?' : ''}${searchParams}`;
   }, [locale, pathname, searchParams]);
 
   const updatePreferredLocale = useCallback(() => {

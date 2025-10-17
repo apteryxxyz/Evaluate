@@ -31,12 +31,14 @@ msgid "Code Evaluation"
 msgstr "Évaluation du code"
 
 #: src/handlers/evaluate.ts:144
+#: src/components/evaluate-modal.ts:102
 msgid "CLI Arguments"
 msgstr "Args CLI"
 
 #: src/handlers/evaluate.ts:150
-msgid "STD Input"
-msgstr "Entrée STD"
+#: src/components/evaluate-modal.ts:120
+msgid "STDIN"
+msgstr "STDIN"
 
 #: src/handlers/evaluate.ts:154
 msgid "Output"
@@ -77,18 +79,10 @@ msgstr "Code"
 msgid "Additional command line arguments to pass to the program."
 msgstr "Arguments de ligne de commande supplémentaires à passer au programme."
 
-#: src/components/evaluate-modal.ts:102
-msgid "Arguments"
-msgstr "Arguments"
-
 #: src/components/evaluate-modal.ts:109
 #: src/commands/evaluate.ts:37
 msgid "The STDIN input to provide to the program."
 msgstr "L'entrée STDIN à fournir au programme."
-
-#: src/components/evaluate-modal.ts:120
-msgid "Input"
-msgstr "Entrée"
 
 #: src/components/open-evaluation-button.ts:9
 msgid "Open Evaluation"

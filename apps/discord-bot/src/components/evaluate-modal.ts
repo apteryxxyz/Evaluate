@@ -99,7 +99,7 @@ class ArgumentsTextInput extends sayable(TextInput) {
 
 class ArgumentsLabel extends sayable(Label) {
   constructor(say: Sayable, value?: string) {
-    super({ label: say`Arguments` }, new ArgumentsTextInput(say, value));
+    super({ label: say`CLI Arguments` }, new ArgumentsTextInput(say, value));
   }
 }
 
@@ -117,48 +117,6 @@ class InputTextInput extends sayable(TextInput) {
 
 class InputLabel extends sayable(Label) {
   constructor(say: Sayable, value?: string) {
-    super({ label: say`Input` }, new InputTextInput(say, value));
+    super({ label: say`STDIN` }, new InputTextInput(say, value));
   }
 }
-
-/*
-class RuntimeInput extends TextInput {
-  customId = 'runtime';
-  label = 'Runtime';
-  placeholder = 'The runtime in which the code is written.';
-  style = TextInputStyle.Short;
-  minLength = 1;
-  maxLength = 100;
-  required = true;
-}
-
-class CodeInput extends TextInput {
-  customId = 'code';
-  label = 'Code';
-  placeholder = 'The source code to evaluate.';
-  style = TextInputStyle.Paragraph;
-  minLength = 1;
-  maxLength = 4000;
-  required = true;
-}
-
-class ArgumentsInput extends TextInput {
-  customId = 'args';
-  label = 'Arguments';
-  placeholder = 'Additional command line arguments to pass to the program.';
-  style = TextInputStyle.Short;
-  minLength = 0;
-  maxLength = 500;
-  required = false;
-}
-
-class InputInput extends TextInput {
-  customId = 'input';
-  label = 'Input';
-  placeholder = 'The STDIN input to provide to the program.';
-  style = TextInputStyle.Short;
-  minLength = 0;
-  maxLength = 500;
-  required = false;
-}
-*/

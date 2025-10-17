@@ -147,7 +147,7 @@ export function createEvaluationPayload(
   if (options.files['::input::'])
     embed.fields?.push({
       inline: true,
-      name: `${resolveEmoji('keyboard')} ${interaction.say`STD Input`}`,
+      name: `${resolveEmoji('keyboard')} ${interaction.say`STDIN`}`,
       value: codeBlock(options.files['::input::'], 1000),
     });
   embed.fields?.push({

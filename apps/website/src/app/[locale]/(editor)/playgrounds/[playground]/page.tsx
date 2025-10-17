@@ -28,7 +28,7 @@ export async function generateMetadata(
     `/playgrounds/${playground}`,
     (say) => ({
       title: say`${runtime.name} Online Playground on Evaluate`,
-      description: say`Run ${runtime.name} and more code snippets online in your browser with Evaluates code playground.`,
+      description: say`Run ${runtime.name} and more code snippets online in your browser with Evaluate's code playground.`,
       keywords: [runtime.name, ...runtime.aliases, ...runtime.tags].map((k) =>
         k.toLowerCase(),
       ),

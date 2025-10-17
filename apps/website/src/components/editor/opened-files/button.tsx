@@ -38,7 +38,7 @@ export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
 
   const name = useMemo(() => {
     if (file.name === '::args::') return say`CLI Arguments`;
-    if (file.name === '::input::') return say`STD Input`;
+    if (file.name === '::input::') return say`STDIN`;
     return file.name || say`Untitled`;
   }, [say, file.name]);
 

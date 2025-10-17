@@ -78,7 +78,7 @@ export function ExplorerItemName(props: ExplorerItemName.Props) {
 
   const name = useMemo(() => {
     if (item.name === '::args::') return say`CLI Arguments`;
-    if (item.name === '::input::') return say`STD Input`;
+    if (item.name === '::input::') return say`STDIN`;
     return item.name;
   }, [say, item.name]);
 

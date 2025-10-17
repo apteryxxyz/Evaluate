@@ -72,7 +72,7 @@ export function Explorer() {
         </Button>
 
         <Button
-          title={say`Download As Zip`}
+          title={say`Download as Zip`}
           size="icon"
           variant="ghost"
           className="size-auto rounded-full"
@@ -80,7 +80,7 @@ export function Explorer() {
         >
           <HardDriveDownloadIcon size={16} />
           <span className="sr-only">
-            <Say>Download As Zip</Say>
+            <Say>Download as Zip</Say>
           </span>
         </Button>
       </div>

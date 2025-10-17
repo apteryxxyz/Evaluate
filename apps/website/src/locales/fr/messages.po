@@ -11,43 +11,43 @@ msgstr ""
 msgid "Nothing to render here."
 msgstr "Rien à rendre ici."
 
-#: src/components/terminal/index.tsx:46
+#: src/components/terminal/index.tsx:44
 msgid "Run"
 msgstr "Exécuter"
 
-#: src/components/terminal/index.tsx:61
+#: src/components/terminal/index.tsx:59
 msgid "Compile"
 msgstr "Compiler"
 
-#: src/components/terminal/index.tsx:76
+#: src/components/terminal/index.tsx:74
 msgid "Preview"
 msgstr "Aperçu"
 
-#: src/components/terminal/index.tsx:90
+#: src/components/terminal/index.tsx:88
 msgid "Clear"
 msgstr "Effacer"
 
-#: src/components/terminal/index.tsx:104
+#: src/components/terminal/index.tsx:102
 msgid "Your code execution exceeded the allotted time and was terminated. Consider optimising it for better performance."
 msgstr "L'exécution de votre code a dépassé le temps imparti et a été terminée. Envisagez de l'optimiser pour de meilleures performances."
 
-#: src/components/terminal/index.tsx:109
+#: src/components/terminal/index.tsx:107
 msgid "Your code executed successfully; however, it did not generate any output for the console."
 msgstr "Votre code a été exécuté avec succès ; cependant, il n'a généré aucune sortie pour la console."
 
-#: src/components/terminal/index.tsx:114
+#: src/components/terminal/index.tsx:112
 msgid "Write your code and press <0/> to execute it. The results will be displayed here."
 msgstr "Écrivez votre code et appuyez sur <0/> pour l'exécuter. Les résultats seront affichés ici."
 
-#: src/components/terminal/index.tsx:134
+#: src/components/terminal/index.tsx:132
 msgid "Your code compilation exceeded the allotted time and was terminated. Consider optimising your code for faster compilation."
 msgstr "La compilation de votre code a dépassé le temps imparti et a été terminée. Envisagez d'optimiser votre code pour une compilation plus rapide."
 
-#: src/components/terminal/index.tsx:140
+#: src/components/terminal/index.tsx:138
 msgid "<0>If</0> this runtime requires compilation, the output will be displayed here."
 msgstr "<0>Si</0> ce runtime nécessite une compilation, la sortie sera affichée ici."
 
-#: src/components/terminal/index.tsx:158
+#: src/components/terminal/index.tsx:156
 msgid "This runtime does not have a way to display any preview."
 msgstr "Ce runtime n'a pas de moyen d'afficher un aperçu."
 
@@ -72,7 +72,7 @@ msgstr "Bot Discord"
 msgid "Toggle Mobile Navigation"
 msgstr "Basculer la navigation mobile"
 
-#: src/components/header/locale-switcher.tsx:24
+#: src/components/header/locale-switcher.tsx:25
 msgid "Change Language"
 msgstr "Changer de langue"
 
@@ -80,52 +80,52 @@ msgstr "Changer de langue"
 msgid "Toggle Theme"
 msgstr "Basculer le thème"
 
-#: src/components/explorer/index.tsx:44
+#: src/components/explorer/index.tsx:43
 msgid "Explorer"
 msgstr "Explorateur"
 
-#: src/components/explorer/index.tsx:50
-#: src/components/explorer/index.tsx:58
+#: src/components/explorer/index.tsx:49
+#: src/components/explorer/index.tsx:57
 msgid "New File"
 msgstr "Nouveau fichier"
 
-#: src/components/explorer/index.tsx:63
-#: src/components/explorer/index.tsx:71
+#: src/components/explorer/index.tsx:62
+#: src/components/explorer/index.tsx:70
 msgid "New Folder"
 msgstr "Nouveau dossier"
 
-#: src/components/explorer/index.tsx:76
-#: src/components/explorer/index.tsx:84
-msgid "Download As Zip"
-msgstr "Télécharger en tant que Zip"
+#: src/components/explorer/index.tsx:75
+#: src/components/explorer/index.tsx:83
+msgid "Download as Zip"
+msgstr "Télécharger au format ZIP"
 
 #: src/components/explorer/index.tsx:108
 msgid "This is the file explorer. Create a new file to get started."
 msgstr "Voici l'explorateur de fichiers. Créez un nouveau fichier pour commencer."
 
-#: src/components/explorer/name.tsx:37
+#: src/components/explorer/name.tsx:36
 msgid "A name must be provided."
 msgstr "Un nom doit être fourni."
 
-#: src/components/explorer/name.tsx:39
+#: src/components/explorer/name.tsx:38
 msgid "This name is invalid."
 msgstr "Ce nom est invalide."
 
-#: src/components/explorer/name.tsx:41
+#: src/components/explorer/name.tsx:40
 msgid "This name already exists."
 msgstr "Ce nom existe déjà."
 
-#: src/components/explorer/name.tsx:81
-#: src/components/editor/opened-files/button.tsx:41
+#: src/components/explorer/name.tsx:80
+#: src/components/editor/opened-files/button.tsx:40
 msgid "CLI Arguments"
 msgstr "Arguments CLI"
 
-#: src/components/explorer/name.tsx:82
-#: src/components/editor/opened-files/button.tsx:42
-msgid "STD Input"
-msgstr "Entrée STD"
+#: src/components/explorer/name.tsx:81
+#: src/components/editor/opened-files/button.tsx:41
+msgid "STDIN"
+msgstr "STDIN"
 
-#: src/components/explorer/use.tsx:68
+#: src/components/explorer/use.tsx:67
 msgid "Saved and copied URL to clipboard"
 msgstr "URL sauvegardée et copiée dans le presse-papiers"
 
@@ -137,8 +137,7 @@ msgstr "Renommer le fichier"
 msgid "Delete File"
 msgstr "Supprimer le fichier"
 
-#: src/components/editor/opened-files/button.tsx:43
-#: src/components/editor/opened-files/button.tsx:55
+#: src/components/editor/opened-files/button.tsx:42
 msgid "Untitled"
 msgstr "Sans titre"
 
@@ -211,35 +210,35 @@ msgstr "Explorez et exécutez du code dans différents langages de programmation
 msgid "Powered by the Piston execution engine."
 msgstr "Alimenté par le moteur d'exécution Piston."
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:80
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:79
 msgid "Choose a playground!"
 msgstr "Choisissez un espace de jeu !"
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:93
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:92
 msgid "Search runtime playgrounds..."
 msgstr "Chercher des espaces de jeu pour runtimes..."
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:105
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:104
 msgid "Clear Search"
 msgstr "Effacer la recherche"
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:115
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:112
 msgid "Sort by..."
 msgstr "Trier par..."
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:117
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:114
 msgid "Toggle Sort By Dropdown"
 msgstr "Basculer le menu de tri"
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:123
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:120
 msgid "Sort By"
 msgstr "Trier par"
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:126
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:123
 msgid "Popularity"
 msgstr "Popularité"
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:129
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:126
 msgid "Name"
 msgstr "Nom"
 
@@ -264,5 +263,5 @@ msgid "{0} Online Playground on Evaluate"
 msgstr "{0} Espace de jeu en ligne sur Evaluate"
 
 #: src/app/[locale]/(editor)/playgrounds/[playground]/page.tsx:31
-msgid "Run {0} and more code snippets online in your browser with Evaluates code playground."
-msgstr "Exécutez {0} et plus d'extraits de code en ligne dans votre navigateur avec l'espace de jeu de code Evaluate."
+msgid "Run {0} and more code snippets online in your browser with Evaluate's code playground."
+msgstr "Exécutez {0} et d'autres extraits de code en ligne dans votre navigateur avec l'aire de jeux de code d'Evaluate."

@@ -35,7 +35,7 @@ export function middleware(request: NextRequest) {
     response = NextResponse.rewrite(request.nextUrl);
   }
 
-  if (!cookieLocale || request.nextUrl.searchParams.has('spl'))
+  if (!cookieLocale)
     response.cookies.set(
       'preferred-locale',
       pathLocale ?? defaultLocale, //

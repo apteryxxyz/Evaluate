@@ -10,7 +10,8 @@ import {
 import { Say, useSay } from '@sayable/react';
 import { LanguagesIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useMemo } from 'react';
 
 export function LocaleSwitcher() {
   const say = useSay();
@@ -42,19 +43,32 @@ export function LocaleSwitcher() {
 }
 
 function LocaleSwitcherItem({ locale, ...props }: { locale: string }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const localisedHref = useMemo(() => {
-    if (typeof window === 'undefined') return '';
-    const url = new URL(window.location.toString());
-    const segments = url.pathname.split('/').filter(Boolean);
+    const segments = pathname.split('/').filter(Boolean);
     if (/^[a-z]{2}(-[A-Z]{2})?$/.test(segments[0]!)) segments[0] = locale;
     else segments.unshift(locale);
-    url.pathname = `/${segments.join('/')}`;
-    url.searchParams.set('spl', '');
-    return url.toString();
+    return `${segments.join('/')}?${searchParams}`;
+  }, [locale, pathname, searchParams]);
+
+  const updatePreferredLocale = useCallback(() => {
+    // biome-ignore lint/suspicious/noDocumentCookie: update the locale cookie
+    document.cookie = `preferred-locale=${locale}; max-age=31536000; path=/`;
   }, [locale]);
 
   return (
-    <Link href={localisedHref} {...props}>
+    <Link
+      href={localisedHref}
+      {...props}
+      onClick={() => {
+        updatePreferredLocale();
+        router.push(localisedHref);
+        return false;
+      }}
+    >
       {new Intl.DisplayNames([locale], { type: 'language' }).of(locale)}
     </Link>
   );

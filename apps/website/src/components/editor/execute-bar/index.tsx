@@ -14,7 +14,7 @@ import { executeCode, FilesOptions } from '@evaluate/execute';
 import { useEventListener } from '@evaluate/hooks/event-listener';
 import type { Runtime } from '@evaluate/runtimes';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Say } from '@sayable/react';
+import { Say, useSay } from '@sayable/react';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
@@ -25,6 +25,7 @@ import { useTerminal } from '~/components/terminal/use';
 import posthog from '~/services/posthog';
 
 export function ExecuteBar({ runtime }: { runtime: Runtime }) {
+  const say = useSay();
   const explorer = useExplorer();
   const files = explorer.descendants //
     .filter((f): f is File => f.type === 'file');
@@ -114,7 +115,7 @@ export function ExecuteBar({ runtime }: { runtime: Runtime }) {
       <form className="flex w-full gap-1" onSubmit={handleSubmit}>
         <Select value={entry?.path ?? ''} onValueChange={handleEntryChange}>
           <SelectTrigger className="w-full lg:w-[200px]">
-            <SelectValue placeholder="Select an entry file..." />
+            <SelectValue placeholder={say`Select an entry file...`} />
           </SelectTrigger>
 
           <SelectContent>

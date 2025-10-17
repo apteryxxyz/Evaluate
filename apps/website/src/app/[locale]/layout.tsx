@@ -25,7 +25,14 @@ export default async function RootLayout(p: LayoutProps<['[locale]']>) {
 
   return (
     <HtmlProviders>
-      <html key="html" lang={say.locale} className="dark">
+      <html
+        key="html"
+        lang={say.locale}
+        dir={
+          ['ar', 'fa', 'he', 'ur', 'ps'].includes(say.locale) ? 'rtl' : 'ltr'
+        }
+        className="dark"
+      >
         <head key="head">
           <meta name="evaluate-extension" content="disabled" />
           <meta name="darkreader-lock" />

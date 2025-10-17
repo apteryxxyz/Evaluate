@@ -141,11 +141,15 @@ msgstr "Supprimer le fichier"
 msgid "Untitled"
 msgstr "Sans titre"
 
-#: src/components/editor/execute-bar/index.tsx:132
+#: src/components/editor/execute-bar/index.tsx:118
+msgid "Select an entry file..."
+msgstr "Sélectionnez un fichier d'entrée..."
+
+#: src/components/editor/execute-bar/index.tsx:133
 msgid "No files found"
 msgstr "Aucun fichier trouvé"
 
-#: src/components/editor/execute-bar/index.tsx:148
+#: src/components/editor/execute-bar/index.tsx:149
 msgid "<0>Execute</0> <1>{2}</1> <3>Code</3>"
 msgstr "<0>Exécuter</0> <1>{2}</1> <3>Code</3>"
 
@@ -215,30 +219,31 @@ msgid "Choose a playground!"
 msgstr "Choisissez un espace de jeu !"
 
 #: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:92
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:93
 msgid "Search runtime playgrounds..."
 msgstr "Chercher des espaces de jeu pour runtimes..."
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:104
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:105
 msgid "Clear Search"
 msgstr "Effacer la recherche"
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:112
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:113
 msgid "Sort by..."
 msgstr "Trier par..."
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:114
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:115
 msgid "Toggle Sort By Dropdown"
 msgstr "Basculer le menu de tri"
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:120
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:121
 msgid "Sort By"
 msgstr "Trier par"
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:123
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:124
 msgid "Popularity"
 msgstr "Popularité"
 
-#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:126
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:127
 msgid "Name"
 msgstr "Nom"
 

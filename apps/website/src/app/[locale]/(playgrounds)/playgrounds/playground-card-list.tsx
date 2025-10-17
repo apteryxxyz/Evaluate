@@ -60,7 +60,7 @@ export function PlaygroundCardList({
   type SortBy = 'popularity' | 'name';
   const [sortBy, setSortBy] = useQueryParameter<SortBy>('sort', 'popularity');
   const sortedRuntimes = useMemo(() => {
-    return searchedRuntimes.sort((a, b) => {
+    return [...searchedRuntimes].sort((a, b) => {
       if (sortBy === 'name') return a.name.localeCompare(b.name);
       return b.popularity - a.popularity;
     });
@@ -69,27 +69,28 @@ export function PlaygroundCardList({
   const [pinnedRuntimeIds] = useLocalStorage<string[]>('evaluate.pinned', []);
   const pinnedRuntimes = useMemo(() => {
     return pinnedRuntimeIds
-      .map((id) => initialRuntimes.find((r) => r.id === id)!)
-      .filter(Boolean);
+      .map((id) => initialRuntimes.find((r) => r.id === id))
+      .filter((r): r is Runtime => Boolean(r));
   }, [pinnedRuntimeIds, initialRuntimes]);
 
   const [hash] = useHashFragment();
   useEffect(() => {
-    if (hash)
-      toast.info(say`Choose a playground!`, {
-        icon: <CircleDotIcon className="size-4" />,
-      });
+    if (!hash) return;
+    toast.info(say`Choose a playground!`, {
+      icon: <CircleDotIcon className="size-4" />,
+    });
   }, [say, hash]);
 
   return (
     <div className="space-y-3">
-      <search className="flex gap-3">
+      <div role="search" className="flex gap-3">
         <div className="relative flex w-full">
           <SearchIcon className="absolute top-[27%] left-2 size-4 opacity-50" />
 
           <Input
             className="absolute inset-0 h-full w-full pl-7"
             placeholder={say`Search runtime playgrounds...`}
+            aria-label={say`Search runtime playgrounds...`}
             value={search ?? ''}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -128,7 +129,7 @@ export function PlaygroundCardList({
             </SelectGroup>
           </SelectContent>
         </Select>
-      </search>
+      </div>
 
       {pinnedRuntimes.length > 0 && (
         <>

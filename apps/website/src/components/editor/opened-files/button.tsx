@@ -4,7 +4,6 @@ import { Button } from '@evaluate/components/button';
 import { useSay } from '@sayable/react';
 import { XIcon } from 'lucide-react';
 import { useCallback, useMemo } from 'react';
-import type { Sayable } from 'sayable';
 import type { File } from 'virtual-file-explorer-backend';
 import { useWatch } from '~/components/explorer/use';
 import { MaterialIcon } from '~/components/material-icon';
@@ -18,7 +17,7 @@ export namespace OpenedFileButton {
 
 export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
   useWatch(file, ['name']);
-  const say = useSay() as Sayable;
+  const say = useSay();
 
   const handleClick = useCallback(() => file.select().focus(), [file]);
   const handleCloseClick = useCallback(

@@ -20,7 +20,6 @@ import {
 } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import type { Sayable } from 'sayable';
 import { File, Folder } from 'virtual-file-explorer-backend';
 import { useHashFragment } from '~/hooks/hash-fragment';
 
@@ -36,7 +35,7 @@ export function ExplorerProvider({
 }: React.PropsWithChildren<{
   runtime: Runtime;
 }>) {
-  const say = useSay() as Sayable;
+  const say = useSay();
 
   const [hash, setHash] = useHashFragment();
   const example = useMemo(

@@ -21,7 +21,6 @@ import {
   XIcon,
 } from 'lucide-react';
 import { useDeferredValue, useEffect, useMemo } from 'react';
-import type { Sayable } from 'sayable';
 import { useHashFragment } from '~/hooks/hash-fragment';
 import { useLocalStorage } from '~/hooks/local-storage';
 import { useQueryParameter } from '~/hooks/query-parameter';
@@ -32,7 +31,7 @@ export function PlaygroundCardList({
 }: {
   initialRuntimes: Runtime[];
 }) {
-  const say = useSay() as Sayable;
+  const say = useSay();
 
   const [search, setSearch] = useQueryParameter('search');
   const deferredSearch = useDeferredValue(search);

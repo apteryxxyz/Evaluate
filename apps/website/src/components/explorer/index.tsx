@@ -9,7 +9,6 @@ import {
   FolderPlusIcon,
   HardDriveDownloadIcon,
 } from 'lucide-react';
-import type { Sayable } from 'sayable';
 import { twMerge as cn } from 'tailwind-merge';
 import type { File } from 'virtual-file-explorer-backend';
 import { ExplorerFileItem } from './file/item';
@@ -23,7 +22,7 @@ import {
 import { useExplorer, useWatch } from './use';
 
 export function Explorer() {
-  const say = useSay() as Sayable;
+  const say = useSay();
 
   const explorer = useExplorer();
   useWatch(explorer, ['children']);
@@ -92,7 +91,8 @@ export function Explorer() {
         <Separator />
 
         <ScrollArea
-          ref={dropzoneRef}
+          // TODO: Fix types
+          ref={dropzoneRef as never}
           className={cn(
             'relative h-[calc(100%_-_45px)] w-full',
             isOver && 'bg-border',

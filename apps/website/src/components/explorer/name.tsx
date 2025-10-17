@@ -8,7 +8,6 @@ import {
 } from '@evaluate/components/popover';
 import { useSay } from '@sayable/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { Sayable } from 'sayable';
 import { twMerge as cn } from 'tailwind-merge';
 import type { File, Folder } from 'virtual-file-explorer-backend';
 
@@ -24,7 +23,7 @@ export namespace ExplorerItemName {
 
 export function ExplorerItemName(props: ExplorerItemName.Props) {
   const { item, naming, setNaming } = props;
-  const say = useSay() as Sayable;
+  const say = useSay();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [errorMessage, setErrorMessage] = useState<string>();

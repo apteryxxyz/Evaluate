@@ -15,7 +15,7 @@
   },
   "scripts": {
     "check": "tsc --noEmit",
-    "prebuild": "pnpm sayable extract && pnpm sayable compile",
+    "prebuild": "sayable extract && sayable compile",
     "build": "pnpm tsup"
   },
   "dependencies": {

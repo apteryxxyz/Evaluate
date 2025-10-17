@@ -26,7 +26,7 @@ const client = enabled
         clientId: env.DISCORD_CLIENT_ID!,
         publicKey: env.DISCORD_PUBLIC_KEY!,
         token: env.DISCORD_TOKEN!,
-        deploySecret: env.DISCORD_CLIENT_ID!,
+        deploySecret: env.DISCORD_CLIENT_SECRET!,
         requestOptions: { queueRequests: false },
       },
       {

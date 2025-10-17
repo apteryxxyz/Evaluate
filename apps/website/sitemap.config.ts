@@ -1,5 +1,5 @@
 import type { IConfig } from 'next-sitemap';
-import sayable from './sayable.config';
+import sayable from './sayable.config.ts';
 
 export default {
   siteUrl: process.env.NEXT_PUBLIC_WEBSITE_URL!,

@@ -2,7 +2,7 @@ import { defineConfig } from '@sayable/config';
 
 export default defineConfig({
   sourceLocale: 'en',
-  locales: ['en', 'fr'],
+  locales: ['en'],
   catalogues: [
     {
       include: ['src/**/*.{ts,tsx}'],

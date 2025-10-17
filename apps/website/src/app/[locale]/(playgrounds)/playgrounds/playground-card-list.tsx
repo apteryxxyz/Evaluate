@@ -101,9 +101,7 @@ export function PlaygroundCardList({
               onClick={() => setSearch('')}
             >
               <span className="sr-only">
-                <Say>
-                  <Say>Clear Search</Say>
-                </Say>
+                <Say>Clear Search</Say>
               </span>
             </XIcon>
           )}

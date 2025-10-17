@@ -51,7 +51,7 @@ export function OpenedFileButton({ file, others }: OpenedFileButton.Props) {
       onClick={handleClick}
     >
       <MaterialIcon type="file" name={file.name} />
-      <span>&nbsp;{name ?? say`Untitled`}</span>
+      <span>&nbsp;{name}</span>
 
       <Button
         size="icon"

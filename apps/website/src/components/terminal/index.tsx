@@ -29,8 +29,6 @@ export namespace Terminal {
 export function Terminal({ runtime }: Terminal.Props) {
   const { result, setResult } = useTerminal();
 
-  console.log(result);
-
   return (
     <section className="h-full">
       <Tabs defaultValue="run" className="h-full gap-0">

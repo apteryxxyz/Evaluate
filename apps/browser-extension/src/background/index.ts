@@ -83,6 +83,7 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
         throw error;
       });
     promises.push(initialPromise);
+    await new Promise((r) => setTimeout(r, 250));
   }
 
   const results = await Promise.all(promises);

@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@evaluate/fetch": "workspace:^",
-    "es-toolkit": "^1.39.7",
+    "es-toolkit": "^1.40.0",
     "fuse.js": "^7.1.0",
-    "zod": "^4.0.5"
+    "zod": "^4.1.12"
   }
 }

@@ -5,7 +5,6 @@ import { Footer } from '~/components/footer';
 import { Header } from '~/components/header';
 import { BodyProviders, HtmlProviders } from '~/components/providers';
 import say from '~/i18n';
-import type { LayoutProps } from '~/types';
 import '../../style.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -14,8 +13,11 @@ export function generateStaticParams() {
   return say.locales.map((l) => ({ locale: l }));
 }
 
-export default async function RootLayout(p: LayoutProps<['[locale]']>) {
-  const { locale = 'en' } = await p.params;
+export default async function RootLayout({
+  params,
+  children,
+}: LayoutProps<'/[locale]'>) {
+  const { locale = 'en' } = await params;
   try {
     await say.load(String(locale));
     say.activate(String(locale));
@@ -53,7 +55,7 @@ export default async function RootLayout(p: LayoutProps<['[locale]']>) {
         >
           <BodyProviders {...say}>
             <Header />
-            <main className="flex-1">{p.children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
           </BodyProviders>
         </body>

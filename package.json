@@ -1,6 +1,6 @@
 {
   "name": "evaluate",
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "pnpm@10.18.3",
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
     "lint": "biome check . --write",

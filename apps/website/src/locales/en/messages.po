@@ -51,7 +51,7 @@ msgid "This runtime does not have a way to display any preview."
 msgstr "This runtime does not have a way to display any preview."
 
 #: src/components/header/index.tsx:50
-#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:20
+#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:21
 msgid "Playgrounds"
 msgstr "Playgrounds"
 
@@ -205,11 +205,11 @@ msgstr "Evaluate for <0>Chrome</0>"
 msgid "Evaluate for <0>Firefox</0>"
 msgstr "Evaluate for <0>Firefox</0>"
 
-#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:23
+#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:24
 msgid "Explore and run code in different programming languages and runtimes."
 msgstr "Explore and run code in different programming languages and runtimes."
 
-#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:29
+#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:30
 msgid "Powered by the Piston execution engine."
 msgstr "Powered by the Piston execution engine."
 
@@ -262,10 +262,10 @@ msgstr "Hmm, we couldn't find the playground you're looking for."
 msgid "Browse Playgrounds"
 msgstr "Browse Playgrounds"
 
-#: src/app/[locale]/(editor)/playgrounds/[playground]/page.tsx:30
+#: src/app/[locale]/(editor)/playgrounds/[playground]/page.tsx:29
 msgid "{0} Online Playground on Evaluate"
 msgstr "{0} Online Playground on Evaluate"
 
-#: src/app/[locale]/(editor)/playgrounds/[playground]/page.tsx:31
+#: src/app/[locale]/(editor)/playgrounds/[playground]/page.tsx:30
 msgid "Run {0} and more code snippets online in your browser with Evaluate's code playground."
 msgstr "Run {0} and more code snippets online in your browser with Evaluate's code playground."

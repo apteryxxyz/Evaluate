@@ -15,13 +15,13 @@
     "graph": "pnpx nx@18 graph"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.5",
+    "@biomejs/biome": "2.2.6",
     "@evaluate/scripts": "workspace:^",
-    "@types/node": "^22.16.4",
+    "@types/node": "^22.18.11",
     "husky": "^9.1.7",
     "ts-patch": "^3.3.0",
-    "turbo": "^2.5.5",
-    "typescript": "^5.8.3",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3",
     "typescript-transform-paths": "^3.5.5"
   }
 }

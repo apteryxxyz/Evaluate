@@ -8,7 +8,6 @@ import { ExplorerProvider } from '~/components/explorer/use';
 import { Terminal } from '~/components/terminal';
 import { TerminalProvider } from '~/components/terminal/use';
 import say from '~/i18n';
-import type { PageProps } from '~/types';
 import { EditorWrapper } from './wrapper';
 
 export async function generateStaticParams() {
@@ -16,10 +15,10 @@ export async function generateStaticParams() {
   return runtimes.map((r) => ({ playground: r.id }));
 }
 
-export async function generateMetadata(
-  props: PageProps<['[locale]', '[playground]']>,
-) {
-  const { locale, playground } = await props.params;
+export async function generateMetadata({
+  params,
+}: PageProps<'/[locale]/playgrounds/[playground]'>) {
+  const { locale, playground } = await params;
   const runtime = await fetchRuntimeById(decodeURIComponent(playground));
   if (!runtime) notFound();
 
@@ -36,8 +35,10 @@ export async function generateMetadata(
   );
 }
 
-export default async function EditorPage(props: PageProps<['[playground]']>) {
-  const { playground } = await props.params;
+export default async function EditorPage({
+  params,
+}: PageProps<'/[locale]/playgrounds/[playground]'>) {
+  const { playground } = await params;
   const runtime = await fetchRuntimeById(decodeURIComponent(playground));
   if (!runtime) notFound();
 

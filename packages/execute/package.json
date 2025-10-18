@@ -14,12 +14,12 @@
   "dependencies": {
     "@evaluate/fetch": "workspace:^",
     "@evaluate/runtimes": "workspace:^",
-    "es-toolkit": "^1.39.7",
+    "es-toolkit": "^1.40.0",
     "lexure": "npm:@apteryxxyz/lexure@^0.17.0",
     "pako": "^2.1.0",
-    "zod": "^4.0.5"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@types/pako": "^2.0.3"
+    "@types/pako": "^2.0.4"
   }
 }

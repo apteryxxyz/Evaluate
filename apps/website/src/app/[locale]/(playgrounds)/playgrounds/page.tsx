@@ -1,12 +1,13 @@
 import { fetchAllRuntimes } from '@evaluate/runtimes';
 import { Say } from '@sayable/react';
 import say from '~/i18n';
-import type { PageProps } from '~/types';
 import { generateBaseMetadata } from '../../metadata';
 import { PlaygroundCardList } from './playground-card-list';
 
-export async function generateMetadata(props: PageProps<['[locale]']>) {
-  const { locale } = await props.params;
+export async function generateMetadata({
+  params,
+}: PageProps<'/[locale]/playgrounds'>) {
+  const { locale } = await params;
   return generateBaseMetadata(say.activate(locale), '/playgrounds');
 }
 

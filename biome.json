@@ -6,7 +6,8 @@
       "!**/.ignore/**/*",
       "!**/node_modules/**/*",
       "!**/dist/**/*",
-      "!**/.next/**/*"
+      "!**/.next/**/*",
+      "!**/.turbo/**/*"
     ]
   },
 
@@ -55,5 +56,9 @@
       "jsxQuoteStyle": "double",
       "semicolons": "always"
     }
+  },
+  "css": {
+    "linter": { "enabled": false },
+    "formatter": { "enabled": false }
   }
 }

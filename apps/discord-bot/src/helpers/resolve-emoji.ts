@@ -2,11 +2,17 @@ import type { Snowflake } from '@buape/carbon';
 
 export const UnicodeEmojis = {
   joy: '😂',
+  keyboard: '⌨️',
+  printer: '🖨️',
+  puzzle: '🧩',
+  pencil: '✏️',
+  globe: '🌐',
 } as const;
 
 export const CustomEmojis = {
-  pencil: '1278931843986620428',
-  globe: '1278931860805779517',
+  // pencil: '1278931843986620428',
+  // globe: '1278931860805779517',
+  _: '',
 } as const;
 
 type ExtractId<T extends string> = T extends `${infer I}:a` ? I : T;

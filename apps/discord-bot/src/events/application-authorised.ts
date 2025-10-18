@@ -1,15 +1,12 @@
 import {
   ApplicationAuthorizedListener,
-  type ApplicationWebhookEventType,
   type ListenerEventData,
 } from '@buape/carbon';
 import { getUserContext } from '~/helpers/session-context';
 import { captureEvent } from '~/services/posthog';
 
 export class ApplicationAuthorisedListener extends ApplicationAuthorizedListener {
-  async handle(
-    data: ListenerEventData[ApplicationWebhookEventType.ApplicationAuthorized],
-  ) {
+  async handle(data: ListenerEventData[this['type']]) {
     if (data.guild)
       captureEvent(getUserContext(data.user), 'installed_app', {
         install_type: 'guild',

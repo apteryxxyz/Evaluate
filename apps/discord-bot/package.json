@@ -15,20 +15,27 @@
   },
   "scripts": {
     "check": "tsc --noEmit",
+    "prebuild": "sayable extract && sayable compile",
     "build": "pnpm tsup"
   },
   "dependencies": {
-    "@buape/carbon": "^0.9.0",
+    "@buape/carbon": "^0.12.0",
     "@evaluate/execute": "workspace:^",
     "@evaluate/logger": "workspace:^",
     "@evaluate/runtimes": "workspace:^",
+    "@sayable/carbon": "0.0.0-alpha.4",
+    "@sayable/react": "0.0.0-alpha.6",
     "@t3-oss/env-core": "^0.13.8",
     "date-fns": "^4.1.0",
     "es-toolkit": "^1.39.7",
     "posthog-node": "^5.5.1",
+    "sayable": "0.0.0-alpha.6",
     "zod": "^4.0.5"
   },
   "devDependencies": {
-    "tsup": "^8.5.0"
+    "@sayable/config": "0.0.0",
+    "@sayable/format-po": "0.0.0",
+    "tsup": "^8.5.0",
+    "unplugin-sayable": "0.0.0-alpha.4"
   }
 }

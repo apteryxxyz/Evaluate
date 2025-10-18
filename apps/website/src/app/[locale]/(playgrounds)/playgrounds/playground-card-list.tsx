@@ -13,6 +13,7 @@ import {
 import { Separator } from '@evaluate/components/separator';
 import { toast } from '@evaluate/components/toast';
 import type { Runtime } from '@evaluate/runtimes';
+import { Say, useSay } from '@sayable/react';
 import {
   ArrowDownWideNarrowIcon,
   CircleDotIcon,
@@ -30,6 +31,8 @@ export function PlaygroundCardList({
 }: {
   initialRuntimes: Runtime[];
 }) {
+  const say = useSay();
+
   const [search, setSearch] = useQueryParameter('search');
   const deferredSearch = useDeferredValue(search);
   const searchedRuntimes = useMemo(() => {
@@ -57,7 +60,7 @@ export function PlaygroundCardList({
   type SortBy = 'popularity' | 'name';
   const [sortBy, setSortBy] = useQueryParameter<SortBy>('sort', 'popularity');
   const sortedRuntimes = useMemo(() => {
-    return searchedRuntimes.sort((a, b) => {
+    return [...searchedRuntimes].sort((a, b) => {
       if (sortBy === 'name') return a.name.localeCompare(b.name);
       return b.popularity - a.popularity;
     });
@@ -66,27 +69,28 @@ export function PlaygroundCardList({
   const [pinnedRuntimeIds] = useLocalStorage<string[]>('evaluate.pinned', []);
   const pinnedRuntimes = useMemo(() => {
     return pinnedRuntimeIds
-      .map((id) => initialRuntimes.find((r) => r.id === id)!)
-      .filter(Boolean);
+      .map((id) => initialRuntimes.find((r) => r.id === id))
+      .filter((r): r is Runtime => Boolean(r));
   }, [pinnedRuntimeIds, initialRuntimes]);
 
   const [hash] = useHashFragment();
   useEffect(() => {
-    if (hash)
-      toast.info('Choose a playground!', {
-        icon: <CircleDotIcon className="size-4" />,
-      });
-  }, [hash]);
+    if (!hash) return;
+    toast.info(say`Choose a playground!`, {
+      icon: <CircleDotIcon className="size-4" />,
+    });
+  }, [say, hash]);
 
   return (
     <div className="space-y-3">
-      <search className="flex gap-3">
+      <div role="search" className="flex gap-3">
         <div className="relative flex w-full">
           <SearchIcon className="absolute top-[27%] left-2 size-4 opacity-50" />
 
           <Input
             className="absolute inset-0 h-full w-full pl-7"
-            placeholder="Search runtime playgrounds..."
+            placeholder={say`Search runtime playgrounds...`}
+            aria-label={say`Search runtime playgrounds...`}
             value={search ?? ''}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -97,25 +101,35 @@ export function PlaygroundCardList({
               className="absolute top-[27%] right-2 size-4 cursor-pointer opacity-50"
               onClick={() => setSearch('')}
             >
-              <span className="sr-only">Clear Search</span>
+              <span className="sr-only">
+                <Say>Clear Search</Say>
+              </span>
             </XIcon>
           )}
         </div>
 
         <Select value={sortBy} onValueChange={setSortBy as never}>
           <SelectTrigger className="w-[205px]" icon={ArrowDownWideNarrowIcon}>
-            <SelectValue placeholder="Sort by..." />
-            <span className="sr-only">Toggle Sort By Dropdown</span>
+            <SelectValue placeholder={say`Sort by...`} />
+            <span className="sr-only">
+              <Say>Toggle Sort By Dropdown</Say>
+            </span>
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Sort By</SelectLabel>
-              <SelectItem value="popularity">Popularity</SelectItem>
-              <SelectItem value="name">Name</SelectItem>
+              <SelectLabel>
+                <Say>Sort By</Say>
+              </SelectLabel>
+              <SelectItem value="popularity">
+                <Say>Popularity</Say>
+              </SelectItem>
+              <SelectItem value="name">
+                <Say>Name</Say>
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
-      </search>
+      </div>
 
       {pinnedRuntimes.length > 0 && (
         <>

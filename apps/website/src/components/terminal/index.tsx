@@ -9,6 +9,7 @@ import {
   TabsTrigger,
 } from '@evaluate/components/tabs';
 import type { Runtime } from '@evaluate/runtimes';
+import { Say } from '@sayable/react';
 import {
   CodeIcon,
   FullscreenIcon,
@@ -39,7 +40,9 @@ export function Terminal({ runtime }: Terminal.Props) {
                 className="relative bg-card text-foreground/70 hover:text-foreground data-[state=active]:bg-muted data-[state=active]:text-foreground"
               >
                 <CodeIcon className="size-4" />
-                <span>&nbsp;Run</span>
+                <span>
+                  &nbsp;<Say>Run</Say>
+                </span>
                 {result?.run.output && (
                   <span className="-mt-1 -mr-1 absolute top-2 right-2 size-1.5 rounded-full bg-primary/50" />
                 )}
@@ -52,7 +55,9 @@ export function Terminal({ runtime }: Terminal.Props) {
                 className="relative bg-card text-foreground/70 hover:text-foreground data-[state=active]:bg-muted data-[state=active]:text-foreground"
               >
                 <PackageCheckIcon className="size-4" />
-                <span>&nbsp;Compile</span>
+                <span>
+                  &nbsp;<Say>Compile</Say>
+                </span>
                 {result?.compile?.output && (
                   <span className="-mt-1 -mr-1 absolute top-2 right-2 size-1.5 rounded-full bg-primary/50" />
                 )}
@@ -65,7 +70,9 @@ export function Terminal({ runtime }: Terminal.Props) {
                 className="relative bg-card text-foreground/70 hover:text-foreground data-[state=active]:bg-muted data-[state=active]:text-foreground"
               >
                 <FullscreenIcon className="size-4" />
-                <span>&nbsp;Preview</span>
+                <span>
+                  &nbsp;<Say>Preview</Say>
+                </span>
               </Button>
             </TabsTrigger>
 
@@ -77,7 +84,9 @@ export function Terminal({ runtime }: Terminal.Props) {
               disabled={!result}
             >
               <Trash2Icon className="size-4" />
-              <span className="sr-only">Clear</span>
+              <span className="sr-only">
+                <Say>Clear</Say>
+              </span>
             </Button>
           </TabsList>
           <ScrollBar orientation="horizontal" />
@@ -90,21 +99,21 @@ export function Terminal({ runtime }: Terminal.Props) {
             <div className="absolute inset-0 flex items-center justify-center bg-black/40">
               <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
                 {result?.run.expired ? (
-                  <>
+                  <Say>
                     Your code execution exceeded the allotted time and was
                     terminated. Consider optimising it for better performance.
-                  </>
-                ) : result?.run.output?.trim() === '' ? (
-                  <>
+                  </Say>
+                ) : result && !result.run.output ? (
+                  <Say>
                     Your code executed successfully; however, it did not
                     generate any output for the console.
-                  </>
+                  </Say>
                 ) : (
-                  <>
-                    Write your code and press{' '}
-                    <PlayIcon size={16} className="inline" /> to execute it. The
-                    results will be displayed here.
-                  </>
+                  <Say>
+                    Write your code and press
+                    <PlayIcon size={16} className="inline"></PlayIcon> to
+                    execute it. The results will be displayed here.
+                  </Say>
                 )}
               </span>
             </div>
@@ -120,16 +129,16 @@ export function Terminal({ runtime }: Terminal.Props) {
             <div className="absolute inset-0 flex items-center justify-center bg-black/40">
               <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
                 {result?.compile?.expired ? (
-                  <>
+                  <Say>
                     Your code compilation exceeded the allotted time and was
                     terminated. Consider optimising your code for faster
                     compilation.
-                  </>
+                  </Say>
                 ) : (
-                  <>
+                  <Say>
                     <strong>If</strong> this runtime requires compilation, the
                     output will be displayed here.
-                  </>
+                  </Say>
                 )}
               </span>
             </div>
@@ -144,7 +153,9 @@ export function Terminal({ runtime }: Terminal.Props) {
           {!(runtime.id === 'php') && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/40">
               <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
-                This runtime does not have a way to display any preview.
+                <Say>
+                  This runtime does not have a way to display any preview.
+                </Say>
               </span>
             </div>
           )}

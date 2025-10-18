@@ -1,11 +1,13 @@
 import { fetchAllRuntimes, fetchRuntimeById } from '@evaluate/runtimes';
 import { notFound } from 'next/navigation';
-import { generateBaseMetadata } from '~/app/metadata';
+import { generateBaseMetadata } from '~/app/[locale]/metadata';
+
 import { Editor } from '~/components/editor';
 import { Explorer } from '~/components/explorer';
 import { ExplorerProvider } from '~/components/explorer/use';
 import { Terminal } from '~/components/terminal';
 import { TerminalProvider } from '~/components/terminal/use';
+import say from '~/i18n';
 import type { PageProps } from '~/types';
 import { EditorWrapper } from './wrapper';
 
@@ -14,21 +16,28 @@ export async function generateStaticParams() {
   return runtimes.map((r) => ({ playground: r.id }));
 }
 
-export async function generateMetadata(props: PageProps<['[playground]']>) {
-  const playground = (await props.params).playground;
+export async function generateMetadata(
+  props: PageProps<['[locale]', '[playground]']>,
+) {
+  const { locale, playground } = await props.params;
   const runtime = await fetchRuntimeById(decodeURIComponent(playground));
   if (!runtime) notFound();
 
-  return generateBaseMetadata(`/playground/${playground}`, {
-    title: `${runtime.name} Playground on Evaluate`,
-    description: `Run code in ${runtime.name} and other programming languages effortlessly with Evaluate. Input your code, optional arguments, and get instant results. Debug, optimize, and elevate your coding experience with our versatile evaluation tools.`,
-    keywords: [runtime.name, ...runtime.aliases, ...runtime.tags] //
-      .map((k) => k.toLowerCase()),
-  });
+  return generateBaseMetadata(
+    say.activate(locale),
+    `/playgrounds/${playground}`,
+    (say) => ({
+      title: say`${runtime.name} Online Playground on Evaluate`,
+      description: say`Run ${runtime.name} and more code snippets online in your browser with Evaluate's code playground.`,
+      keywords: [runtime.name, ...runtime.aliases, ...runtime.tags].map((k) =>
+        k.toLowerCase(),
+      ),
+    }),
+  );
 }
 
 export default async function EditorPage(props: PageProps<['[playground]']>) {
-  const playground = (await props.params).playground;
+  const { playground } = await props.params;
   const runtime = await fetchRuntimeById(decodeURIComponent(playground));
   if (!runtime) notFound();
 

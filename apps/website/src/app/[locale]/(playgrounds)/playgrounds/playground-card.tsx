@@ -8,10 +8,11 @@ import {
   CardTitle,
 } from '@evaluate/components/card';
 import { getRuntimeIconUrl, type Runtime } from '@evaluate/runtimes';
+import { Say } from '@sayable/react';
 import { CodeIcon, PinIcon } from 'lucide-react';
-import Link from 'next/link';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { ImageWithFallback } from '~/components/image-fallback';
+import { LocalisedLink } from '~/components/localised-link';
 import { useLocalStorage } from '~/hooks/local-storage';
 import { getDominantColour, type RGB } from './get-colour';
 
@@ -72,14 +73,16 @@ export function PlaygroundCard({
         <CardDescription>v{runtime.version}</CardDescription>
       </CardHeader>
 
-      <Link
+      <LocalisedLink
         suppressHydrationWarning
         className="absolute inset-0"
         href={`/playgrounds/${runtime.id}${hash ? `#${hash}` : ''}`}
         prefetch={false}
       >
-        <span className="sr-only">{`Open ${runtime.name} Playground`}</span>
-      </Link>
+        <span className="sr-only">
+          <Say>Open {runtime.name} Playground</Say>
+        </span>
+      </LocalisedLink>
 
       <div className="absolute top-0 right-0">
         <Button

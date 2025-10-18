@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { twMerge as cn } from 'tailwind-merge';
+import { LocalisedLink } from '../localised-link';
 
 export function Footer(p: { className?: string }) {
   const pathname = usePathname();
@@ -18,19 +18,19 @@ export function Footer(p: { className?: string }) {
       )}
     >
       <p>
-        <Link
+        <LocalisedLink
           href="/policies/privacy-policy"
           className="duration-200 hover:text-foreground/60"
         >
           Privacy Policy
-        </Link>
+        </LocalisedLink>
         <span className="mx-2">•</span>
-        <Link
+        <LocalisedLink
           href="/policies/terms-of-service"
           className="duration-200 hover:text-foreground/60"
         >
           Terms of Service
-        </Link>
+        </LocalisedLink>
       </p>
     </footer>
   );

@@ -1,7 +1,5 @@
 // TODO: Bug in Next.js 15.4.x, cannot upgrade, see https://github.com/vercel/next.js/issues/81628
 
-import { fetchAllRuntimes } from '@evaluate/runtimes';
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -15,11 +13,10 @@ const nextConfig = {
         permanent: false,
       },
       {
-        source: `/:slug(${(await fetchAllRuntimes())
-          .map((r) => r.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-          .join('|')})`,
-        destination: '/playgrounds/:slug',
-        permanent: true,
+        // (?:[a-z]{2,3}(-[A-Z][a-z]+)?(-[A-Z]{2}|\d{3})?)
+        source: '/:locale((?:[a-zA-Z]{2})(?:-[a-zA-Z]{2})?)',
+        destination: '/:locale/playgrounds',
+        permanent: false,
       },
     ];
   },
@@ -51,6 +48,10 @@ const nextConfig = {
         pathname: '/PKief/vscode-material-icon-theme/main/icons/**',
       },
     ],
+  },
+
+  experimental: {
+    swcPlugins: [['@sayable/swc-plugin', {}]],
   },
 };
 

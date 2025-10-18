@@ -1,4 +1,5 @@
 import { Button } from '@evaluate/components/button';
+import { Say } from '@sayable/react';
 import Link from 'next/link';
 import { ImageCarousel } from './image-carousel';
 
@@ -7,13 +8,17 @@ export default function BrowserExtensionPlatformPage() {
     <div className="container grid grid-cols-1 gap-6 py-6 pt-[20vh] lg:grid-cols-2">
       <div className="flex flex-col items-center justify-center gap-6 text-center">
         <h1 className="font-bold text-3xl tracking-tight md:text-5xl">
-          The <span className="text-primary">Evaluate</span> Browser Extension
+          <Say>
+            The <span className="text-primary">Evaluate</span> Browser Extension
+          </Say>
         </h1>
         <p className="mx-auto max-w-5xl text-balance text-sm md:text-base">
-          When you stumble upon code snippets while browsing the web, wouldn't
-          it be great to execute them instantly? Look no further—the Evaluate
-          extension is your solution, with its over 70 supported languages and
-          quick code execution capabilities.
+          <Say>
+            When you stumble upon code snippets while browsing the web, wouldn't
+            it be great to execute them instantly? Look no further—the Evaluate
+            extension is your solution, with its over 70 supported languages and
+            quick code execution capabilities.
+          </Say>
         </p>
 
         <div className="flex flex-col items-center gap-2">
@@ -34,7 +39,9 @@ export default function BrowserExtensionPlatformPage() {
                   alt="Chrome"
                 />
                 <span>
-                  Evaluate for <span className="font-bold">Chrome</span>
+                  <Say>
+                    Evaluate for <span className="font-bold">Chrome</span>
+                  </Say>
                 </span>
               </Link>
             </Button>
@@ -118,7 +125,9 @@ export default function BrowserExtensionPlatformPage() {
                 alt="Firefox"
               />
               <span>
-                Evaluate for <span className="font-bold">Firefox</span>
+                <Say>
+                  Evaluate for <span className="font-bold">Firefox</span>
+                </Say>
               </span>
             </Link>
           </Button>

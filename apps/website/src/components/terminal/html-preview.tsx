@@ -1,5 +1,6 @@
 'use client';
 
+import { Say } from '@sayable/react';
 import DOMPurify from 'dompurify';
 import { Children, useEffect, useState } from 'react';
 
@@ -36,7 +37,7 @@ export function HtmlPreview({ children }: React.PropsWithChildren) {
       {!sanitisedHtml && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/40">
           <span className="max-w-64 text-balance text-center text-foreground/50 text-sm">
-            Nothing to render here.
+            <Say>Nothing to render here.</Say>
           </span>
         </div>
       )}

@@ -1,0 +1,271 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-10-10 09:16+1300\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"X-Generator: sayable\n"
+
+#: src/components/terminal/html-preview.tsx:40
+msgid "Nothing to render here."
+msgstr "Nothing to render here."
+
+#: src/components/terminal/index.tsx:44
+msgid "Run"
+msgstr "Run"
+
+#: src/components/terminal/index.tsx:59
+msgid "Compile"
+msgstr "Compile"
+
+#: src/components/terminal/index.tsx:74
+msgid "Preview"
+msgstr "Preview"
+
+#: src/components/terminal/index.tsx:88
+msgid "Clear"
+msgstr "Clear"
+
+#: src/components/terminal/index.tsx:102
+msgid "Your code execution exceeded the allotted time and was terminated. Consider optimising it for better performance."
+msgstr "Your code execution exceeded the allotted time and was terminated. Consider optimising it for better performance."
+
+#: src/components/terminal/index.tsx:107
+msgid "Your code executed successfully; however, it did not generate any output for the console."
+msgstr "Your code executed successfully; however, it did not generate any output for the console."
+
+#: src/components/terminal/index.tsx:112
+msgid "Write your code and press <0/> to execute it. The results will be displayed here."
+msgstr "Write your code and press <0/> to execute it. The results will be displayed here."
+
+#: src/components/terminal/index.tsx:132
+msgid "Your code compilation exceeded the allotted time and was terminated. Consider optimising your code for faster compilation."
+msgstr "Your code compilation exceeded the allotted time and was terminated. Consider optimising your code for faster compilation."
+
+#: src/components/terminal/index.tsx:138
+msgid "<0>If</0> this runtime requires compilation, the output will be displayed here."
+msgstr "<0>If</0> this runtime requires compilation, the output will be displayed here."
+
+#: src/components/terminal/index.tsx:156
+msgid "This runtime does not have a way to display any preview."
+msgstr "This runtime does not have a way to display any preview."
+
+#: src/components/header/index.tsx:50
+#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:20
+msgid "Playgrounds"
+msgstr "Playgrounds"
+
+#: src/components/header/index.tsx:61
+msgid "Browser Extension"
+msgstr "Browser Extension"
+
+#: src/components/header/index.tsx:63
+msgid "new"
+msgstr "new"
+
+#: src/components/header/index.tsx:70
+msgid "Discord Bot"
+msgstr "Discord Bot"
+
+#: src/components/header/index.tsx:137
+msgid "Toggle Mobile Navigation"
+msgstr "Toggle Mobile Navigation"
+
+#: src/components/header/locale-switcher.tsx:25
+msgid "Change Language"
+msgstr "Change Language"
+
+#: src/components/header/theme-switcher.tsx:26
+msgid "Toggle Theme"
+msgstr "Toggle Theme"
+
+#: src/components/explorer/index.tsx:43
+msgid "Explorer"
+msgstr "Explorer"
+
+#: src/components/explorer/index.tsx:49
+#: src/components/explorer/index.tsx:57
+msgid "New File"
+msgstr "New File"
+
+#: src/components/explorer/index.tsx:62
+#: src/components/explorer/index.tsx:70
+msgid "New Folder"
+msgstr "New Folder"
+
+#: src/components/explorer/index.tsx:75
+#: src/components/explorer/index.tsx:83
+msgid "Download as Zip"
+msgstr "Download as Zip"
+
+#: src/components/explorer/index.tsx:108
+msgid "This is the file explorer. Create a new file to get started."
+msgstr "This is the file explorer. Create a new file to get started."
+
+#: src/components/explorer/name.tsx:36
+msgid "A name must be provided."
+msgstr "A name must be provided."
+
+#: src/components/explorer/name.tsx:38
+msgid "This name is invalid."
+msgstr "This name is invalid."
+
+#: src/components/explorer/name.tsx:40
+msgid "This name already exists."
+msgstr "This name already exists."
+
+#: src/components/explorer/name.tsx:80
+#: src/components/editor/opened-files/button.tsx:40
+msgid "CLI Arguments"
+msgstr "CLI Arguments"
+
+#: src/components/explorer/name.tsx:81
+#: src/components/editor/opened-files/button.tsx:41
+msgid "STDIN"
+msgstr "STDIN"
+
+#: src/components/explorer/use.tsx:67
+msgid "Saved and copied URL to clipboard"
+msgstr "Saved and copied URL to clipboard"
+
+#: src/components/explorer/file/item.tsx:65
+msgid "Rename File"
+msgstr "Rename File"
+
+#: src/components/explorer/file/item.tsx:81
+msgid "Delete File"
+msgstr "Delete File"
+
+#: src/components/editor/opened-files/button.tsx:42
+msgid "Untitled"
+msgstr "Untitled"
+
+#: src/components/editor/execute-bar/index.tsx:118
+msgid "Select an entry file..."
+msgstr "Select an entry file..."
+
+#: src/components/editor/execute-bar/index.tsx:133
+msgid "No files found"
+msgstr "No files found"
+
+#: src/components/editor/execute-bar/index.tsx:149
+msgid "<0>Execute</0> <1>{2}</1> <3>Code</3>"
+msgstr "<0>Execute</0> <1>{2}</1> <3>Code</3>"
+
+#: src/app/manifest.ts:10
+#: src/app/[locale]/metadata.ts:15
+msgid "Test code in any programming language with Evaluate! Run code snippets in your browser, without installing anything."
+msgstr "Test code in any programming language with Evaluate! Run code snippets in your browser, without installing anything."
+
+#: src/app/[locale]/metadata.ts:17
+msgid "online playground"
+msgstr "online playground"
+
+#: src/app/[locale]/metadata.ts:18
+msgid "code playground"
+msgstr "code playground"
+
+#: src/app/[locale]/metadata.ts:19
+msgid "code sandbox"
+msgstr "code sandbox"
+
+#: src/app/[locale]/metadata.ts:20
+msgid "online compiler"
+msgstr "online compiler"
+
+#: src/app/[locale]/metadata.ts:21
+msgid "online interpreter"
+msgstr "online interpreter"
+
+#: src/app/[locale]/(products)/products/discord-bot/page.tsx:10
+msgid "The <0>Evaluate</0> Discord Bot"
+msgstr "The <0>Evaluate</0> Discord Bot"
+
+#: src/app/[locale]/(products)/products/discord-bot/page.tsx:15
+msgid "Run code snippets directly in your Discord server with the Evaluate bot! Evaluate supports over 70 languages and is perfect for quickly testing code and sharing results with your friends."
+msgstr "Run code snippets directly in your Discord server with the Evaluate bot! Evaluate supports over 70 languages and is perfect for quickly testing code and sharing results with your friends."
+
+#: src/app/[locale]/(products)/products/discord-bot/page.tsx:37
+msgid "Evaluate for <0>Discord</0>"
+msgstr "Evaluate for <0>Discord</0>"
+
+#: src/app/[locale]/(products)/products/browser-extension/page.tsx:11
+msgid "The <0>Evaluate</0> Browser Extension"
+msgstr "The <0>Evaluate</0> Browser Extension"
+
+#: src/app/[locale]/(products)/products/browser-extension/page.tsx:16
+msgid "When you stumble upon code snippets while browsing the web, wouldn't it be great to execute them instantly? Look no further—the Evaluate extension is your solution, with its over 70 supported languages and quick code execution capabilities."
+msgstr "When you stumble upon code snippets while browsing the web, wouldn't it be great to execute them instantly? Look no further—the Evaluate extension is your solution, with its over 70 supported languages and quick code execution capabilities."
+
+#: src/app/[locale]/(products)/products/browser-extension/page.tsx:42
+msgid "Evaluate for <0>Chrome</0>"
+msgstr "Evaluate for <0>Chrome</0>"
+
+#: src/app/[locale]/(products)/products/browser-extension/page.tsx:128
+msgid "Evaluate for <0>Firefox</0>"
+msgstr "Evaluate for <0>Firefox</0>"
+
+#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:23
+msgid "Explore and run code in different programming languages and runtimes."
+msgstr "Explore and run code in different programming languages and runtimes."
+
+#: src/app/[locale]/(playgrounds)/playgrounds/page.tsx:29
+msgid "Powered by the Piston execution engine."
+msgstr "Powered by the Piston execution engine."
+
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:79
+msgid "Choose a playground!"
+msgstr "Choose a playground!"
+
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:92
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:93
+msgid "Search runtime playgrounds..."
+msgstr "Search runtime playgrounds..."
+
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:105
+msgid "Clear Search"
+msgstr "Clear Search"
+
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:113
+msgid "Sort by..."
+msgstr "Sort by..."
+
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:115
+msgid "Toggle Sort By Dropdown"
+msgstr "Toggle Sort By Dropdown"
+
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:121
+msgid "Sort By"
+msgstr "Sort By"
+
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:124
+msgid "Popularity"
+msgstr "Popularity"
+
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card-list.tsx:127
+msgid "Name"
+msgstr "Name"
+
+#: src/app/[locale]/(playgrounds)/playgrounds/playground-card.tsx:83
+msgid "Open {0} Playground"
+msgstr "Open {0} Playground"
+
+#: src/app/[locale]/(editor)/playgrounds/[playground]/not-found.tsx:10
+msgid "Not Found"
+msgstr "Not Found"
+
+#: src/app/[locale]/(editor)/playgrounds/[playground]/not-found.tsx:13
+msgid "Hmm, we couldn't find the playground you're looking for."
+msgstr "Hmm, we couldn't find the playground you're looking for."
+
+#: src/app/[locale]/(editor)/playgrounds/[playground]/not-found.tsx:19
+msgid "Browse Playgrounds"
+msgstr "Browse Playgrounds"
+
+#: src/app/[locale]/(editor)/playgrounds/[playground]/page.tsx:30
+msgid "{0} Online Playground on Evaluate"
+msgstr "{0} Online Playground on Evaluate"
+
+#: src/app/[locale]/(editor)/playgrounds/[playground]/page.tsx:31
+msgid "Run {0} and more code snippets online in your browser with Evaluate's code playground."
+msgstr "Run {0} and more code snippets online in your browser with Evaluate's code playground."

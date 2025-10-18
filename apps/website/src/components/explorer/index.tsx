@@ -3,6 +3,7 @@
 import { Button } from '@evaluate/components/button';
 import { ScrollArea } from '@evaluate/components/scroll-area';
 import { Separator } from '@evaluate/components/separator';
+import { Say, useSay } from '@sayable/react';
 import {
   FilePlusIcon,
   FolderPlusIcon,
@@ -21,6 +22,8 @@ import {
 import { useExplorer, useWatch } from './use';
 
 export function Explorer() {
+  const say = useSay();
+
   const explorer = useExplorer();
   useWatch(explorer, ['children']);
   const args = explorer.children //
@@ -36,41 +39,49 @@ export function Explorer() {
   return (
     <section className="h-full w-full">
       <div className="flex h-10 items-center gap-1 border-b-2 px-3 py-1">
-        <span className="mr-auto font-medium text-sm">Explorer</span>
+        <span className="mr-auto font-medium text-sm">
+          <Say>Explorer</Say>
+        </span>
 
         {/* TODO: Upload button? Would likely need a confirm dialog as this will overwrite the current content */}
 
         <Button
-          title="New File"
+          title={say`New File`}
           size="icon"
           variant="ghost"
           className="size-auto rounded-full"
           onClick={handleNewFileClick}
         >
           <FilePlusIcon className="size-4" />
-          <span className="sr-only">New File</span>
+          <span className="sr-only">
+            <Say>New File</Say>
+          </span>
         </Button>
 
         <Button
-          title="New Folder"
+          title={say`New Folder`}
           size="icon"
           variant="ghost"
           className="size-auto rounded-full"
           onClick={handleNewFolderClick}
         >
           <FolderPlusIcon className="size-4" />
-          <span className="sr-only">New Folder</span>
+          <span className="sr-only">
+            <Say>New Folder</Say>
+          </span>
         </Button>
 
         <Button
-          title="Download As Zip"
+          title={say`Download as Zip`}
           size="icon"
           variant="ghost"
           className="size-auto rounded-full"
           onClick={handleDownloadClick}
         >
           <HardDriveDownloadIcon size={16} />
-          <span className="sr-only">Download As Zip</span>
+          <span className="sr-only">
+            <Say>Download as Zip</Say>
+          </span>
         </Button>
       </div>
 
@@ -80,7 +91,8 @@ export function Explorer() {
         <Separator />
 
         <ScrollArea
-          ref={dropzoneRef}
+          // TODO: Fix types
+          ref={dropzoneRef as never}
           className={cn(
             'relative h-[calc(100%_-_45px)] w-full',
             isOver && 'bg-border',
@@ -93,7 +105,9 @@ export function Explorer() {
           {explorer.children.length <= 2 && (
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="max-w-64 text-balance p-1 text-center text-foreground/50 text-sm">
-                This is the file explorer. Create a new file to get started.
+                <Say>
+                  This is the file explorer. Create a new file to get started.
+                </Say>
               </span>
             </div>
           )}

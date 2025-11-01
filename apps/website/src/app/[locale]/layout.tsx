@@ -38,12 +38,13 @@ export default async function RootLayout({
         <head key="head">
           <meta name="evaluate-extension" content="disabled" />
           <meta name="darkreader-lock" />
-          <meta
-            name="google-adsense-account"
-            content="ca-pub-5722227635911083"
-          />
           <meta name="theme-color" content="#2fc186" />
           <link rel="icon" type="image/png" href="/favicon.ico" />
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5722227635911083"
+            crossOrigin="anonymous"
+          />
         </head>
 
         <body

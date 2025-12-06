@@ -30,14 +30,14 @@
     "class-variance-authority": "^0.7.1",
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^0.546.0",
-    "react": "^19.2.0",
+    "react": "^19.2.1",
     "react-hook-form": "^7.65.0",
     "react-resizable-panels": "^3.0.6",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
-    "@types/react": "^19.1.8",
+    "@types/react": "^19.2.7",
     "tailwindcss": "^4.1.11"
   }
 }

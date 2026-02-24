@@ -18,12 +18,6 @@ function withOriginCheck(
   return async (req: NextRequest, ctx: RouteContext<'/api/piston/[route]'>) => {
     const origin = req.headers.get('origin') ?? '';
     const allowed = env.ALLOWED_ORIGIN.some((o) => matchOrigin(origin, o));
-    console.log({
-      origin,
-      allowed,
-      'req.headers': req.headers,
-      'process.env': process.env,
-    });
     if (!origin || !allowed) return new Response(null, { status: 403 });
     return handler(req, ctx);
   };

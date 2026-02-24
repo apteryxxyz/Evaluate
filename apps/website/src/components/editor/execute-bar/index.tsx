@@ -10,21 +10,22 @@ import {
   SelectValue,
 } from '@evaluate/components/select';
 import { toast } from '@evaluate/components/toast';
-import { executeCode, FilesOptions } from '@evaluate/execute';
 import { useEventListener } from '@evaluate/hooks/event-listener';
-import type { Runtime } from '@evaluate/runtimes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Say, useSay } from '@sayable/react';
 import { useMutation } from '@tanstack/react-query';
 import { Loader2Icon, PlayIcon } from 'lucide-react';
+import { FilesOptions, type Runtime } from 'piston.ts';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { File } from 'virtual-file-explorer-backend';
 import { useExplorer, useWatch } from '~/components/explorer/use';
 import { useTerminal } from '~/components/terminal/use';
+import piston from '~/services/piston';
+
 import posthog from '~/services/posthog';
 
-export function ExecuteBar({ runtime }: { runtime: Runtime }) {
+export function ExecuteBar({ runtime }: { runtime: typeof Runtime._output }) {
   const say = useSay();
   const explorer = useExplorer();
   const files = explorer.descendants //
@@ -63,7 +64,7 @@ export function ExecuteBar({ runtime }: { runtime: Runtime }) {
   const { setResult } = useTerminal();
   const { mutate, isPending } = useMutation({
     mutationKey: ['executeCode', runtime.id],
-    mutationFn: (o: FilesOptions) => executeCode(runtime, o),
+    mutationFn: (o: typeof FilesOptions._input) => piston.execute(runtime, o),
     onSuccess([result, options]) {
       setResult(result);
       dispatchEvent(new CustomEvent('mobile-terminal-open-change'));

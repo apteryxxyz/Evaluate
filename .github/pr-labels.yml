@@ -22,16 +22,6 @@ packages:components:
       - any-glob-to-any-file:
           - packages/components/*
           - packages/components/**/*
-packages:execute:
-  - changed-files:
-      - any-glob-to-any-file:
-          - packages/execute/*
-          - packages/execute/**/*
-packages:fetch:
-  - changed-files:
-      - any-glob-to-any-file:
-          - packages/fetch/*
-          - packages/fetch/**/*
 packages:hooks:
   - changed-files:
       - any-glob-to-any-file:
@@ -42,11 +32,11 @@ packages:logger:
       - any-glob-to-any-file:
           - packages/logger/*
           - packages/logger/**/*
-packages:runtimes:
+packages:piston-ts:
   - changed-files:
       - any-glob-to-any-file:
-          - packages/runtimes/*
-          - packages/runtimes/**/*
+          - packages/piston-ts/*
+          - packages/piston-ts/**/*
 packages:scripts:
   - changed-files:
       - any-glob-to-any-file:
@@ -57,4 +47,3 @@ packages:style:
       - any-glob-to-any-file:
           - packages/style/*
           - packages/style/**/*
-

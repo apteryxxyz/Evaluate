@@ -1,0 +1,34 @@
+{
+  "name": "piston.ts",
+  "version": "0.0.1",
+  "type": "module",
+  "homepage": "https://github.com/k0d13/evaluate/packages/piston.ts#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/k0d13/evaluate.git",
+    "directory": "packages/piston.ts"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./evaluate": {
+      "import": "./dist/evaluate/index.js",
+      "types": "./dist/evaluate/index.d.ts"
+    }
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "fuse.js": "^7.1.0",
+    "lexure": "^0.17.0",
+    "zod": "4.1.12",
+    "pako": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/pako": "^2.0.4"
+  }
+}

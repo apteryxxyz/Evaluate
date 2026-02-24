@@ -8,7 +8,6 @@ import {
   TabsList,
   TabsTrigger,
 } from '@evaluate/components/tabs';
-import type { Runtime } from '@evaluate/runtimes';
 import { Say } from '@sayable/react';
 import {
   CodeIcon,
@@ -17,13 +16,14 @@ import {
   PlayIcon,
   Trash2Icon,
 } from 'lucide-react';
+import type { Runtime } from 'piston.ts';
 import { ReadonlyEditor } from '../editor/readonly';
 import { HtmlPreview } from './html-preview';
 import { useTerminal } from './use';
 
 export namespace Terminal {
   export interface Props {
-    runtime: Runtime;
+    runtime: typeof Runtime._output;
   }
 }
 export function Terminal({ runtime }: Terminal.Props) {

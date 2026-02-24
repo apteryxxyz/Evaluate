@@ -7,9 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@evaluate/components/card';
-import { getRuntimeIconUrl, type Runtime } from '@evaluate/runtimes';
 import { Say } from '@sayable/react';
 import { CodeIcon, PinIcon } from 'lucide-react';
+import { getRuntimeIconUrl, type Runtime } from 'piston.ts';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { ImageWithFallback } from '~/components/image-fallback';
 import { LocalisedLink } from '~/components/localised-link';
@@ -28,7 +28,7 @@ export function PlaygroundCard({
   runtime,
   hash,
 }: {
-  runtime: Runtime;
+  runtime: typeof Runtime._output;
   hash?: string;
 }) {
   const imageRef = useRef<HTMLImageElement>(null);

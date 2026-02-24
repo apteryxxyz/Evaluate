@@ -4,7 +4,6 @@
   "type": "module",
   "bin": {
     "ff-zip": "./bin/ff-zip",
-    "run-in": "./bin/run-in",
     "use-env": "./bin/use-env"
   },
   "dependencies": {

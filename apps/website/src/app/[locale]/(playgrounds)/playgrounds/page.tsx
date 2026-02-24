@@ -1,6 +1,6 @@
-import { fetchAllRuntimes } from '@evaluate/runtimes';
 import { Say } from '@sayable/react';
 import say from '~/i18n';
+import piston from '~/services/piston';
 import { generateBaseMetadata } from '../../metadata';
 import { PlaygroundCardList } from './playground-card-list';
 
@@ -12,7 +12,7 @@ export async function generateMetadata({
 }
 
 export default async function PlaygroundsPage() {
-  const runtimes = await fetchAllRuntimes();
+  const runtimes = await piston.runtimes();
 
   return (
     <div className="container flex flex-col gap-6 py-6">

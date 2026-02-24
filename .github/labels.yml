@@ -24,15 +24,11 @@
   description: New feature or request
 - name: packages:components
   color: 0075ca
-- name: packages:execute
-  color: 0075ca
-- name: packages:fetch
-  color: 0075ca
 - name: packages:hooks
   color: 0075ca
 - name: packages:logger
   color: 0075ca
-- name: packages:runtimes
+- name: packages:piston-ts
   color: 0075ca
 - name: packages:scripts
   color: 0075ca

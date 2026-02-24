@@ -1,9 +1,9 @@
-import { type ExecuteResult, executeCode } from '@evaluate/execute';
-import { type Runtime, searchForRuntimes } from '@evaluate/runtimes';
+import type { ExecuteResult, Runtime } from 'piston.ts';
 import type { ProtocolWithReturn } from 'webext-bridge';
 import { onMessage, sendMessage } from 'webext-bridge/background';
 import browser from 'webextension-polyfill';
 import env from '~/env';
+import piston from '~/services/piston.js';
 import posthog, { sessionLog } from '~/services/posthog';
 
 declare module 'webext-bridge' {
@@ -19,7 +19,11 @@ declare module 'webext-bridge' {
     >;
     executionFailed: ProtocolWithReturn<{ errorMessage: string }, void>;
     executionFinished: ProtocolWithReturn<
-      { code: string; runtimes: Runtime[]; results: ExecuteResult[] },
+      {
+        code: string;
+        runtimes: (typeof Runtime._output)[];
+        results: (typeof ExecuteResult._output)[];
+      },
       void
     >;
     getBackgroundSessionId: ProtocolWithReturn<void, string | undefined>;
@@ -55,7 +59,7 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 
   const selection = await sendMessage('getSelectionInfo', void 0, endpoint);
   const { code, resolvables } = selection;
-  const runtimes = (await searchForRuntimes(resolvables)).slice(0, 5);
+  const runtimes = (await piston.runtimes.search(resolvables)).slice(0, 5);
   if (!runtimes.length)
     return sendMessage('unknownRuntime', { code }, endpoint);
 
@@ -65,7 +69,8 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 
   const promises = [];
   for (const runtime of runtimes) {
-    const initialPromise = executeCode(runtime, { code })
+    const initialPromise = piston
+      .execute(runtime, { code })
       .then(([result, options]) => {
         posthog?.capture('executed_code', {
           runtime_id: runtime.id,

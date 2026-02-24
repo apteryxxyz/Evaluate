@@ -3,15 +3,15 @@
 import { Button } from '@evaluate/components/button';
 import { ScrollArea, ScrollBar } from '@evaluate/components/scroll-area';
 import { useEventListener } from '@evaluate/hooks/event-listener';
-import type { Runtime } from '@evaluate/runtimes';
 import { FilesIcon, Share2Icon, TerminalIcon } from 'lucide-react';
+import type { Runtime } from 'piston.ts';
 import { useCallback, useEffect, useRef } from 'react';
 import { twMerge as cn } from 'tailwind-merge';
 import { ExecuteBar } from './execute-bar';
 import { useEditor } from './hooks';
 import { OpenedFiles } from './opened-files';
 
-export function Editor({ runtime }: { runtime: Runtime }) {
+export function Editor({ runtime }: { runtime: typeof Runtime._output }) {
   const editorRef = useRef<HTMLDivElement>(null);
   const { file, handlers, setContainer } = useEditor();
   useEffect(() => setContainer(editorRef.current!), [setContainer]);

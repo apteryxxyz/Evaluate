@@ -8,20 +8,14 @@ import {
   ModalInteraction,
   Row,
 } from '@buape/carbon';
-import {
-  type CodeOptions,
-  type ExecuteOptions,
-  type ExecuteResult,
-  executeCode,
-  makeEditCodePathname,
-} from '@evaluate/execute';
-import { type Runtime, searchForRuntimes } from '@evaluate/runtimes';
+import { makeEditCodePathname } from 'piston.ts/evaluate';
 import { EditEvaluationButton } from '~/components/edit-evaluation-button.js';
 import { OpenEvaluationButton } from '~/components/open-evaluation-button.js';
 import env from '~/env.js';
 import { codeBlock } from '~/helpers/discord-formatting.js';
 import { resolveEmoji } from '~/helpers/resolve-emoji.js';
 import { getInteractionContext } from '~/helpers/session-context.js';
+import piston from '~/services/piston.js';
 import { captureEvent } from '~/services/posthog.js';
 
 //
@@ -53,7 +47,7 @@ function isEdit(
 export async function handleEvaluating(
   interaction: CommandInteraction | ModalInteraction,
   runtimeResolvable: string,
-  options: CodeOptions,
+  options: Parameters<typeof piston.execute>[1],
 ) {
   // HACK: If trying to edit an existing evaluation owned by another user, create new instead
   if (
@@ -66,7 +60,9 @@ export async function handleEvaluating(
   if (isNew(interaction)) await interaction.defer();
   if (isEdit(interaction)) await interaction.acknowledge();
 
-  const runtime = await searchForRuntimes(runtimeResolvable).then((r) => r[0]);
+  const runtime = await piston.runtimes
+    .search(runtimeResolvable)
+    .then((r) => r[0]);
   if (!runtime) {
     const message = interaction.say`I was unable to find the runtime you were looking for, try again with another name.`;
     if (isNew(interaction))
@@ -82,7 +78,10 @@ export async function handleEvaluating(
     throw new Error(message);
   }
 
-  const [executeResult, executeOptions] = await executeCode(runtime, options);
+  const [executeResult, executeOptions] = await piston.execute(
+    runtime,
+    options,
+  );
 
   captureEvent(getInteractionContext(interaction.rawData), 'executed_code', {
     runtime_id: runtime.id,
@@ -120,9 +119,9 @@ export async function handleEvaluating(
 
 export function createEvaluationPayload(
   interaction: BaseInteraction<APIInteraction>,
-  runtime: Runtime,
-  options: ExecuteOptions,
-  result: ExecuteResult,
+  runtime: Parameters<typeof piston.execute>[0],
+  options: Awaited<ReturnType<typeof piston.execute>>[1],
+  result: Awaited<ReturnType<typeof piston.execute>>[0],
   output: string,
 ): MessagePayload {
   const embed = new Embed({

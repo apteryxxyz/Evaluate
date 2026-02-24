@@ -1,6 +1,6 @@
 import { toast } from '@evaluate/components/toast';
-import { type ExecuteResult, makePickRuntimePathname } from '@evaluate/execute';
-import type { Runtime } from '@evaluate/runtimes';
+import type { ExecuteResult, Runtime } from 'piston.ts';
+import { makePickRuntimePathname } from 'piston.ts/evaluate';
 import { useEffect, useState } from 'react';
 import { onMessage } from 'webext-bridge/content-script';
 import env from '~/env.js';
@@ -8,8 +8,8 @@ import { ExecutionDialog } from './dialog';
 
 export function Execution({ dialogPortal }: { dialogPortal: HTMLElement }) {
   const [code, setCode] = useState('');
-  const [runtimes, setRuntimes] = useState<Runtime[]>([]);
-  const [results, setResults] = useState<ExecuteResult[]>([]);
+  const [runtimes, setRuntimes] = useState<(typeof Runtime._output)[]>([]);
+  const [results, setResults] = useState<(typeof ExecuteResult._output)[]>([]);
 
   useEffect(() => {
     let lastToastId: string | number;

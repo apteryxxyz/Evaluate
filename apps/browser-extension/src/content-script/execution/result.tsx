@@ -1,13 +1,12 @@
 import { Button } from '@evaluate/components/button';
 import { Label } from '@evaluate/components/label';
 import { Textarea } from '@evaluate/components/textarea';
+import { ExternalLinkIcon } from 'lucide-react';
+import type { ExecuteResult, Runtime } from 'piston.ts';
 import {
-  type ExecuteResult,
   makeEditCodePathname,
   makePickRuntimePathname,
-} from '@evaluate/execute';
-import type { Runtime } from '@evaluate/runtimes';
-import { ExternalLinkIcon } from 'lucide-react';
+} from 'piston.ts/evaluate';
 import { twMerge as cn } from 'tailwind-merge';
 import env from '~/env.js';
 
@@ -16,9 +15,9 @@ export function ResultDialog({
   options,
   result,
 }: {
-  runtime: Runtime;
+  runtime: typeof Runtime._output;
   options: { code: string };
-  result: ExecuteResult;
+  result: typeof ExecuteResult._output;
 }) {
   let output = result.output;
   if (result.compile?.expired)

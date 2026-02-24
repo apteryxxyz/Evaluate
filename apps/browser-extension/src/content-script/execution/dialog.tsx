@@ -11,8 +11,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@evaluate/components/tabs';
-import type { ExecuteResult } from '@evaluate/execute';
-import type { Runtime } from '@evaluate/runtimes';
+import type { ExecuteResult, Runtime } from 'piston.ts';
 import browser from 'webextension-polyfill';
 import env from '~/env';
 import { ResultDialog } from './result';
@@ -26,9 +25,9 @@ export function ExecutionDialog({
 }: {
   portal: HTMLElement;
   code: string;
-  runtimes: Runtime[];
-  results: ExecuteResult[];
-  setResults: (results: ExecuteResult[]) => void;
+  runtimes: (typeof Runtime._output)[];
+  results: (typeof ExecuteResult._output)[];
+  setResults: (results: (typeof ExecuteResult._output)[]) => void;
 }) {
   const open = results.length > 0;
   const onClose = () => setResults([]);

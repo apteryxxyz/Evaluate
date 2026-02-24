@@ -124,7 +124,7 @@ msgstr "CLI Arguments"
 msgid "STDIN"
 msgstr "STDIN"
 
-#: src/components/explorer/use.tsx:67
+#: src/components/explorer/use.tsx:68
 msgid "Saved and copied URL to clipboard"
 msgstr "Saved and copied URL to clipboard"
 
@@ -140,15 +140,15 @@ msgstr "Delete File"
 msgid "Untitled"
 msgstr "Untitled"
 
-#: src/components/editor/execute-bar/index.tsx:118
+#: src/components/editor/execute-bar/index.tsx:119
 msgid "Select an entry file..."
 msgstr "Select an entry file..."
 
-#: src/components/editor/execute-bar/index.tsx:133
+#: src/components/editor/execute-bar/index.tsx:134
 msgid "No files found"
 msgstr "No files found"
 
-#: src/components/editor/execute-bar/index.tsx:149
+#: src/components/editor/execute-bar/index.tsx:150
 msgid "<0>Execute</0> <1>{2}</1> <3>Code</3>"
 msgstr "<0>Execute</0> <1>{2}</1> <3>Code</3>"
 
@@ -262,10 +262,10 @@ msgstr "Hmm, we couldn't find the playground you're looking for."
 msgid "Browse Playgrounds"
 msgstr "Browse Playgrounds"
 
-#: src/app/[locale]/(editor)/playgrounds/[playground]/page.tsx:29
+#: src/app/[locale]/(editor)/playgrounds/[playground]/page.tsx:28
 msgid "{0} Online Playground on Evaluate"
 msgstr "{0} Online Playground on Evaluate"
 
-#: src/app/[locale]/(editor)/playgrounds/[playground]/page.tsx:30
+#: src/app/[locale]/(editor)/playgrounds/[playground]/page.tsx:29
 msgid "Run {0} and more code snippets online in your browser with Evaluate's code playground."
 msgstr "Run {0} and more code snippets online in your browser with Evaluate's code playground."

@@ -1,12 +1,8 @@
-import { HttpError, TooManyRequestsError } from './http-error.js';
-
-const FETCH = globalThis.fetch;
-
-export default async function fetch(input: RequestInfo, init?: RequestInit) {
+export async function betterFetch(input: RequestInfo, init?: RequestInit) {
   let attempts = 0;
 
   while (true) {
-    const [error, response] = await FETCH(input, init)
+    const [error, response] = await fetch(input, init)
       .then((response) => [null, response] as const)
       .catch((error: Error) => [error, null] as const);
 
@@ -20,8 +16,8 @@ export default async function fetch(input: RequestInfo, init?: RequestInit) {
     }
 
     if (response.status === 429) {
-      if (attempts >= 5)
-        throw new TooManyRequestsError(response, 'Too many requests');
+      if (attempts >= 3)
+        throw new Error('Too many requests', { cause: response });
 
       attempts++;
       const delay = 2 ** attempts * 1000;
@@ -33,10 +29,6 @@ export default async function fetch(input: RequestInfo, init?: RequestInit) {
       continue;
     }
 
-    throw new HttpError(
-      response, //
-      'An unknown error occurred',
-      { cause: response },
-    );
+    throw new Error('An unknown error occurred', { cause: response });
   }
 }

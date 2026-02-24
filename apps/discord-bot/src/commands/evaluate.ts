@@ -4,12 +4,12 @@ import {
   Command,
   type CommandInteraction,
 } from '@buape/carbon';
-import { fetchAllRuntimes, searchForRuntimes } from '@evaluate/runtimes';
 import { sayable } from '@sayable/carbon';
 import type { Sayable } from 'sayable';
 import { EvaluateModal } from '~/components/evaluate-modal';
 import { handleEvaluating } from '~/handlers/evaluate';
 import { getInteractionContext } from '~/helpers/session-context';
+import piston from '~/services/piston.js';
 import { captureEvent } from '~/services/posthog';
 
 export class EvaluateCommand extends sayable(Command) {
@@ -51,12 +51,12 @@ export class EvaluateCommand extends sayable(Command) {
     const runtime = interaction.options.getString('runtime');
 
     if (runtime) {
-      const runtimes = await searchForRuntimes(runtime);
+      const runtimes = await piston.runtimes.search(runtime);
       return interaction.respond(
         runtimes.slice(0, 25).map((r) => ({ name: r.name, value: r.id })),
       );
     } else {
-      const runtimes = await fetchAllRuntimes();
+      const runtimes = await piston.runtimes();
       return interaction.respond(
         runtimes.slice(0, 25).map((r) => ({ name: r.name, value: r.id })),
       );

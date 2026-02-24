@@ -14,12 +14,11 @@
   },
   "dependencies": {
     "@evaluate/components": "workspace:^",
-    "@evaluate/execute": "workspace:^",
     "@evaluate/logger": "workspace:^",
-    "@evaluate/runtimes": "workspace:^",
     "@evaluate/style": "workspace:^",
     "@t3-oss/env-core": "^0.13.8",
     "lucide-react": "^0.546.0",
+    "piston.ts": "workspace:^",
     "posthog-js": "^1.276.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",

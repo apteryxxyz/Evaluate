@@ -5,6 +5,7 @@ export default createEnv({
   server: {
     WEBSITE_URL: z.url().transform((v) => new URL(v)),
     POSTHOG_KEY: z.string().optional(),
+    PISTON_API_KEY: z.string().min(1),
     DISCORD_TOKEN: z.string().min(1).optional(),
     DISCORD_PUBLIC_KEY: z.string().min(1).optional(),
     DISCORD_CLIENT_ID: z.string().min(1).optional(),

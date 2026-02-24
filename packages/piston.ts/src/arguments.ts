@@ -1,3 +1,4 @@
+// @ts-expect-error - Lexure has crap typings
 import { Lexer, Parser } from 'lexure';
 
 const Arguments = new Lexer().setQuotes([

@@ -1,17 +1,16 @@
-import { fetchAllRuntimes, fetchRuntimeById } from '@evaluate/runtimes';
 import { notFound } from 'next/navigation';
 import { generateBaseMetadata } from '~/app/[locale]/metadata';
-
 import { Editor } from '~/components/editor';
 import { Explorer } from '~/components/explorer';
 import { ExplorerProvider } from '~/components/explorer/use';
 import { Terminal } from '~/components/terminal';
 import { TerminalProvider } from '~/components/terminal/use';
 import say from '~/i18n';
+import piston from '~/services/piston';
 import { EditorWrapper } from './wrapper';
 
 export async function generateStaticParams() {
-  const runtimes = await fetchAllRuntimes();
+  const runtimes = await piston.runtimes();
   return runtimes.map((r) => ({ playground: r.id }));
 }
 
@@ -19,7 +18,7 @@ export async function generateMetadata({
   params,
 }: PageProps<'/[locale]/playgrounds/[playground]'>) {
   const { locale, playground } = await params;
-  const runtime = await fetchRuntimeById(decodeURIComponent(playground));
+  const runtime = await piston.runtimes.get(decodeURIComponent(playground));
   if (!runtime) notFound();
 
   return generateBaseMetadata(
@@ -39,7 +38,7 @@ export default async function EditorPage({
   params,
 }: PageProps<'/[locale]/playgrounds/[playground]'>) {
   const { playground } = await params;
-  const runtime = await fetchRuntimeById(decodeURIComponent(playground));
+  const runtime = await piston.runtimes.get(decodeURIComponent(playground));
   if (!runtime) notFound();
 
   return (

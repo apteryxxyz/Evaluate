@@ -9,13 +9,14 @@
 
 import { exec } from 'node:child_process';
 import { createWriteStream } from 'node:fs';
-import { readFile, readdir, rm, stat } from 'node:fs/promises';
+import { readdir, readFile, rm, stat } from 'node:fs/promises';
 import { basename, dirname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 import gitignoreParser from '@gerhobbelt/gitignore-parser';
 import archiver from 'archiver';
 import { logger } from './_logger.js';
+
 const execAsync = promisify(exec);
 
 // ===== //

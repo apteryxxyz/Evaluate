@@ -6,41 +6,41 @@ msgstr ""
 "Language: en\n"
 "X-Generator: sayable\n"
 
-#: src/handlers/evaluate.ts:71
+#: src/handlers/evaluate.ts:67
 msgid "I was unable to find the runtime you were looking for, try again with another name."
 msgstr "I was unable to find the runtime you were looking for, try again with another name."
 
-#: src/handlers/evaluate.ts:97
+#: src/handlers/evaluate.ts:96
 msgid "Your code compilation exceeded the allotted time and was terminated. Consider optimising your code for faster compilation."
 msgstr "Your code compilation exceeded the allotted time and was terminated. Consider optimising your code for faster compilation."
 
-#: src/handlers/evaluate.ts:99
+#: src/handlers/evaluate.ts:98
 msgid "Your code execution exceeded the allotted time and was terminated. Consider optimising it for better performance."
 msgstr "Your code execution exceeded the allotted time and was terminated. Consider optimising it for better performance."
 
-#: src/handlers/evaluate.ts:101
+#: src/handlers/evaluate.ts:100
 msgid "Your code executed successfully; however, it did not generate any output for the console."
 msgstr "Your code executed successfully; however, it did not generate any output for the console."
 
-#: src/handlers/evaluate.ts:107
+#: src/handlers/evaluate.ts:106
 msgid "Output was too large to display, [click here to view the full output]({url})."
 msgstr "Output was too large to display, [click here to view the full output]({url})."
 
-#: src/handlers/evaluate.ts:129
+#: src/handlers/evaluate.ts:128
 msgid "Code Evaluation"
 msgstr "Code Evaluation"
 
-#: src/handlers/evaluate.ts:144
+#: src/handlers/evaluate.ts:143
 #: src/components/evaluate-modal.ts:102
 msgid "CLI Arguments"
 msgstr "CLI Arguments"
 
-#: src/handlers/evaluate.ts:150
+#: src/handlers/evaluate.ts:149
 #: src/components/evaluate-modal.ts:120
 msgid "STDIN"
 msgstr "STDIN"
 
-#: src/handlers/evaluate.ts:154
+#: src/handlers/evaluate.ts:153
 msgid "Output"
 msgstr "Output"
 

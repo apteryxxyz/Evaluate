@@ -12,7 +12,6 @@ import {
 } from '@evaluate/components/select';
 import { Separator } from '@evaluate/components/separator';
 import { toast } from '@evaluate/components/toast';
-import type { Runtime } from '@evaluate/runtimes';
 import { Say, useSay } from '@sayable/react';
 import {
   ArrowDownWideNarrowIcon,
@@ -20,6 +19,7 @@ import {
   SearchIcon,
   XIcon,
 } from 'lucide-react';
+import type { Runtime } from 'piston.ts';
 import { useDeferredValue, useEffect, useMemo } from 'react';
 import { useHashFragment } from '~/hooks/hash-fragment';
 import { useLocalStorage } from '~/hooks/local-storage';
@@ -29,7 +29,7 @@ import { PlaygroundCard } from './playground-card';
 export function PlaygroundCardList({
   initialRuntimes,
 }: {
-  initialRuntimes: Runtime[];
+  initialRuntimes: (typeof Runtime._output)[];
 }) {
   const say = useSay();
 
@@ -70,7 +70,7 @@ export function PlaygroundCardList({
   const pinnedRuntimes = useMemo(() => {
     return pinnedRuntimeIds
       .map((id) => initialRuntimes.find((r) => r.id === id))
-      .filter((r): r is Runtime => Boolean(r));
+      .filter((r): r is typeof Runtime._output => Boolean(r));
   }, [pinnedRuntimeIds, initialRuntimes]);
 
   const [hash] = useHashFragment();

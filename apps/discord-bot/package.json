@@ -20,14 +20,13 @@
   },
   "dependencies": {
     "@buape/carbon": "^0.13.0",
-    "@evaluate/execute": "workspace:^",
     "@evaluate/logger": "workspace:^",
-    "@evaluate/runtimes": "workspace:^",
     "@sayable/carbon": "0.0.0-alpha.4",
     "@sayable/react": "0.0.0-alpha.6",
     "@t3-oss/env-core": "^0.13.8",
     "date-fns": "^4.1.0",
     "es-toolkit": "^1.40.0",
+    "piston.ts": "workspace:^",
     "posthog-node": "^5.5.1",
     "sayable": "0.0.0-alpha.6",
     "zod": "^4.1.12"

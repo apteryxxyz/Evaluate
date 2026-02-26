@@ -1,0 +1,21 @@
+{
+  "singleQuote": true,
+  "printWidth": 80,
+  "experimentalSortImports": {
+    "groups": [
+      "builtin",
+      "external",
+      "internal",
+      "parent",
+      "sibling",
+      "index",
+      "unknown"
+    ],
+    "newlinesBetween": false
+  },
+  "experimentalTailwindcss": {
+    "stylesheet": "./packages/style/src/tailwind.css",
+    "functions": ["tw", "cn"],
+    "preserveWhitespace": true
+  }
+}

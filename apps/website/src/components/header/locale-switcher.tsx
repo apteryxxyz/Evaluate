@@ -55,7 +55,6 @@ function LocaleSwitcherItem({ locale, ...props }: { locale: string }) {
   }, [locale, pathname, searchParams]);
 
   const updatePreferredLocale = useCallback(() => {
-    // biome-ignore lint/suspicious/noDocumentCookie: update the locale cookie
     document.cookie = `preferred-locale=${locale}; max-age=31536000; path=/`;
   }, [locale]);
 

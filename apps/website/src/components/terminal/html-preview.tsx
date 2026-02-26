@@ -25,9 +25,7 @@ export function HtmlPreview({ children }: React.PropsWithChildren) {
       {sanitisedHtml && (
         <iframe
           title="HTML Preview"
-          src={`data:text/html;charset=utf-8,${encodeURIComponent(
-            sanitisedHtml,
-          )}`}
+          src={`data:text/html;charset=utf-8,${encodeURIComponent(sanitisedHtml)}`}
           className="h-full w-full"
           style={{ border: 'none' }}
           sandbox="allow-scripts"

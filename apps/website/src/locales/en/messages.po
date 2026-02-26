@@ -6,7 +6,7 @@ msgstr ""
 "Language: en\n"
 "X-Generator: sayable\n"
 
-#: src/components/terminal/html-preview.tsx:40
+#: src/components/terminal/html-preview.tsx:38
 msgid "Nothing to render here."
 msgstr "Nothing to render here."
 
@@ -124,7 +124,7 @@ msgstr "CLI Arguments"
 msgid "STDIN"
 msgstr "STDIN"
 
-#: src/components/explorer/use.tsx:68
+#: src/components/explorer/use.tsx:66
 msgid "Saved and copied URL to clipboard"
 msgstr "Saved and copied URL to clipboard"
 
@@ -140,15 +140,15 @@ msgstr "Delete File"
 msgid "Untitled"
 msgstr "Untitled"
 
-#: src/components/editor/execute-bar/index.tsx:119
+#: src/components/editor/execute-bar/index.tsx:117
 msgid "Select an entry file..."
 msgstr "Select an entry file..."
 
-#: src/components/editor/execute-bar/index.tsx:134
+#: src/components/editor/execute-bar/index.tsx:132
 msgid "No files found"
 msgstr "No files found"
 
-#: src/components/editor/execute-bar/index.tsx:150
+#: src/components/editor/execute-bar/index.tsx:148
 msgid "<0>Execute</0> <1>{2}</1> <3>Code</3>"
 msgstr "<0>Execute</0> <1>{2}</1> <3>Code</3>"
 
@@ -185,7 +185,7 @@ msgstr "The <0>Evaluate</0> Discord Bot"
 msgid "Run code snippets directly in your Discord server with the Evaluate bot! Evaluate supports over 70 languages and is perfect for quickly testing code and sharing results with your friends."
 msgstr "Run code snippets directly in your Discord server with the Evaluate bot! Evaluate supports over 70 languages and is perfect for quickly testing code and sharing results with your friends."
 
-#: src/app/[locale]/(products)/products/discord-bot/page.tsx:37
+#: src/app/[locale]/(products)/products/discord-bot/page.tsx:36
 msgid "Evaluate for <0>Discord</0>"
 msgstr "Evaluate for <0>Discord</0>"
 
@@ -197,11 +197,11 @@ msgstr "The <0>Evaluate</0> Browser Extension"
 msgid "When you stumble upon code snippets while browsing the web, wouldn't it be great to execute them instantly? Look no further—the Evaluate extension is your solution, with its over 70 supported languages and quick code execution capabilities."
 msgstr "When you stumble upon code snippets while browsing the web, wouldn't it be great to execute them instantly? Look no further—the Evaluate extension is your solution, with its over 70 supported languages and quick code execution capabilities."
 
-#: src/app/[locale]/(products)/products/browser-extension/page.tsx:42
+#: src/app/[locale]/(products)/products/browser-extension/page.tsx:41
 msgid "Evaluate for <0>Chrome</0>"
 msgstr "Evaluate for <0>Chrome</0>"
 
-#: src/app/[locale]/(products)/products/browser-extension/page.tsx:128
+#: src/app/[locale]/(products)/products/browser-extension/page.tsx:123
 msgid "Evaluate for <0>Firefox</0>"
 msgstr "Evaluate for <0>Firefox</0>"
 

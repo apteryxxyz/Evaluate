@@ -1,6 +1,6 @@
-@import "@evaluate/style";
-@import "@evaluate/components";
-@source ".";
+@import '@evaluate/style';
+@import '@evaluate/components';
+@source '.';
 
 ::-webkit-scrollbar {
   width: 17px;

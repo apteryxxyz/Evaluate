@@ -1,7 +1,7 @@
 {
   "name": "website",
-  "description": "Run code snippets in any programming language with Evaluate!",
   "version": "2.0.0",
+  "description": "Run code snippets in any programming language with Evaluate!",
   "type": "module",
   "scripts": {
     "check": "tsc --noEmit",

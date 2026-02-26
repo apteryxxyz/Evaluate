@@ -1,7 +1,6 @@
 'use client';
 
 import type { ExecuteResult } from 'piston.ts';
-
 import { createContext, useContext, useState } from 'react';
 
 const TerminalContext = createContext<{

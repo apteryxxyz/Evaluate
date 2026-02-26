@@ -2,7 +2,7 @@ name: Setup Workflow
 description: Setup workflow for GitHub Actions
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - uses: pnpm/action-setup@v4
 
@@ -10,7 +10,7 @@ runs:
       uses: actions/setup-node@v3
       with:
         node-version: 20
-        registry-url: "https://registry.npmjs.org"
+        registry-url: 'https://registry.npmjs.org'
         cache: pnpm
 
     - name: Install dependencies

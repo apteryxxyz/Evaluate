@@ -1,11 +1,11 @@
 {
   "name": "@evaluate/scripts",
   "description": "Collection of utility scripts for build and development tasks.",
-  "type": "module",
   "bin": {
     "ff-zip": "./bin/ff-zip",
     "use-env": "./bin/use-env"
   },
+  "type": "module",
   "dependencies": {
     "@gerhobbelt/gitignore-parser": "0.2.0-9",
     "@next/env": "15.5.6",

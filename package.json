@@ -1,10 +1,14 @@
 {
   "name": "evaluate",
-  "packageManager": "pnpm@10.18.3",
-  "workspaces": ["apps/*", "bots/*", "extensions/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "bots/*",
+    "extensions/*",
+    "packages/*"
+  ],
   "scripts": {
-    "lint": "biome check . --write",
-    "format": "biome check . --write",
+    "lint": "oxlint",
+    "format": "oxfmt",
     "check": "turbo run check",
     "build": "turbo run build",
     "build:packages": "turbo run build --filter=\"./packages/*\"",
@@ -15,16 +19,15 @@
     "graph": "pnpx nx@18 graph"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.6",
     "@evaluate/scripts": "workspace:^",
     "@types/node": "^22.18.11",
     "husky": "^9.1.7",
+    "oxfmt": "^0.35.0",
+    "oxlint": "^1.50.0",
     "ts-patch": "^3.3.0",
     "turbo": "^2.5.8",
     "typescript": "^5.9.3",
     "typescript-transform-paths": "^3.5.5"
   },
-  "patchedDependencies": {
-    "@tailwindcss/vite@4.1.11@4.1.11": "patches/@tailwindcss__vite@4.1.11.patch"
-  }
+  "packageManager": "pnpm@10.18.3"
 }

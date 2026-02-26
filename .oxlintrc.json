@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "no-unsafe-declaration-merging": "off"
+  },
+  "ignorePatterns": ["next-env.d.ts"]
+}

@@ -22,7 +22,6 @@ import type { File } from 'virtual-file-explorer-backend';
 import { useExplorer, useWatch } from '~/components/explorer/use';
 import { useTerminal } from '~/components/terminal/use';
 import piston from '~/services/piston';
-
 import posthog from '~/services/posthog';
 
 export function ExecuteBar({ runtime }: { runtime: typeof Runtime._output }) {
@@ -51,7 +50,6 @@ export function ExecuteBar({ runtime }: { runtime: typeof Runtime._output }) {
     ['parent'],
     () => !entry?.parent && setEntry(undefined),
   );
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Once trigger once
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!entry) setEntry(files.find((f) => Reflect.get(f, 'entry')));
@@ -90,7 +88,7 @@ export function ExecuteBar({ runtime }: { runtime: typeof Runtime._output }) {
   });
   const handleSubmit = useCallback<ReturnType<typeof form.handleSubmit>>(
     (e) => {
-      form.setValue('entry', entry?.path!);
+      if (entry?.path) form.setValue('entry', entry.path);
       const map = Object.fromEntries(files.map((f) => [f.path, f.content]));
       form.setValue('files', map);
 

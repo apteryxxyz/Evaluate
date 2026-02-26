@@ -40,8 +40,10 @@ export function closestAnsiColour(r: number, g: number, b: number) {
   for (let i = 0; i < colours.length; i++) {
     const [cr, cg, cb] = colours[i]!;
     const dist = (cr - r) ** 2 + (cg - g) ** 2 + (cb - b) ** 2;
-
-    if (dist < minDist) (minDist = dist), (closestColour = i);
+    if (dist < minDist) {
+      minDist = dist;
+      closestColour = i;
+    }
   }
 
   return closestColour;

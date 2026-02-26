@@ -1,8 +1,8 @@
 {
   "recommendations": [
-    "biomejs.biome",
     "streetsidesoftware.code-spell-checker",
     "gruntfuggly.todo-tree",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "oxc.oxc-vscode"
   ]
 }

@@ -7,8 +7,8 @@
       "style": "./src/style.css"
     },
     "./*": {
-      "import": "./dist/*.jsx",
-      "types": "./dist/*.d.ts"
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.jsx"
     }
   },
   "scripts": {

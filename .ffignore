@@ -10,4 +10,3 @@ packages/scripts/bin/ff-zip
 .ffignore
 .gitignore
 .vercelignore
-biome.json

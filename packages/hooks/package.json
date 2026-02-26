@@ -4,18 +4,18 @@
   "type": "module",
   "exports": {
     "./*": {
-      "import": "./dist/*.js",
-      "types": "./dist/*.d.ts"
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js"
     }
   },
   "scripts": {
     "check": "tsc --noEmit",
     "build": "tsc"
   },
-  "peerDependencies": {
-    "react": "^19.2.0"
-  },
   "devDependencies": {
     "@types/react": "^19.2.7"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0"
   }
 }

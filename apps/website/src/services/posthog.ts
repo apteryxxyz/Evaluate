@@ -10,8 +10,8 @@ export const captureLog = createLogger({
 export function isAvailable() {
   return Boolean(
     typeof window !== 'undefined' && // client only
-      !window.location.origin.endsWith('.vercel.app') && // not hosted on vercel
-      env.NEXT_PUBLIC_POSTHOG_KEY, // has a posthog key
+    !window.location.origin.endsWith('.vercel.app') && // not hosted on vercel
+    env.NEXT_PUBLIC_POSTHOG_KEY, // has a posthog key
   );
 }
 

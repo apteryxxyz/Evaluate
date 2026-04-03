@@ -1,0 +1,24 @@
+{
+  "name": "virtual-file-explorer-backend",
+  "version": "0.0.5",
+  "type": "module",
+  "homepage": "https://github.com/k0d13/evaluate/packages/virtual-file-explorer-backend#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/k0d13/evaluate.git",
+    "directory": "packages/virtual-file-explorer-backend"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "eventemitter2": "^6.4.9"
+  }
+}
